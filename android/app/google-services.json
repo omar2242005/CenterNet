@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "76920270979",
+    "project_id": "centernet-cbf40",
+    "storage_bucket": "centernet-cbf40.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76920270979:android:e03bb111c2a6c7499bebb6",
+        "android_client_info": {
+          "package_name": "com.centernet.center_net"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLXS76BW2XmUFIDF-iO2oueq9t8Q9w3Tc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

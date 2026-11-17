@@ -1,0 +1,249 @@
+rules_version = '2';
+
+// CenterNet — Firestore Rules (قسم الهوية والسنتر: users / centers / members / inviteCodes)
+//
+// المبادئ (من الملف الشامل، قسم 6):
+//  - الافتراضي منع، وكل allow صريح.
+//  - الصلاحيات من centers/{c}/members فقط. الـ Rules مبتقراش users.centerId ولا accountType أبدًا.
+//  - مفيش delete على أي مسار هنا.
+//
+// افتراضات المسارات (لازم تتأكد منها):
+//  - members تحت السنتر:  centers/{c}/members/{uid}
+//  - students تحت السنتر: centers/{c}/students/{sid}   (بتتقرا بس للتحقق وقت إنشاء كود طالب/ولي أمر)
+//  - inviteCodes على مستوى الجذر: inviteCodes/{code}   (والـ centerId جوه المستند)
+//
+// تعديل على الموديل: مستند العضو بيتزود فيه حقل inviteCode (اسم الكود المستخدم) عند قبول كود موظف.
+// من غيره الـ Rules مش هتقدر تربط إنشاء العضوية بالكود في نفس الـ Batch.
+//
+// الأقسام التانية (students / groups / sessions / attendance / exams / scores) بتتضاف من B و C و D.
+// لحد ما تتضاف، هي ممنوعة بالـ default deny اللي في آخر الملف.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ------------------------------------------------------------------
+    // دوال مساعدة
+    // ------------------------------------------------------------------
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function centerPath(c) {
+      return /databases/$(database)/documents/centers/$(c);
+    }
+
+    function memberPath(c, u) {
+      return /databases/$(database)/documents/centers/$(c)/members/$(u);
+    }
+
+    function studentPath(c, s) {
+      return /databases/$(database)/documents/centers/$(c)/students/$(s);
+    }
+
+    function codePath(id) {
+      return /databases/$(database)/documents/inviteCodes/$(id);
+    }
+
+    function isActiveMember(c) {
+      return signedIn()
+        && exists(memberPath(c, request.auth.uid))
+        && get(memberPath(c, request.auth.uid)).data.active == true;
+    }
+
+    function isAdmin(c) {
+      return isActiveMember(c)
+        && get(memberPath(c, request.auth.uid)).data.role == 'admin';
+    }
+
+    // ------------------------------------------------------------------
+    // التحقق من شكل المستندات
+    // ------------------------------------------------------------------
+
+    function validUser(d) {
+      return d.keys().hasOnly(['name', 'email', 'phone', 'accountType', 'centerId',
+                               'createdAt', 'createdBy', 'updatedAt'])
+        && d.get('name', null) is string
+        && d.get('accountType', null) is string;
+    }
+
+    function validCenter(d) {
+      return d.keys().hasOnly(['name', 'year', 'createdBy', 'createdAt', 'lateAfterMinutes'])
+        && d.get('name', null) is string
+        && d.name.size() > 0 && d.name.size() <= 80
+        && d.get('lateAfterMinutes', 15) is int
+        && d.get('lateAfterMinutes', 15) >= 0
+        && d.get('lateAfterMinutes', 15) <= 180;
+    }
+
+    function validMember(d) {
+      return d.keys().hasOnly(['role', 'name', 'active', 'createdAt', 'createdBy', 'inviteCode'])
+        && d.get('role', null) is string
+        && d.get('name', null) is string
+        && d.get('active', null) is bool;
+    }
+
+    // كود جديد: حد أقصى 7 أيام (+ يوم سماحية لفرق ساعة الجهاز).
+    // كود الموظف دوره معلم أو مساعد فقط. مفيش كود بدور أدمن.
+    function validNewCode(d) {
+      return d.keys().hasOnly(['centerId', 'kind', 'role', 'name', 'studentId', 'relation',
+                               'expiresAt', 'usedBy', 'createdAt', 'createdBy'])
+        && d.get('centerId', null) is string
+        && d.createdBy == request.auth.uid
+        && d.get('usedBy', 'missing') == null
+        && d.get('expiresAt', null) is timestamp
+        && d.expiresAt > request.time
+        && d.expiresAt <= request.time + duration.value(8, 'd')
+        && (
+          (d.kind == 'staff'
+            && d.get('role', '') in ['teacher', 'assistant']
+            && d.get('name', null) is string)
+          || (d.kind in ['student', 'guardian']
+            && d.get('studentId', null) is string
+            && exists(studentPath(d.centerId, d.studentId))
+            && (d.kind == 'student' || d.get('relation', null) is string))
+        );
+    }
+
+    // ------------------------------------------------------------------
+    // الحالات الخاصة بإنشاء العضوية
+    // ------------------------------------------------------------------
+
+    // (أ) منشئ السنتر: عضو أدمن في سنتر جديد بيتكتب في نفس الـ Batch.
+    //     لو السنتر موجود قبل كده، المسار ده مغلق (مينفعش حد يضيف نفسه أدمن).
+    function bootstrapsCenter(c) {
+      let d = request.resource.data;
+      return d.role == 'admin'
+        && d.active == true
+        && !exists(centerPath(c))
+        && existsAfter(centerPath(c))
+        && getAfter(centerPath(c)).data.createdBy == request.auth.uid;
+    }
+
+    // (ب) قبول كود موظف: الكود صالح ولنفس السنتر وبنفس الدور، ومتعلّم مستخدم في نفس الـ Batch.
+    function acceptsStaffInvite(c) {
+      let d = request.resource.data;
+      let id = d.get('inviteCode', '');
+      return id is string && id.size() > 0
+        && d.role in ['teacher', 'assistant']
+        && d.active == true
+        && exists(codePath(id))
+        && get(codePath(id)).data.kind == 'staff'
+        && get(codePath(id)).data.centerId == c
+        && get(codePath(id)).data.role == d.role
+        && get(codePath(id)).data.usedBy == null
+        && get(codePath(id)).data.expiresAt > request.time
+        && getAfter(codePath(id)).data.usedBy == request.auth.uid;
+    }
+
+    // استهلاك كود موظف (تعديل usedBy فقط) لازم يتزامن مع إنشاء العضوية المرتبطة بيه.
+    // TODO(C — خطوة 3.2): كود الطالب/ولي الأمر محتاج نفس الربط مع studentLinks.
+    //                      لحد ما يتكتب، استهلاكهم ممنوع (fail closed).
+    function consumesStaffCode(id) {
+      let old = resource.data;
+      let me = memberPath(old.centerId, request.auth.uid);
+      return signedIn()
+        && old.kind == 'staff'
+        && old.usedBy == null
+        && old.expiresAt > request.time
+        && request.resource.data.usedBy == request.auth.uid
+        && request.resource.data.diff(old).affectedKeys().hasOnly(['usedBy'])
+        && !exists(me)
+        && existsAfter(me)
+        && getAfter(me).data.get('inviteCode', null) == id;
+    }
+
+    // الأدمن يقدر يلغي كود لسه ما اتستخدمش (بيخلي expiresAt = الآن).
+    function revokesCode() {
+      return isAdmin(resource.data.centerId)
+        && resource.data.usedBy == null
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['expiresAt'])
+        && request.resource.data.expiresAt <= request.time;
+    }
+
+    // ------------------------------------------------------------------
+    // users/{uid}  — للتوجيه في الشاشات فقط، مفيش صلاحية بتيجي منه
+    // ------------------------------------------------------------------
+    match /users/{uid} {
+      allow get: if signedIn() && request.auth.uid == uid;
+
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && validUser(request.resource.data)
+        && request.resource.data.createdBy == uid
+        && request.resource.data.get('centerId', null) == null;
+
+      allow update: if signedIn()
+        && request.auth.uid == uid
+        && validUser(request.resource.data)
+        && request.resource.data.createdBy == resource.data.createdBy;
+
+      // TODO: "حذف حسابي" محتاج استثناء ضيق هنا (أو soft-delete) — قرار مفتوح.
+      allow delete: if false;
+    }
+
+    // ------------------------------------------------------------------
+    // centers/{c}  و  centers/{c}/members/{uid}
+    // ------------------------------------------------------------------
+    match /centers/{c} {
+      allow get: if isActiveMember(c);
+
+      // الإنشاء ذري: السنتر + عضوية الأدمن في Batch واحد.
+      allow create: if signedIn()
+        && validCenter(request.resource.data)
+        && request.resource.data.createdBy == request.auth.uid
+        && existsAfter(memberPath(c, request.auth.uid))
+        && getAfter(memberPath(c, request.auth.uid)).data.role == 'admin';
+
+      allow update: if isAdmin(c)
+        && validCenter(request.resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['name', 'year', 'lateAfterMinutes']);
+
+      allow delete: if false;
+
+      match /members/{uid} {
+        // العضو يقرا مستنده هو حتى لو اتعطّل (عشان التطبيق يعرف يوجّهه)، وباقي القائمة لأعضاء السنتر.
+        allow get: if signedIn() && (request.auth.uid == uid || isActiveMember(c));
+        allow list: if isActiveMember(c);
+
+        allow create: if signedIn()
+          && request.auth.uid == uid
+          && validMember(request.resource.data)
+          && request.resource.data.createdBy == uid
+          && (bootstrapsCenter(c) || acceptsStaffInvite(c));
+
+        // الأدمن بيغيّر دور/اسم/تفعيل الموظفين (معلم/مساعد فقط).
+        // مفيش تعديل على الأدمن نفسه، ومفيش ترقية لأدمن.
+        allow update: if isAdmin(c)
+          && resource.data.role in ['teacher', 'assistant']
+          && request.resource.data.role in ['teacher', 'assistant']
+          && request.resource.data.active is bool
+          && request.resource.data.diff(resource.data).affectedKeys()
+               .hasOnly(['role', 'name', 'active']);
+
+        allow delete: if false;
+      }
+    }
+
+    // ------------------------------------------------------------------
+    // inviteCodes/{code}  — get فقط، مفيش list
+    // ------------------------------------------------------------------
+    match /inviteCodes/{code} {
+      allow get: if signedIn();
+
+      allow create: if signedIn()
+        && validNewCode(request.resource.data)
+        && isAdmin(request.resource.data.centerId);
+
+      allow update: if consumesStaffCode(code) || revokesCode();
+
+      allow delete: if false;
+    }
+
+    // أي مسار تاني ممنوع لحد ما حد يكتب له قسم صريح.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
