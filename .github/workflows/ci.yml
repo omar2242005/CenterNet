@@ -29,7 +29,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-      - run: npm i -g firebase-tools
+      - run: npm i -g firebase-tools@15.36.0
       - run: npm ci
         working-directory: firebase/rules-test
       - run: npm test
