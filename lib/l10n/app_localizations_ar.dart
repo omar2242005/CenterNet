@@ -255,4 +255,63 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get centerLateInvalid => 'المدة لازم تكون من 0 إلى 180 دقيقة';
+
+  @override
+  String get staffInviteTitle => 'إضافة موظف';
+
+  @override
+  String get staffInviteName => 'اسم الموظف';
+
+  @override
+  String get staffInviteRole => 'الدور';
+
+  @override
+  String get staffRoleTeacher => 'معلم';
+
+  @override
+  String get staffRoleAssistant => 'مساعد';
+
+  @override
+  String get staffInvitePhone =>
+      'موبايل الموظف (اختياري، لإرسال الكود عبر واتساب)';
+
+  @override
+  String get staffInviteCreate => 'إنشاء الكود';
+
+  @override
+  String get staffInviteReadyTitle => 'تم إنشاء كود الدعوة';
+
+  @override
+  String get staffInviteCodeLabel => 'كود الدعوة';
+
+  @override
+  String staffInviteValidUntil(String date) {
+    return 'صالح حتى $date';
+  }
+
+  @override
+  String get staffInviteNote =>
+      'الكود يُستخدم مرة واحدة فقط. بعد قبوله يصبح الموظف عضوًا في السنتر بالدور المحدد.';
+
+  @override
+  String get staffInviteCopy => 'نسخ الكود';
+
+  @override
+  String get staffInviteCopied => 'تم نسخ الكود';
+
+  @override
+  String get staffInviteWhatsapp => 'إرسال عبر واتساب';
+
+  @override
+  String get staffInviteAnother => 'إضافة موظف آخر';
+
+  @override
+  String staffInviteMessage(
+    String name,
+    String center,
+    String role,
+    String code,
+  ) {
+    return 'مرحبًا $name، تمت دعوتك للانضمام إلى $center بصفة $role على تطبيق CenterNet.\nكود الدعوة: $code\nالكود صالح لمدة 7 أيام ويُستخدم مرة واحدة. سجّل حسابك في التطبيق ثم أدخل الكود.';
+  }
 }

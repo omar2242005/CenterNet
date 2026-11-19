@@ -9,6 +9,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../centers/center_route_names.dart';
+import '../../staff/staff_route_names.dart';
 import '../auth_route_names.dart';
 import '../repository/auth_repository.dart';
 import 'auth_page.dart';
@@ -68,6 +69,12 @@ class SignedInScreen extends StatelessWidget {
             label: l10n.centerSettingsTitle,
             variant: AppButtonVariant.secondary,
             onPressed: () => context.push(CenterRoutes.settings),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          AppButton(
+            label: l10n.staffInviteTitle,
+            variant: AppButtonVariant.secondary,
+            onPressed: () => context.push(StaffRoutes.invite),
           ),
           const SizedBox(height: AppSpacing.sm),
           AppButton(
