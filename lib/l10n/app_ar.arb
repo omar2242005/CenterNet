@@ -126,5 +126,44 @@
   "centerSaved": "تم حفظ الإعدادات.",
   "centerNone": "ليس لديك سنتر بعد.",
   "centerYearInvalid": "السنة غير صالحة",
-  "centerLateInvalid": "المدة لازم تكون من 0 إلى 180 دقيقة"
+  "centerLateInvalid": "المدة لازم تكون من 0 إلى 180 دقيقة",
+  "staffInviteTitle": "إضافة موظف",
+  "staffInviteName": "اسم الموظف",
+  "staffInviteRole": "الدور",
+  "staffRoleTeacher": "معلم",
+  "staffRoleAssistant": "مساعد",
+  "staffInvitePhone": "موبايل الموظف (اختياري، لإرسال الكود عبر واتساب)",
+  "staffInviteCreate": "إنشاء الكود",
+  "staffInviteReadyTitle": "تم إنشاء كود الدعوة",
+  "staffInviteCodeLabel": "كود الدعوة",
+  "staffInviteValidUntil": "صالح حتى {date}",
+  "@staffInviteValidUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "staffInviteNote": "الكود يُستخدم مرة واحدة فقط. بعد قبوله يصبح الموظف عضوًا في السنتر بالدور المحدد.",
+  "staffInviteCopy": "نسخ الكود",
+  "staffInviteCopied": "تم نسخ الكود",
+  "staffInviteWhatsapp": "إرسال عبر واتساب",
+  "staffInviteAnother": "إضافة موظف آخر",
+  "staffInviteMessage": "مرحبًا {name}، تمت دعوتك للانضمام إلى {center} بصفة {role} على تطبيق CenterNet.\nكود الدعوة: {code}\nالكود صالح لمدة 7 أيام ويُستخدم مرة واحدة. سجّل حسابك في التطبيق ثم أدخل الكود.",
+  "@staffInviteMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "center": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  }
 }

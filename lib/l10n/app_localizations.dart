@@ -525,6 +525,107 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'المدة لازم تكون من 0 إلى 180 دقيقة'**
   String get centerLateInvalid;
+
+  /// No description provided for @staffInviteTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة موظف'**
+  String get staffInviteTitle;
+
+  /// No description provided for @staffInviteName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم الموظف'**
+  String get staffInviteName;
+
+  /// No description provided for @staffInviteRole.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدور'**
+  String get staffInviteRole;
+
+  /// No description provided for @staffRoleTeacher.
+  ///
+  /// In ar, this message translates to:
+  /// **'معلم'**
+  String get staffRoleTeacher;
+
+  /// No description provided for @staffRoleAssistant.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد'**
+  String get staffRoleAssistant;
+
+  /// No description provided for @staffInvitePhone.
+  ///
+  /// In ar, this message translates to:
+  /// **'موبايل الموظف (اختياري، لإرسال الكود عبر واتساب)'**
+  String get staffInvitePhone;
+
+  /// No description provided for @staffInviteCreate.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء الكود'**
+  String get staffInviteCreate;
+
+  /// No description provided for @staffInviteReadyTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إنشاء كود الدعوة'**
+  String get staffInviteReadyTitle;
+
+  /// No description provided for @staffInviteCodeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود الدعوة'**
+  String get staffInviteCodeLabel;
+
+  /// No description provided for @staffInviteValidUntil.
+  ///
+  /// In ar, this message translates to:
+  /// **'صالح حتى {date}'**
+  String staffInviteValidUntil(String date);
+
+  /// No description provided for @staffInviteNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكود يُستخدم مرة واحدة فقط. بعد قبوله يصبح الموظف عضوًا في السنتر بالدور المحدد.'**
+  String get staffInviteNote;
+
+  /// No description provided for @staffInviteCopy.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسخ الكود'**
+  String get staffInviteCopy;
+
+  /// No description provided for @staffInviteCopied.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم نسخ الكود'**
+  String get staffInviteCopied;
+
+  /// No description provided for @staffInviteWhatsapp.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال عبر واتساب'**
+  String get staffInviteWhatsapp;
+
+  /// No description provided for @staffInviteAnother.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة موظف آخر'**
+  String get staffInviteAnother;
+
+  /// No description provided for @staffInviteMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرحبًا {name}، تمت دعوتك للانضمام إلى {center} بصفة {role} على تطبيق CenterNet.\nكود الدعوة: {code}\nالكود صالح لمدة 7 أيام ويُستخدم مرة واحدة. سجّل حسابك في التطبيق ثم أدخل الكود.'**
+  String staffInviteMessage(
+    String name,
+    String center,
+    String role,
+    String code,
+  );
 }
 
 class _AppLocalizationsDelegate
