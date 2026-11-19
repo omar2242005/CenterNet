@@ -776,6 +776,162 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'هل تريد إعادة تفعيل {name}؟'**
   String staffEnableMessage(String name);
+
+  /// No description provided for @scanTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسح الحضور'**
+  String get scanTitle;
+
+  /// No description provided for @scanTitleDemo.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسح الحضور (تجريبي)'**
+  String get scanTitleDemo;
+
+  /// No description provided for @scanHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'وجّه الكاميرا ناحية رمز الـ QR الخاص بالطالب'**
+  String get scanHint;
+
+  /// No description provided for @scanWaiting.
+  ///
+  /// In ar, this message translates to:
+  /// **'في انتظار مسح أول رمز'**
+  String get scanWaiting;
+
+  /// No description provided for @scanTorch.
+  ///
+  /// In ar, this message translates to:
+  /// **'الفلاش'**
+  String get scanTorch;
+
+  /// No description provided for @scanSwitchCamera.
+  ///
+  /// In ar, this message translates to:
+  /// **'تبديل الكاميرا'**
+  String get scanSwitchCamera;
+
+  /// No description provided for @scanPermissionDenied.
+  ///
+  /// In ar, this message translates to:
+  /// **'نحتاج إذن الكاميرا لمسح الحضور. فعّله من إعدادات الجهاز ثم ارجع للشاشة.'**
+  String get scanPermissionDenied;
+
+  /// No description provided for @scanCameraUnsupported.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكاميرا غير متاحة على هذا الجهاز'**
+  String get scanCameraUnsupported;
+
+  /// No description provided for @scanCameraError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تشغيل الكاميرا'**
+  String get scanCameraError;
+
+  /// No description provided for @scanRecordedPresent.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تسجيل حضور {student}'**
+  String scanRecordedPresent(String student);
+
+  /// No description provided for @scanRecordedLate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تسجيل {student} متأخرًا'**
+  String scanRecordedLate(String student);
+
+  /// No description provided for @scanAlreadyRegistered.
+  ///
+  /// In ar, this message translates to:
+  /// **'{student} مسجّل بالفعل'**
+  String scanAlreadyRegistered(String student);
+
+  /// No description provided for @scanVoidedBefore.
+  ///
+  /// In ar, this message translates to:
+  /// **'{student} ملغى سابقًا — راجع المصحح'**
+  String scanVoidedBefore(String student);
+
+  /// No description provided for @scanNotRegistered.
+  ///
+  /// In ar, this message translates to:
+  /// **'{student} غير مسجّل في مجموعة هذه الحصة'**
+  String scanNotRegistered(String student);
+
+  /// No description provided for @scanOtherCenter.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الرمز تابع لسنتر آخر'**
+  String get scanOtherCenter;
+
+  /// No description provided for @scanInvalidCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'رمز غير صالح'**
+  String get scanInvalidCode;
+
+  /// No description provided for @scanStorageError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر حفظ المسحة على الجهاز، حاول مرة أخرى'**
+  String get scanStorageError;
+
+  /// No description provided for @scanLocalListCorrupt.
+  ///
+  /// In ar, this message translates to:
+  /// **'قائمة المسحات المحلية تالفة، المسح متوقف'**
+  String get scanLocalListCorrupt;
+
+  /// No description provided for @scanCountPresent.
+  ///
+  /// In ar, this message translates to:
+  /// **'حاضر {count}'**
+  String scanCountPresent(int count);
+
+  /// No description provided for @scanCountLate.
+  ///
+  /// In ar, this message translates to:
+  /// **'متأخر {count}'**
+  String scanCountLate(int count);
+
+  /// No description provided for @scanCountRejected.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرفوض {count}'**
+  String scanCountRejected(int count);
+
+  /// No description provided for @scanPendingCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} بانتظار المزامنة'**
+  String scanPendingCount(int count);
+
+  /// No description provided for @scanDemoBanner.
+  ///
+  /// In ar, this message translates to:
+  /// **'نموذج أولي: بيانات تجريبية، والمسحات لا تُحفظ على الجهاز'**
+  String get scanDemoBanner;
+
+  /// No description provided for @scanManualTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إدخال يدوي للتجربة'**
+  String get scanManualTitle;
+
+  /// No description provided for @scanManualHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثال: demo:s1'**
+  String get scanManualHint;
+
+  /// No description provided for @scanManualSubmit.
+  ///
+  /// In ar, this message translates to:
+  /// **'تجربة الرمز'**
+  String get scanManualSubmit;
 }
 
 class _AppLocalizationsDelegate

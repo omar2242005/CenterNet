@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/attendance/attendance_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
 import '../features/staff/staff_module.dart';
@@ -18,6 +19,7 @@ final List<RouteBase> featureRoutes = <RouteBase>[
   ...centerRoutes,
   ...staffRoutes,
   // sessions / attendance (B)
+  ...attendanceRoutes,
   // students / linking / groups (C)
   // grades (D)
 ];
