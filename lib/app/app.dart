@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 
+import '../core/theme/app_theme.dart';
+import '../l10n/app_localizations.dart';
 import 'router.dart';
 
 /// جذر التطبيق: عربي وRTL. مفيش أي اعتماد على Firebase هنا عشان
@@ -32,12 +33,10 @@ class _CenterNetAppState extends State<CenterNetApp> {
     return MaterialApp.router(
       title: 'CenterNet',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-      ),
+      theme: AppTheme.light(),
       locale: _locale,
-      supportedLocales: const [_locale],
-      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       routerConfig: _router,
     );
   }

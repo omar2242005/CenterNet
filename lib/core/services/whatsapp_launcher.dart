@@ -1,6 +1,7 @@
 import 'package:url_launcher/url_launcher.dart';
 
 import '../errors/failure.dart';
+import '../utils/digits.dart';
 
 /// فتح واتساب برسالة جاهزة (دعوات الأكواد وإبلاغ ولي الأمر).
 ///
@@ -19,7 +20,7 @@ class WhatsAppLauncher {
   /// بيقبل 01012345678 و+201012345678 و00201012345678 وأرقام هندية
   /// ومسافات وشرطات. بيرجّع null لو مش موبايل مصري صالح.
   static String? toInternational(String phone) {
-    var p = _latinDigits(phone).replaceAll(RegExp(r'[\s\-().]'), '');
+    var p = toLatinDigits(phone).replaceAll(RegExp(r'[\s\-().]'), '');
     if (p.startsWith('+')) p = p.substring(1);
     if (p.startsWith('0020')) p = '0${p.substring(4)}';
     if (p.startsWith('20') && p.length == 12) p = '0${p.substring(2)}';
@@ -46,20 +47,5 @@ class WhatsAppLauncher {
         'تعذر فتح واتساب. تأكد إن التطبيق متثبّت.',
       );
     }
-  }
-
-  // نسخة صغيرة مؤقتة لحد ما utils بتاعة D تنزل (بعدها نستبدلها).
-  static String _latinDigits(String s) {
-    final b = StringBuffer();
-    for (final c in s.runes) {
-      if (c >= 0x0660 && c <= 0x0669) {
-        b.writeCharCode(0x30 + c - 0x0660);
-      } else if (c >= 0x06F0 && c <= 0x06F9) {
-        b.writeCharCode(0x30 + c - 0x06F0);
-      } else {
-        b.writeCharCode(c);
-      }
-    }
-    return b.toString();
   }
 }

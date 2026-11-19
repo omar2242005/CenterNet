@@ -1,0 +1,60 @@
+{
+  "@@locale": "ar",
+
+  "retry": "إعادة المحاولة",
+  "loading": "جارٍ التحميل",
+  "emptyDefault": "لا توجد بيانات لعرضها",
+  "confirm": "تأكيد",
+  "cancel": "إلغاء",
+  "searchHint": "بحث",
+  "clearSearch": "مسح البحث",
+  "showPassword": "إظهار كلمة السر",
+  "hidePassword": "إخفاء كلمة السر",
+  "qrSemantics": "رمز QR الخاص بالطالب",
+
+  "validationRequired": "هذا الحقل مطلوب",
+  "validationNameTooShort": "الاسم قصير جدًا",
+  "validationNameTooLong": "الاسم طويل جدًا",
+  "validationNameInvalid": "الاسم يجب أن يحتوي على حروف فقط",
+  "validationMobileInvalid": "رقم الموبايل غير صالح، مثال: 01012345678",
+  "validationEmailInvalid": "البريد الإلكتروني غير صالح",
+  "validationPasswordTooShort": "كلمة السر يجب ألا تقل عن 8 أحرف",
+  "validationScoreInvalid": "الدرجة غير صالحة",
+  "validationScoreOutOfRange": "الدرجة خارج النطاق المسموح",
+  "validationScoreStep": "الدرجة تُكتب بخطوة 0.5 فقط",
+
+  "currencyEgp": "{amount} ج.م",
+  "@currencyEgp": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+
+  "dateFull": "{day} {month} {year}",
+  "@dateFull": {
+    "placeholders": {
+      "day": {"type": "int"},
+      "month": {"type": "String"},
+      "year": {"type": "int"}
+    }
+  },
+
+  "monthName": "{month, select, m1{يناير} m2{فبراير} m3{مارس} m4{أبريل} m5{مايو} m6{يونيو} m7{يوليو} m8{أغسطس} m9{سبتمبر} m10{أكتوبر} m11{نوفمبر} other{ديسمبر}}",
+  "@monthName": {
+    "description": "اسم الشهر. القيمة m1..m12، وأي قيمة تانية بترجّع ديسمبر.",
+    "placeholders": {
+      "month": {"type": "String"}
+    }
+  },
+
+  "timeFormat": "{hour}:{minute} {period}",
+  "@timeFormat": {
+    "placeholders": {
+      "hour": {"type": "String"},
+      "minute": {"type": "String"},
+      "period": {"type": "String"}
+    }
+  },
+  "am": "ص",
+  "pm": "م"
+}
