@@ -459,6 +459,150 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أنت مسجل الدخول بالحساب {email}.'**
   String authSignedInBody(String email);
+
+  /// No description provided for @centersCreateTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء مركز'**
+  String get centersCreateTitle;
+
+  /// No description provided for @centersCreateIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنشئ مركزك لتبدأ بإدارة الطلاب والحضور. ستصبح مدير المركز تلقائيًا.'**
+  String get centersCreateIntro;
+
+  /// No description provided for @centersNameLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم المركز'**
+  String get centersNameLabel;
+
+  /// No description provided for @centersYearLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'السنة الدراسية'**
+  String get centersYearLabel;
+
+  /// No description provided for @centersYearHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثال: 2026'**
+  String get centersYearHint;
+
+  /// No description provided for @centersCreateButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء المركز'**
+  String get centersCreateButton;
+
+  /// No description provided for @centersNameTooShort.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم المركز قصير جدًا'**
+  String get centersNameTooShort;
+
+  /// No description provided for @centersNameTooLong.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم المركز طويل جدًا (80 حرفًا كحد أقصى)'**
+  String get centersNameTooLong;
+
+  /// No description provided for @centersYearInvalid.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب السنة بأربعة أرقام بين 2000 و2100'**
+  String get centersYearInvalid;
+
+  /// No description provided for @centersLateInvalid.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب عدد دقائق صحيحًا من 0 إلى 180'**
+  String get centersLateInvalid;
+
+  /// No description provided for @centersSettingsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعدادات المركز'**
+  String get centersSettingsTitle;
+
+  /// No description provided for @centersLateLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدة التأخير (بالدقائق)'**
+  String get centersLateLabel;
+
+  /// No description provided for @centersLateHelp.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطالب الذي يصل بعد هذه المدة من بداية الحصة يُسجَّل متأخرًا.'**
+  String get centersLateHelp;
+
+  /// No description provided for @centersSaveButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ التعديلات'**
+  String get centersSaveButton;
+
+  /// No description provided for @centersSaved.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم حفظ الإعدادات'**
+  String get centersSaved;
+
+  /// No description provided for @centersAdminOnly.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذه الشاشة لمدير المركز فقط'**
+  String get centersAdminOnly;
+
+  /// No description provided for @centersEntryTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المركز'**
+  String get centersEntryTitle;
+
+  /// No description provided for @centersNoCenter.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تنضم إلى مركز بعد'**
+  String get centersNoCenter;
+
+  /// No description provided for @centersCreateCta.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء مركز جديد'**
+  String get centersCreateCta;
+
+  /// No description provided for @centersOpenSettings.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعدادات المركز'**
+  String get centersOpenSettings;
+
+  /// No description provided for @centersRoleAdmin.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدير المركز'**
+  String get centersRoleAdmin;
+
+  /// No description provided for @centersRoleTeacher.
+  ///
+  /// In ar, this message translates to:
+  /// **'معلم'**
+  String get centersRoleTeacher;
+
+  /// No description provided for @centersRoleAssistant.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد'**
+  String get centersRoleAssistant;
+
+  /// No description provided for @centersRoleLine.
+  ///
+  /// In ar, this message translates to:
+  /// **'دورك: {role}'**
+  String centersRoleLine(String role);
 }
 
 class _AppLocalizationsDelegate

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/auth/auth_module.dart';
+import '../features/centers/centers_module.dart';
 
 /// أسماء المسارات في مكان واحد.
 abstract final class AppRoutes {
@@ -13,6 +14,7 @@ abstract final class AppRoutes {
 final List<RouteBase> featureRoutes = <RouteBase>[
   // auth / centers / staff (A)
   ...authRoutes,
+  ...centersRoutes,
   // sessions / attendance (B)
   // students / linking / groups (C)
   // grades (D)

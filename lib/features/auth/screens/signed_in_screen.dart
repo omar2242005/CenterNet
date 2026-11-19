@@ -8,6 +8,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../centers/screens/center_entry_card.dart';
 import '../auth_route_names.dart';
 import '../repository/auth_repository.dart';
 import 'auth_page.dart';
@@ -56,6 +57,9 @@ class SignedInScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(l10n.authSignedInBody(email)),
+          const SizedBox(height: AppSpacing.lg),
+          // مؤقت لحد خطوة 3.5: دخول لإنشاء السنتر وإعداداته.
+          const CenterEntryCard(),
           const SizedBox(height: AppSpacing.lg),
           AppButton(
             label: l10n.authSignOut,

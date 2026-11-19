@@ -222,4 +222,80 @@ class AppLocalizationsAr extends AppLocalizations {
   String authSignedInBody(String email) {
     return 'أنت مسجل الدخول بالحساب $email.';
   }
+
+  @override
+  String get centersCreateTitle => 'إنشاء مركز';
+
+  @override
+  String get centersCreateIntro =>
+      'أنشئ مركزك لتبدأ بإدارة الطلاب والحضور. ستصبح مدير المركز تلقائيًا.';
+
+  @override
+  String get centersNameLabel => 'اسم المركز';
+
+  @override
+  String get centersYearLabel => 'السنة الدراسية';
+
+  @override
+  String get centersYearHint => 'مثال: 2026';
+
+  @override
+  String get centersCreateButton => 'إنشاء المركز';
+
+  @override
+  String get centersNameTooShort => 'اسم المركز قصير جدًا';
+
+  @override
+  String get centersNameTooLong => 'اسم المركز طويل جدًا (80 حرفًا كحد أقصى)';
+
+  @override
+  String get centersYearInvalid => 'اكتب السنة بأربعة أرقام بين 2000 و2100';
+
+  @override
+  String get centersLateInvalid => 'اكتب عدد دقائق صحيحًا من 0 إلى 180';
+
+  @override
+  String get centersSettingsTitle => 'إعدادات المركز';
+
+  @override
+  String get centersLateLabel => 'مدة التأخير (بالدقائق)';
+
+  @override
+  String get centersLateHelp =>
+      'الطالب الذي يصل بعد هذه المدة من بداية الحصة يُسجَّل متأخرًا.';
+
+  @override
+  String get centersSaveButton => 'حفظ التعديلات';
+
+  @override
+  String get centersSaved => 'تم حفظ الإعدادات';
+
+  @override
+  String get centersAdminOnly => 'هذه الشاشة لمدير المركز فقط';
+
+  @override
+  String get centersEntryTitle => 'المركز';
+
+  @override
+  String get centersNoCenter => 'لم تنضم إلى مركز بعد';
+
+  @override
+  String get centersCreateCta => 'إنشاء مركز جديد';
+
+  @override
+  String get centersOpenSettings => 'إعدادات المركز';
+
+  @override
+  String get centersRoleAdmin => 'مدير المركز';
+
+  @override
+  String get centersRoleTeacher => 'معلم';
+
+  @override
+  String get centersRoleAssistant => 'مساعد';
+
+  @override
+  String centersRoleLine(String role) {
+    return 'دورك: $role';
+  }
 }

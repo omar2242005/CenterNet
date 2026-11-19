@@ -115,5 +115,36 @@
         "type": "String"
       }
     }
+  },
+  "centersCreateTitle": "إنشاء مركز",
+  "centersCreateIntro": "أنشئ مركزك لتبدأ بإدارة الطلاب والحضور. ستصبح مدير المركز تلقائيًا.",
+  "centersNameLabel": "اسم المركز",
+  "centersYearLabel": "السنة الدراسية",
+  "centersYearHint": "مثال: 2026",
+  "centersCreateButton": "إنشاء المركز",
+  "centersNameTooShort": "اسم المركز قصير جدًا",
+  "centersNameTooLong": "اسم المركز طويل جدًا (80 حرفًا كحد أقصى)",
+  "centersYearInvalid": "اكتب السنة بأربعة أرقام بين 2000 و2100",
+  "centersLateInvalid": "اكتب عدد دقائق صحيحًا من 0 إلى 180",
+  "centersSettingsTitle": "إعدادات المركز",
+  "centersLateLabel": "مدة التأخير (بالدقائق)",
+  "centersLateHelp": "الطالب الذي يصل بعد هذه المدة من بداية الحصة يُسجَّل متأخرًا.",
+  "centersSaveButton": "حفظ التعديلات",
+  "centersSaved": "تم حفظ الإعدادات",
+  "centersAdminOnly": "هذه الشاشة لمدير المركز فقط",
+  "centersEntryTitle": "المركز",
+  "centersNoCenter": "لم تنضم إلى مركز بعد",
+  "centersCreateCta": "إنشاء مركز جديد",
+  "centersOpenSettings": "إعدادات المركز",
+  "centersRoleAdmin": "مدير المركز",
+  "centersRoleTeacher": "معلم",
+  "centersRoleAssistant": "مساعد",
+  "centersRoleLine": "دورك: {role}",
+  "@centersRoleLine": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
   }
 }
