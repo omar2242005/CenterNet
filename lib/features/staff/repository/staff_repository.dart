@@ -7,8 +7,11 @@ import '../../../core/firestore_paths.dart';
 import '../../../core/utils/link_code_generator.dart';
 import '../../linking/models/invite_code.dart';
 import '../models/staff_invite_issued.dart';
+import '../models/staff_member.dart';
+import '../models/staff_roster.dart';
 
-/// دعوة الموظفين بكود (جانب الأدمن): إنشاء كود موظف.
+/// إدارة الموظفين (جانب الأدمن): إنشاء كود دعوة، وعرض الموظفين،
+/// وتغيير الدور، وتعطيل/تفعيل العضو.
 ///
 /// الـ Rules هي الحكم: لو المستخدم مش أدمن في السنتر الكتابة بتترفض
 /// ويتحوّل الرفض لـ [Failure.permission].
@@ -80,5 +83,83 @@ class StaffRepository {
       }
       throw const Failure.unknown();
     });
+  }
+
+  /// بيحمّل أعضاء سنتر الأدمن الحالي (من السيرفر، عشان القائمة متبقاش قديمة).
+  ///
+  /// `users/{uid}.centerId` للتوجيه بس. الصلاحية الحقيقية من الـ Rules:
+  /// قراءة القائمة لأعضاء السنتر النشطين بس.
+  Future<StaffRoster> loadStaff() {
+    return ErrorMapper.guard(() async {
+      final uid = _requireUid();
+      final centerId = await _myCenterId(uid);
+
+      final snap = await _db
+          .collection(FirestorePaths.members(centerId))
+          .get(const GetOptions(source: Source.server))
+          .timeout(createTimeout);
+
+      final members = <StaffMember>[];
+      for (final doc in snap.docs) {
+        try {
+          members.add(StaffMember.fromMap(doc.id, doc.data()));
+        } on FormatException {
+          // الـ Rules بتفرض شكل مستند العضو، فالحالة دي مش متوقعة.
+          // بنتخطى المستند التالف بدل ما نوقّع الشاشة كلها.
+          continue;
+        }
+      }
+      members.sort(StaffRoster.compare);
+      return StaffRoster(centerId: centerId, members: members);
+    });
+  }
+
+  /// بيبدّل دور موظف (معلم أو مساعد بس. مفيش ترقية لأدمن).
+  Future<void> changeRole({
+    required String centerId,
+    required String uid,
+    required StaffInviteRole role,
+  }) {
+    return ErrorMapper.guard(() async {
+      _guardNotSelf(uid, 'لا يمكنك تغيير دورك أنت.');
+      await _db
+          .doc(FirestorePaths.member(centerId, uid))
+          .update(<String, dynamic>{'role': role.wire}).timeout(createTimeout);
+    });
+  }
+
+  /// بيعطّل الموظف (`active=false`) أو بيرجّع تفعيله. مفيش حذف.
+  Future<void> setActive({
+    required String centerId,
+    required String uid,
+    required bool active,
+  }) {
+    return ErrorMapper.guard(() async {
+      _guardNotSelf(uid, 'لا يمكنك تعطيل حسابك أنت.');
+      await _db
+          .doc(FirestorePaths.member(centerId, uid))
+          .update(<String, dynamic>{'active': active}).timeout(createTimeout);
+    });
+  }
+
+  String _requireUid() {
+    final uid = _auth.currentUser?.uid;
+    if (uid == null) throw const Failure.permission();
+    return uid;
+  }
+
+  void _guardNotSelf(String targetUid, String message) {
+    if (_requireUid() == targetUid) throw Failure.validation(message);
+  }
+
+  Future<String> _myCenterId(String uid) async {
+    final userSnap = await _db.doc(FirestorePaths.user(uid)).get();
+    final centerId = userSnap.data()?['centerId'];
+    if (centerId is! String) {
+      throw const Failure.notFound(
+        message: 'أنشئ سنتر أولًا قبل إدارة الموظفين.',
+      );
+    }
+    return centerId;
   }
 }

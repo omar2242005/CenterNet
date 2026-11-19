@@ -72,6 +72,12 @@ class SignedInScreen extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           AppButton(
+            label: l10n.staffListTitle,
+            variant: AppButtonVariant.secondary,
+            onPressed: () => context.push(StaffRoutes.list),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          AppButton(
             label: l10n.staffInviteTitle,
             variant: AppButtonVariant.secondary,
             onPressed: () => context.push(StaffRoutes.invite),

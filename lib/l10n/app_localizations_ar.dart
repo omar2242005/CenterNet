@@ -328,7 +328,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffJoinCodeLabel => 'كود الدعوة';
 
   @override
-  String get staffJoinCodeInvalid => 'الكود يتكون من 8 رموز (حروف إنجليزية وأرقام)';
+  String get staffJoinCodeInvalid =>
+      'الكود يتكون من 8 رموز (حروف إنجليزية وأرقام)';
 
   @override
   String get staffJoinButton => 'انضمام';
@@ -343,4 +344,60 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get staffJoinContinue => 'متابعة';
+
+  @override
+  String get staffListTitle => 'الموظفون';
+
+  @override
+  String get staffListEmpty => 'لا يوجد موظفون';
+
+  @override
+  String get staffRoleAdmin => 'مدير';
+
+  @override
+  String get staffStatusActive => 'نشط';
+
+  @override
+  String get staffStatusDisabled => 'معطّل';
+
+  @override
+  String get staffMenuTooltip => 'خيارات الموظف';
+
+  @override
+  String staffActionChangeRoleTo(String role) {
+    return 'تغيير الدور إلى $role';
+  }
+
+  @override
+  String get staffActionDisable => 'تعطيل';
+
+  @override
+  String get staffActionEnable => 'تفعيل';
+
+  @override
+  String get staffChangeRoleTitle => 'تغيير دور الموظف';
+
+  @override
+  String staffChangeRoleMessage(String name, String role) {
+    return 'هل تريد تغيير دور $name إلى $role؟';
+  }
+
+  @override
+  String get staffChangeRoleConfirm => 'تغيير';
+
+  @override
+  String get staffDisableTitle => 'تعطيل الموظف';
+
+  @override
+  String staffDisableMessage(String name) {
+    return '$name لن يتمكن من استخدام السنتر حتى تعيد تفعيله. هل تريد المتابعة؟';
+  }
+
+  @override
+  String get staffEnableTitle => 'تفعيل الموظف';
+
+  @override
+  String staffEnableMessage(String name) {
+    return 'هل تريد إعادة تفعيل $name؟';
+  }
 }
