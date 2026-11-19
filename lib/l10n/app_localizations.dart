@@ -680,6 +680,102 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'متابعة'**
   String get staffJoinContinue;
+
+  /// No description provided for @staffListTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموظفون'**
+  String get staffListTitle;
+
+  /// No description provided for @staffListEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد موظفون'**
+  String get staffListEmpty;
+
+  /// No description provided for @staffRoleAdmin.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدير'**
+  String get staffRoleAdmin;
+
+  /// No description provided for @staffStatusActive.
+  ///
+  /// In ar, this message translates to:
+  /// **'نشط'**
+  String get staffStatusActive;
+
+  /// No description provided for @staffStatusDisabled.
+  ///
+  /// In ar, this message translates to:
+  /// **'معطّل'**
+  String get staffStatusDisabled;
+
+  /// No description provided for @staffMenuTooltip.
+  ///
+  /// In ar, this message translates to:
+  /// **'خيارات الموظف'**
+  String get staffMenuTooltip;
+
+  /// No description provided for @staffActionChangeRoleTo.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير الدور إلى {role}'**
+  String staffActionChangeRoleTo(String role);
+
+  /// No description provided for @staffActionDisable.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعطيل'**
+  String get staffActionDisable;
+
+  /// No description provided for @staffActionEnable.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفعيل'**
+  String get staffActionEnable;
+
+  /// No description provided for @staffChangeRoleTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير دور الموظف'**
+  String get staffChangeRoleTitle;
+
+  /// No description provided for @staffChangeRoleMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل تريد تغيير دور {name} إلى {role}؟'**
+  String staffChangeRoleMessage(String name, String role);
+
+  /// No description provided for @staffChangeRoleConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير'**
+  String get staffChangeRoleConfirm;
+
+  /// No description provided for @staffDisableTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعطيل الموظف'**
+  String get staffDisableTitle;
+
+  /// No description provided for @staffDisableMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'{name} لن يتمكن من استخدام السنتر حتى تعيد تفعيله. هل تريد المتابعة؟'**
+  String staffDisableMessage(String name);
+
+  /// No description provided for @staffEnableTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفعيل الموظف'**
+  String get staffEnableTitle;
+
+  /// No description provided for @staffEnableMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل تريد إعادة تفعيل {name}؟'**
+  String staffEnableMessage(String name);
 }
 
 class _AppLocalizationsDelegate

@@ -7,6 +7,7 @@ import 'repository/staff_join_repository.dart';
 import 'repository/staff_repository.dart';
 import 'screens/staff_invite_screen.dart';
 import 'screens/staff_join_screen.dart';
+import 'screens/staff_list_screen.dart';
 import 'staff_route_names.dart';
 
 /// سطر الـ DI بتاع الـ feature.
@@ -21,6 +22,10 @@ void registerStaff(GetIt g) {
 
 /// سطر الـ router بتاع الـ feature.
 final List<RouteBase> staffRoutes = <RouteBase>[
+  GoRoute(
+    path: StaffRoutes.list,
+    builder: (context, state) => const StaffListScreen(),
+  ),
   GoRoute(
     path: StaffRoutes.invite,
     builder: (context, state) => const StaffInviteScreen(),

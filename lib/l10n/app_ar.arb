@@ -184,5 +184,52 @@
       }
     }
   },
-  "staffJoinContinue": "متابعة"
+  "staffJoinContinue": "متابعة",
+  "staffListTitle": "الموظفون",
+  "staffListEmpty": "لا يوجد موظفون",
+  "staffRoleAdmin": "مدير",
+  "staffStatusActive": "نشط",
+  "staffStatusDisabled": "معطّل",
+  "staffMenuTooltip": "خيارات الموظف",
+  "staffActionChangeRoleTo": "تغيير الدور إلى {role}",
+  "@staffActionChangeRoleTo": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "staffActionDisable": "تعطيل",
+  "staffActionEnable": "تفعيل",
+  "staffChangeRoleTitle": "تغيير دور الموظف",
+  "staffChangeRoleMessage": "هل تريد تغيير دور {name} إلى {role}؟",
+  "@staffChangeRoleMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "staffChangeRoleConfirm": "تغيير",
+  "staffDisableTitle": "تعطيل الموظف",
+  "staffDisableMessage": "{name} لن يتمكن من استخدام السنتر حتى تعيد تفعيله. هل تريد المتابعة؟",
+  "@staffDisableMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "staffEnableTitle": "تفعيل الموظف",
+  "staffEnableMessage": "هل تريد إعادة تفعيل {name}؟",
+  "@staffEnableMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }
