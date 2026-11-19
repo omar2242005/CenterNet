@@ -8,6 +8,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../attendance/attendance_route_names.dart';
 import '../../centers/center_route_names.dart';
 import '../../staff/staff_route_names.dart';
 import '../auth_route_names.dart';
@@ -87,6 +88,13 @@ class SignedInScreen extends StatelessWidget {
             label: l10n.staffJoinEntry,
             variant: AppButtonVariant.secondary,
             onPressed: () => context.push(StaffRoutes.join),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          // مؤقت لحد ما تتبني رئيسية المساعد (B).
+          AppButton(
+            label: l10n.scanTitleDemo,
+            variant: AppButtonVariant.secondary,
+            onPressed: () => context.push(AttendanceRoutes.scan),
           ),
           const SizedBox(height: AppSpacing.sm),
           AppButton(

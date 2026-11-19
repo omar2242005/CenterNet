@@ -400,4 +400,102 @@ class AppLocalizationsAr extends AppLocalizations {
   String staffEnableMessage(String name) {
     return 'هل تريد إعادة تفعيل $name؟';
   }
+
+  @override
+  String get scanTitle => 'مسح الحضور';
+
+  @override
+  String get scanTitleDemo => 'مسح الحضور (تجريبي)';
+
+  @override
+  String get scanHint => 'وجّه الكاميرا ناحية رمز الـ QR الخاص بالطالب';
+
+  @override
+  String get scanWaiting => 'في انتظار مسح أول رمز';
+
+  @override
+  String get scanTorch => 'الفلاش';
+
+  @override
+  String get scanSwitchCamera => 'تبديل الكاميرا';
+
+  @override
+  String get scanPermissionDenied =>
+      'نحتاج إذن الكاميرا لمسح الحضور. فعّله من إعدادات الجهاز ثم ارجع للشاشة.';
+
+  @override
+  String get scanCameraUnsupported => 'الكاميرا غير متاحة على هذا الجهاز';
+
+  @override
+  String get scanCameraError => 'تعذّر تشغيل الكاميرا';
+
+  @override
+  String scanRecordedPresent(String student) {
+    return 'تم تسجيل حضور $student';
+  }
+
+  @override
+  String scanRecordedLate(String student) {
+    return 'تم تسجيل $student متأخرًا';
+  }
+
+  @override
+  String scanAlreadyRegistered(String student) {
+    return '$student مسجّل بالفعل';
+  }
+
+  @override
+  String scanVoidedBefore(String student) {
+    return '$student ملغى سابقًا — راجع المصحح';
+  }
+
+  @override
+  String scanNotRegistered(String student) {
+    return '$student غير مسجّل في مجموعة هذه الحصة';
+  }
+
+  @override
+  String get scanOtherCenter => 'هذا الرمز تابع لسنتر آخر';
+
+  @override
+  String get scanInvalidCode => 'رمز غير صالح';
+
+  @override
+  String get scanStorageError => 'تعذّر حفظ المسحة على الجهاز، حاول مرة أخرى';
+
+  @override
+  String get scanLocalListCorrupt => 'قائمة المسحات المحلية تالفة، المسح متوقف';
+
+  @override
+  String scanCountPresent(int count) {
+    return 'حاضر $count';
+  }
+
+  @override
+  String scanCountLate(int count) {
+    return 'متأخر $count';
+  }
+
+  @override
+  String scanCountRejected(int count) {
+    return 'مرفوض $count';
+  }
+
+  @override
+  String scanPendingCount(int count) {
+    return '$count بانتظار المزامنة';
+  }
+
+  @override
+  String get scanDemoBanner =>
+      'نموذج أولي: بيانات تجريبية، والمسحات لا تُحفظ على الجهاز';
+
+  @override
+  String get scanManualTitle => 'إدخال يدوي للتجربة';
+
+  @override
+  String get scanManualHint => 'مثال: demo:s1';
+
+  @override
+  String get scanManualSubmit => 'تجربة الرمز';
 }

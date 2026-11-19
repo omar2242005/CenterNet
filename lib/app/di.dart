@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import '../core/services/local_store.dart';
 import '../core/services/pending_ops_guard.dart';
 import '../core/services/whatsapp_launcher.dart';
+import '../features/attendance/attendance_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
 import '../features/staff/staff_module.dart';
@@ -37,6 +38,7 @@ void registerFeatures(GetIt g) {
   registerCenters(g);
   registerStaff(g);
   // sessions / attendance (B)
+  registerAttendance(g);
   // students / linking / groups (C)
   // grades (D)
 }

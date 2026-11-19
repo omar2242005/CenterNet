@@ -231,5 +231,94 @@
         "type": "String"
       }
     }
-  }
+  },
+  "scanTitle": "مسح الحضور",
+  "scanTitleDemo": "مسح الحضور (تجريبي)",
+  "scanHint": "وجّه الكاميرا ناحية رمز الـ QR الخاص بالطالب",
+  "scanWaiting": "في انتظار مسح أول رمز",
+  "scanTorch": "الفلاش",
+  "scanSwitchCamera": "تبديل الكاميرا",
+  "scanPermissionDenied": "نحتاج إذن الكاميرا لمسح الحضور. فعّله من إعدادات الجهاز ثم ارجع للشاشة.",
+  "scanCameraUnsupported": "الكاميرا غير متاحة على هذا الجهاز",
+  "scanCameraError": "تعذّر تشغيل الكاميرا",
+  "scanRecordedPresent": "تم تسجيل حضور {student}",
+  "@scanRecordedPresent": {
+    "placeholders": {
+      "student": {
+        "type": "String"
+      }
+    }
+  },
+  "scanRecordedLate": "تم تسجيل {student} متأخرًا",
+  "@scanRecordedLate": {
+    "placeholders": {
+      "student": {
+        "type": "String"
+      }
+    }
+  },
+  "scanAlreadyRegistered": "{student} مسجّل بالفعل",
+  "@scanAlreadyRegistered": {
+    "placeholders": {
+      "student": {
+        "type": "String"
+      }
+    }
+  },
+  "scanVoidedBefore": "{student} ملغى سابقًا — راجع المصحح",
+  "@scanVoidedBefore": {
+    "placeholders": {
+      "student": {
+        "type": "String"
+      }
+    }
+  },
+  "scanNotRegistered": "{student} غير مسجّل في مجموعة هذه الحصة",
+  "@scanNotRegistered": {
+    "placeholders": {
+      "student": {
+        "type": "String"
+      }
+    }
+  },
+  "scanOtherCenter": "هذا الرمز تابع لسنتر آخر",
+  "scanInvalidCode": "رمز غير صالح",
+  "scanStorageError": "تعذّر حفظ المسحة على الجهاز، حاول مرة أخرى",
+  "scanLocalListCorrupt": "قائمة المسحات المحلية تالفة، المسح متوقف",
+  "scanCountPresent": "حاضر {count}",
+  "@scanCountPresent": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scanCountLate": "متأخر {count}",
+  "@scanCountLate": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scanCountRejected": "مرفوض {count}",
+  "@scanCountRejected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scanPendingCount": "{count} بانتظار المزامنة",
+  "@scanPendingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scanDemoBanner": "نموذج أولي: بيانات تجريبية، والمسحات لا تُحفظ على الجهاز",
+  "scanManualTitle": "إدخال يدوي للتجربة",
+  "scanManualHint": "مثال: demo:s1",
+  "scanManualSubmit": "تجربة الرمز"
 }
