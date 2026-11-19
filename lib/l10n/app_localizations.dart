@@ -459,6 +459,72 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أنت مسجل الدخول بالحساب {email}.'**
   String authSignedInBody(String email);
+
+  /// No description provided for @centerCreateTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء سنتر'**
+  String get centerCreateTitle;
+
+  /// No description provided for @centerCreateButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء السنتر'**
+  String get centerCreateButton;
+
+  /// No description provided for @centerSettingsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعدادات السنتر'**
+  String get centerSettingsTitle;
+
+  /// No description provided for @centerName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم السنتر'**
+  String get centerName;
+
+  /// No description provided for @centerYear.
+  ///
+  /// In ar, this message translates to:
+  /// **'السنة الدراسية'**
+  String get centerYear;
+
+  /// No description provided for @centerLateAfter.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدة التأخير (بالدقائق)'**
+  String get centerLateAfter;
+
+  /// No description provided for @centerSave.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ'**
+  String get centerSave;
+
+  /// No description provided for @centerSaved.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم حفظ الإعدادات.'**
+  String get centerSaved;
+
+  /// No description provided for @centerNone.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليس لديك سنتر بعد.'**
+  String get centerNone;
+
+  /// No description provided for @centerYearInvalid.
+  ///
+  /// In ar, this message translates to:
+  /// **'السنة غير صالحة'**
+  String get centerYearInvalid;
+
+  /// No description provided for @centerLateInvalid.
+  ///
+  /// In ar, this message translates to:
+  /// **'المدة لازم تكون من 0 إلى 180 دقيقة'**
+  String get centerLateInvalid;
 }
 
 class _AppLocalizationsDelegate

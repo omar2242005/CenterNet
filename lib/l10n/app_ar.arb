@@ -115,5 +115,16 @@
         "type": "String"
       }
     }
-  }
+  },
+  "centerCreateTitle": "إنشاء سنتر",
+  "centerCreateButton": "إنشاء السنتر",
+  "centerSettingsTitle": "إعدادات السنتر",
+  "centerName": "اسم السنتر",
+  "centerYear": "السنة الدراسية",
+  "centerLateAfter": "مدة التأخير (بالدقائق)",
+  "centerSave": "حفظ",
+  "centerSaved": "تم حفظ الإعدادات.",
+  "centerNone": "ليس لديك سنتر بعد.",
+  "centerYearInvalid": "السنة غير صالحة",
+  "centerLateInvalid": "المدة لازم تكون من 0 إلى 180 دقيقة"
 }

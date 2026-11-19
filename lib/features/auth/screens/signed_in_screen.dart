@@ -8,6 +8,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../centers/center_route_names.dart';
 import '../auth_route_names.dart';
 import '../repository/auth_repository.dart';
 import 'auth_page.dart';
@@ -57,6 +58,18 @@ class SignedInScreen extends StatelessWidget {
         children: [
           Text(l10n.authSignedInBody(email)),
           const SizedBox(height: AppSpacing.lg),
+          // مؤقتة لحد 3.5 (التوجيه حسب الدور).
+          AppButton(
+            label: l10n.centerCreateTitle,
+            onPressed: () => context.push(CenterRoutes.create),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          AppButton(
+            label: l10n.centerSettingsTitle,
+            variant: AppButtonVariant.secondary,
+            onPressed: () => context.push(CenterRoutes.settings),
+          ),
+          const SizedBox(height: AppSpacing.sm),
           AppButton(
             label: l10n.authSignOut,
             variant: AppButtonVariant.secondary,

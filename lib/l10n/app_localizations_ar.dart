@@ -222,4 +222,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String authSignedInBody(String email) {
     return 'أنت مسجل الدخول بالحساب $email.';
   }
+
+  @override
+  String get centerCreateTitle => 'إنشاء سنتر';
+
+  @override
+  String get centerCreateButton => 'إنشاء السنتر';
+
+  @override
+  String get centerSettingsTitle => 'إعدادات السنتر';
+
+  @override
+  String get centerName => 'اسم السنتر';
+
+  @override
+  String get centerYear => 'السنة الدراسية';
+
+  @override
+  String get centerLateAfter => 'مدة التأخير (بالدقائق)';
+
+  @override
+  String get centerSave => 'حفظ';
+
+  @override
+  String get centerSaved => 'تم حفظ الإعدادات.';
+
+  @override
+  String get centerNone => 'ليس لديك سنتر بعد.';
+
+  @override
+  String get centerYearInvalid => 'السنة غير صالحة';
+
+  @override
+  String get centerLateInvalid => 'المدة لازم تكون من 0 إلى 180 دقيقة';
 }
