@@ -314,4 +314,33 @@ class AppLocalizationsAr extends AppLocalizations {
   ) {
     return 'مرحبًا $name، تمت دعوتك للانضمام إلى $center بصفة $role على تطبيق CenterNet.\nكود الدعوة: $code\nالكود صالح لمدة 7 أيام ويُستخدم مرة واحدة. سجّل حسابك في التطبيق ثم أدخل الكود.';
   }
+
+  @override
+  String get staffJoinEntry => 'لدي كود دعوة';
+
+  @override
+  String get staffJoinTitle => 'الانضمام بكود دعوة';
+
+  @override
+  String get staffJoinIntro => 'اكتب كود الدعوة اللي وصلك من مدير السنتر.';
+
+  @override
+  String get staffJoinCodeLabel => 'كود الدعوة';
+
+  @override
+  String get staffJoinCodeInvalid => 'الكود يتكون من 8 رموز (حروف إنجليزية وأرقام)';
+
+  @override
+  String get staffJoinButton => 'انضمام';
+
+  @override
+  String get staffJoinSuccessTitle => 'تم الانضمام بنجاح';
+
+  @override
+  String staffJoinSuccessBody(String center, String role) {
+    return 'أصبحت عضوًا في $center بصفة $role.';
+  }
+
+  @override
+  String get staffJoinContinue => 'متابعة';
 }

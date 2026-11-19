@@ -626,6 +626,60 @@ abstract class AppLocalizations {
     String role,
     String code,
   );
+
+  /// No description provided for @staffJoinEntry.
+  ///
+  /// In ar, this message translates to:
+  /// **'لدي كود دعوة'**
+  String get staffJoinEntry;
+
+  /// No description provided for @staffJoinTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الانضمام بكود دعوة'**
+  String get staffJoinTitle;
+
+  /// No description provided for @staffJoinIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب كود الدعوة اللي وصلك من مدير السنتر.'**
+  String get staffJoinIntro;
+
+  /// No description provided for @staffJoinCodeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود الدعوة'**
+  String get staffJoinCodeLabel;
+
+  /// No description provided for @staffJoinCodeInvalid.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكود يتكون من 8 رموز (حروف إنجليزية وأرقام)'**
+  String get staffJoinCodeInvalid;
+
+  /// No description provided for @staffJoinButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'انضمام'**
+  String get staffJoinButton;
+
+  /// No description provided for @staffJoinSuccessTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الانضمام بنجاح'**
+  String get staffJoinSuccessTitle;
+
+  /// No description provided for @staffJoinSuccessBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'أصبحت عضوًا في {center} بصفة {role}.'**
+  String staffJoinSuccessBody(String center, String role);
+
+  /// No description provided for @staffJoinContinue.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get staffJoinContinue;
 }
 
 class _AppLocalizationsDelegate

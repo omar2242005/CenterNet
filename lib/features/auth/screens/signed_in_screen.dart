@@ -78,6 +78,12 @@ class SignedInScreen extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           AppButton(
+            label: l10n.staffJoinEntry,
+            variant: AppButtonVariant.secondary,
+            onPressed: () => context.push(StaffRoutes.join),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          AppButton(
             label: l10n.authSignOut,
             variant: AppButtonVariant.secondary,
             onPressed: () => _signOut(context),

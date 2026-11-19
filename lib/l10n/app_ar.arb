@@ -165,5 +165,24 @@
         "type": "String"
       }
     }
-  }
+  },
+  "staffJoinEntry": "لدي كود دعوة",
+  "staffJoinTitle": "الانضمام بكود دعوة",
+  "staffJoinIntro": "اكتب كود الدعوة اللي وصلك من مدير السنتر.",
+  "staffJoinCodeLabel": "كود الدعوة",
+  "staffJoinCodeInvalid": "الكود يتكون من 8 رموز (حروف إنجليزية وأرقام)",
+  "staffJoinButton": "انضمام",
+  "staffJoinSuccessTitle": "تم الانضمام بنجاح",
+  "staffJoinSuccessBody": "أصبحت عضوًا في {center} بصفة {role}.",
+  "@staffJoinSuccessBody": {
+    "placeholders": {
+      "center": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "staffJoinContinue": "متابعة"
 }
