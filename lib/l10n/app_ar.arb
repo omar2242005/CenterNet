@@ -1,6 +1,5 @@
 {
   "@@locale": "ar",
-
   "retry": "إعادة المحاولة",
   "loading": "جارٍ التحميل",
   "emptyDefault": "لا توجد بيانات لعرضها",
@@ -11,7 +10,6 @@
   "showPassword": "إظهار كلمة السر",
   "hidePassword": "إخفاء كلمة السر",
   "qrSemantics": "رمز QR الخاص بالطالب",
-
   "validationRequired": "هذا الحقل مطلوب",
   "validationNameTooShort": "الاسم قصير جدًا",
   "validationNameTooLong": "الاسم طويل جدًا",
@@ -22,39 +20,100 @@
   "validationScoreInvalid": "الدرجة غير صالحة",
   "validationScoreOutOfRange": "الدرجة خارج النطاق المسموح",
   "validationScoreStep": "الدرجة تُكتب بخطوة 0.5 فقط",
-
   "currencyEgp": "{amount} ج.م",
   "@currencyEgp": {
     "placeholders": {
-      "amount": {"type": "String"}
+      "amount": {
+        "type": "String"
+      }
     }
   },
-
   "dateFull": "{day} {month} {year}",
   "@dateFull": {
     "placeholders": {
-      "day": {"type": "int"},
-      "month": {"type": "String"},
-      "year": {"type": "int"}
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "int"
+      }
     }
   },
-
   "monthName": "{month, select, m1{يناير} m2{فبراير} m3{مارس} m4{أبريل} m5{مايو} m6{يونيو} m7{يوليو} m8{أغسطس} m9{سبتمبر} m10{أكتوبر} m11{نوفمبر} other{ديسمبر}}",
   "@monthName": {
     "description": "اسم الشهر. القيمة m1..m12، وأي قيمة تانية بترجّع ديسمبر.",
     "placeholders": {
-      "month": {"type": "String"}
+      "month": {
+        "type": "String"
+      }
     }
   },
-
   "timeFormat": "{hour}:{minute} {period}",
   "@timeFormat": {
     "placeholders": {
-      "hour": {"type": "String"},
-      "minute": {"type": "String"},
-      "period": {"type": "String"}
+      "hour": {
+        "type": "String"
+      },
+      "minute": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
     }
   },
   "am": "ص",
-  "pm": "م"
+  "pm": "م",
+  "authLoginTitle": "تسجيل الدخول",
+  "authEmail": "البريد الإلكتروني",
+  "authPassword": "كلمة السر",
+  "authLoginButton": "دخول",
+  "authForgotPassword": "نسيت كلمة السر؟",
+  "authCreateAccount": "إنشاء حساب جديد",
+  "authRegisterTitle": "إنشاء حساب",
+  "authName": "الاسم",
+  "authPhone": "رقم الموبايل",
+  "authContinue": "متابعة",
+  "authHaveAccount": "لدي حساب بالفعل",
+  "authAccountTypeTitle": "نوع الحساب",
+  "authAccountTypeNotice": "اختيارك لنوع الحساب لا يمنحك أي صلاحيات. تحصل على الصلاحيات بإنشاء سنتر أو بإدخال كود دعوة.",
+  "authCreateAccountButton": "إنشاء الحساب",
+  "accountTypeAdmin": "مدير سنتر",
+  "accountTypeStaff": "معلم أو مساعد",
+  "accountTypeGuardian": "ولي أمر",
+  "accountTypeStudent": "طالب",
+  "authVerifyTitle": "تأكيد البريد الإلكتروني",
+  "authVerifyBody": "أرسلنا رابط التأكيد إلى {email}. افتح الرابط ثم اضغط \"تم التأكيد\".",
+  "@authVerifyBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyCheck": "تم التأكيد",
+  "authVerifyResend": "إعادة إرسال الرابط",
+  "authVerifyNotYet": "لم يتم تأكيد البريد بعد. افتح الرابط في الرسالة ثم حاول مرة أخرى.",
+  "authVerifySent": "تم إرسال الرابط من جديد.",
+  "authForgotTitle": "استعادة كلمة السر",
+  "authForgotBody": "اكتب بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة السر.",
+  "authForgotSend": "إرسال الرابط",
+  "authResetSent": "لو كان البريد مسجلًا لدينا فسيصلك رابط إعادة التعيين خلال دقائق.",
+  "authBackToLogin": "العودة لتسجيل الدخول",
+  "authSignOut": "تسجيل الخروج",
+  "authSignOutTitle": "تسجيل الخروج",
+  "authSignOutMessage": "هل تريد تسجيل الخروج من حسابك؟",
+  "authSignOutFailed": "تعذر تسجيل الخروج. حاول مرة أخرى.",
+  "authSignedInTitle": "تم تسجيل الدخول",
+  "authSignedInBody": "أنت مسجل الدخول بالحساب {email}.",
+  "@authSignedInBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  }
 }

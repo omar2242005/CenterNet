@@ -5,6 +5,8 @@ import 'package:timezone/data/latest.dart' as tz;
 
 import 'app/app.dart';
 import 'app/di.dart';
+import 'app/router.dart';
+import 'features/auth/screens/auth_gate_screen.dart';
 import 'core/services/local_store.dart';
 import 'firebase_options.dart';
 
@@ -18,5 +20,9 @@ Future<void> main() async {
   );
   tz.initializeTimeZones();
   configureDependencies(await LocalStore.open());
-  runApp(const CenterNetApp());
+  runApp(
+    CenterNetApp(
+      router: buildRouter(splashBuilder: (_) => const AuthGateScreen()),
+    ),
+  );
 }

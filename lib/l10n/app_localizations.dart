@@ -249,6 +249,216 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'م'**
   String get pm;
+
+  /// No description provided for @authLoginTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الدخول'**
+  String get authLoginTitle;
+
+  /// No description provided for @authEmail.
+  ///
+  /// In ar, this message translates to:
+  /// **'البريد الإلكتروني'**
+  String get authEmail;
+
+  /// No description provided for @authPassword.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة السر'**
+  String get authPassword;
+
+  /// No description provided for @authLoginButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'دخول'**
+  String get authLoginButton;
+
+  /// No description provided for @authForgotPassword.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسيت كلمة السر؟'**
+  String get authForgotPassword;
+
+  /// No description provided for @authCreateAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء حساب جديد'**
+  String get authCreateAccount;
+
+  /// No description provided for @authRegisterTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء حساب'**
+  String get authRegisterTitle;
+
+  /// No description provided for @authName.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم'**
+  String get authName;
+
+  /// No description provided for @authPhone.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم الموبايل'**
+  String get authPhone;
+
+  /// No description provided for @authContinue.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get authContinue;
+
+  /// No description provided for @authHaveAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'لدي حساب بالفعل'**
+  String get authHaveAccount;
+
+  /// No description provided for @authAccountTypeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع الحساب'**
+  String get authAccountTypeTitle;
+
+  /// No description provided for @authAccountTypeNotice.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختيارك لنوع الحساب لا يمنحك أي صلاحيات. تحصل على الصلاحيات بإنشاء سنتر أو بإدخال كود دعوة.'**
+  String get authAccountTypeNotice;
+
+  /// No description provided for @authCreateAccountButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء الحساب'**
+  String get authCreateAccountButton;
+
+  /// No description provided for @accountTypeAdmin.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدير سنتر'**
+  String get accountTypeAdmin;
+
+  /// No description provided for @accountTypeStaff.
+  ///
+  /// In ar, this message translates to:
+  /// **'معلم أو مساعد'**
+  String get accountTypeStaff;
+
+  /// No description provided for @accountTypeGuardian.
+  ///
+  /// In ar, this message translates to:
+  /// **'ولي أمر'**
+  String get accountTypeGuardian;
+
+  /// No description provided for @accountTypeStudent.
+  ///
+  /// In ar, this message translates to:
+  /// **'طالب'**
+  String get accountTypeStudent;
+
+  /// No description provided for @authVerifyTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد البريد الإلكتروني'**
+  String get authVerifyTitle;
+
+  /// No description provided for @authVerifyBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرسلنا رابط التأكيد إلى {email}. افتح الرابط ثم اضغط \"تم التأكيد\".'**
+  String authVerifyBody(String email);
+
+  /// No description provided for @authVerifyCheck.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم التأكيد'**
+  String get authVerifyCheck;
+
+  /// No description provided for @authVerifyResend.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة إرسال الرابط'**
+  String get authVerifyResend;
+
+  /// No description provided for @authVerifyNotYet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يتم تأكيد البريد بعد. افتح الرابط في الرسالة ثم حاول مرة أخرى.'**
+  String get authVerifyNotYet;
+
+  /// No description provided for @authVerifySent.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إرسال الرابط من جديد.'**
+  String get authVerifySent;
+
+  /// No description provided for @authForgotTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'استعادة كلمة السر'**
+  String get authForgotTitle;
+
+  /// No description provided for @authForgotBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة السر.'**
+  String get authForgotBody;
+
+  /// No description provided for @authForgotSend.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال الرابط'**
+  String get authForgotSend;
+
+  /// No description provided for @authResetSent.
+  ///
+  /// In ar, this message translates to:
+  /// **'لو كان البريد مسجلًا لدينا فسيصلك رابط إعادة التعيين خلال دقائق.'**
+  String get authResetSent;
+
+  /// No description provided for @authBackToLogin.
+  ///
+  /// In ar, this message translates to:
+  /// **'العودة لتسجيل الدخول'**
+  String get authBackToLogin;
+
+  /// No description provided for @authSignOut.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الخروج'**
+  String get authSignOut;
+
+  /// No description provided for @authSignOutTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الخروج'**
+  String get authSignOutTitle;
+
+  /// No description provided for @authSignOutMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل تريد تسجيل الخروج من حسابك؟'**
+  String get authSignOutMessage;
+
+  /// No description provided for @authSignOutFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تسجيل الخروج. حاول مرة أخرى.'**
+  String get authSignOutFailed;
+
+  /// No description provided for @authSignedInTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تسجيل الدخول'**
+  String get authSignedInTitle;
+
+  /// No description provided for @authSignedInBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنت مسجل الدخول بالحساب {email}.'**
+  String authSignedInBody(String email);
 }
 
 class _AppLocalizationsDelegate

@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import '../core/services/local_store.dart';
 import '../core/services/pending_ops_guard.dart';
 import '../core/services/whatsapp_launcher.dart';
+import '../features/auth/auth_module.dart';
 
 /// الـ service locator الوحيد في التطبيق.
 final GetIt sl = GetIt.instance;
@@ -30,6 +31,7 @@ void registerInfrastructure(GetIt g, LocalStore localStore) {
 /// مثال: registerAuth(g);
 void registerFeatures(GetIt g) {
   // auth / centers / staff (A)
+  registerAuth(g);
   // sessions / attendance (B)
   // students / linking / groups (C)
   // grades (D)

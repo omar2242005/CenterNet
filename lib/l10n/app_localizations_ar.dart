@@ -109,4 +109,117 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pm => 'م';
+
+  @override
+  String get authLoginTitle => 'تسجيل الدخول';
+
+  @override
+  String get authEmail => 'البريد الإلكتروني';
+
+  @override
+  String get authPassword => 'كلمة السر';
+
+  @override
+  String get authLoginButton => 'دخول';
+
+  @override
+  String get authForgotPassword => 'نسيت كلمة السر؟';
+
+  @override
+  String get authCreateAccount => 'إنشاء حساب جديد';
+
+  @override
+  String get authRegisterTitle => 'إنشاء حساب';
+
+  @override
+  String get authName => 'الاسم';
+
+  @override
+  String get authPhone => 'رقم الموبايل';
+
+  @override
+  String get authContinue => 'متابعة';
+
+  @override
+  String get authHaveAccount => 'لدي حساب بالفعل';
+
+  @override
+  String get authAccountTypeTitle => 'نوع الحساب';
+
+  @override
+  String get authAccountTypeNotice =>
+      'اختيارك لنوع الحساب لا يمنحك أي صلاحيات. تحصل على الصلاحيات بإنشاء سنتر أو بإدخال كود دعوة.';
+
+  @override
+  String get authCreateAccountButton => 'إنشاء الحساب';
+
+  @override
+  String get accountTypeAdmin => 'مدير سنتر';
+
+  @override
+  String get accountTypeStaff => 'معلم أو مساعد';
+
+  @override
+  String get accountTypeGuardian => 'ولي أمر';
+
+  @override
+  String get accountTypeStudent => 'طالب';
+
+  @override
+  String get authVerifyTitle => 'تأكيد البريد الإلكتروني';
+
+  @override
+  String authVerifyBody(String email) {
+    return 'أرسلنا رابط التأكيد إلى $email. افتح الرابط ثم اضغط \"تم التأكيد\".';
+  }
+
+  @override
+  String get authVerifyCheck => 'تم التأكيد';
+
+  @override
+  String get authVerifyResend => 'إعادة إرسال الرابط';
+
+  @override
+  String get authVerifyNotYet =>
+      'لم يتم تأكيد البريد بعد. افتح الرابط في الرسالة ثم حاول مرة أخرى.';
+
+  @override
+  String get authVerifySent => 'تم إرسال الرابط من جديد.';
+
+  @override
+  String get authForgotTitle => 'استعادة كلمة السر';
+
+  @override
+  String get authForgotBody =>
+      'اكتب بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة السر.';
+
+  @override
+  String get authForgotSend => 'إرسال الرابط';
+
+  @override
+  String get authResetSent =>
+      'لو كان البريد مسجلًا لدينا فسيصلك رابط إعادة التعيين خلال دقائق.';
+
+  @override
+  String get authBackToLogin => 'العودة لتسجيل الدخول';
+
+  @override
+  String get authSignOut => 'تسجيل الخروج';
+
+  @override
+  String get authSignOutTitle => 'تسجيل الخروج';
+
+  @override
+  String get authSignOutMessage => 'هل تريد تسجيل الخروج من حسابك؟';
+
+  @override
+  String get authSignOutFailed => 'تعذر تسجيل الخروج. حاول مرة أخرى.';
+
+  @override
+  String get authSignedInTitle => 'تم تسجيل الدخول';
+
+  @override
+  String authSignedInBody(String email) {
+    return 'أنت مسجل الدخول بالحساب $email.';
+  }
 }
