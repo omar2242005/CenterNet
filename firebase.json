@@ -1,0 +1,10 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"centernet-cbf40","appId":"1:76920270979:android:e03bb111c2a6c7499bebb6","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"centernet-cbf40","configurations":{"android":"1:76920270979:android:e03bb111c2a6c7499bebb6"}}}}},"firestore": {
+  "rules": "firestore.rules",
+  "indexes": "firestore.indexes.json"
+},
+"emulators": {
+  "auth": { "port": 9099 },
+  "firestore": { "port": 8080 },
+  "ui": { "enabled": true, "port": 4000 },
+  "singleProjectMode": true
+}}
