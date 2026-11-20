@@ -229,16 +229,17 @@ async function main() {
   });
 
   // امتحان الجبر (لسه مش منشور) + درجات g1
-  // ملحوظة: شكل الامتحان والدرجات مبدئي لحد ما D يثبّت الموديلات (خطوة 5.1).
+  // الشكل مطابق لـ Exam و Score في lib/features/grades/models.
   const examDay = cairoDay(-7);
   set(`centers/${CENTER}/exams/e1`, {
-    centerId: CENTER, groupId: 'g1', name: 'امتحان الجبر - الوحدة الأولى',
+    centerId: CENTER, groupId: 'g1', title: 'امتحان الجبر - الوحدة الأولى',
     date: Timestamp.fromDate(cairoWallToUtc(examDay.y, examDay.m, examDay.d, 17, 0)),
     maxScore: 30, published: false, createdAt: now, createdBy: 'teacherSara',
   });
   for (const [sid, score] of Object.entries({ s1: 27, s2: 30, s3: 22.5 })) {
     set(`centers/${CENTER}/scores/e1_${sid}`, {
-      centerId: CENTER, examId: 'e1', studentId: sid, score, createdAt: now, createdBy: 'teacherSara',
+      centerId: CENTER, examId: 'e1', studentId: sid, state: 'scored', score, comment: '',
+      createdAt: now, createdBy: 'teacherSara',
     });
   }
 
