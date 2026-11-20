@@ -15,7 +15,7 @@ rules_version = '2';
 // تعديل على الموديل: مستند العضو بيتزود فيه حقل inviteCode (اسم الكود المستخدم) عند قبول كود موظف.
 // من غيره الـ Rules مش هتقدر تربط إنشاء العضوية بالكود في نفس الـ Batch.
 //
-// الأقسام التانية (students / groups / sessions / attendance / exams / scores) بتتضاف من B و C و D.
+// الأقسام التانية (groups / sessions / attendance / exams / scores) بتتضاف من B و C و D.
 // لحد ما تتضاف، هي ممنوعة بالـ default deny اللي في آخر الملف.
 
 service cloud.firestore {
@@ -39,6 +39,10 @@ service cloud.firestore {
 
     function studentPath(c, s) {
       return /databases/$(database)/documents/centers/$(c)/students/$(s);
+    }
+
+    function counterPath(c) {
+      return /databases/$(database)/documents/centers/$(c)/counters/students;
     }
 
     function codePath(id) {
@@ -81,6 +85,27 @@ service cloud.firestore {
         && d.get('role', null) is string
         && d.get('name', null) is string
         && d.get('active', null) is bool;
+    }
+
+    // الطالب: الأدمن بس بيكتب (لحد ما قسم المجموعات يتكتب). الرقم التسلسلي
+    // لازم يساوي عدّاد السنتر، والعدّاد بيزيد 1 في نفس الـ Batch.
+    function validStudent(d, c) {
+      return d.keys().hasOnly(['centerId', 'studentNo', 'fullName', 'searchKey', 'phone',
+                               'grade', 'groupIds', 'status', 'createdAt', 'createdBy'])
+        && d.get('centerId', null) == c
+        && d.get('studentNo', null) is int
+        && d.get('fullName', null) is string
+        && d.fullName.size() > 0 && d.fullName.size() <= 120
+        && d.get('searchKey', null) is string
+        && d.searchKey.size() > 0 && d.searchKey.size() <= 120
+        && d.get('phone', null) is string && d.phone.size() <= 20
+        && d.get('grade', null) is string && d.grade.size() <= 60
+        && d.get('groupIds', null) is list
+        && d.get('status', null) in ['active', 'archived'];
+    }
+
+    function nextStudentNo(c) {
+      return exists(counterPath(c)) ? get(counterPath(c)).data.next : 1;
     }
 
     // كود جديد: حد أقصى 7 أيام (+ يوم سماحية لفرق ساعة الجهاز).
@@ -224,6 +249,47 @@ service cloud.firestore {
 
         allow delete: if false;
       }
+    }
+
+    // ------------------------------------------------------------------
+    // centers/{c}/students/{sid}  و  centers/{c}/counters/students
+    // الأدمن فقط لحد ما قسم المجموعات يتكتب.
+    // TODO(C — خطوة 3.3): قراءة المعلم/المساعد لطلاب مجموعاتهم، وقراءة الطالب/ولي الأمر
+    //                      لسجله من studentLinks.
+    // ------------------------------------------------------------------
+    match /centers/{c}/students/{sid} {
+      allow get, list: if isAdmin(c);
+
+      allow create: if isAdmin(c)
+        && validStudent(request.resource.data, c)
+        && request.resource.data.status == 'active'
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.studentNo == nextStudentNo(c)
+        && existsAfter(counterPath(c))
+        && getAfter(counterPath(c)).data.next == request.resource.data.studentNo + 1;
+
+      // تعديل البيانات والأرشفة. الرقم والسنتر والمنشئ ثابتين. مفيش حذف.
+      allow update: if isAdmin(c)
+        && validStudent(request.resource.data, c)
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['fullName', 'searchKey', 'phone', 'grade', 'groupIds', 'status']);
+
+      allow delete: if false;
+    }
+
+    match /centers/{c}/counters/students {
+      allow get: if isAdmin(c);
+
+      allow create: if isAdmin(c)
+        && request.resource.data.keys().hasOnly(['next'])
+        && request.resource.data.next == 2;
+
+      allow update: if isAdmin(c)
+        && request.resource.data.keys().hasOnly(['next'])
+        && request.resource.data.next == resource.data.next + 1;
+
+      allow delete: if false;
     }
 
     // ------------------------------------------------------------------

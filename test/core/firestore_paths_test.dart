@@ -117,6 +117,10 @@ void main() {
       expect(FirestorePaths.member('c1', 'u1'), 'centers/c1/members/u1');
       expect(FirestorePaths.members('c1'), 'centers/c1/members');
       expect(FirestorePaths.student('c1', 's7'), 'centers/c1/students/s7');
+      expect(
+        FirestorePaths.studentCounter('c1'),
+        'centers/c1/counters/students',
+      );
       expect(FirestorePaths.group('c1', 'g1'), 'centers/c1/groups/g1');
     });
 

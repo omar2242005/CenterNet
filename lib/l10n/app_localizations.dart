@@ -932,6 +932,150 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تجربة الرمز'**
   String get scanManualSubmit;
+
+  /// No description provided for @studentsListTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطلاب'**
+  String get studentsListTitle;
+
+  /// No description provided for @studentsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تتم إضافة طلاب بعد'**
+  String get studentsEmpty;
+
+  /// No description provided for @studentsNoResults.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد طالب مطابق للبحث'**
+  String get studentsNoResults;
+
+  /// No description provided for @studentsSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث بالاسم أو الرقم أو الموبايل'**
+  String get studentsSearchHint;
+
+  /// No description provided for @studentsAddTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة طالب'**
+  String get studentsAddTitle;
+
+  /// No description provided for @studentsEditTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل بيانات الطالب'**
+  String get studentsEditTitle;
+
+  /// No description provided for @studentsShowArchived.
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار المؤرشفين'**
+  String get studentsShowArchived;
+
+  /// No description provided for @studentsHideArchived.
+  ///
+  /// In ar, this message translates to:
+  /// **'إخفاء المؤرشفين'**
+  String get studentsHideArchived;
+
+  /// No description provided for @studentFieldName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم الطالب'**
+  String get studentFieldName;
+
+  /// No description provided for @studentFieldPhone.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم الموبايل'**
+  String get studentFieldPhone;
+
+  /// No description provided for @studentFieldGrade.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصف الدراسي (اختياري)'**
+  String get studentFieldGrade;
+
+  /// No description provided for @studentSave.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ'**
+  String get studentSave;
+
+  /// No description provided for @studentNumber.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم الطالب: {no}'**
+  String studentNumber(int no);
+
+  /// No description provided for @studentDetailTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملف الطالب'**
+  String get studentDetailTitle;
+
+  /// No description provided for @studentEdit.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل البيانات'**
+  String get studentEdit;
+
+  /// No description provided for @studentArchive.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرشفة الطالب'**
+  String get studentArchive;
+
+  /// No description provided for @studentRestore.
+  ///
+  /// In ar, this message translates to:
+  /// **'استرجاع الطالب'**
+  String get studentRestore;
+
+  /// No description provided for @studentArchiveTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرشفة الطالب'**
+  String get studentArchiveTitle;
+
+  /// No description provided for @studentArchiveMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم إخفاء {name} من القوائم، ولن يُحذف أي من بياناته أو سجل حضوره. هل تريد المتابعة؟'**
+  String studentArchiveMessage(String name);
+
+  /// No description provided for @studentArchiveConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرشفة'**
+  String get studentArchiveConfirm;
+
+  /// No description provided for @studentArchivedBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'مؤرشف'**
+  String get studentArchivedBadge;
+
+  /// No description provided for @studentQrHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'يعرض الطالب هذا الرمز عند دخول الحصة'**
+  String get studentQrHint;
+
+  /// No description provided for @studentPhoneLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموبايل: {phone}'**
+  String studentPhoneLabel(String phone);
+
+  /// No description provided for @studentGradeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصف: {grade}'**
+  String studentGradeLabel(String grade);
 }
 
 class _AppLocalizationsDelegate

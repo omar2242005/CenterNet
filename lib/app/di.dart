@@ -9,6 +9,7 @@ import '../features/attendance/attendance_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
 import '../features/staff/staff_module.dart';
+import '../features/students/students_module.dart';
 
 /// الـ service locator الوحيد في التطبيق.
 final GetIt sl = GetIt.instance;
@@ -40,5 +41,6 @@ void registerFeatures(GetIt g) {
   // sessions / attendance (B)
   registerAttendance(g);
   // students / linking / groups (C)
+  registerStudents(g);
   // grades (D)
 }

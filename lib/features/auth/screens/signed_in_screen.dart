@@ -11,6 +11,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../attendance/attendance_route_names.dart';
 import '../../centers/center_route_names.dart';
 import '../../staff/staff_route_names.dart';
+import '../../students/student_route_names.dart';
 import '../auth_route_names.dart';
 import '../repository/auth_repository.dart';
 import 'auth_page.dart';
@@ -88,6 +89,13 @@ class SignedInScreen extends StatelessWidget {
             label: l10n.staffJoinEntry,
             variant: AppButtonVariant.secondary,
             onPressed: () => context.push(StaffRoutes.join),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          // مؤقت لحد 3.5 (رئيسية الأدمن).
+          AppButton(
+            label: l10n.studentsListTitle,
+            variant: AppButtonVariant.secondary,
+            onPressed: () => context.push(StudentRoutes.list),
           ),
           const SizedBox(height: AppSpacing.sm),
           // مؤقت لحد ما تتبني رئيسية المساعد (B).

@@ -498,4 +498,84 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get scanManualSubmit => 'تجربة الرمز';
+
+  @override
+  String get studentsListTitle => 'الطلاب';
+
+  @override
+  String get studentsEmpty => 'لم تتم إضافة طلاب بعد';
+
+  @override
+  String get studentsNoResults => 'لا يوجد طالب مطابق للبحث';
+
+  @override
+  String get studentsSearchHint => 'ابحث بالاسم أو الرقم أو الموبايل';
+
+  @override
+  String get studentsAddTitle => 'إضافة طالب';
+
+  @override
+  String get studentsEditTitle => 'تعديل بيانات الطالب';
+
+  @override
+  String get studentsShowArchived => 'إظهار المؤرشفين';
+
+  @override
+  String get studentsHideArchived => 'إخفاء المؤرشفين';
+
+  @override
+  String get studentFieldName => 'اسم الطالب';
+
+  @override
+  String get studentFieldPhone => 'رقم الموبايل';
+
+  @override
+  String get studentFieldGrade => 'الصف الدراسي (اختياري)';
+
+  @override
+  String get studentSave => 'حفظ';
+
+  @override
+  String studentNumber(int no) {
+    return 'رقم الطالب: $no';
+  }
+
+  @override
+  String get studentDetailTitle => 'ملف الطالب';
+
+  @override
+  String get studentEdit => 'تعديل البيانات';
+
+  @override
+  String get studentArchive => 'أرشفة الطالب';
+
+  @override
+  String get studentRestore => 'استرجاع الطالب';
+
+  @override
+  String get studentArchiveTitle => 'أرشفة الطالب';
+
+  @override
+  String studentArchiveMessage(String name) {
+    return 'سيتم إخفاء $name من القوائم، ولن يُحذف أي من بياناته أو سجل حضوره. هل تريد المتابعة؟';
+  }
+
+  @override
+  String get studentArchiveConfirm => 'أرشفة';
+
+  @override
+  String get studentArchivedBadge => 'مؤرشف';
+
+  @override
+  String get studentQrHint => 'يعرض الطالب هذا الرمز عند دخول الحصة';
+
+  @override
+  String studentPhoneLabel(String phone) {
+    return 'الموبايل: $phone';
+  }
+
+  @override
+  String studentGradeLabel(String grade) {
+    return 'الصف: $grade';
+  }
 }

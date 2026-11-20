@@ -5,6 +5,7 @@ import '../features/attendance/attendance_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
 import '../features/staff/staff_module.dart';
+import '../features/students/students_module.dart';
 
 /// أسماء المسارات في مكان واحد.
 abstract final class AppRoutes {
@@ -21,6 +22,7 @@ final List<RouteBase> featureRoutes = <RouteBase>[
   // sessions / attendance (B)
   ...attendanceRoutes,
   // students / linking / groups (C)
+  ...studentRoutes,
   // grades (D)
 ];
 
