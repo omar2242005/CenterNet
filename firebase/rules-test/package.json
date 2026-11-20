@@ -5,7 +5,7 @@
   "description": "CenterNet Firestore Rules tests (run against the Firestore emulator)",
   "type": "commonjs",
   "scripts": {
-    "test": "firebase emulators:exec --config ../../firebase.json --only firestore --project demo-centernet \"node --test\""
+    "test": "firebase emulators:exec --config ../../firebase.json --only firestore --project demo-centernet \"node --test --test-concurrency=1\""
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^6.0.0",

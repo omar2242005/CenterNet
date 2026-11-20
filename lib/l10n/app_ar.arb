@@ -320,5 +320,57 @@
   "scanDemoBanner": "نموذج أولي: بيانات تجريبية، والمسحات لا تُحفظ على الجهاز",
   "scanManualTitle": "إدخال يدوي للتجربة",
   "scanManualHint": "مثال: demo:s1",
-  "scanManualSubmit": "تجربة الرمز"
+  "scanManualSubmit": "تجربة الرمز",
+  "studentsListTitle": "الطلاب",
+  "studentsEmpty": "لم تتم إضافة طلاب بعد",
+  "studentsNoResults": "لا يوجد طالب مطابق للبحث",
+  "studentsSearchHint": "ابحث بالاسم أو الرقم أو الموبايل",
+  "studentsAddTitle": "إضافة طالب",
+  "studentsEditTitle": "تعديل بيانات الطالب",
+  "studentsShowArchived": "إظهار المؤرشفين",
+  "studentsHideArchived": "إخفاء المؤرشفين",
+  "studentFieldName": "اسم الطالب",
+  "studentFieldPhone": "رقم الموبايل",
+  "studentFieldGrade": "الصف الدراسي (اختياري)",
+  "studentSave": "حفظ",
+  "studentNumber": "رقم الطالب: {no}",
+  "@studentNumber": {
+    "placeholders": {
+      "no": {
+        "type": "int"
+      }
+    }
+  },
+  "studentDetailTitle": "ملف الطالب",
+  "studentEdit": "تعديل البيانات",
+  "studentArchive": "أرشفة الطالب",
+  "studentRestore": "استرجاع الطالب",
+  "studentArchiveTitle": "أرشفة الطالب",
+  "studentArchiveMessage": "سيتم إخفاء {name} من القوائم، ولن يُحذف أي من بياناته أو سجل حضوره. هل تريد المتابعة؟",
+  "@studentArchiveMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "studentArchiveConfirm": "أرشفة",
+  "studentArchivedBadge": "مؤرشف",
+  "studentQrHint": "يعرض الطالب هذا الرمز عند دخول الحصة",
+  "studentPhoneLabel": "الموبايل: {phone}",
+  "@studentPhoneLabel": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "studentGradeLabel": "الصف: {grade}",
+  "@studentGradeLabel": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  }
 }

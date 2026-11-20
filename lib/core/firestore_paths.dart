@@ -51,6 +51,11 @@ abstract final class FirestorePaths {
   static String student(String centerId, String studentId) =>
       '${students(centerId)}/${_part(studentId, 'studentId')}';
 
+  /// عدّاد الرقم التسلسلي للطلاب: مستند واحد `{next: int}` بيتحدّث في نفس
+  /// الـ Transaction بتاعة إضافة الطالب (خطوة 3.1).
+  static String studentCounter(String centerId) =>
+      '${center(centerId)}/counters/students';
+
   static String studentLinks(String centerId) =>
       '${center(centerId)}/studentLinks';
   static String studentLink(String centerId, String uid, String studentId) =>
