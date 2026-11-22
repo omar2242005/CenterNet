@@ -19,7 +19,7 @@ Group makeGroup(
     'createdBy': 'u1',
     'assistantIds': <String>[],
     'status': archived ? 'archived' : 'active',
-    if (capacity != null) 'capacity': capacity,
+    'capacity': ?capacity,
   });
 }
 
