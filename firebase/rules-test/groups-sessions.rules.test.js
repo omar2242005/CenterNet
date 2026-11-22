@@ -4,6 +4,7 @@
 const { describe, it, before, after, beforeEach } = require('node:test');
 const fs = require('node:fs');
 const path = require('node:path');
+const assert = require('node:assert/strict');
 const {
   initializeTestEnvironment,
   assertSucceeds,
@@ -11,7 +12,7 @@ const {
 } = require('@firebase/rules-unit-testing');
 const {
   doc, collection, getDoc, getDocs, setDoc, updateDoc, deleteDoc,
-  query, where, Timestamp, serverTimestamp,
+  query, where, orderBy, runTransaction, Timestamp, serverTimestamp,
 } = require('firebase/firestore');
 
 const A = 'centerA';
@@ -240,5 +241,60 @@ describe('sessions — القراءة', () => {
     await assertSucceeds(getDocs(collection(as('adminA'), `centers/${A}/sessions`)));
     await assertFails(getDoc(sessionRef(as('offTeacher'), G1_SESSION)));
     await assertFails(getDoc(sessionRef(as('adminB'), G1_SESSION)));
+  });
+});
+
+describe('sessions — نمط SessionsRepository', () => {
+  // نفس منطق generateUpcoming: يقرا الأول ويكتب الناقص بس.
+  async function generate(db, ids) {
+    let created = 0;
+    await runTransaction(db, async (tx) => {
+      const missing = [];
+      for (const id of ids) {
+        const snap = await tx.get(sessionRef(db, id));
+        if (!snap.exists()) missing.push(id);
+      }
+      for (const id of missing) tx.set(sessionRef(db, id), sessionData());
+      created = missing.length;
+    });
+    return created;
+  }
+
+  const IDS = [G1_SESSION, 'g1_20261203_1700', 'g1_20261210_1700'];
+
+  it('set فوق حصة موجودة مرفوض (عشان كده Transaction)', async () => {
+    await assertFails(setDoc(sessionRef(as('adminA'), G1_SESSION), sessionData()));
+  });
+
+  it('التوليد بيكتب الناقص بس، وإعادته بتكتب صفر', async () => {
+    const db = as('adminA');
+    // G1_SESSION موجودة من الـ seed، فالناقص اتنين.
+    assert.equal(await generate(db, IDS), 2);
+    assert.equal(await generate(db, IDS), 0);
+  });
+
+  it('الحصة الملغاة ما بترجعش تتولّد', async () => {
+    const db = as('adminA');
+    await updateDoc(sessionRef(db, G1_SESSION), { status: 'cancelled' });
+    assert.equal(await generate(db, IDS), 2);
+    const snap = await getDoc(sessionRef(db, G1_SESSION));
+    assert.equal(snap.data().status, 'cancelled');
+  });
+
+  it('المعلم مينفعش يولّد', async () => {
+    await assert.rejects(generate(as('teacherA'), ['g1_20261203_1700']));
+  });
+
+  it('استعلام loadGroupSessions: الأدمن والمعلم والمساعد لمجموعتهم', async () => {
+    const q = (db, g) => query(
+      collection(db, `centers/${A}/sessions`),
+      where('groupId', '==', g),
+      where('startAt', '>=', Timestamp.fromDate(new Date('2026-11-01T00:00:00Z'))),
+      orderBy('startAt'),
+    );
+    await assertSucceeds(getDocs(q(as('adminA'), 'g1')));
+    await assertSucceeds(getDocs(q(as('teacherA'), 'g1')));
+    await assertSucceeds(getDocs(q(as('assistantA'), 'g1')));
+    await assertFails(getDocs(q(as('teacherA'), 'g2')));
   });
 });
