@@ -15,7 +15,7 @@ rules_version = '2';
 // تعديل على الموديل: مستند العضو بيتزود فيه حقل inviteCode (اسم الكود المستخدم) عند قبول كود موظف.
 // من غيره الـ Rules مش هتقدر تربط إنشاء العضوية بالكود في نفس الـ Batch.
 //
-// الأقسام التانية (groups / sessions / attendance / exams / scores) بتتضاف من B و C و D.
+// groups / sessions اتضافوا. الأقسام التانية (attendance / exams / scores) بتتضاف من C و D.
 // لحد ما تتضاف، هي ممنوعة بالـ default deny اللي في آخر الملف.
 
 service cloud.firestore {
@@ -60,6 +60,19 @@ service cloud.firestore {
         && get(memberPath(c, request.auth.uid)).data.role == 'admin';
     }
 
+    function memberRole(c) {
+      return get(memberPath(c, request.auth.uid)).data.role;
+    }
+
+    // معلم أو مساعد نشط في السنتر.
+    function isStaff(c) {
+      return isActiveMember(c) && memberRole(c) in ['teacher', 'assistant'];
+    }
+
+    function groupPath(c, g) {
+      return /databases/$(database)/documents/centers/$(c)/groups/$(g);
+    }
+
     // ------------------------------------------------------------------
     // التحقق من شكل المستندات
     // ------------------------------------------------------------------
@@ -87,7 +100,7 @@ service cloud.firestore {
         && d.get('active', null) is bool;
     }
 
-    // الطالب: الأدمن بس بيكتب (لحد ما قسم المجموعات يتكتب). الرقم التسلسلي
+    // الطالب: الأدمن بس بيكتب. الرقم التسلسلي
     // لازم يساوي عدّاد السنتر، والعدّاد بيزيد 1 في نفس الـ Batch.
     function validStudent(d, c) {
       return d.keys().hasOnly(['centerId', 'studentNo', 'fullName', 'searchKey', 'phone',
@@ -102,6 +115,51 @@ service cloud.firestore {
         && d.get('grade', null) is string && d.grade.size() <= 60
         && d.get('groupIds', null) is list
         && d.get('status', null) in ['active', 'archived'];
+    }
+
+    function validSlot(s) {
+      return s is map
+        && s.keys().hasOnly(['weekday', 'startMinutes', 'durationMinutes'])
+        && s.get('weekday', null) is int
+        && s.weekday >= 1 && s.weekday <= 7
+        && s.get('startMinutes', null) is int
+        && s.startMinutes >= 0 && s.startMinutes <= 1439
+        && s.get('durationMinutes', null) is int
+        && s.durationMinutes >= 1 && s.durationMinutes <= 480;
+    }
+
+    // Rules مش بتعمل loop، فبنتحقق من أول ميعاد بس. ده كفاية كحارس،
+    // والـ model في Dart هو اللي بيتحقق من الباقي.
+    function validGroup(d, c) {
+      return d.keys().hasOnly(['centerId', 'name', 'subject', 'grade', 'teacherId',
+                               'assistantIds', 'room', 'capacity', 'monthlyFee',
+                               'slots', 'status', 'createdAt', 'createdBy'])
+        && d.get('centerId', null) == c
+        && d.get('name', null) is string
+        && d.name.size() > 0 && d.name.size() <= 80
+        && d.get('subject', null) is string && d.subject.size() <= 60
+        && d.get('grade', null) is string && d.grade.size() <= 60
+        && d.get('teacherId', null) is string
+        && d.get('assistantIds', null) is list && d.assistantIds.size() <= 10
+        && !(d.teacherId in d.assistantIds)
+        && d.get('room', null) is string && d.room.size() <= 60
+        && d.get('capacity', 1) is int && d.get('capacity', 1) >= 1
+        && d.get('monthlyFee', null) is int && d.monthlyFee >= 0
+        && d.get('slots', null) is list && d.slots.size() <= 14
+        && (d.slots.size() == 0 || validSlot(d.slots[0]))
+        && d.get('status', null) in ['active', 'archived'];
+    }
+
+    function validSession(d, c) {
+      return d.keys().hasOnly(['centerId', 'groupId', 'startAt', 'endAt',
+                               'status', 'createdAt', 'createdBy'])
+        && d.get('centerId', null) == c
+        && d.get('groupId', null) is string
+        && exists(groupPath(c, d.groupId))
+        && d.get('startAt', null) is timestamp
+        && d.get('endAt', null) is timestamp
+        && d.endAt > d.startAt
+        && d.get('status', null) in ['scheduled', 'cancelled'];
     }
 
     function nextStudentNo(c) {
@@ -253,12 +311,12 @@ service cloud.firestore {
 
     // ------------------------------------------------------------------
     // centers/{c}/students/{sid}  و  centers/{c}/counters/students
-    // الأدمن فقط لحد ما قسم المجموعات يتكتب.
-    // TODO(C — خطوة 3.3): قراءة المعلم/المساعد لطلاب مجموعاتهم، وقراءة الطالب/ولي الأمر
-    //                      لسجله من studentLinks.
+    // الكتابة للأدمن فقط. القراءة للأدمن والمعلم/المساعد النشطين في السنتر.
+    // TODO(C — خطوة 3.3): قراءة الطالب/ولي الأمر لسجله من studentLinks.
+    //                      وتضييق قراءة المعلم/المساعد لطلاب مجموعاتهم فقط.
     // ------------------------------------------------------------------
     match /centers/{c}/students/{sid} {
-      allow get, list: if isAdmin(c);
+      allow get, list: if isAdmin(c) || isStaff(c);
 
       allow create: if isAdmin(c)
         && validStudent(request.resource.data, c)
@@ -288,6 +346,63 @@ service cloud.firestore {
       allow update: if isAdmin(c)
         && request.resource.data.keys().hasOnly(['next'])
         && request.resource.data.next == resource.data.next + 1;
+
+      allow delete: if false;
+    }
+
+    // ------------------------------------------------------------------
+    // centers/{c}/groups/{gid}
+    // الأدمن يكتب ويقرا. المعلم/المساعد يقرا المجموعات اللي هو فيها بس.
+    // ------------------------------------------------------------------
+    match /centers/{c}/groups/{gid} {
+      allow get: if isAdmin(c)
+        || (isStaff(c) && (resource.data.teacherId == request.auth.uid
+                           || request.auth.uid in resource.data.assistantIds));
+
+      // list: لازم الاستعلام نفسه يكون مقيّد (الـ Rules مش بتفلتر).
+      allow list: if isAdmin(c)
+        || (isStaff(c) && (resource.data.teacherId == request.auth.uid
+                           || request.auth.uid in resource.data.assistantIds));
+
+      allow create: if isAdmin(c)
+        && validGroup(request.resource.data, c)
+        && request.resource.data.status == 'active'
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdAt == request.time;
+
+      allow update: if isAdmin(c)
+        && validGroup(request.resource.data, c)
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['name', 'subject', 'grade', 'teacherId', 'assistantIds',
+                       'room', 'capacity', 'monthlyFee', 'slots', 'status']);
+
+      allow delete: if false;
+    }
+
+    // ------------------------------------------------------------------
+    // centers/{c}/sessions/{sid}
+    // الأدمن يكتب. المعلم/المساعد يقرا حصص مجموعاته.
+    // الـ ID حتمي (gid_yyyyMMdd_HHmm بتوقيت القاهرة) والـ repository هو اللي بيضمنه،
+    // لأن الـ Rules مش بتحسب التوقيت ده.
+    // ------------------------------------------------------------------
+    match /centers/{c}/sessions/{sid} {
+      allow get, list: if isAdmin(c)
+        || (isStaff(c)
+            && exists(groupPath(c, resource.data.groupId))
+            && (get(groupPath(c, resource.data.groupId)).data.teacherId == request.auth.uid
+                || request.auth.uid in get(groupPath(c, resource.data.groupId)).data.assistantIds));
+
+      allow create: if isAdmin(c)
+        && validSession(request.resource.data, c)
+        && request.resource.data.status == 'scheduled'
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdAt == request.time;
+
+      // الإلغاء: حقل status بس، ومن scheduled لـ cancelled.
+      allow update: if isAdmin(c)
+        && resource.data.status == 'scheduled'
+        && request.resource.data.status == 'cancelled'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
 
       allow delete: if false;
     }

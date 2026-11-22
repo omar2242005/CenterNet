@@ -148,9 +148,10 @@ describe('students — القراءة', () => {
     await assertFails(getDocs(collection(db, `centers/${A}/students`)));
   });
 
-  it('المعلم والمساعد مقفولين لحد ما قسم المجموعات يتكتب', async () => {
-    await assertFails(getDoc(doc(as('teacherA'), `centers/${A}/students/s1`)));
-    await assertFails(getDoc(doc(as('assistantA'), `centers/${A}/students/s1`)));
+  it('المعلم والمساعد النشطين يقروا، والمعطّل وسنتر تاني لا', async () => {
+    await assertSucceeds(getDoc(doc(as('teacherA'), `centers/${A}/students/s1`)));
+    await assertSucceeds(getDoc(doc(as('assistantA'), `centers/${A}/students/s1`)));
+    await assertFails(getDoc(doc(as('adminB'), `centers/${A}/students/s1`)));
   });
 });
 
