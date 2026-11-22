@@ -10,7 +10,6 @@ import 'screens/account_type_screen.dart';
 import 'screens/forgot_password_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
-import 'screens/signed_in_screen.dart';
 import 'screens/verify_email_screen.dart';
 
 /// سطر الـ DI بتاع الـ feature (بيتنادى من registerFeatures في di.dart).
@@ -45,9 +44,5 @@ final List<RouteBase> authRoutes = <RouteBase>[
   GoRoute(
     path: AuthRoutes.forgotPassword,
     builder: (context, state) => const ForgotPasswordScreen(),
-  ),
-  GoRoute(
-    path: AuthRoutes.signedIn,
-    builder: (context, state) => const SignedInScreen(),
   ),
 ];

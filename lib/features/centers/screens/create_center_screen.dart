@@ -8,8 +8,8 @@ import '../../../core/utils/digits.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/auth_route_names.dart';
 import '../../auth/screens/auth_page.dart';
-import '../center_route_names.dart';
 import '../cubit/create_center_cubit.dart';
 import '../models/center_form_error.dart';
 import '../repository/centers_repository.dart';
@@ -60,7 +60,7 @@ class _CreateCenterViewState extends State<_CreateCenterView> {
     return BlocConsumer<CreateCenterCubit, CreateCenterState>(
       listener: (context, state) {
         if (state.status == CreateCenterStatus.success) {
-          context.go(CenterRoutes.settings);
+          context.go(AuthRoutes.signedIn);
         }
       },
       builder: (context, state) {

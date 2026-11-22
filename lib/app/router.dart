@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../features/attendance/attendance_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
+import '../features/home/home_module.dart';
 import '../features/staff/staff_module.dart';
 import '../features/students/students_module.dart';
 
@@ -13,17 +14,13 @@ abstract final class AppRoutes {
 }
 
 /// كل feature بتضيف سطرها هنا (سطر واحد لكل feature).
-/// مثال: ...authRoutes,
 final List<RouteBase> featureRoutes = <RouteBase>[
-  // auth / centers / staff (A)
   ...authRoutes,
+  ...homeRoutes,
   ...centerRoutes,
   ...staffRoutes,
-  // sessions / attendance (B)
-  ...attendanceRoutes,
-  // students / linking / groups (C)
   ...studentRoutes,
-  // grades (D)
+  ...attendanceRoutes,
 ];
 
 /// [routes] للاختبار بس. الافتراضي هو [featureRoutes].
