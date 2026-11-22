@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../features/attendance/attendance_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
+import '../features/groups/groups_module.dart';
 import '../features/home/home_module.dart';
 import '../features/staff/staff_module.dart';
 import '../features/students/students_module.dart';
@@ -20,6 +21,7 @@ final List<RouteBase> featureRoutes = <RouteBase>[
   ...centerRoutes,
   ...staffRoutes,
   ...studentRoutes,
+  ...groupRoutes,
   ...attendanceRoutes,
 ];
 

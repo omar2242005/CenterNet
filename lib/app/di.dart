@@ -8,6 +8,7 @@ import '../core/services/whatsapp_launcher.dart';
 import '../features/attendance/attendance_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
+import '../features/groups/groups_module.dart';
 import '../features/home/home_module.dart';
 import '../features/staff/staff_module.dart';
 import '../features/students/students_module.dart';
@@ -39,5 +40,6 @@ void registerFeatures(GetIt g) {
   registerCenters(g);
   registerStaff(g);
   registerStudents(g);
+  registerGroups(g);
   registerAttendance(g);
 }
