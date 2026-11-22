@@ -1076,6 +1076,66 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الصف: {grade}'**
   String studentGradeLabel(String grade);
+
+  /// No description provided for @homeAdminTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رئيسية الأدمن'**
+  String get homeAdminTitle;
+
+  /// No description provided for @homeTeacherTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رئيسية المعلم'**
+  String get homeTeacherTitle;
+
+  /// No description provided for @homeAssistantTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رئيسية المساعد'**
+  String get homeAssistantTitle;
+
+  /// No description provided for @homeStudentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رئيسية الطالب'**
+  String get homeStudentTitle;
+
+  /// No description provided for @homeGuardianTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رئيسية ولي الأمر'**
+  String get homeGuardianTitle;
+
+  /// No description provided for @homeComingSoon.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذه الشاشة قيد التطوير.'**
+  String get homeComingSoon;
+
+  /// No description provided for @homeInactiveTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحساب معطّل'**
+  String get homeInactiveTitle;
+
+  /// No description provided for @homeInactiveBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تعطيل حسابك من إدارة السنتر. تواصل مع الأدمن.'**
+  String get homeInactiveBody;
+
+  /// No description provided for @homeNoAccessTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد صلاحيات'**
+  String get homeNoAccessTitle;
+
+  /// No description provided for @homeNoAccessBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسابك غير مرتبط بسنتر بشكل صحيح. تواصل مع الأدمن أو سجّل الخروج.'**
+  String get homeNoAccessBody;
 }
 
 class _AppLocalizationsDelegate

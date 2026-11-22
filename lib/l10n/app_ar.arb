@@ -372,5 +372,15 @@
         "type": "String"
       }
     }
-  }
+  },
+  "homeAdminTitle": "رئيسية الأدمن",
+  "homeTeacherTitle": "رئيسية المعلم",
+  "homeAssistantTitle": "رئيسية المساعد",
+  "homeStudentTitle": "رئيسية الطالب",
+  "homeGuardianTitle": "رئيسية ولي الأمر",
+  "homeComingSoon": "هذه الشاشة قيد التطوير.",
+  "homeInactiveTitle": "الحساب معطّل",
+  "homeInactiveBody": "تم تعطيل حسابك من إدارة السنتر. تواصل مع الأدمن.",
+  "homeNoAccessTitle": "لا توجد صلاحيات",
+  "homeNoAccessBody": "حسابك غير مرتبط بسنتر بشكل صحيح. تواصل مع الأدمن أو سجّل الخروج."
 }
