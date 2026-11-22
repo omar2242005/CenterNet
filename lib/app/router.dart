@@ -26,14 +26,15 @@ final List<RouteBase> featureRoutes = <RouteBase>[
 /// [routes] للاختبار بس. الافتراضي هو [featureRoutes].
 /// [splashBuilder]: شاشة البداية. الافتراضي نص ثابت (عشان الاختبارات من غير Firebase)،
 /// و main.dart بيبعت AuthGateScreen.
-/// التوجيه حسب الدور (redirect) هيتضاف هنا في خطوة 3.5.
 GoRouter buildRouter({
   List<RouteBase>? routes,
   String initialLocation = AppRoutes.splash,
   WidgetBuilder? splashBuilder,
+  GoRouterRedirect? redirect,
 }) {
   return GoRouter(
     initialLocation: initialLocation,
+    redirect: redirect,
     routes: <RouteBase>[
       GoRoute(
         path: AppRoutes.splash,

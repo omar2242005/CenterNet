@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/di.dart';
+import '../../../app/session_role.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/state/view_state.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -35,6 +36,7 @@ class _HomeGateScreenState extends State<HomeGateScreen> {
     try {
       final destination = await sl<RoleRepository>().resolve();
       if (!mounted) return;
+      sl<SessionRole>().set(destination);
       context.go(HomeRoutes.forDestination(destination));
     } on Failure catch (f) {
       if (!mounted) return;

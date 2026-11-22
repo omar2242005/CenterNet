@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/di.dart';
+import '../../app/session_role.dart';
 import '../../core/errors/failure.dart';
 import '../../core/services/pending_ops_guard.dart';
 import '../../core/widgets/confirm_dialog.dart';
@@ -32,6 +33,7 @@ Future<void> confirmAndSignOut(BuildContext context) async {
 
   try {
     await sl<AuthRepository>().signOut();
+    if (sl.isRegistered<SessionRole>()) sl<SessionRole>().clear();
     if (context.mounted) context.go(AuthRoutes.login);
   } catch (e) {
     messenger.showSnackBar(

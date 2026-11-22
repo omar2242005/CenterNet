@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../app/session_role.dart';
 import '../../l10n/app_localizations.dart';
 import '../attendance/attendance_route_names.dart';
 import '../auth/auth_route_names.dart';
@@ -20,6 +21,7 @@ void registerHome(GetIt g) {
   g.registerLazySingleton<RoleRepository>(
     () => RoleRepository(g<FirebaseAuth>(), g<FirebaseFirestore>()),
   );
+  g.registerLazySingleton<SessionRole>(SessionRole.new);
 }
 
 /// سطر الـ router بتاع الـ feature.

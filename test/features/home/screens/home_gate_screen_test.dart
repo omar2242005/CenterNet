@@ -1,4 +1,5 @@
 import 'package:center_net/app/di.dart';
+import 'package:center_net/app/session_role.dart';
 import 'package:center_net/core/errors/failure.dart';
 import 'package:center_net/core/theme/app_theme.dart';
 import 'package:center_net/features/auth/auth_route_names.dart';
@@ -61,6 +62,10 @@ Future<void> _pumpGate(WidgetTester tester) {
 }
 
 void main() {
+  setUp(() {
+    sl.registerSingleton<SessionRole>(SessionRole());
+  });
+
   tearDown(() async {
     await sl.reset();
   });
@@ -72,6 +77,7 @@ void main() {
     await _pumpGate(tester);
     await tester.pumpAndSettle();
     expect(find.text('ADMIN'), findsOneWidget);
+    expect(sl<SessionRole>().value, HomeDestination.admin);
   });
 
   testWidgets('بيوجّه المعلم لرئيسية المعلم', (tester) async {
