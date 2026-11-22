@@ -5,8 +5,7 @@ import '../../../app/di.dart';
 import '../auth_route_names.dart';
 import '../repository/auth_repository.dart';
 
-/// شاشة البداية الحقيقية: بتبص على المستخدم الحالي وتوجّه.
-/// مؤقتة لحد خطوة 3.5 (التوجيه حسب الدور في الـ router).
+/// شاشة البداية: بتبص على المستخدم الحالي وتوجّه (الدور بيتحدد في HomeGate).
 class AuthGateScreen extends StatefulWidget {
   const AuthGateScreen({super.key});
 
