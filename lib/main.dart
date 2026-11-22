@@ -6,6 +6,7 @@ import 'package:timezone/data/latest.dart' as tz;
 
 import 'app/app.dart';
 import 'app/di.dart';
+import 'app/route_guard.dart';
 import 'app/router.dart';
 import 'features/auth/screens/auth_gate_screen.dart';
 import 'core/services/local_store.dart';
@@ -35,7 +36,10 @@ Future<void> main() async {
   configureDependencies(await LocalStore.open());
   runApp(
     CenterNetApp(
-      router: buildRouter(splashBuilder: (_) => const AuthGateScreen()),
+      router: buildRouter(
+        splashBuilder: (_) => const AuthGateScreen(),
+        redirect: appRedirect,
+      ),
     ),
   );
 }

@@ -8,6 +8,8 @@ import '../core/services/whatsapp_launcher.dart';
 import '../features/attendance/attendance_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
+import '../features/groups/groups_module.dart';
+import '../features/home/home_module.dart';
 import '../features/staff/staff_module.dart';
 import '../features/students/students_module.dart';
 
@@ -32,15 +34,12 @@ void registerInfrastructure(GetIt g, LocalStore localStore) {
 }
 
 /// كل feature بتضيف سطرها هنا (سطر واحد لكل feature).
-/// مثال: registerAuth(g);
 void registerFeatures(GetIt g) {
-  // auth / centers / staff (A)
   registerAuth(g);
+  registerHome(g);
   registerCenters(g);
   registerStaff(g);
-  // sessions / attendance (B)
-  registerAttendance(g);
-  // students / linking / groups (C)
   registerStudents(g);
-  // grades (D)
+  registerGroups(g);
+  registerAttendance(g);
 }

@@ -578,4 +578,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String studentGradeLabel(String grade) {
     return 'الصف: $grade';
   }
+
+  @override
+  String get homeAdminTitle => 'رئيسية الأدمن';
+
+  @override
+  String get homeTeacherTitle => 'رئيسية المعلم';
+
+  @override
+  String get homeAssistantTitle => 'رئيسية المساعد';
+
+  @override
+  String get homeStudentTitle => 'رئيسية الطالب';
+
+  @override
+  String get homeGuardianTitle => 'رئيسية ولي الأمر';
+
+  @override
+  String get homeComingSoon => 'هذه الشاشة قيد التطوير.';
+
+  @override
+  String get homeInactiveTitle => 'الحساب معطّل';
+
+  @override
+  String get homeInactiveBody =>
+      'تم تعطيل حسابك من إدارة السنتر. تواصل مع الأدمن.';
+
+  @override
+  String get homeNoAccessTitle => 'لا توجد صلاحيات';
+
+  @override
+  String get homeNoAccessBody =>
+      'حسابك غير مرتبط بسنتر بشكل صحيح. تواصل مع الأدمن أو سجّل الخروج.';
 }

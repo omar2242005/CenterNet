@@ -6,6 +6,7 @@ abstract final class AuthRoutes {
   static const String verifyEmail = '/verify-email';
   static const String forgotPassword = '/forgot-password';
 
-  /// مؤقتة: شاشة "تم تسجيل الدخول". خطوة 3.5 هتستبدلها بالتوجيه حسب الدور.
+  /// نقطة الدخول بعد أي تسجيل دخول: شاشة بتحدد الدور وتوجّه للرئيسية
+  /// المناسبة (feature الـ home).
   static const String signedIn = '/signed-in';
 }
