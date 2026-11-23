@@ -3,6 +3,7 @@ import 'sessions_state.dart';
 import '../repository/assistant_repository.dart';
 
 class SessionsCubit extends Cubit<SessionsState> {
+  // ignore: unused_field
   final AssistantRepository _repository;
 
   SessionsCubit(this._repository) : super(const SessionsState());

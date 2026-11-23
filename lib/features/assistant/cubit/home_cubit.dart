@@ -3,6 +3,7 @@ import 'home_state.dart';
 import '../repository/assistant_repository.dart';
 
 class AssistantHomeCubit extends Cubit<AssistantHomeState> {
+  // ignore: unused_field
   final AssistantRepository _repository;
 
   AssistantHomeCubit(this._repository) : super(const AssistantHomeState());

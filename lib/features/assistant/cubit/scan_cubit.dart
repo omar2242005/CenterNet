@@ -3,6 +3,7 @@ import 'scan_state.dart';
 import '../repository/assistant_repository.dart';
 
 class ScanCubit extends Cubit<ScanState> {
+  // ignore: unused_field
   final AssistantRepository _repository;
 
   ScanCubit(this._repository) : super(const ScanState());
