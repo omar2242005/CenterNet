@@ -69,10 +69,20 @@ service cloud.firestore {
       return isActiveMember(c) && memberRole(c) in ['teacher', 'assistant'];
     }
 
-    function groupPath(c, g) {
-      return /databases/$(database)/documents/centers/$(c)/groups/$(g);
+  function sessionPath(c, s) {
+      return /databases/$(database)/documents/centers/$(c)/sessions/$(s);
     }
 
+    // معلم أو مساعد نشط، وهو من مجموعة الحصة دي.
+    function isSessionStaff(c, sid) {
+      return isStaff(c)
+        && exists(sessionPath(c, sid))
+        && exists(groupPath(c, get(sessionPath(c, sid)).data.groupId))
+        && (get(groupPath(c, get(sessionPath(c, sid)).data.groupId)).data.teacherId == request.auth.uid
+            || request.auth.uid in get(groupPath(c, get(sessionPath(c, sid)).data.groupId)).data.assistantIds);
+    }
+
+    
     // ------------------------------------------------------------------
     // التحقق من شكل المستندات
     // ------------------------------------------------------------------
@@ -160,6 +170,31 @@ service cloud.firestore {
         && d.get('endAt', null) is timestamp
         && d.endAt > d.startAt
         && d.get('status', null) in ['scheduled', 'cancelled'];
+    }
+
+        // سجل الحضور: الـ id لازم = sessionId_studentId، وحقول الإلغاء بقيمها الابتدائية.
+    function validAttendance(d, c, aid) {
+      return d.keys().hasOnly(['centerId', 'sessionId', 'studentId', 'status', 'method',
+                               'scannedAt', 'recordedBy', 'recordedAt',
+                               'voided', 'voidedBy', 'voidReason', 'voidedAt'])
+        && d.keys().hasAll(['centerId', 'sessionId', 'studentId', 'status', 'method',
+                            'recordedBy', 'recordedAt',
+                            'voided', 'voidedBy', 'voidReason', 'voidedAt'])
+        && d.centerId == c
+        && d.sessionId is string && d.sessionId.matches('[A-Za-z0-9_]+')
+        && d.studentId is string && d.studentId.matches('[A-Za-z0-9]+')
+        && aid == d.sessionId + '_' + d.studentId
+        && d.status in ['present', 'late', 'excused']
+        && d.method in ['qr', 'manual']
+        && (d.method == 'qr'
+              ? (d.get('scannedAt', null) is timestamp)
+              : !d.keys().hasAny(['scannedAt']))
+        && d.recordedBy == request.auth.uid
+        && d.recordedAt == request.time
+        && d.voided == false
+        && d.voidedBy == null
+        && d.voidReason == null
+        && d.voidedAt == null;
     }
 
     function nextStudentNo(c) {
@@ -403,6 +438,34 @@ service cloud.firestore {
         && resource.data.status == 'scheduled'
         && request.resource.data.status == 'cancelled'
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
+
+      allow delete: if false;
+    }
+
+        // ------------------------------------------------------------------
+    // centers/{c}/attendance/{aid}   (aid = sessionId_studentId)
+    // الكتابة والقراءة: الأدمن، أو معلم/مساعد مجموعة الحصة.
+    // مفيش delete: الإلغاء = update لحقول الإلغاء بس مع سبب.
+    // TODO(C): قراءة الطالب/ولي الأمر لحضوره من studentLinks.
+    // ------------------------------------------------------------------
+    match /centers/{c}/attendance/{aid} {
+      allow get, list: if isAdmin(c) || isSessionStaff(c, resource.data.sessionId);
+
+      allow create: if validAttendance(request.resource.data, c, aid)
+        && (isAdmin(c) || isSessionStaff(c, request.resource.data.sessionId))
+        && exists(sessionPath(c, request.resource.data.sessionId))
+        && exists(studentPath(c, request.resource.data.studentId));
+
+      allow update: if (isAdmin(c) || isSessionStaff(c, resource.data.sessionId))
+        && resource.data.voided == false
+        && request.resource.data.voided == true
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['voided', 'voidedBy', 'voidReason', 'voidedAt'])
+        && request.resource.data.voidedBy == request.auth.uid
+        && request.resource.data.voidReason is string
+        && request.resource.data.voidReason.size() >= 1
+        && request.resource.data.voidReason.size() <= 300
+        && request.resource.data.voidedAt == request.time;
 
       allow delete: if false;
     }
