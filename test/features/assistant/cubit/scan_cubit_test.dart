@@ -1,7 +1,7 @@
-import 'package:center_net/features/attendance/cubit/scan_cubit.dart';
-import 'package:center_net/features/attendance/models/scan_setup.dart';
-import 'package:center_net/features/attendance/services/pending_scan_store.dart';
-import 'package:center_net/features/attendance/services/scan_recorder.dart';
+import 'package:center_net/features/assistant/cubit/scan_cubit.dart';
+import 'package:center_net/features/assistant/models/pending_scan.dart';
+import 'package:center_net/features/assistant/models/scan_setup.dart';
+import 'package:center_net/features/assistant/services/scan_recorder.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// recorder بيرمي استثناء عند الكتابة (لاختبار فشل التخزين).

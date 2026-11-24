@@ -1,3 +1,4 @@
+import '../models/pending_scan.dart';
 import 'pending_scan_store.dart';
 
 /// المكان اللي المسحات الناجحة بتتسجل فيه.

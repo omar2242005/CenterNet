@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import '../core/services/local_store.dart';
 import '../core/services/pending_ops_guard.dart';
 import '../core/services/whatsapp_launcher.dart';
-import '../features/attendance/attendance_module.dart';
+import '../features/assistant/assistant_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
 import '../features/groups/groups_module.dart';
@@ -13,7 +13,6 @@ import '../features/home/home_module.dart';
 import '../features/sessions/sessions_module.dart';
 import '../features/staff/staff_module.dart';
 import '../features/students/students_module.dart';
-import '../features/grades/grades_module.dart';
 
 /// الـ service locator الوحيد في التطبيق.
 final GetIt sl = GetIt.instance;
@@ -44,6 +43,5 @@ void registerFeatures(GetIt g) {
   registerStudents(g);
   registerGroups(g);
   registerSessions(g);
-  registerAttendance(g);
-    registerGrades(g);
+  registerAssistant(g);
 }
