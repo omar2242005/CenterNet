@@ -1,6 +1,6 @@
-import 'package:center_net/features/attendance/models/scan_setup.dart';
-import 'package:center_net/features/attendance/screens/scan_screen.dart';
-import 'package:center_net/features/attendance/services/scan_recorder.dart';
+import 'package:center_net/features/assistant/models/scan_setup.dart';
+import 'package:center_net/features/assistant/screens/scan_screen.dart';
+import 'package:center_net/features/assistant/services/scan_recorder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

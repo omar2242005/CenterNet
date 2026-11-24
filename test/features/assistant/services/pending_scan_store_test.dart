@@ -3,7 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:center_net/core/services/local_store.dart';
 import 'package:center_net/core/services/pending_ops_guard.dart';
-import 'package:center_net/features/attendance/services/pending_scan_store.dart';
+import 'package:center_net/features/assistant/models/pending_scan.dart';
+import 'package:center_net/features/assistant/services/pending_scan_store.dart';
 
 void main() {
   late LocalStore local;

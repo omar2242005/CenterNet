@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:center_net/features/attendance/rules/scan_validator.dart';
+import 'package:center_net/features/assistant/rules/scan_validator.dart';
 
 void main() {
   final start = DateTime(2026, 11, 19, 17);

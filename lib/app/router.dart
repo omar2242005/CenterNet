@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/attendance/attendance_module.dart';
+import '../features/assistant/assistant_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
 import '../features/groups/groups_module.dart';
@@ -22,7 +22,7 @@ final List<RouteBase> featureRoutes = <RouteBase>[
   ...staffRoutes,
   ...studentRoutes,
   ...groupRoutes,
-  ...attendanceRoutes,
+  ...assistantRoutes,
 ];
 
 /// [routes] للاختبار بس. الافتراضي هو [featureRoutes].

@@ -1,5 +1,5 @@
 import 'package:center_net/app/route_guard.dart';
-import 'package:center_net/features/attendance/attendance_route_names.dart';
+import 'package:center_net/features/assistant/assistant_route_names.dart';
 import 'package:center_net/features/auth/auth_route_names.dart';
 import 'package:center_net/features/centers/center_route_names.dart';
 import 'package:center_net/features/home/home_route_names.dart';
@@ -114,11 +114,11 @@ void main() {
     });
 
     test('المسح للمساعد والمعلم بس', () {
-      expect(g(AttendanceRoutes.scan, role: HomeDestination.assistant), isNull);
-      expect(g(AttendanceRoutes.scan, role: HomeDestination.teacher), isNull);
-      expect(g(AttendanceRoutes.scan, role: HomeDestination.admin),
+      expect(g(AssistantRouteNames.scan, role: HomeDestination.assistant), isNull);
+      expect(g(AssistantRouteNames.scan, role: HomeDestination.teacher), isNull);
+      expect(g(AssistantRouteNames.scan, role: HomeDestination.admin),
           HomeRoutes.admin);
-      expect(g(AttendanceRoutes.scan, role: HomeDestination.student),
+      expect(g(AssistantRouteNames.scan, role: HomeDestination.student),
           HomeRoutes.student);
     });
 
