@@ -1136,6 +1136,138 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حسابك غير مرتبط بسنتر بشكل صحيح. تواصل مع الأدمن أو سجّل الخروج.'**
   String get homeNoAccessBody;
+
+  /// No description provided for @examsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الامتحانات'**
+  String get examsTitle;
+
+  /// No description provided for @examsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تتم إضافة امتحانات بعد'**
+  String get examsEmpty;
+
+  /// No description provided for @examAddTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء امتحان'**
+  String get examAddTitle;
+
+  /// No description provided for @examFieldTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'عنوان الامتحان'**
+  String get examFieldTitle;
+
+  /// No description provided for @examFieldMax.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدرجة النهائية'**
+  String get examFieldMax;
+
+  /// No description provided for @examMaxInvalid.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدرجة النهائية لازم تكون رقمًا أكبر من صفر'**
+  String get examMaxInvalid;
+
+  /// No description provided for @examSave.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ الامتحان'**
+  String get examSave;
+
+  /// No description provided for @examPublished.
+  ///
+  /// In ar, this message translates to:
+  /// **'منشور'**
+  String get examPublished;
+
+  /// No description provided for @examDraft.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسودة'**
+  String get examDraft;
+
+  /// No description provided for @examPublish.
+  ///
+  /// In ar, this message translates to:
+  /// **'نشر الدرجات'**
+  String get examPublish;
+
+  /// No description provided for @examUnpublish.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء النشر'**
+  String get examUnpublish;
+
+  /// No description provided for @examMaxLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'من {max}'**
+  String examMaxLabel(String max);
+
+  /// No description provided for @scoresTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إدخال الدرجات'**
+  String get scoresTitle;
+
+  /// No description provided for @scoresEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد طلاب في المجموعة'**
+  String get scoresEmpty;
+
+  /// No description provided for @scoresRecorded.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم رصد {done} من {total}'**
+  String scoresRecorded(int done, int total);
+
+  /// No description provided for @scoreStateScored.
+  ///
+  /// In ar, this message translates to:
+  /// **'له درجة'**
+  String get scoreStateScored;
+
+  /// No description provided for @scoreStateAbsent.
+  ///
+  /// In ar, this message translates to:
+  /// **'غائب'**
+  String get scoreStateAbsent;
+
+  /// No description provided for @scoreStateExcused.
+  ///
+  /// In ar, this message translates to:
+  /// **'معفى'**
+  String get scoreStateExcused;
+
+  /// No description provided for @scoreNotYet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لسه'**
+  String get scoreNotYet;
+
+  /// No description provided for @scoreFieldScore.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدرجة'**
+  String get scoreFieldScore;
+
+  /// No description provided for @scoreFieldComment.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعليق (اختياري)'**
+  String get scoreFieldComment;
+
+  /// No description provided for @scoreSave.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ'**
+  String get scoreSave;
 }
 
 class _AppLocalizationsDelegate

@@ -8,6 +8,8 @@ import '../features/groups/groups_module.dart';
 import '../features/home/home_module.dart';
 import '../features/staff/staff_module.dart';
 import '../features/students/students_module.dart';
+import '../features/grades/grades_module.dart';
+import '../features/grades/grades_module.dart';
 
 /// أسماء المسارات في مكان واحد.
 abstract final class AppRoutes {
@@ -23,6 +25,7 @@ final List<RouteBase> featureRoutes = <RouteBase>[
   ...studentRoutes,
   ...groupRoutes,
   ...attendanceRoutes,
+    ...gradeRoutes,
 ];
 
 /// [routes] للاختبار بس. الافتراضي هو [featureRoutes].

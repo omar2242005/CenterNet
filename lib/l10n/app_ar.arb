@@ -382,5 +382,45 @@
   "homeInactiveTitle": "الحساب معطّل",
   "homeInactiveBody": "تم تعطيل حسابك من إدارة السنتر. تواصل مع الأدمن.",
   "homeNoAccessTitle": "لا توجد صلاحيات",
-  "homeNoAccessBody": "حسابك غير مرتبط بسنتر بشكل صحيح. تواصل مع الأدمن أو سجّل الخروج."
+  "homeNoAccessBody": "حسابك غير مرتبط بسنتر بشكل صحيح. تواصل مع الأدمن أو سجّل الخروج.",
+    "examsTitle": "الامتحانات",
+  "examsEmpty": "لم تتم إضافة امتحانات بعد",
+  "examAddTitle": "إنشاء امتحان",
+  "examFieldTitle": "عنوان الامتحان",
+  "examFieldMax": "الدرجة النهائية",
+  "examMaxInvalid": "الدرجة النهائية لازم تكون رقمًا أكبر من صفر",
+  "examSave": "حفظ الامتحان",
+  "examPublished": "منشور",
+  "examDraft": "مسودة",
+  "examPublish": "نشر الدرجات",
+  "examUnpublish": "إلغاء النشر",
+  "examMaxLabel": "من {max}",
+  "@examMaxLabel": {
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "scoresTitle": "إدخال الدرجات",
+  "scoresEmpty": "لا يوجد طلاب في المجموعة",
+  "scoresRecorded": "تم رصد {done} من {total}",
+  "@scoresRecorded": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreStateScored": "له درجة",
+  "scoreStateAbsent": "غائب",
+  "scoreStateExcused": "معفى",
+  "scoreNotYet": "لسه",
+  "scoreFieldScore": "الدرجة",
+  "scoreFieldComment": "تع
+  ليق (اختياري)",
+  "scoreSave": "حفظ"
 }

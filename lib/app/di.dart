@@ -13,6 +13,7 @@ import '../features/home/home_module.dart';
 import '../features/sessions/sessions_module.dart';
 import '../features/staff/staff_module.dart';
 import '../features/students/students_module.dart';
+import '../features/grades/grades_module.dart';
 
 /// الـ service locator الوحيد في التطبيق.
 final GetIt sl = GetIt.instance;
@@ -44,4 +45,5 @@ void registerFeatures(GetIt g) {
   registerGroups(g);
   registerSessions(g);
   registerAttendance(g);
+    registerGrades(g);
 }
