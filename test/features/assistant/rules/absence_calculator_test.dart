@@ -1,5 +1,5 @@
-import 'package:center_net/features/attendance/models/attendance.dart';
-import 'package:center_net/features/attendance/rules/absence_calculator.dart';
+import 'package:center_net/features/assistant/models/attendance.dart';
+import 'package:center_net/features/assistant/rules/absence_calculator.dart';
 import 'package:center_net/features/sessions/models/session.dart';
 import 'package:center_net/features/students/models/student.dart';
 import 'package:flutter_test/flutter_test.dart';

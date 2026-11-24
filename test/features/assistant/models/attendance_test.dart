@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:center_net/features/attendance/models/attendance.dart';
+import 'package:center_net/features/assistant/models/attendance.dart';
 
 void main() {
   final scanned = DateTime.utc(2026, 11, 19, 15, 5);

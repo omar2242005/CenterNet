@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../app/session_role.dart';
 import '../../l10n/app_localizations.dart';
-import '../attendance/attendance_route_names.dart';
+
+import '../assistant/assistant_route_names.dart';
 import '../auth/auth_route_names.dart';
 import '../centers/center_route_names.dart';
 import '../staff/staff_route_names.dart';
@@ -59,7 +59,7 @@ final List<RouteBase> homeRoutes = <RouteBase>[
       return RoleHomeScreen(
         title: l10n.homeAssistantTitle,
         actions: [
-          (label: l10n.scanTitleDemo, route: AttendanceRoutes.scan),
+          (label: l10n.scanTitleDemo, route: AssistantRouteNames.scan),
         ],
       );
     },
@@ -95,3 +95,4 @@ final List<RouteBase> homeRoutes = <RouteBase>[
     },
   ),
 ];
+

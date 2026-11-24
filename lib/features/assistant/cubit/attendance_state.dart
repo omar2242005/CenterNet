@@ -1,5 +1,6 @@
 import '../../../core/state/view_state.dart';
-import '../../attendance/models/attendance.dart';
+import '../models/attendance.dart';
+
 
 class AttendanceState {
   final ViewState<List<Attendance>> status;

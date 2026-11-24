@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/attendance/attendance_route_names.dart';
+import '../features/assistant/assistant_route_names.dart';
 import '../features/auth/auth_route_names.dart';
 import '../features/auth/repository/auth_repository.dart';
 import '../features/centers/center_route_names.dart';
@@ -32,7 +32,7 @@ final Map<String, Set<HomeDestination>> _exactAccess = {
   StaffRoutes.list: _admin,
   StaffRoutes.invite: _admin,
   StaffRoutes.join: {HomeDestination.joinCenter},
-  AttendanceRoutes.scan: {HomeDestination.assistant, HomeDestination.teacher},
+  AssistantRouteNames.scan: {HomeDestination.assistant, HomeDestination.teacher},
 };
 
 /// المسار نفسه وكل اللي تحته (`/students` و`/students/new` ...).
