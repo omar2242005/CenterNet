@@ -85,6 +85,30 @@ service cloud.firestore {
         && (get(groupPath(c, get(sessionPath(c, sid)).data.groupId)).data.teacherId == request.auth.uid
             || request.auth.uid in get(groupPath(c, get(sessionPath(c, sid)).data.groupId)).data.assistantIds);
     }
+        function examPath(c, e) {
+      return /databases/$(database)/documents/centers/$(c)/exams/$(e);
+    }
+
+    // معلم أو مساعد نشط في المجموعة دي.
+    function isGroupStaff(c, gid) {
+      return isStaff(c)
+        && exists(groupPath(c, gid))
+        && (get(groupPath(c, gid)).data.teacherId == request.auth.uid
+            || request.auth.uid in get(groupPath(c, gid)).data.assistantIds);
+    }
+
+    // معلم المجموعة نفسه (مش المساعد).
+    function isGroupTeacher(c, gid) {
+      return isActiveMember(c)
+        && memberRole(c) == 'teacher'
+        && exists(groupPath(c, gid))
+        && get(groupPath(c, gid)).data.teacherId == request.auth.uid;
+    }
+
+    // الأدمن أو معلم المجموعة: يدير الامتحانات والدرجات.
+    function canManageGroupGrades(c, gid) {
+      return isAdmin(c) || isGroupTeacher(c, gid);
+    }
 
     
     // ------------------------------------------------------------------
@@ -199,6 +223,51 @@ service cloud.firestore {
         && d.voidedBy == null
         && d.voidReason == null
         && d.voidedAt == null;
+    }
+        function validExam(d, c) {
+      return d.keys().hasOnly(['centerId', 'groupId', 'title', 'date', 'maxScore',
+                               'published', 'createdAt', 'createdBy'])
+        && d.keys().hasAll(['centerId', 'groupId', 'title', 'date', 'maxScore',
+                            'published', 'createdAt', 'createdBy'])
+        && d.centerId == c
+        && d.groupId is string
+        && exists(groupPath(c, d.groupId))
+        && d.title is string && d.title.size() > 0 && d.title.size() <= 120
+        && d.date is timestamp
+        && d.maxScore is number && d.maxScore > 0
+        && d.published == false
+        && d.createdBy == request.auth.uid
+        && d.createdAt == request.time;
+    }
+
+    // قيم الدرجة: scored لازم score من 0 لحد max بخطوة 0.5، وغير كده score = null.
+    function validScoreValues(d, maxScore) {
+      return d.state in ['scored', 'absent', 'excused']
+        && d.comment is string && d.comment.size() <= 300
+        && (d.state == 'scored'
+              ? (d.score is number
+                 && d.score >= 0 && d.score <= maxScore
+                 && math.floor(d.score * 2) == d.score * 2)
+              : d.score == null);
+    }
+
+    // الدرجة: id = examId_studentId، والطالب في مجموعة الامتحان.
+   function validScore(d, c, aid) {
+      return d.keys().hasOnly(['centerId', 'examId', 'studentId', 'state', 'score',
+                               'comment', 'createdAt', 'createdBy'])
+        && d.keys().hasAll(['centerId', 'examId', 'studentId', 'state', 'score',
+                            'comment', 'createdAt', 'createdBy'])
+        && d.centerId == c
+        && d.examId is string && d.examId.matches('[A-Za-z0-9]+')
+        && d.studentId is string && d.studentId.matches('[A-Za-z0-9]+')
+        && aid == d.examId + '_' + d.studentId
+        && exists(examPath(c, d.examId))
+        && exists(studentPath(c, d.studentId))
+        && get(examPath(c, d.examId)).data.groupId
+             in get(studentPath(c, d.studentId)).data.groupIds
+        && validScoreValues(d, get(examPath(c, d.examId)).data.maxScore)
+        && d.createdBy == request.auth.uid
+        && d.createdAt == request.time;
     }
 
     function nextStudentNo(c) {
@@ -470,6 +539,48 @@ service cloud.firestore {
         && request.resource.data.voidReason.size() >= 1
         && request.resource.data.voidReason.size() <= 300
         && request.resource.data.voidedAt == request.time;
+
+      allow delete: if false;
+    }
+        // ------------------------------------------------------------------
+    // centers/{c}/exams/{eid}
+    // الأدمن أو معلم المجموعة ينشئ وينشر. المعلم/المساعد بتوع المجموعة يقروا.
+    // النشر = تعديل حقل published بس. مفيش delete.
+    // TODO(C): قراءة الطالب/ولي الأمر للامتحانات المنشورة بس من studentLinks.
+    // ------------------------------------------------------------------
+    match /centers/{c}/exams/{eid} {
+      allow get, list: if isAdmin(c) || isGroupStaff(c, resource.data.groupId);
+
+      allow create: if validExam(request.resource.data, c)
+        && canManageGroupGrades(c, request.resource.data.groupId);
+
+      allow update: if canManageGroupGrades(c, resource.data.groupId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['published'])
+        && request.resource.data.published is bool;
+
+      allow delete: if false;
+    }
+
+    // ------------------------------------------------------------------
+    // centers/{c}/scores/{aid}   (aid = examId_studentId)
+    // الأدمن أو معلم المجموعة يكتب. المعلم/المساعد بتوع المجموعة يقروا.
+    // التعديل: state/score/comment بس. مفيش delete.
+    // TODO(C): قراءة الطالب/ولي الأمر لدرجاته المنشورة بس.
+    // ------------------------------------------------------------------
+    match /centers/{c}/scores/{aid} {
+      allow get, list: if isAdmin(c)
+        || (exists(examPath(c, resource.data.examId))
+            && isGroupStaff(c, get(examPath(c, resource.data.examId)).data.groupId));
+
+      allow create: if validScore(request.resource.data, c, aid)
+        && canManageGroupGrades(c, get(examPath(c, request.resource.data.examId)).data.groupId);
+
+      allow update: if exists(examPath(c, resource.data.examId))
+        && canManageGroupGrades(c, get(examPath(c, resource.data.examId)).data.groupId)
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['state', 'score', 'comment'])
+        && validScoreValues(request.resource.data,
+                            get(examPath(c, resource.data.examId)).data.maxScore);
 
       allow delete: if false;
     }
