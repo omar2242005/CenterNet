@@ -1268,6 +1268,318 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حفظ'**
   String get scoreSave;
+  /// No description provided for @linkEnterTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ربط الحساب بالطالب'**
+  String get linkEnterTitle;
+
+  /// No description provided for @linkStudentIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.'**
+  String get linkStudentIntro;
+
+  /// No description provided for @linkGuardianIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.'**
+  String get linkGuardianIntro;
+
+  /// No description provided for @linkCodeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود الربط'**
+  String get linkCodeLabel;
+
+  /// No description provided for @linkCodeHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثال: AB3CD4EF'**
+  String get linkCodeHint;
+
+  /// No description provided for @linkConsentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموافقة على الربط'**
+  String get linkConsentTitle;
+
+  /// No description provided for @linkConsentStudent.
+  ///
+  /// In ar, this message translates to:
+  /// **'بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.'**
+  String get linkConsentStudent;
+
+  /// No description provided for @linkConsentGuardian.
+  ///
+  /// In ar, this message translates to:
+  /// **'بربط حسابك أنت توافق على عرض البيانات الدراسية للطالب لك (الحضور والدرجات والجدول). الحد الأقصى {max} أولياء أمور لكل طالب، وتقدر تفك الربط في أي وقت.'**
+  String linkConsentGuardian(int max);
+
+  /// No description provided for @linkConsentAgree.
+  ///
+  /// In ar, this message translates to:
+  /// **'أوافق'**
+  String get linkConsentAgree;
+
+  /// No description provided for @linkSubmit.
+  ///
+  /// In ar, this message translates to:
+  /// **'ربط'**
+  String get linkSubmit;
+
+  /// No description provided for @linkSuccess.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الربط بنجاح'**
+  String get linkSuccess;
+
+  /// No description provided for @linkUnlink.
+  ///
+  /// In ar, this message translates to:
+  /// **'فك الربط'**
+  String get linkUnlink;
+
+  /// No description provided for @linkUnlinkTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'فك الربط'**
+  String get linkUnlinkTitle;
+
+  /// No description provided for @linkUnlinkMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل تريد فك ربط حسابك بالطالب {name}؟ لن تتمكن من رؤية بياناته بعد ذلك.'**
+  String linkUnlinkMessage(String name);
+
+  /// No description provided for @linkIssueStudentCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود ربط الطالب'**
+  String get linkIssueStudentCode;
+
+  /// No description provided for @linkIssueGuardianCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود ربط ولي الأمر'**
+  String get linkIssueGuardianCode;
+
+  /// No description provided for @linkIssueRelationTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'صلة القرابة'**
+  String get linkIssueRelationTitle;
+
+  /// No description provided for @linkIssueExpires.
+  ///
+  /// In ar, this message translates to:
+  /// **'صالح حتى {date}'**
+  String linkIssueExpires(String date);
+
+  /// No description provided for @linkIssueCopy.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسخ'**
+  String get linkIssueCopy;
+
+  /// No description provided for @linkIssueCopied.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم نسخ الكود'**
+  String get linkIssueCopied;
+
+  /// No description provided for @linkIssueClose.
+  ///
+  /// In ar, this message translates to:
+  /// **'إغلاق'**
+  String get linkIssueClose;
+
+  /// No description provided for @relationFather.
+  ///
+  /// In ar, this message translates to:
+  /// **'أب'**
+  String get relationFather;
+
+  /// No description provided for @relationMother.
+  ///
+  /// In ar, this message translates to:
+  /// **'أم'**
+  String get relationMother;
+
+  /// No description provided for @relationBrother.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخ'**
+  String get relationBrother;
+
+  /// No description provided for @relationSister.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخت'**
+  String get relationSister;
+
+  /// No description provided for @relationOther.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخرى'**
+  String get relationOther;
+
+  /// No description provided for @areaNotLinked.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسابك غير مربوط بطالب بعد.'**
+  String get areaNotLinked;
+
+  /// No description provided for @areaLinkStudentButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'ربط حسابي بكود الطالب'**
+  String get areaLinkStudentButton;
+
+  /// No description provided for @areaScheduleTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجدول الأسبوعي'**
+  String get areaScheduleTitle;
+
+  /// No description provided for @areaAttendanceTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجل الحضور'**
+  String get areaAttendanceTitle;
+
+  /// No description provided for @areaResultsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'النتائج'**
+  String get areaResultsTitle;
+
+  /// No description provided for @areaScheduleEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مواعيد مسجلة'**
+  String get areaScheduleEmpty;
+
+  /// No description provided for @areaAttendanceEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد حضور مسجل بعد'**
+  String get areaAttendanceEmpty;
+
+  /// No description provided for @areaResultsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد نتائج منشورة بعد'**
+  String get areaResultsEmpty;
+
+  /// No description provided for @weekdayName.
+  ///
+  /// In ar, this message translates to:
+  /// **'{day, select, d1{الاثنين} d2{الثلاثاء} d3{الأربعاء} d4{الخميس} d5{الجمعة} d6{السبت} other{الأحد}}'**
+  String weekdayName(String day);
+
+  /// No description provided for @scheduleRoom.
+  ///
+  /// In ar, this message translates to:
+  /// **'القاعة: {room}'**
+  String scheduleRoom(String room);
+
+  /// No description provided for @scheduleTimeRange.
+  ///
+  /// In ar, this message translates to:
+  /// **'{start} - {end}'**
+  String scheduleTimeRange(String start, String end);
+
+  /// No description provided for @attendanceStatusPresent.
+  ///
+  /// In ar, this message translates to:
+  /// **'حاضر'**
+  String get attendanceStatusPresent;
+
+  /// No description provided for @attendanceStatusLate.
+  ///
+  /// In ar, this message translates to:
+  /// **'متأخر'**
+  String get attendanceStatusLate;
+
+  /// No description provided for @attendanceStatusExcused.
+  ///
+  /// In ar, this message translates to:
+  /// **'غائب بعذر'**
+  String get attendanceStatusExcused;
+
+  /// No description provided for @attendanceSummary.
+  ///
+  /// In ar, this message translates to:
+  /// **'حضر {attended} من {total} حصة'**
+  String attendanceSummary(int attended, int total);
+
+  /// No description provided for @attendanceDateTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'{date} - {time}'**
+  String attendanceDateTime(String date, String time);
+
+  /// No description provided for @resultsAverage.
+  ///
+  /// In ar, this message translates to:
+  /// **'المتوسط العام: {percent}%'**
+  String resultsAverage(String percent);
+
+  /// No description provided for @resultsScoreOf.
+  ///
+  /// In ar, this message translates to:
+  /// **'{score} من {max}'**
+  String resultsScoreOf(String score, String max);
+
+  /// No description provided for @resultsAbsent.
+  ///
+  /// In ar, this message translates to:
+  /// **'غائب'**
+  String get resultsAbsent;
+
+  /// No description provided for @resultsExcused.
+  ///
+  /// In ar, this message translates to:
+  /// **'معفى'**
+  String get resultsExcused;
+
+  /// No description provided for @resultsPending.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تُرصد بعد'**
+  String get resultsPending;
+
+  /// No description provided for @guardianNoChildren.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تربط أي طالب بعد.'**
+  String get guardianNoChildren;
+
+  /// No description provided for @guardianLinkChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'ربط طالب بكود'**
+  String get guardianLinkChild;
+
+  /// No description provided for @guardianAddChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'ربط طالب آخر'**
+  String get guardianAddChild;
+
+  /// No description provided for @guardianRelation.
+  ///
+  /// In ar, this message translates to:
+  /// **'صلتك: {relation}'**
+  String guardianRelation(String relation);
+
+  /// No description provided for @guardianChooseChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر الطالب'**
+  String get guardianChooseChild;
+
 }
 
 class _AppLocalizationsDelegate

@@ -52,6 +52,9 @@ class StudentLink {
   /// صلة القرابة: ولي الأمر فقط.
   final String? relation;
 
+  /// الكود اللي اتستخدم في الربط (الـ Rules بتربطه باستهلاك الكود في نفس الـ Batch).
+  final String? inviteCode;
+
   /// null قبل ما السيرفر يكتب الوقت (قراءة من الكاش بعد كتابة محلية).
   final DateTime? createdAt;
 
@@ -67,6 +70,7 @@ class StudentLink {
     required this.status,
     required this.createdBy,
     this.relation,
+    this.inviteCode,
     this.createdAt,
   });
 
@@ -77,6 +81,7 @@ class StudentLink {
     required String studentId,
     required LinkKind kind,
     String? relation,
+    String? inviteCode,
   }) {
     // بيرمي ArgumentError لو أي جزء مش حروف وأرقام.
     FirestorePaths.studentLink(centerId, uid, studentId);
@@ -99,6 +104,7 @@ class StudentLink {
       kind: kind,
       status: LinkStatus.active,
       relation: kind == LinkKind.guardian ? rel : null,
+      inviteCode: inviteCode,
       createdBy: uid,
     );
   }
@@ -118,6 +124,7 @@ class StudentLink {
       );
     }
     final relation = map['relation'];
+    final inviteCode = map['inviteCode'];
     return StudentLink._(
       id: id,
       centerId: centerId,
@@ -126,6 +133,7 @@ class StudentLink {
       kind: LinkKind.parse(map['kind']),
       status: LinkStatus.parse(map['status']),
       relation: relation is String ? relation : null,
+      inviteCode: inviteCode is String ? inviteCode : null,
       createdAt: _toDate(map['createdAt']),
       createdBy: createdBy,
     );
@@ -141,6 +149,7 @@ class StudentLink {
       'kind': kind.wire,
       'status': status.wire,
       if (relation != null) 'relation': relation,
+      if (inviteCode != null) 'inviteCode': inviteCode,
       'createdAt': createdAt ?? FieldValue.serverTimestamp(),
       'createdBy': createdBy,
     };

@@ -421,5 +421,146 @@
   "scoreNotYet": "لسه",
   "scoreFieldScore": "الدرجة",
   "scoreFieldComment": "تعليق (اختياري)",
-  "scoreSave": "حفظ"
+  "scoreSave": "حفظ",
+  "linkEnterTitle": "ربط الحساب بالطالب",
+  "linkStudentIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.",
+  "linkGuardianIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.",
+  "linkCodeLabel": "كود الربط",
+  "linkCodeHint": "مثال: AB3CD4EF",
+  "linkConsentTitle": "الموافقة على الربط",
+  "linkConsentStudent": "بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.",
+  "linkConsentGuardian": "بربط حسابك أنت توافق على عرض البيانات الدراسية للطالب لك (الحضور والدرجات والجدول). الحد الأقصى {max} أولياء أمور لكل طالب، وتقدر تفك الربط في أي وقت.",
+  "@linkConsentGuardian": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "linkConsentAgree": "أوافق",
+  "linkSubmit": "ربط",
+  "linkSuccess": "تم الربط بنجاح",
+  "linkUnlink": "فك الربط",
+  "linkUnlinkTitle": "فك الربط",
+  "linkUnlinkMessage": "هل تريد فك ربط حسابك بالطالب {name}؟ لن تتمكن من رؤية بياناته بعد ذلك.",
+  "@linkUnlinkMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "linkIssueStudentCode": "كود ربط الطالب",
+  "linkIssueGuardianCode": "كود ربط ولي الأمر",
+  "linkIssueRelationTitle": "صلة القرابة",
+  "linkIssueExpires": "صالح حتى {date}",
+  "@linkIssueExpires": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "linkIssueCopy": "نسخ",
+  "linkIssueCopied": "تم نسخ الكود",
+  "linkIssueClose": "إغلاق",
+  "relationFather": "أب",
+  "relationMother": "أم",
+  "relationBrother": "أخ",
+  "relationSister": "أخت",
+  "relationOther": "أخرى",
+  "areaNotLinked": "حسابك غير مربوط بطالب بعد.",
+  "areaLinkStudentButton": "ربط حسابي بكود الطالب",
+  "areaScheduleTitle": "الجدول الأسبوعي",
+  "areaAttendanceTitle": "سجل الحضور",
+  "areaResultsTitle": "النتائج",
+  "areaScheduleEmpty": "لا توجد مواعيد مسجلة",
+  "areaAttendanceEmpty": "لا يوجد حضور مسجل بعد",
+  "areaResultsEmpty": "لا توجد نتائج منشورة بعد",
+  "weekdayName": "{day, select, d1{الاثنين} d2{الثلاثاء} d3{الأربعاء} d4{الخميس} d5{الجمعة} d6{السبت} other{الأحد}}",
+  "@weekdayName": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "scheduleRoom": "القاعة: {room}",
+  "@scheduleRoom": {
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "scheduleTimeRange": "{start} - {end}",
+  "@scheduleTimeRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceStatusPresent": "حاضر",
+  "attendanceStatusLate": "متأخر",
+  "attendanceStatusExcused": "غائب بعذر",
+  "attendanceSummary": "حضر {attended} من {total} حصة",
+  "@attendanceSummary": {
+    "placeholders": {
+      "attended": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceDateTime": "{date} - {time}",
+  "@attendanceDateTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsAverage": "المتوسط العام: {percent}%",
+  "@resultsAverage": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsScoreOf": "{score} من {max}",
+  "@resultsScoreOf": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsAbsent": "غائب",
+  "resultsExcused": "معفى",
+  "resultsPending": "لم تُرصد بعد",
+  "guardianNoChildren": "لم تربط أي طالب بعد.",
+  "guardianLinkChild": "ربط طالب بكود",
+  "guardianAddChild": "ربط طالب آخر",
+  "guardianRelation": "صلتك: {relation}",
+  "@guardianRelation": {
+    "placeholders": {
+      "relation": {
+        "type": "String"
+      }
+    }
+  },
+  "guardianChooseChild": "اختر الطالب"
 }

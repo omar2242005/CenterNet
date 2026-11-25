@@ -680,4 +680,191 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get scoreSave => 'حفظ';
+
+  @override
+  String get linkEnterTitle => 'ربط الحساب بالطالب';
+
+  @override
+  String get linkStudentIntro => 'اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.';
+
+  @override
+  String get linkGuardianIntro => 'اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.';
+
+  @override
+  String get linkCodeLabel => 'كود الربط';
+
+  @override
+  String get linkCodeHint => 'مثال: AB3CD4EF';
+
+  @override
+  String get linkConsentTitle => 'الموافقة على الربط';
+
+  @override
+  String get linkConsentStudent => 'بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.';
+
+  @override
+  String linkConsentGuardian(int max) {
+    return 'بربط حسابك أنت توافق على عرض البيانات الدراسية للطالب لك (الحضور والدرجات والجدول). الحد الأقصى $max أولياء أمور لكل طالب، وتقدر تفك الربط في أي وقت.';
+  }
+
+  @override
+  String get linkConsentAgree => 'أوافق';
+
+  @override
+  String get linkSubmit => 'ربط';
+
+  @override
+  String get linkSuccess => 'تم الربط بنجاح';
+
+  @override
+  String get linkUnlink => 'فك الربط';
+
+  @override
+  String get linkUnlinkTitle => 'فك الربط';
+
+  @override
+  String linkUnlinkMessage(String name) {
+    return 'هل تريد فك ربط حسابك بالطالب $name؟ لن تتمكن من رؤية بياناته بعد ذلك.';
+  }
+
+  @override
+  String get linkIssueStudentCode => 'كود ربط الطالب';
+
+  @override
+  String get linkIssueGuardianCode => 'كود ربط ولي الأمر';
+
+  @override
+  String get linkIssueRelationTitle => 'صلة القرابة';
+
+  @override
+  String linkIssueExpires(String date) {
+    return 'صالح حتى $date';
+  }
+
+  @override
+  String get linkIssueCopy => 'نسخ';
+
+  @override
+  String get linkIssueCopied => 'تم نسخ الكود';
+
+  @override
+  String get linkIssueClose => 'إغلاق';
+
+  @override
+  String get relationFather => 'أب';
+
+  @override
+  String get relationMother => 'أم';
+
+  @override
+  String get relationBrother => 'أخ';
+
+  @override
+  String get relationSister => 'أخت';
+
+  @override
+  String get relationOther => 'أخرى';
+
+  @override
+  String get areaNotLinked => 'حسابك غير مربوط بطالب بعد.';
+
+  @override
+  String get areaLinkStudentButton => 'ربط حسابي بكود الطالب';
+
+  @override
+  String get areaScheduleTitle => 'الجدول الأسبوعي';
+
+  @override
+  String get areaAttendanceTitle => 'سجل الحضور';
+
+  @override
+  String get areaResultsTitle => 'النتائج';
+
+  @override
+  String get areaScheduleEmpty => 'لا توجد مواعيد مسجلة';
+
+  @override
+  String get areaAttendanceEmpty => 'لا يوجد حضور مسجل بعد';
+
+  @override
+  String get areaResultsEmpty => 'لا توجد نتائج منشورة بعد';
+
+  @override
+  String weekdayName(String day) {
+    String _temp0 = intl.Intl.selectLogic(day, {
+      'd1': 'الاثنين',
+      'd2': 'الثلاثاء',
+      'd3': 'الأربعاء',
+      'd4': 'الخميس',
+      'd5': 'الجمعة',
+      'd6': 'السبت',
+      'other': 'الأحد',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String scheduleRoom(String room) {
+    return 'القاعة: $room';
+  }
+
+  @override
+  String scheduleTimeRange(String start, String end) {
+    return '$start - $end';
+  }
+
+  @override
+  String get attendanceStatusPresent => 'حاضر';
+
+  @override
+  String get attendanceStatusLate => 'متأخر';
+
+  @override
+  String get attendanceStatusExcused => 'غائب بعذر';
+
+  @override
+  String attendanceSummary(int attended, int total) {
+    return 'حضر $attended من $total حصة';
+  }
+
+  @override
+  String attendanceDateTime(String date, String time) {
+    return '$date - $time';
+  }
+
+  @override
+  String resultsAverage(String percent) {
+    return 'المتوسط العام: $percent%';
+  }
+
+  @override
+  String resultsScoreOf(String score, String max) {
+    return '$score من $max';
+  }
+
+  @override
+  String get resultsAbsent => 'غائب';
+
+  @override
+  String get resultsExcused => 'معفى';
+
+  @override
+  String get resultsPending => 'لم تُرصد بعد';
+
+  @override
+  String get guardianNoChildren => 'لم تربط أي طالب بعد.';
+
+  @override
+  String get guardianLinkChild => 'ربط طالب بكود';
+
+  @override
+  String get guardianAddChild => 'ربط طالب آخر';
+
+  @override
+  String guardianRelation(String relation) {
+    return 'صلتك: $relation';
+  }
+
+  @override
+  String get guardianChooseChild => 'اختر الطالب';
 }
