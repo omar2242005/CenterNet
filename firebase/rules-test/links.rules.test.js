@@ -270,13 +270,15 @@ describe('ولي الأمر والحد الأقصى 4', () => {
   it('إعادة الربط بعد الفك بكود جديد', async () => {
     await assertSucceeds(linkBatch(as('gu1'), { uid: 'gu1', code: 'GUARD001', sid: 's1', kind: 'guardian' }));
     await assertSucceeds(unlinkBatch(as('gu1'), { uid: 'gu1', sid: 's1', kind: 'guardian' }));
-    const b = writeBatch(as('gu1'));
-    b.update(doc(as('gu1'), 'inviteCodes/GUARD003'), { usedBy: 'gu1' });
-    b.update(doc(as('gu1'), `centers/${A}/studentLinks/gu1_s1`), {
+    // نفس الـ db لكل الـ refs والـ batch (غير كده بيطلع invalid-argument)
+    const db = as('gu1');
+    const b = writeBatch(db);
+    b.update(doc(db, 'inviteCodes/GUARD003'), { usedBy: 'gu1' });
+    b.update(doc(db, `centers/${A}/studentLinks/gu1_s1`), {
       status: 'active', inviteCode: 'GUARD003', relation: 'أب',
     });
-    b.set(doc(as('gu1'), `centers/${A}/linkedUsers/gu1`), { count: increment(1), sid: 's1' }, { merge: true });
-    b.set(doc(as('gu1'), `centers/${A}/guardianCounts/s1`), { count: increment(1) }, { merge: true });
+    b.set(doc(db, `centers/${A}/linkedUsers/gu1`), { count: increment(1), sid: 's1' }, { merge: true });
+    b.set(doc(db, `centers/${A}/guardianCounts/s1`), { count: increment(1) }, { merge: true });
     await assertSucceeds(b.commit());
   });
 

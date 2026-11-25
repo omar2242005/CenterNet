@@ -6,12 +6,10 @@ import '../../../core/state/view_state.dart';
 /// تحميل بيانات شاشة (جدول/حضور/نتايج) بالحالات الأربع.
 /// [isEmpty] بيحدد إمتى النتيجة تتعرض كـ "فارغ".
 class ChildDataCubit<T> extends Cubit<ViewState<T>> {
-  ChildDataCubit(this._loader, {bool Function(T data)? isEmpty})
-      : _isEmpty = isEmpty,
-        super(ViewLoading<T>());
+  ChildDataCubit(this._loader, {this.isEmpty}) : super(ViewLoading<T>());
 
   final Future<T> Function() _loader;
-  final bool Function(T data)? _isEmpty;
+  final bool Function(T data)? isEmpty;
 
   Future<void> load() async {
     emit(ViewLoading<T>());
@@ -19,7 +17,7 @@ class ChildDataCubit<T> extends Cubit<ViewState<T>> {
       final data = await _loader();
       if (isClosed) return;
       emit(
-        (_isEmpty?.call(data) ?? false)
+        (isEmpty?.call(data) ?? false)
             ? ViewEmpty<T>()
             : ViewSuccess<T>(data),
       );
