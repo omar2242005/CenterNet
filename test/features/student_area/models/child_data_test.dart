@@ -5,7 +5,7 @@ import 'package:center_net/features/groups/models/group.dart';
 import 'package:center_net/features/student_area/models/child_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Group group(String id, String name, List<Map<String, dynamic>> slots,
+Group makeGroup(String id, String name, List<Map<String, dynamic>> slots,
     {String status = 'active'}) {
   return Group.fromMap(id, <String, dynamic>{
     'centerId': 'c1',
@@ -57,14 +57,14 @@ void main() {
   group('buildSchedule', () {
     test('بيرتب من السبت وبعدين بالوقت، وبيتخطى المؤرشف', () {
       final entries = buildSchedule([
-        group('g1', 'جبر', [
+        makeGroup('g1', 'جبر', [
           {'weekday': 1, 'startMinutes': 600, 'durationMinutes': 60}, // اثنين
           {'weekday': 6, 'startMinutes': 900, 'durationMinutes': 60}, // سبت
         ]),
-        group('g2', 'هندسة', [
+        makeGroup('g2', 'هندسة', [
           {'weekday': 6, 'startMinutes': 600, 'durationMinutes': 60}, // سبت أبكر
         ]),
-        group('g3', 'قديمة', [
+        makeGroup('g3', 'قديمة', [
           {'weekday': 7, 'startMinutes': 600, 'durationMinutes': 60},
         ], status: 'archived'),
       ]);
