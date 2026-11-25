@@ -731,13 +731,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scoreSave => 'حفظ';
 
   @override
+  String get myGroupsTitle => 'مجموعاتي';
+
+  @override
+  String get myGroupsEmpty => 'لا توجد مجموعات مسندة إليك';
+
+  @override
+  String get groupExamsButton => 'الامتحانات والدرجات';
+
+  @override
+  String get groupNoStudents => 'لا يوجد طلاب في المجموعة';
+
+  @override
+  String groupStudentsSummary(int students, int sessions) {
+    return '$students طالب · $sessions حصة سابقة';
+  }
+
+  @override
+  String groupAbsencesBadge(int count) {
+    return 'غياب $count';
+  }
+
+  @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override
-  String get linkStudentIntro => 'اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.';
+  String get linkStudentIntro =>
+      'اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.';
 
   @override
-  String get linkGuardianIntro => 'اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.';
+  String get linkGuardianIntro =>
+      'اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.';
 
   @override
   String get linkCodeLabel => 'كود الربط';
@@ -749,7 +773,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get linkConsentTitle => 'الموافقة على الربط';
 
   @override
-  String get linkConsentStudent => 'بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.';
+  String get linkConsentStudent =>
+      'بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.';
 
   @override
   String linkConsentGuardian(int max) {
