@@ -227,6 +227,10 @@ async function main() {
     centerId: CENTER, uid: 'studentAhmed', studentId: 's1', kind: 'student', status: 'active',
     createdAt: now, createdBy: ADMIN,
   });
+  // عدّادات الربط (Person 3): ولي الأمر النشطين للطالب + ربط كل مستخدم النشط
+  set(`centers/${CENTER}/guardianCounts/s1`, { count: 1 });
+  set(`centers/${CENTER}/linkedUsers/guardianAhmed`, { count: 1, sid: 's1' });
+  set(`centers/${CENTER}/linkedUsers/studentAhmed`, { count: 1, sid: 's1' });
 
   // امتحان الجبر (لسه مش منشور) + درجات g1
   // الشكل مطابق لـ Exam و Score في lib/features/grades/models.

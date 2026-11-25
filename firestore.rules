@@ -328,8 +328,7 @@ service cloud.firestore {
     }
 
     // استهلاك كود موظف (تعديل usedBy فقط) لازم يتزامن مع إنشاء العضوية المرتبطة بيه.
-    // TODO(C — خطوة 3.2): كود الطالب/ولي الأمر محتاج نفس الربط مع studentLinks.
-    //                      لحد ما يتكتب، استهلاكهم ممنوع (fail closed).
+    // كود الطالب/ولي الأمر: consumesLinkCode (قسم Person 3 فوق).
     function consumesStaffCode(id) {
       let old = resource.data;
       let me = memberPath(old.centerId, request.auth.uid);
@@ -350,6 +349,198 @@ service cloud.firestore {
         && resource.data.usedBy == null
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['expiresAt'])
         && request.resource.data.expiresAt <= request.time;
+    }
+
+    // ==================================================================
+    // [Person 3] الطالب وولي الأمر: studentLinks + linkedUsers + guardianCounts
+    //
+    // * الطالب/ولي الأمر مش members. صلاحيتهم من centers/{c}/studentLinks/{uid_sid}.
+    // * الربط بيتم بـ Batch واحد: استهلاك الكود (usedBy) + إنشاء الربط
+    //   + زيادة العدّادات (FieldValue.increment) والـ Rules بتتحقق بـ getAfter.
+    // * guardianCounts/{sid}.count = عدد أولياء الأمور النشطين (الحد الأقصى 4).
+    // * linkedUsers/{uid}.count = عدد ربط المستخدم النشط. بيدّي قراءة المجموعات والحصص
+    //   والامتحانات المنشورة بس (الـ Rules مش بتعرف الطالب من المستند، فبنعمّمها على السنتر).
+    // * فك الربط: status فقط active -> unlinked، من صاحب الربط أو الأدمن، والعدّادات بتنقص.
+    // * إعادة الربط بعد الفك: update من unlinked -> active بكود جديد (نفس شروط الإنشاء).
+    // ==================================================================
+
+    function linkPath(c, u, s) {
+      return /databases/$(database)/documents/centers/$(c)/studentLinks/$(u + '_' + s);
+    }
+
+    function guardianCountPath(c, s) {
+      return /databases/$(database)/documents/centers/$(c)/guardianCounts/$(s);
+    }
+
+    function linkedUserPath(c, u) {
+      return /databases/$(database)/documents/centers/$(c)/linkedUsers/$(u);
+    }
+
+    // المستخدم الحالي مربوط (نشط) بالطالب ده.
+    function hasLink(c, sid) {
+      return signedIn()
+        && exists(linkPath(c, request.auth.uid, sid))
+        && get(linkPath(c, request.auth.uid, sid)).data.status == 'active';
+    }
+
+    // المستخدم الحالي عنده ربط نشط واحد على الأقل في السنتر.
+    function isLinkedUser(c) {
+      return signedIn()
+        && exists(linkedUserPath(c, request.auth.uid))
+        && get(linkedUserPath(c, request.auth.uid)).data.count > 0;
+    }
+
+    function countBefore(p) {
+      return exists(p) ? get(p).data.count : 0;
+    }
+
+    function countAfter(p) {
+      return existsAfter(p) ? getAfter(p).data.count : 0;
+    }
+
+    // الربط بيتفعّل في الـ Batch ده (مش موجود أو unlinked قبل، و active بعد).
+    function linkActivating(c, u, s) {
+      return existsAfter(linkPath(c, u, s))
+        && getAfter(linkPath(c, u, s)).data.status == 'active'
+        && (!exists(linkPath(c, u, s)) || get(linkPath(c, u, s)).data.status == 'unlinked');
+    }
+
+    // الربط بيتفك في الـ Batch ده (active قبل، و unlinked بعد).
+    function linkDeactivating(c, u, s) {
+      return exists(linkPath(c, u, s))
+        && get(linkPath(c, u, s)).data.status == 'active'
+        && existsAfter(linkPath(c, u, s))
+        && getAfter(linkPath(c, u, s)).data.status == 'unlinked';
+    }
+
+    // الكود صالح للربط ده (بالحالة قبل الكتابة) ومتعلّم مستخدم بعدها.
+    // d = بيانات الربط بعد الكتابة.
+    function linkCodeOk(c, d) {
+      let code = codePath(d.inviteCode);
+      return exists(code)
+        && get(code).data.kind == d.kind
+        && get(code).data.centerId == c
+        && get(code).data.studentId == d.studentId
+        && get(code).data.usedBy == null
+        && get(code).data.expiresAt > request.time
+        && getAfter(code).data.usedBy == request.auth.uid
+        && (d.kind == 'student' || d.relation == get(code).data.relation);
+    }
+
+    // العدّادات بتزيد بالظبط 1 (المستخدم + ولي الأمر للطالب، وماتعديش 4).
+    function linkCountsBumped(c, d) {
+      return countAfter(linkedUserPath(c, d.uid)) == countBefore(linkedUserPath(c, d.uid)) + 1
+        && getAfter(linkedUserPath(c, d.uid)).data.sid == d.studentId
+        && (d.kind == 'student'
+            || (countAfter(guardianCountPath(c, d.studentId))
+                  == countBefore(guardianCountPath(c, d.studentId)) + 1
+                && countAfter(guardianCountPath(c, d.studentId)) <= 4));
+    }
+
+    // العدّادات بتنقص بالظبط 1 عند فك الربط. d = بيانات الربط قبل الفك.
+    function linkCountsDropped(c, d) {
+      return countAfter(linkedUserPath(c, d.uid)) == countBefore(linkedUserPath(c, d.uid)) - 1
+        && (d.kind == 'student'
+            || countAfter(guardianCountPath(c, d.studentId))
+                 == countBefore(guardianCountPath(c, d.studentId)) - 1);
+    }
+
+    function validNewLink(d, c, lid) {
+      return d.keys().hasOnly(['centerId', 'uid', 'studentId', 'kind', 'status', 'relation',
+                               'inviteCode', 'createdAt', 'createdBy'])
+        && d.keys().hasAll(['centerId', 'uid', 'studentId', 'kind', 'status',
+                            'inviteCode', 'createdAt', 'createdBy'])
+        && d.centerId == c
+        && d.uid == request.auth.uid
+        && d.createdBy == request.auth.uid
+        && d.studentId is string && d.studentId.matches('[A-Za-z0-9]+')
+        && lid == d.uid + '_' + d.studentId
+        && d.status == 'active'
+        && d.createdAt == request.time
+        && d.kind in ['student', 'guardian']
+        && (d.kind == 'guardian'
+              ? (d.get('relation', null) is string
+                 && d.relation.size() > 0 && d.relation.size() <= 40)
+              : !d.keys().hasAny(['relation']))
+        && d.inviteCode is string && d.inviteCode.size() > 0
+        && exists(studentPath(c, d.studentId))
+        && linkCodeOk(c, d)
+        && linkCountsBumped(c, d);
+    }
+
+    // إعادة الربط بعد الفك: نفس الشروط، والمسموح يتغيّر status و inviteCode و relation بس.
+    function reactivatesLink(c) {
+      let d = request.resource.data;
+      return resource.data.status == 'unlinked'
+        && resource.data.uid == request.auth.uid
+        && d.status == 'active'
+        && d.diff(resource.data).affectedKeys().hasOnly(['status', 'inviteCode', 'relation'])
+        && d.inviteCode is string && d.inviteCode.size() > 0
+        && (d.kind == 'guardian'
+              ? (d.get('relation', null) is string
+                 && d.relation.size() > 0 && d.relation.size() <= 40)
+              : !d.keys().hasAny(['relation']))
+        && linkCodeOk(c, d)
+        && linkCountsBumped(c, d);
+    }
+
+    function unlinksLink(c) {
+      return resource.data.status == 'active'
+        && request.resource.data.status == 'unlinked'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        && (resource.data.uid == request.auth.uid || isAdmin(c))
+        && linkCountsDropped(c, resource.data);
+    }
+
+    // استهلاك كود طالب/ولي أمر (تعديل usedBy فقط) لازم يتزامن مع إنشاء/تفعيل الربط.
+    function consumesLinkCode(id) {
+      let old = resource.data;
+      let s = old.get('studentId', null);
+      return signedIn()
+        && old.kind in ['student', 'guardian']
+        && s is string
+        && old.usedBy == null
+        && old.expiresAt > request.time
+        && request.resource.data.usedBy == request.auth.uid
+        && request.resource.data.diff(old).affectedKeys().hasOnly(['usedBy'])
+        && existsAfter(linkPath(old.centerId, request.auth.uid, s))
+        && getAfter(linkPath(old.centerId, request.auth.uid, s)).data.inviteCode == id
+        && getAfter(linkPath(old.centerId, request.auth.uid, s)).data.kind == old.kind
+        && getAfter(linkPath(old.centerId, request.auth.uid, s)).data.status == 'active'
+        && (!exists(linkPath(old.centerId, request.auth.uid, s))
+            || get(linkPath(old.centerId, request.auth.uid, s)).data.status == 'unlinked');
+    }
+
+    // عدّاد ربط المستخدم: يزيد/ينقص 1، ومربوط بتغيّر حقيقي في الربط.
+    function validLinkedUserWrite(c, u) {
+      let d = request.resource.data;
+      let before = resource == null ? 0 : resource.data.count;
+      return signedIn()
+        && d.keys().hasOnly(['count', 'sid'])
+        && d.count is int && d.count >= 0 && d.count <= 100
+        && d.sid is string && d.sid.matches('[A-Za-z0-9]+')
+        && ((d.count == before + 1
+             && request.auth.uid == u
+             && linkActivating(c, u, d.sid))
+            || (d.count == before - 1
+                && (isAdmin(c)
+                    || (request.auth.uid == u && linkDeactivating(c, u, d.sid)))));
+    }
+
+    // عدّاد أولياء أمور الطالب: يزيد 1 بربط ولي أمر جديد، وينقص 1 بفك ربط (ولي الأمر أو الأدمن).
+    function validGuardianCountWrite(c, s) {
+      let d = request.resource.data;
+      let before = resource == null ? 0 : resource.data.count;
+      return signedIn()
+        && d.keys().hasOnly(['count'])
+        && d.count is int && d.count >= 0 && d.count <= 4
+        && ((d.count == before + 1
+             && linkActivating(c, request.auth.uid, s)
+             && getAfter(linkPath(c, request.auth.uid, s)).data.kind == 'guardian')
+            || (d.count == before - 1
+                && (isAdmin(c)
+                    || (linkDeactivating(c, request.auth.uid, s)
+                        && get(linkPath(c, request.auth.uid, s)).data.kind == 'guardian'))));
     }
 
     // ------------------------------------------------------------------
@@ -424,7 +615,9 @@ service cloud.firestore {
     //                      وتضييق قراءة المعلم/المساعد لطلاب مجموعاتهم فقط.
     // ------------------------------------------------------------------
     match /centers/{c}/students/{sid} {
-      allow get, list: if isAdmin(c) || isStaff(c);
+      // [Person 3] الطالب/ولي الأمر يقرا الطالب المربوط بيه (get بس، مفيش list).
+      allow get: if isAdmin(c) || isStaff(c) || hasLink(c, sid);
+      allow list: if isAdmin(c) || isStaff(c);
 
       allow create: if isAdmin(c)
         && validStudent(request.resource.data, c)
@@ -463,14 +656,17 @@ service cloud.firestore {
     // الأدمن يكتب ويقرا. المعلم/المساعد يقرا المجموعات اللي هو فيها بس.
     // ------------------------------------------------------------------
     match /centers/{c}/groups/{gid} {
+      // [Person 3] isLinkedUser: الطالب/ولي الأمر المربوط يقرا مجموعات السنتر (للجدول).
       allow get: if isAdmin(c)
         || (isStaff(c) && (resource.data.teacherId == request.auth.uid
-                           || request.auth.uid in resource.data.assistantIds));
+                           || request.auth.uid in resource.data.assistantIds))
+        || isLinkedUser(c);
 
       // list: لازم الاستعلام نفسه يكون مقيّد (الـ Rules مش بتفلتر).
       allow list: if isAdmin(c)
         || (isStaff(c) && (resource.data.teacherId == request.auth.uid
-                           || request.auth.uid in resource.data.assistantIds));
+                           || request.auth.uid in resource.data.assistantIds))
+        || isLinkedUser(c);
 
       allow create: if isAdmin(c)
         && validGroup(request.resource.data, c)
@@ -498,7 +694,9 @@ service cloud.firestore {
         || (isStaff(c)
             && exists(groupPath(c, resource.data.groupId))
             && (get(groupPath(c, resource.data.groupId)).data.teacherId == request.auth.uid
-                || request.auth.uid in get(groupPath(c, resource.data.groupId)).data.assistantIds));
+                || request.auth.uid in get(groupPath(c, resource.data.groupId)).data.assistantIds))
+        // [Person 3] الطالب/ولي الأمر المربوط يقرا حصص السنتر (للجدول).
+        || isLinkedUser(c);
 
       allow create: if isAdmin(c)
         && validSession(request.resource.data, c)
@@ -522,7 +720,9 @@ service cloud.firestore {
     // TODO(C): قراءة الطالب/ولي الأمر لحضوره من studentLinks.
     // ------------------------------------------------------------------
     match /centers/{c}/attendance/{aid} {
-      allow get, list: if isAdmin(c) || isSessionStaff(c, resource.data.sessionId);
+      // [Person 3] الطالب/ولي الأمر يقرا حضور الطالب المربوط بيه بس.
+      allow get, list: if isAdmin(c) || isSessionStaff(c, resource.data.sessionId)
+        || hasLink(c, resource.data.studentId);
 
       allow create: if validAttendance(request.resource.data, c, aid)
         && (isAdmin(c) || isSessionStaff(c, request.resource.data.sessionId))
@@ -549,7 +749,9 @@ service cloud.firestore {
     // TODO(C): قراءة الطالب/ولي الأمر للامتحانات المنشورة بس من studentLinks.
     // ------------------------------------------------------------------
     match /centers/{c}/exams/{eid} {
-      allow get, list: if isAdmin(c) || isGroupStaff(c, resource.data.groupId);
+      // [Person 3] الطالب/ولي الأمر المربوط يقرا الامتحانات المنشورة بس.
+      allow get, list: if isAdmin(c) || isGroupStaff(c, resource.data.groupId)
+        || (resource.data.published == true && isLinkedUser(c));
 
       allow create: if validExam(request.resource.data, c)
         && canManageGroupGrades(c, request.resource.data.groupId);
@@ -568,9 +770,13 @@ service cloud.firestore {
     // TODO(C): قراءة الطالب/ولي الأمر لدرجاته المنشورة بس.
     // ------------------------------------------------------------------
     match /centers/{c}/scores/{aid} {
+      // [Person 3] الطالب/ولي الأمر يقرا درجات الطالب المربوط بيه في الامتحانات المنشورة بس.
       allow get, list: if isAdmin(c)
         || (exists(examPath(c, resource.data.examId))
-            && isGroupStaff(c, get(examPath(c, resource.data.examId)).data.groupId));
+            && isGroupStaff(c, get(examPath(c, resource.data.examId)).data.groupId))
+        || (hasLink(c, resource.data.studentId)
+            && exists(examPath(c, resource.data.examId))
+            && get(examPath(c, resource.data.examId)).data.published == true);
 
       allow create: if validScore(request.resource.data, c, aid)
         && canManageGroupGrades(c, get(examPath(c, request.resource.data.examId)).data.groupId);
@@ -586,6 +792,35 @@ service cloud.firestore {
     }
 
     // ------------------------------------------------------------------
+    // [Person 3] centers/{c}/studentLinks/{lid}  (lid = uid_studentId)
+    // القراءة: صاحب الربط أو الأدمن. الكتابة: ربط بكود / فك ربط / إعادة ربط. مفيش delete.
+    // ------------------------------------------------------------------
+    match /centers/{c}/studentLinks/{lid} {
+      allow get, list: if signedIn()
+        && (resource.data.uid == request.auth.uid || isAdmin(c));
+
+      allow create: if validNewLink(request.resource.data, c, lid);
+
+      allow update: if unlinksLink(c) || reactivatesLink(c);
+
+      allow delete: if false;
+    }
+
+    // [Person 3] عدّاد أولياء الأمور النشطين للطالب (حد أقصى 4). بيتكتب مع الربط/الفك بس.
+    match /centers/{c}/guardianCounts/{sid} {
+      allow get: if isAdmin(c);
+      allow create, update: if validGuardianCountWrite(c, sid);
+      allow delete: if false;
+    }
+
+    // [Person 3] عدّاد ربط المستخدم النشط (بيدّي قراءة الجدول والامتحانات المنشورة).
+    match /centers/{c}/linkedUsers/{u} {
+      allow get: if signedIn() && request.auth.uid == u;
+      allow create, update: if validLinkedUserWrite(c, u);
+      allow delete: if false;
+    }
+
+    // ------------------------------------------------------------------
     // inviteCodes/{code}  — get فقط، مفيش list
     // ------------------------------------------------------------------
     match /inviteCodes/{code} {
@@ -595,7 +830,7 @@ service cloud.firestore {
         && validNewCode(request.resource.data)
         && isAdmin(request.resource.data.centerId);
 
-      allow update: if consumesStaffCode(code) || revokesCode();
+      allow update: if consumesStaffCode(code) || consumesLinkCode(code) || revokesCode();
 
       allow delete: if false;
     }
