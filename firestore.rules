@@ -662,11 +662,8 @@ service cloud.firestore {
                            || request.auth.uid in resource.data.assistantIds))
         || isLinkedUser(c);
 
-      // list: لازم الاستعلام نفسه يكون مقيّد (الـ Rules مش بتفلتر).
-      allow list: if isAdmin(c)
-        || (isStaff(c) && (resource.data.teacherId == request.auth.uid
-                           || request.auth.uid in resource.data.assistantIds))
-        || isLinkedUser(c);
+      // list: أي موظف نشط يقرا قوائم مجموعات السنتر (الكتابة للأدمن بس).
+      allow list: if isAdmin(c) || isStaff(c) || isLinkedUser(c);
 
       allow create: if isAdmin(c)
         && validGroup(request.resource.data, c)
@@ -690,13 +687,16 @@ service cloud.firestore {
     // لأن الـ Rules مش بتحسب التوقيت ده.
     // ------------------------------------------------------------------
     match /centers/{c}/sessions/{sid} {
-      allow get, list: if isAdmin(c)
+      allow get: if isAdmin(c)
         || (isStaff(c)
             && exists(groupPath(c, resource.data.groupId))
             && (get(groupPath(c, resource.data.groupId)).data.teacherId == request.auth.uid
                 || request.auth.uid in get(groupPath(c, resource.data.groupId)).data.assistantIds))
         // [Person 3] الطالب/ولي الأمر المربوط يقرا حصص السنتر (للجدول).
         || isLinkedUser(c);
+
+      // list: أي موظف نشط يقرا قوائم حصص السنتر (الكتابة للأدمن بس).
+      allow list: if isAdmin(c) || isStaff(c) || isLinkedUser(c);
 
       allow create: if isAdmin(c)
         && validSession(request.resource.data, c)
@@ -721,8 +721,13 @@ service cloud.firestore {
     // ------------------------------------------------------------------
     match /centers/{c}/attendance/{aid} {
       // [Person 3] الطالب/ولي الأمر يقرا حضور الطالب المربوط بيه بس.
-      allow get, list: if isAdmin(c) || isSessionStaff(c, resource.data.sessionId)
+      allow get: if isAdmin(c) || isSessionStaff(c, resource.data.sessionId)
         || hasLink(c, resource.data.studentId);
+
+      // list: أي موظف نشط يقرا قوائم حضور السنتر (الكتابة للأدمن بس)،
+      // والطالب/ولي الأمر المربوط يقرا حضور الطالب المربوط بيه بس
+      // (استعلامه لازم يكون مقيّد بـ studentId).
+      allow list: if isAdmin(c) || isStaff(c) || hasLink(c, resource.data.studentId);
 
       allow create: if validAttendance(request.resource.data, c, aid)
         && (isAdmin(c) || isSessionStaff(c, request.resource.data.sessionId))

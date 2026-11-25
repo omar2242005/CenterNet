@@ -165,10 +165,18 @@ describe('groups — القراءة', () => {
     await assertSucceeds(getDocs(col(as('adminA'))));
   });
 
-  it('list من غير فلتر للمعلم مرفوض، وبفلتر حد تاني برضه', async () => {
+  it('list: الموظف النشط يقرا كل مجموعات السنتر (من غير فلتر أو بفلتر حد تاني)', async () => {
     const col = (db) => collection(db, `centers/${A}/groups`);
-    await assertFails(getDocs(col(as('teacherA'))));
-    await assertFails(getDocs(query(col(as('teacherA')), where('teacherId', '==', 'teacherB'))));
+    await assertSucceeds(getDocs(col(as('teacherA'))));
+    await assertSucceeds(getDocs(query(col(as('teacherA')), where('teacherId', '==', 'teacherB'))));
+    await assertSucceeds(getDocs(col(as('assistantA'))));
+  });
+
+  it('list: معطّل أو سنتر تاني أو غير مسجل مرفوضين', async () => {
+    const col = (db) => collection(db, `centers/${A}/groups`);
+    await assertFails(getDocs(col(as('offTeacher'))));
+    await assertFails(getDocs(col(as('adminB'))));
+    await assertFails(getDocs(col(env.unauthenticatedContext().firestore())));
   });
 
   it('معلم معطّل أو من سنتر تاني أو غير مسجل مرفوض', async () => {
@@ -230,11 +238,13 @@ describe('sessions — القراءة', () => {
     await assertFails(getDoc(sessionRef(as('assistantA'), G2_SESSION)));
   });
 
-  it('list بفلتر groupId: مجموعتي تنجح ومجموعة حد تاني لأ', async () => {
+  it('list: الموظف النشط يقرا حصص أي مجموعة في السنتر، وغير المسجل لأ', async () => {
     const col = (db) => collection(db, `centers/${A}/sessions`);
     await assertSucceeds(getDocs(query(col(as('teacherA')), where('groupId', '==', 'g1'))));
-    await assertFails(getDocs(query(col(as('teacherA')), where('groupId', '==', 'g2'))));
-    await assertSucceeds(getDocs(query(col(as('assistantA')), where('groupId', '==', 'g1'))));
+    await assertSucceeds(getDocs(query(col(as('teacherA')), where('groupId', '==', 'g2'))));
+    await assertSucceeds(getDocs(query(col(as('assistantA')), where('groupId', '==', 'g2'))));
+    await assertSucceeds(getDocs(col(as('teacherA'))));
+    await assertFails(getDocs(col(env.unauthenticatedContext().firestore())));
   });
 
   it('الأدمن يقرا الكل، ومعلم معطّل أو سنتر تاني لأ', async () => {
@@ -285,7 +295,7 @@ describe('sessions — نمط SessionsRepository', () => {
     await assert.rejects(generate(as('teacherA'), ['g1_20261203_1700']));
   });
 
-  it('استعلام loadGroupSessions: الأدمن والمعلم والمساعد لمجموعتهم', async () => {
+  it('استعلام loadGroupSessions: الأدمن والمعلم والمساعد لأي مجموعة في السنتر', async () => {
     const q = (db, g) => query(
       collection(db, `centers/${A}/sessions`),
       where('groupId', '==', g),
@@ -295,6 +305,6 @@ describe('sessions — نمط SessionsRepository', () => {
     await assertSucceeds(getDocs(q(as('adminA'), 'g1')));
     await assertSucceeds(getDocs(q(as('teacherA'), 'g1')));
     await assertSucceeds(getDocs(q(as('assistantA'), 'g1')));
-    await assertFails(getDocs(q(as('teacherA'), 'g2')));
+    await assertSucceeds(getDocs(q(as('teacherA'), 'g2')));
   });
 });

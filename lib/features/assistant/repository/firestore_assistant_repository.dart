@@ -92,32 +92,78 @@ class FirestoreAssistantRepository implements AssistantRepository {
   }
 
   @override
+  Future<List<Group>> myStaffGroups() {
+    return ErrorMapper.guard(() async {
+      final uid = _requireUid();
+      final centerId = await _myCenterId();
+      final col = _db.collection(FirestorePaths.groups(centerId));
+      // استعلامان مقيّدان بالـ uid نفسه: كل مستند محتمل يحقق شرط الـ Rules
+      // (rules are not filters)، فيعدي من غير تعديل في القواعد.
+      final snaps = await Future.wait([
+        col
+            .where('teacherId', isEqualTo: uid)
+            .get()
+            .timeout(serverConfirmationTimeout),
+        col
+            .where('assistantIds', arrayContains: uid)
+            .get()
+            .timeout(serverConfirmationTimeout),
+      ]);
+      final byId = <String, Group>{};
+      for (final snap in snaps) {
+        for (final doc in snap.docs) {
+          try {
+            byId[doc.id] = Group.fromMap(doc.id, doc.data());
+          } on FormatException {
+            continue; // مستند تالف: بنتخطاه
+          }
+        }
+      }
+      return byId.values.toList();
+    });
+  }
+
+  @override
   Future<List<Session>> todaySessions({DateTime? now}) {
     return ErrorMapper.guard(() async {
       final centerId = await _myCenterId();
+      final groups = await myStaffGroups();
+      if (groups.isEmpty) return const <Session>[];
       final cairo = tz.getLocation('Africa/Cairo');
       final n = tz.TZDateTime.from(now ?? DateTime.now(), cairo);
       final dayStart = tz.TZDateTime(cairo, n.year, n.month, n.day);
       final dayEnd = dayStart.add(const Duration(days: 1));
-      final snap = await _db
-          .collection(FirestorePaths.sessions(centerId))
-          .where(
-            'startAt',
-            isGreaterThanOrEqualTo: Timestamp.fromDate(dayStart),
-          )
-          .where('startAt', isLessThan: Timestamp.fromDate(dayEnd))
-          .orderBy('startAt')
-          .get()
-          .timeout(serverConfirmationTimeout);
-
-      final out = <Session>[];
-      for (final doc in snap.docs) {
-        try {
-          out.add(Session.fromMap(doc.id, doc.data()));
-        } on FormatException {
-          continue; // مستند تالف: بنتخطاه
+      final col = _db.collection(FirestorePaths.sessions(centerId));
+      // استعلام لكل مجموعة مقيّد بـ groupId: القاعدة بتتحقق من التعيين على
+      // resource.data.groupId وهو ثابت لكل نتايج الاستعلام، فالقراءة بتعدي
+      // للمساعد المعيّن من غير تعديل في الـ Rules.
+      // ملحوظة: محتاج Index مركّب (groupId + startAt) — Firestore بيدي
+      // رابط إنشائه في الخطأ أول تشغيل.
+      final snaps = await Future.wait([
+        for (final group in groups)
+          col
+              .where('groupId', isEqualTo: group.id)
+              .where(
+                'startAt',
+                isGreaterThanOrEqualTo: Timestamp.fromDate(dayStart),
+              )
+              .where('startAt', isLessThan: Timestamp.fromDate(dayEnd))
+              .orderBy('startAt')
+              .get()
+              .timeout(serverConfirmationTimeout),
+      ]);
+      final byId = <String, Session>{};
+      for (final snap in snaps) {
+        for (final doc in snap.docs) {
+          try {
+            byId[doc.id] = Session.fromMap(doc.id, doc.data());
+          } on FormatException {
+            continue; // مستند تالف: بنتخطاه
+          }
         }
       }
+      final out = byId.values.toList()
+        ..sort((a, b) => a.startAt.compareTo(b.startAt));
       return out;
     });
   }

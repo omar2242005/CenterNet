@@ -11,6 +11,7 @@ class MockAssistantRepository implements AssistantRepository {
   MockAssistantRepository({
     this.onWriteAttendance,
     this.onMyProfile,
+    this.onMyStaffGroups,
     this.onTodaySessions,
     this.onSessionById,
     this.onGroupById,
@@ -23,6 +24,7 @@ class MockAssistantRepository implements AssistantRepository {
 
   final Future<void> Function(PendingScan scan)? onWriteAttendance;
   final Future<AppUser> Function()? onMyProfile;
+  final Future<List<Group>> Function()? onMyStaffGroups;
   final Future<List<Session>> Function({DateTime? now})? onTodaySessions;
   final Future<Session> Function(String sessionId)? onSessionById;
   final Future<Group> Function(String groupId)? onGroupById;
@@ -47,6 +49,10 @@ class MockAssistantRepository implements AssistantRepository {
   Future<AppUser> myProfile() =>
       onMyProfile?.call() ??
       (throw UnimplementedError('MockAssistantRepository.myProfile'));
+
+  @override
+  Future<List<Group>> myStaffGroups() =>
+      onMyStaffGroups?.call() ?? Future.value(const <Group>[]);
 
   @override
   Future<List<Session>> todaySessions({DateTime? now}) =>
