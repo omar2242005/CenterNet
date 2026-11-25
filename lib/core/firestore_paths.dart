@@ -61,6 +61,14 @@ abstract final class FirestorePaths {
   static String studentLink(String centerId, String uid, String studentId) =>
       '${studentLinks(centerId)}/${FirestoreIds.studentLink(uid, studentId)}';
 
+  /// عدّاد أولياء الأمور النشطين للطالب (حد أقصى 4): `{count: int}`.
+  static String guardianCount(String centerId, String studentId) =>
+      '${center(centerId)}/guardianCounts/${_part(studentId, 'studentId')}';
+
+  /// عدّاد ربط المستخدم النشط: `{count: int, sid: String}`.
+  static String linkedUser(String centerId, String uid) =>
+      '${center(centerId)}/linkedUsers/${_part(uid, 'uid')}';
+
   static String groups(String centerId) => '${center(centerId)}/groups';
   static String group(String centerId, String groupId) =>
       '${groups(centerId)}/${_part(groupId, 'groupId')}';

@@ -796,7 +796,10 @@ service cloud.firestore {
     // القراءة: صاحب الربط أو الأدمن. الكتابة: ربط بكود / فك ربط / إعادة ربط. مفيش delete.
     // ------------------------------------------------------------------
     match /centers/{c}/studentLinks/{lid} {
-      allow get, list: if signedIn()
+      // get بيتحقق من الـ id (مش من resource) عشان قراءة ربط مش موجود تفشل بشكل سليم.
+      allow get: if signedIn()
+        && (lid.matches(request.auth.uid + '_[A-Za-z0-9]+') || isAdmin(c));
+      allow list: if signedIn()
         && (resource.data.uid == request.auth.uid || isAdmin(c));
 
       allow create: if validNewLink(request.resource.data, c, lid);
