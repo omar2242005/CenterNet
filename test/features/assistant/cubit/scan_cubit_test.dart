@@ -10,8 +10,7 @@ class _FailingRecorder implements ScanRecorder {
   Set<String> loadStudentIds(String sessionId) => <String>{};
 
   @override
-  Future<bool> record(PendingScan scan) async =>
-      throw StateError('تخزين فاشل');
+  Future<bool> record(PendingScan scan) async => throw StateError('تخزين فاشل');
 
   @override
   int get pendingCount => 0;
@@ -38,18 +37,16 @@ void main() {
   late MemoryScanRecorder recorder;
 
   ScanSetup setup() => ScanSetup(
-        centerId: 'c1',
-        sessionId: sessionId,
-        sessionStart: start,
-        groupStudentIds: {'s1', 's2'},
-        lateAfterMinutes: 15,
-      );
+    centerId: 'c1',
+    sessionId: sessionId,
+    sessionStart: start,
+    groupStudentIds: {'s1', 's2'},
+    lateAfterMinutes: 15,
+  );
 
-  ScanCubit build([ScanRecorder? r]) => ScanCubit(
-        setup: setup(),
-        recorder: r ?? recorder,
-        clock: () => now,
-      )..load();
+  ScanCubit build([ScanRecorder? r]) =>
+      ScanCubit(setup: setup(), recorder: r ?? recorder, clock: () => now)
+        ..load();
 
   setUp(() {
     now = start.add(const Duration(minutes: 5));
@@ -65,6 +62,11 @@ void main() {
     expect(cubit.state.presentCount, 1);
     expect(cubit.state.pendingCount, 1);
     expect(recorder.scans.single.id, '${sessionId}_s1');
+    expect(recorder.scans.single.centerId, 'c1');
+    expect(
+      recorder.scans.single.attendanceStatus,
+      PendingAttendanceStatus.present,
+    );
     await cubit.close();
   });
 
@@ -76,6 +78,11 @@ void main() {
     expect(cubit.state.feedback!.kind, ScanFeedbackKind.recordedLate);
     expect(cubit.state.lateCount, 1);
     expect(cubit.state.presentCount, 0);
+    expect(recorder.scans.single.centerId, 'c1');
+    expect(
+      recorder.scans.single.attendanceStatus,
+      PendingAttendanceStatus.late,
+    );
     await cubit.close();
   });
 
@@ -92,18 +99,21 @@ void main() {
     await cubit.close();
   });
 
-  test('نفس الرمز بعد فترة التكرار = مسجّل بالفعل ومن غير تسجيل تاني', () async {
-    final cubit = build();
-    await cubit.onCode('c1:s1');
+  test(
+    'نفس الرمز بعد فترة التكرار = مسجّل بالفعل ومن غير تسجيل تاني',
+    () async {
+      final cubit = build();
+      await cubit.onCode('c1:s1');
 
-    now = now.add(const Duration(seconds: 10));
-    await cubit.onCode('c1:s1');
+      now = now.add(const Duration(seconds: 10));
+      await cubit.onCode('c1:s1');
 
-    expect(cubit.state.feedback!.kind, ScanFeedbackKind.alreadyRegistered);
-    expect(cubit.state.presentCount, 1);
-    expect(recorder.scans, hasLength(1));
-    await cubit.close();
-  });
+      expect(cubit.state.feedback!.kind, ScanFeedbackKind.alreadyRegistered);
+      expect(cubit.state.presentCount, 1);
+      expect(recorder.scans, hasLength(1));
+      await cubit.close();
+    },
+  );
 
   test('طالب اتسجل قبل فتح الشاشة = مسجّل بالفعل', () async {
     final before = MemoryScanRecorder([
@@ -122,24 +132,27 @@ void main() {
     await cubit.close();
   });
 
-  test('سنتر تاني / رمز غلط / طالب برا المجموعة = مرفوض ومن غير تسجيل', () async {
-    final cubit = build();
+  test(
+    'سنتر تاني / رمز غلط / طالب برا المجموعة = مرفوض ومن غير تسجيل',
+    () async {
+      final cubit = build();
 
-    await cubit.onCode('c2:s1');
-    expect(cubit.state.feedback!.kind, ScanFeedbackKind.otherCenter);
+      await cubit.onCode('c2:s1');
+      expect(cubit.state.feedback!.kind, ScanFeedbackKind.otherCenter);
 
-    await cubit.onCode('hello');
-    expect(cubit.state.feedback!.kind, ScanFeedbackKind.invalidCode);
-    expect(cubit.state.feedback!.studentId, isNull);
+      await cubit.onCode('hello');
+      expect(cubit.state.feedback!.kind, ScanFeedbackKind.invalidCode);
+      expect(cubit.state.feedback!.studentId, isNull);
 
-    await cubit.onCode('c1:s9');
-    expect(cubit.state.feedback!.kind, ScanFeedbackKind.notRegistered);
-    expect(cubit.state.feedback!.studentId, 's9');
+      await cubit.onCode('c1:s9');
+      expect(cubit.state.feedback!.kind, ScanFeedbackKind.notRegistered);
+      expect(cubit.state.feedback!.studentId, 's9');
 
-    expect(cubit.state.rejectedCount, 3);
-    expect(recorder.scans, isEmpty);
-    await cubit.close();
-  });
+      expect(cubit.state.rejectedCount, 3);
+      expect(recorder.scans, isEmpty);
+      await cubit.close();
+    },
+  );
 
   test('فشل التخزين بيظهر كخطأ ومش بيتحسب حضور', () async {
     final cubit = build(_FailingRecorder());

@@ -933,6 +933,84 @@ abstract class AppLocalizations {
   /// **'تجربة الرمز'**
   String get scanManualSubmit;
 
+  /// No description provided for @syncTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مزامنة المسحات'**
+  String get syncTitle;
+
+  /// No description provided for @syncSignOutWarning.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الخروج قبل اكتمال المزامنة قد يؤدي إلى فقد بيانات حضور الطلاب.'**
+  String get syncSignOutWarning;
+
+  /// No description provided for @syncNoConnection.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد اتصال بالإنترنت'**
+  String get syncNoConnection;
+
+  /// No description provided for @syncNoConnectionHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'أعد الاتصال بالإنترنت ثم حاول المزامنة مرة أخرى.'**
+  String get syncNoConnectionHint;
+
+  /// No description provided for @syncInProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ رفع المسحات'**
+  String get syncInProgress;
+
+  /// No description provided for @syncProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمت مزامنة {completed} من {total}'**
+  String syncProgress(int completed, int total);
+
+  /// No description provided for @syncDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتملت المزامنة'**
+  String get syncDone;
+
+  /// No description provided for @syncDoneCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم رفع {count} مسحة بنجاح.'**
+  String syncDoneCount(int count);
+
+  /// No description provided for @syncNeedsAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} مسحة تحتاج إلى إجراء.'**
+  String syncNeedsAction(int count);
+
+  /// No description provided for @syncRetryFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة محاولة المسحات الفاشلة'**
+  String get syncRetryFailed;
+
+  /// No description provided for @syncPending.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} مسحة بانتظار المزامنة'**
+  String syncPending(int count);
+
+  /// No description provided for @syncStart.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدء المزامنة'**
+  String get syncStart;
+
+  /// No description provided for @syncEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مسحات بانتظار المزامنة'**
+  String get syncEmpty;
+
   /// No description provided for @studentsListTitle.
   ///
   /// In ar, this message translates to:

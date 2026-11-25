@@ -12,11 +12,11 @@ void main() {
   late PendingScanStore store;
 
   PendingScan scan(String sid) => PendingScan(
-        id: 'g1_20261119_1700_$sid',
-        sessionId: 'g1_20261119_1700',
-        studentId: sid,
-        scannedAt: DateTime.utc(2026, 11, 19, 15, 5),
-      );
+    id: 'g1_20261119_1700_$sid',
+    sessionId: 'g1_20261119_1700',
+    studentId: sid,
+    scannedAt: DateTime.utc(2026, 11, 19, 15, 5),
+  );
 
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
@@ -45,11 +45,14 @@ void main() {
     expect(guard.canLeave, isTrue);
   });
 
-  test('فشلت: بتتسجل بالسبب وبتظهر في القائمة وما بتمنعش الخروج', () async {
+  test('فشلت: بتتسجل بالسبب وبتظهر في القائمة وبتمنع الخروج', () async {
     await store.add(scan('s1'));
     await store.markFailed(scan('s1').id, 'سجّله مساعد آخر');
     expect(store.failed.single.failReason, 'سجّله مساعد آخر');
-    expect(guard.canLeave, isTrue);
+    expect(store.pendingCount, 0);
+    expect(store.unsyncedCount, 1);
+    expect(guard.pending.value, 1);
+    expect(guard.canLeave, isFalse);
   });
 
   test('clearSynced بتشيل التمام بس', () async {
@@ -60,15 +63,36 @@ void main() {
     await store.markFailed(scan('s2').id, 'x');
     await store.clearSynced();
     expect(store.all().map((s) => s.studentId), ['s2', 's3']);
+    expect(store.pendingCount, 1);
+    expect(store.unsyncedCount, 2);
+    expect(guard.pending.value, 2);
   });
 
-  test('بتفضل محفوظة بعد إعادة فتح التطبيق وsyncGuard بترجّع العدّاد', () async {
+  test(
+    'بتفضل محفوظة بعد إعادة فتح التطبيق وsyncGuard بترجّع العدّاد',
+    () async {
+      await store.add(scan('s1'));
+      final reopened = PendingScanStore(local, PendingOpsGuard());
+      expect(reopened.pendingCount, 1);
+      final g2 = PendingOpsGuard();
+      PendingScanStore(local, g2).syncGuard();
+      expect(g2.pending.value, 1);
+    },
+  );
+
+  test('الحارس يحسب المعلّق والفاشل فقط بعد كل تغيير', () async {
     await store.add(scan('s1'));
-    final reopened = PendingScanStore(local, PendingOpsGuard());
-    expect(reopened.pendingCount, 1);
-    final g2 = PendingOpsGuard();
-    PendingScanStore(local, g2).syncGuard();
-    expect(g2.pending.value, 1);
+    await store.add(scan('s2'));
+    expect(guard.pending.value, 2);
+
+    await store.markSynced(scan('s1').id);
+    expect(guard.pending.value, 1);
+
+    await store.markFailed(scan('s2').id, 'رفض السيرفر');
+    expect(guard.pending.value, 1);
+
+    await store.clearSynced();
+    expect(guard.pending.value, 1);
   });
 
   test('قائمة تالفة بترمي FormatException (مفيش فشل صامت)', () async {

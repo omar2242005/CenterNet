@@ -321,6 +321,34 @@
   "scanManualTitle": "إدخال يدوي للتجربة",
   "scanManualHint": "مثال: demo:s1",
   "scanManualSubmit": "تجربة الرمز",
+  "syncTitle": "مزامنة المسحات",
+  "syncSignOutWarning": "تسجيل الخروج قبل اكتمال المزامنة قد يؤدي إلى فقد بيانات حضور الطلاب.",
+  "syncNoConnection": "لا يوجد اتصال بالإنترنت",
+  "syncNoConnectionHint": "أعد الاتصال بالإنترنت ثم حاول المزامنة مرة أخرى.",
+  "syncInProgress": "جارٍ رفع المسحات",
+  "syncProgress": "تمت مزامنة {completed} من {total}",
+  "@syncProgress": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "syncDone": "اكتملت المزامنة",
+  "syncDoneCount": "تم رفع {count} مسحة بنجاح.",
+  "@syncDoneCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "syncNeedsAction": "{count} مسحة تحتاج إلى إجراء.",
+  "@syncNeedsAction": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "syncRetryFailed": "إعادة محاولة المسحات الفاشلة",
+  "syncPending": "{count} مسحة بانتظار المزامنة",
+  "@syncPending": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "syncStart": "بدء المزامنة",
+  "syncEmpty": "لا توجد مسحات بانتظار المزامنة",
   "studentsListTitle": "الطلاب",
   "studentsEmpty": "لم تتم إضافة طلاب بعد",
   "studentsNoResults": "لا يوجد طالب مطابق للبحث",

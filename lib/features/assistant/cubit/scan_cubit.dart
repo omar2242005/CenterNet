@@ -75,17 +75,17 @@ class ScanCubit extends Cubit<ScanState> {
     required ScanRecorder recorder,
     DateTime Function()? clock,
     this.repeatWindow = const Duration(seconds: 3),
-  })  : // الباراميتر المسمّى مينفعش يبدأ بـ _ فمينفعش initializing formal.
-        // ignore: prefer_initializing_formals
-        _recorder = recorder,
-        _clock = clock ?? DateTime.now,
-        _validator = ScanValidator(
-          centerId: setup.centerId,
-          sessionStart: setup.sessionStart,
-          groupStudentIds: setup.groupStudentIds,
-          lateAfterMinutes: setup.lateAfterMinutes,
-        ),
-        super(const ScanState());
+  }) : // الباراميتر المسمّى مينفعش يبدأ بـ _ فمينفعش initializing formal.
+       // ignore: prefer_initializing_formals
+       _recorder = recorder,
+       _clock = clock ?? DateTime.now,
+       _validator = ScanValidator(
+         centerId: setup.centerId,
+         sessionStart: setup.sessionStart,
+         groupStudentIds: setup.groupStudentIds,
+         lateAfterMinutes: setup.lateAfterMinutes,
+       ),
+       super(const ScanState());
 
   final ScanSetup setup;
 
@@ -151,6 +151,10 @@ class ScanCubit extends Cubit<ScanState> {
           sessionId: setup.sessionId,
           studentId: sid,
           scannedAt: now,
+          centerId: setup.centerId,
+          attendanceStatus: result.timing == ScanTiming.late
+              ? PendingAttendanceStatus.late
+              : PendingAttendanceStatus.present,
         ),
       );
       if (isClosed) return;
@@ -186,8 +190,7 @@ class ScanCubit extends Cubit<ScanState> {
           result.studentId,
         );
       case ScanOutcome.notRegistered:
-        _push(ScanFeedbackKind.notRegistered, result.studentId,
-            rejected: true);
+        _push(ScanFeedbackKind.notRegistered, result.studentId, rejected: true);
       case ScanOutcome.otherCenter:
         _push(ScanFeedbackKind.otherCenter, result.studentId, rejected: true);
       case ScanOutcome.invalidCode:
@@ -213,11 +216,7 @@ class ScanCubit extends Cubit<ScanState> {
     }
     emit(
       state.copyWith(
-        feedback: ScanFeedback(
-          seq: ++_seq,
-          kind: kind,
-          studentId: studentId,
-        ),
+        feedback: ScanFeedback(seq: ++_seq, kind: kind, studentId: studentId),
         presentCount: presentCount,
         lateCount: lateCount,
         rejectedCount: state.rejectedCount + (rejected ? 1 : 0),
