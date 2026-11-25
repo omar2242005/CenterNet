@@ -20,7 +20,6 @@ import '../grade_format.dart';
 import '../models/exam.dart';
 import '../models/score.dart';
 import '../repositories/scores_repository.dart';
-import '../rules/score_validator.dart';
 /// إدخال درجات امتحان لطلاب المجموعة.
 class ScoresEntryScreen extends StatelessWidget {
   const ScoresEntryScreen({super.key, required this.group, required this.exam});
