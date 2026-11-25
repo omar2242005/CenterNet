@@ -610,4 +610,74 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get homeNoAccessBody =>
       'حسابك غير مرتبط بسنتر بشكل صحيح. تواصل مع الأدمن أو سجّل الخروج.';
+
+  @override
+  String get examsTitle => 'الامتحانات';
+
+  @override
+  String get examsEmpty => 'لم تتم إضافة امتحانات بعد';
+
+  @override
+  String get examAddTitle => 'إنشاء امتحان';
+
+  @override
+  String get examFieldTitle => 'عنوان الامتحان';
+
+  @override
+  String get examFieldMax => 'الدرجة النهائية';
+
+  @override
+  String get examMaxInvalid => 'الدرجة النهائية لازم تكون رقمًا أكبر من صفر';
+
+  @override
+  String get examSave => 'حفظ الامتحان';
+
+  @override
+  String get examPublished => 'منشور';
+
+  @override
+  String get examDraft => 'مسودة';
+
+  @override
+  String get examPublish => 'نشر الدرجات';
+
+  @override
+  String get examUnpublish => 'إلغاء النشر';
+
+  @override
+  String examMaxLabel(String max) {
+    return 'من $max';
+  }
+
+  @override
+  String get scoresTitle => 'إدخال الدرجات';
+
+  @override
+  String get scoresEmpty => 'لا يوجد طلاب في المجموعة';
+
+  @override
+  String scoresRecorded(int done, int total) {
+    return 'تم رصد $done من $total';
+  }
+
+  @override
+  String get scoreStateScored => 'له درجة';
+
+  @override
+  String get scoreStateAbsent => 'غائب';
+
+  @override
+  String get scoreStateExcused => 'معفى';
+
+  @override
+  String get scoreNotYet => 'لسه';
+
+  @override
+  String get scoreFieldScore => 'الدرجة';
+
+  @override
+  String get scoreFieldComment => 'تعليق (اختياري)';
+
+  @override
+  String get scoreSave => 'حفظ';
 }
