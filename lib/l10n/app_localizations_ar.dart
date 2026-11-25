@@ -731,6 +731,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scoreSave => 'حفظ';
 
   @override
+  String get myGroupsTitle => 'مجموعاتي';
+
+  @override
+  String get myGroupsEmpty => 'لا توجد مجموعات مسندة إليك';
+
+  @override
+  String get groupExamsButton => 'الامتحانات والدرجات';
+
+  @override
+  String get groupNoStudents => 'لا يوجد طلاب في المجموعة';
+
+  @override
+  String groupStudentsSummary(int students, int sessions) {
+    return '$students طالب · $sessions حصة سابقة';
+  }
+
+  @override
+  String groupAbsencesBadge(int count) {
+    return 'غياب $count';
+  }
+
+  @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override

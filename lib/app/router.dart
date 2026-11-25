@@ -4,12 +4,12 @@ import 'package:go_router/go_router.dart';
 import '../features/assistant/assistant_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
+import '../features/grades/grades_module.dart';
 import '../features/groups/groups_module.dart';
 import '../features/home/home_module.dart';
-import '../features/linking/linking_module.dart';
 import '../features/staff/staff_module.dart';
-import '../features/student_area/student_area_module.dart';
 import '../features/students/students_module.dart';
+import '../features/teacher/teacher_module.dart';
 
 /// أسماء المسارات في مكان واحد.
 abstract final class AppRoutes {
@@ -24,9 +24,9 @@ final List<RouteBase> featureRoutes = <RouteBase>[
   ...staffRoutes,
   ...studentRoutes,
   ...groupRoutes,
+  ...gradeRoutes,
   ...assistantRoutes,
-  ...linkingRoutes,
-  ...studentAreaRoutes,
+  ...teacherRoutes,
 ];
 
 /// [routes] للاختبار بس. الافتراضي هو [featureRoutes].
