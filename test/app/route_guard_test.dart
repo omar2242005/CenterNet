@@ -114,12 +114,12 @@ void main() {
     });
 
     test('المسح للمساعد والمعلم بس', () {
-      expect(g(AssistantRouteNames.scan, role: HomeDestination.assistant), isNull);
-      expect(g(AssistantRouteNames.scan, role: HomeDestination.teacher), isNull);
-      expect(g(AssistantRouteNames.scan, role: HomeDestination.admin),
-          HomeRoutes.admin);
-      expect(g(AssistantRouteNames.scan, role: HomeDestination.student),
-          HomeRoutes.student);
+      // matchedLocation بيبقى بالشرطة المائلة في الأول.
+      const scanPath = '/${AssistantRouteNames.scan}';
+      expect(g(scanPath, role: HomeDestination.assistant), isNull);
+      expect(g(scanPath, role: HomeDestination.teacher), isNull);
+      expect(g(scanPath, role: HomeDestination.admin), HomeRoutes.admin);
+      expect(g(scanPath, role: HomeDestination.student), HomeRoutes.student);
     });
 
     test('الطالب وولي الأمر مينفعش يفتحوا شاشات الموظفين', () {

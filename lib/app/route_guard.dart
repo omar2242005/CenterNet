@@ -34,7 +34,11 @@ final Map<String, Set<HomeDestination>> _exactAccess = {
   StaffRoutes.list: _admin,
   StaffRoutes.invite: _admin,
   StaffRoutes.join: {HomeDestination.joinCenter},
-  AssistantRouteNames.scan: {HomeDestination.assistant, HomeDestination.teacher},
+  // matchedLocation دايمًا بشرطة مائلة في الأول.
+  '/${AssistantRouteNames.scan}': {
+    HomeDestination.assistant,
+    HomeDestination.teacher,
+  },
   // الطالب وولي الأمر (Person 3)
   LinkRoutes.enter: {HomeDestination.student, HomeDestination.guardian},
   ChildRoutes.schedule: {HomeDestination.student, HomeDestination.guardian},

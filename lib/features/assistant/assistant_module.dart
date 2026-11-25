@@ -6,12 +6,15 @@ import 'package:go_router/go_router.dart';
 import '../../core/services/local_store.dart';
 import '../../core/services/pending_ops_guard.dart';
 import 'assistant_route_names.dart';
+import 'cubit/home_cubit.dart';
+import 'cubit/sessions_cubit.dart';
 import 'cubit/sync_cubit.dart';
 import 'models/scan_setup.dart';
 import 'repository/assistant_repository.dart';
 import 'repository/firestore_assistant_repository.dart';
 import 'screens/assistant_home_screen.dart';
 import 'screens/attendance_list_screen.dart';
+import 'screens/attendance_tab_screen.dart';
 import 'screens/scan_screen.dart';
 import 'screens/session_details_screen.dart';
 import 'screens/sessions_screen.dart';
@@ -28,6 +31,15 @@ void registerAssistant(GetIt g) {
   g.registerLazySingleton<AssistantRepository>(
     () =>
         FirestoreAssistantRepository(g<FirebaseAuth>(), g<FirebaseFirestore>()),
+  );
+  g.registerFactory<AssistantHomeCubit>(
+    () => AssistantHomeCubit(
+      g<AssistantRepository>(),
+      g<ConnectivityMonitor>(),
+    ),
+  );
+  g.registerFactory<SessionsCubit>(
+    () => SessionsCubit(g<AssistantRepository>()),
   );
   g.registerFactory<SyncCubit>(
     () => SyncCubit(
@@ -70,6 +82,10 @@ final List<RouteBase> assistantRoutes = <RouteBase>[
           final extra = state.extra;
           return ScanScreen(setup: extra is ScanSetup ? extra : null);
         },
+      ),
+      GoRoute(
+        path: 'attendance',
+        builder: (context, state) => const AttendanceTabScreen(),
       ),
       GoRoute(path: 'sync', builder: (context, state) => const SyncScreen()),
     ],

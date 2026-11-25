@@ -941,4 +941,148 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get guardianChooseChild => 'اختر الطالب';
+
+  @override
+  String get appName => 'CenterNet';
+
+  @override
+  String get assistantHomeTitle => 'الرئيسية';
+
+  @override
+  String assistantGreeting(String name) {
+    return 'أهلاً، $name';
+  }
+
+  @override
+  String get assistantOnline => 'متصل بالإنترنت';
+
+  @override
+  String get assistantOffline => 'غير متصل بالإنترنت';
+
+  @override
+  String assistantTodayCount(int count) {
+    return 'عندك $count حصص النهارده';
+  }
+
+  @override
+  String get assistantNoSessionsToday => 'مفيش حصص النهارده';
+
+  @override
+  String get assistantCurrentSession => 'الحصة الجارية دلوقتي';
+
+  @override
+  String get assistantNoCurrentSession => 'مفيش حصة جارية حاليًا';
+
+  @override
+  String get assistantStartScanning => 'ابدأ المسح';
+
+  @override
+  String get assistantSessionsTitle => 'حصص النهارده';
+
+  @override
+  String get assistantSessionDetailsTitle => 'تفاصيل الحصة';
+
+  @override
+  String get sessionStatusCurrent => 'جارية';
+
+  @override
+  String get sessionStatusUpcoming => 'قادمة';
+
+  @override
+  String get sessionStatusEnded => 'انتهت';
+
+  @override
+  String get sessionStatusCancelled => 'ملغاة';
+
+  @override
+  String get sessionGroupLabel => 'المجموعة';
+
+  @override
+  String get sessionTimeLabel => 'الوقت';
+
+  @override
+  String get sessionRoomLabel => 'القاعة';
+
+  @override
+  String get sessionNoRoom => 'غير محددة';
+
+  @override
+  String get sessionScanStudent => 'مسح كود الطالب';
+
+  @override
+  String sessionAttendanceSummary(int attended, int total) {
+    return 'حضر $attended من $total طالب';
+  }
+
+  @override
+  String sessionAttendanceWaiting(int count) {
+    return '$count بانتظار المزامنة';
+  }
+
+  @override
+  String get sessionAttendanceNotYetLabel => 'لسه ما حضروش';
+
+  @override
+  String sessionAttendanceNotYet(int count) {
+    return '$count طالب';
+  }
+
+  @override
+  String get sessionLastScansTitle => 'آخر عمليات المسح';
+
+  @override
+  String get sessionAttendanceListButton => 'قائمة الحضور';
+
+  @override
+  String get assistantAttendanceTitle => 'قائمة الحضور';
+
+  @override
+  String get assistantAttendanceNoSessions => 'مفيش حصص النهارده';
+
+  @override
+  String get attendanceSearchHint => 'ابحث بالاسم أو الكود';
+
+  @override
+  String get attendanceFilterAll => 'الكل';
+
+  @override
+  String get attendanceFilterWaiting => 'بانتظار المزامنة';
+
+  @override
+  String get attendanceFilterFailed => 'فشلت المزامنة';
+
+  @override
+  String get attendanceEmpty => 'مفيش حضور مسجل في الحصة دي لحد دلوقتي';
+
+  @override
+  String get attendanceNoResults => 'لا توجد نتائج مطابقة للبحث';
+
+  @override
+  String get attendanceSyncSynced => 'تمت المزامنة';
+
+  @override
+  String get attendanceSyncWaiting => 'بانتظار المزامنة';
+
+  @override
+  String get attendanceSyncFailed => 'فشلت المزامنة';
+
+  @override
+  String get attendanceUnknownStudent => 'طالب مش في المجموعة';
+
+  @override
+  String attendanceStudentCode(int code) {
+    return 'كود $code';
+  }
+
+  @override
+  String get assistantNavHome => 'الرئيسية';
+
+  @override
+  String get assistantNavSessions => 'الحصص';
+
+  @override
+  String get assistantNavAttendance => 'الحضور';
+
+  @override
+  String get assistantNavSync => 'المزامنة';
 }
