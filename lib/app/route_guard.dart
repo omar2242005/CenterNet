@@ -9,6 +9,7 @@ import '../features/home/home_route_names.dart';
 import '../features/home/models/home_destination.dart';
 import '../features/linking/link_route_names.dart';
 import '../features/staff/staff_route_names.dart';
+import '../features/student_area/child_route_names.dart';
 import '../features/students/student_route_names.dart';
 import 'di.dart';
 import 'router.dart';
@@ -36,6 +37,9 @@ final Map<String, Set<HomeDestination>> _exactAccess = {
   AssistantRouteNames.scan: {HomeDestination.assistant, HomeDestination.teacher},
   // الطالب وولي الأمر (Person 3)
   LinkRoutes.enter: {HomeDestination.student, HomeDestination.guardian},
+  ChildRoutes.schedule: {HomeDestination.student, HomeDestination.guardian},
+  ChildRoutes.attendance: {HomeDestination.student, HomeDestination.guardian},
+  ChildRoutes.results: {HomeDestination.student, HomeDestination.guardian},
 };
 
 /// المسار نفسه وكل اللي تحته (`/students` و`/students/new` ...).

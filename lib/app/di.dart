@@ -13,6 +13,7 @@ import '../features/home/home_module.dart';
 import '../features/linking/linking_module.dart';
 import '../features/sessions/sessions_module.dart';
 import '../features/staff/staff_module.dart';
+import '../features/student_area/student_area_module.dart';
 import '../features/students/students_module.dart';
 
 /// الـ service locator الوحيد في التطبيق.
@@ -46,4 +47,5 @@ void registerFeatures(GetIt g) {
   registerSessions(g);
   registerAssistant(g);
   registerLinking(g);
+  registerStudentArea(g);
 }

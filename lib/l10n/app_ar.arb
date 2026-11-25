@@ -468,5 +468,99 @@
   "relationMother": "أم",
   "relationBrother": "أخ",
   "relationSister": "أخت",
-  "relationOther": "أخرى"
+  "relationOther": "أخرى",
+  "areaNotLinked": "حسابك غير مربوط بطالب بعد.",
+  "areaLinkStudentButton": "ربط حسابي بكود الطالب",
+  "areaScheduleTitle": "الجدول الأسبوعي",
+  "areaAttendanceTitle": "سجل الحضور",
+  "areaResultsTitle": "النتائج",
+  "areaScheduleEmpty": "لا توجد مواعيد مسجلة",
+  "areaAttendanceEmpty": "لا يوجد حضور مسجل بعد",
+  "areaResultsEmpty": "لا توجد نتائج منشورة بعد",
+  "weekdayName": "{day, select, d1{الاثنين} d2{الثلاثاء} d3{الأربعاء} d4{الخميس} d5{الجمعة} d6{السبت} other{الأحد}}",
+  "@weekdayName": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "scheduleRoom": "القاعة: {room}",
+  "@scheduleRoom": {
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "scheduleTimeRange": "{start} - {end}",
+  "@scheduleTimeRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceStatusPresent": "حاضر",
+  "attendanceStatusLate": "متأخر",
+  "attendanceStatusExcused": "غائب بعذر",
+  "attendanceSummary": "حضر {attended} من {total} حصة",
+  "@attendanceSummary": {
+    "placeholders": {
+      "attended": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceDateTime": "{date} - {time}",
+  "@attendanceDateTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsAverage": "المتوسط العام: {percent}%",
+  "@resultsAverage": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsScoreOf": "{score} من {max}",
+  "@resultsScoreOf": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsAbsent": "غائب",
+  "resultsExcused": "معفى",
+  "resultsPending": "لم تُرصد بعد",
+  "guardianNoChildren": "لم تربط أي طالب بعد.",
+  "guardianLinkChild": "ربط طالب بكود",
+  "guardianAddChild": "ربط طالب آخر",
+  "guardianRelation": "صلتك: {relation}",
+  "@guardianRelation": {
+    "placeholders": {
+      "relation": {
+        "type": "String"
+      }
+    }
+  },
+  "guardianChooseChild": "اختر الطالب"
 }

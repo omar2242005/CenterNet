@@ -764,4 +764,107 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get relationOther => 'أخرى';
+
+  @override
+  String get areaNotLinked => 'حسابك غير مربوط بطالب بعد.';
+
+  @override
+  String get areaLinkStudentButton => 'ربط حسابي بكود الطالب';
+
+  @override
+  String get areaScheduleTitle => 'الجدول الأسبوعي';
+
+  @override
+  String get areaAttendanceTitle => 'سجل الحضور';
+
+  @override
+  String get areaResultsTitle => 'النتائج';
+
+  @override
+  String get areaScheduleEmpty => 'لا توجد مواعيد مسجلة';
+
+  @override
+  String get areaAttendanceEmpty => 'لا يوجد حضور مسجل بعد';
+
+  @override
+  String get areaResultsEmpty => 'لا توجد نتائج منشورة بعد';
+
+  @override
+  String weekdayName(String day) {
+    String _temp0 = intl.Intl.selectLogic(day, {
+      'd1': 'الاثنين',
+      'd2': 'الثلاثاء',
+      'd3': 'الأربعاء',
+      'd4': 'الخميس',
+      'd5': 'الجمعة',
+      'd6': 'السبت',
+      'other': 'الأحد',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String scheduleRoom(String room) {
+    return 'القاعة: $room';
+  }
+
+  @override
+  String scheduleTimeRange(String start, String end) {
+    return '$start - $end';
+  }
+
+  @override
+  String get attendanceStatusPresent => 'حاضر';
+
+  @override
+  String get attendanceStatusLate => 'متأخر';
+
+  @override
+  String get attendanceStatusExcused => 'غائب بعذر';
+
+  @override
+  String attendanceSummary(int attended, int total) {
+    return 'حضر $attended من $total حصة';
+  }
+
+  @override
+  String attendanceDateTime(String date, String time) {
+    return '$date - $time';
+  }
+
+  @override
+  String resultsAverage(String percent) {
+    return 'المتوسط العام: $percent%';
+  }
+
+  @override
+  String resultsScoreOf(String score, String max) {
+    return '$score من $max';
+  }
+
+  @override
+  String get resultsAbsent => 'غائب';
+
+  @override
+  String get resultsExcused => 'معفى';
+
+  @override
+  String get resultsPending => 'لم تُرصد بعد';
+
+  @override
+  String get guardianNoChildren => 'لم تربط أي طالب بعد.';
+
+  @override
+  String get guardianLinkChild => 'ربط طالب بكود';
+
+  @override
+  String get guardianAddChild => 'ربط طالب آخر';
+
+  @override
+  String guardianRelation(String relation) {
+    return 'صلتك: $relation';
+  }
+
+  @override
+  String get guardianChooseChild => 'اختر الطالب';
 }

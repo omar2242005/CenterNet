@@ -7,6 +7,8 @@ import '../../l10n/app_localizations.dart';
 
 import '../assistant/assistant_route_names.dart';
 import '../auth/auth_route_names.dart';
+import '../guardian/screens/guardian_home_screen.dart';
+import '../student_area/screens/student_home_screen.dart';
 import '../centers/center_route_names.dart';
 import '../staff/staff_route_names.dart';
 import '../students/student_route_names.dart';
@@ -66,13 +68,11 @@ final List<RouteBase> homeRoutes = <RouteBase>[
   ),
   GoRoute(
     path: HomeRoutes.student,
-    builder: (context, state) =>
-        RoleHomeScreen(title: AppLocalizations.of(context).homeStudentTitle),
+    builder: (context, state) => const StudentHomeScreen(),
   ),
   GoRoute(
     path: HomeRoutes.guardian,
-    builder: (context, state) =>
-        RoleHomeScreen(title: AppLocalizations.of(context).homeGuardianTitle),
+    builder: (context, state) => const GuardianHomeScreen(),
   ),
   GoRoute(
     path: HomeRoutes.inactive,
