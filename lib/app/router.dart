@@ -6,6 +6,7 @@ import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
 import '../features/groups/groups_module.dart';
 import '../features/home/home_module.dart';
+import '../features/linking/linking_module.dart';
 import '../features/staff/staff_module.dart';
 import '../features/students/students_module.dart';
 
@@ -23,6 +24,7 @@ final List<RouteBase> featureRoutes = <RouteBase>[
   ...studentRoutes,
   ...groupRoutes,
   ...assistantRoutes,
+  ...linkingRoutes,
 ];
 
 /// [routes] للاختبار بس. الافتراضي هو [featureRoutes].

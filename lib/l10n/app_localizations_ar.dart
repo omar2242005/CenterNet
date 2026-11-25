@@ -680,4 +680,88 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get scoreSave => 'حفظ';
+
+  @override
+  String get linkEnterTitle => 'ربط الحساب بالطالب';
+
+  @override
+  String get linkStudentIntro => 'اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.';
+
+  @override
+  String get linkGuardianIntro => 'اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.';
+
+  @override
+  String get linkCodeLabel => 'كود الربط';
+
+  @override
+  String get linkCodeHint => 'مثال: AB3CD4EF';
+
+  @override
+  String get linkConsentTitle => 'الموافقة على الربط';
+
+  @override
+  String get linkConsentStudent => 'بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.';
+
+  @override
+  String linkConsentGuardian(int max) {
+    return 'بربط حسابك أنت توافق على عرض البيانات الدراسية للطالب لك (الحضور والدرجات والجدول). الحد الأقصى $max أولياء أمور لكل طالب، وتقدر تفك الربط في أي وقت.';
+  }
+
+  @override
+  String get linkConsentAgree => 'أوافق';
+
+  @override
+  String get linkSubmit => 'ربط';
+
+  @override
+  String get linkSuccess => 'تم الربط بنجاح';
+
+  @override
+  String get linkUnlink => 'فك الربط';
+
+  @override
+  String get linkUnlinkTitle => 'فك الربط';
+
+  @override
+  String linkUnlinkMessage(String name) {
+    return 'هل تريد فك ربط حسابك بالطالب $name؟ لن تتمكن من رؤية بياناته بعد ذلك.';
+  }
+
+  @override
+  String get linkIssueStudentCode => 'كود ربط الطالب';
+
+  @override
+  String get linkIssueGuardianCode => 'كود ربط ولي الأمر';
+
+  @override
+  String get linkIssueRelationTitle => 'صلة القرابة';
+
+  @override
+  String linkIssueExpires(String date) {
+    return 'صالح حتى $date';
+  }
+
+  @override
+  String get linkIssueCopy => 'نسخ';
+
+  @override
+  String get linkIssueCopied => 'تم نسخ الكود';
+
+  @override
+  String get linkIssueClose => 'إغلاق';
+
+  @override
+  String get relationFather => 'أب';
+
+  @override
+  String get relationMother => 'أم';
+
+  @override
+  String get relationBrother => 'أخ';
+
+  @override
+  String get relationSister => 'أخت';
+
+  @override
+  String get relationOther => 'أخرى';
 }

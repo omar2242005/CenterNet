@@ -1268,6 +1268,162 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حفظ'**
   String get scoreSave;
+  /// No description provided for @linkEnterTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ربط الحساب بالطالب'**
+  String get linkEnterTitle;
+
+  /// No description provided for @linkStudentIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.'**
+  String get linkStudentIntro;
+
+  /// No description provided for @linkGuardianIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.'**
+  String get linkGuardianIntro;
+
+  /// No description provided for @linkCodeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود الربط'**
+  String get linkCodeLabel;
+
+  /// No description provided for @linkCodeHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثال: AB3CD4EF'**
+  String get linkCodeHint;
+
+  /// No description provided for @linkConsentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموافقة على الربط'**
+  String get linkConsentTitle;
+
+  /// No description provided for @linkConsentStudent.
+  ///
+  /// In ar, this message translates to:
+  /// **'بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.'**
+  String get linkConsentStudent;
+
+  /// No description provided for @linkConsentGuardian.
+  ///
+  /// In ar, this message translates to:
+  /// **'بربط حسابك أنت توافق على عرض البيانات الدراسية للطالب لك (الحضور والدرجات والجدول). الحد الأقصى {max} أولياء أمور لكل طالب، وتقدر تفك الربط في أي وقت.'**
+  String linkConsentGuardian(int max);
+
+  /// No description provided for @linkConsentAgree.
+  ///
+  /// In ar, this message translates to:
+  /// **'أوافق'**
+  String get linkConsentAgree;
+
+  /// No description provided for @linkSubmit.
+  ///
+  /// In ar, this message translates to:
+  /// **'ربط'**
+  String get linkSubmit;
+
+  /// No description provided for @linkSuccess.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الربط بنجاح'**
+  String get linkSuccess;
+
+  /// No description provided for @linkUnlink.
+  ///
+  /// In ar, this message translates to:
+  /// **'فك الربط'**
+  String get linkUnlink;
+
+  /// No description provided for @linkUnlinkTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'فك الربط'**
+  String get linkUnlinkTitle;
+
+  /// No description provided for @linkUnlinkMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل تريد فك ربط حسابك بالطالب {name}؟ لن تتمكن من رؤية بياناته بعد ذلك.'**
+  String linkUnlinkMessage(String name);
+
+  /// No description provided for @linkIssueStudentCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود ربط الطالب'**
+  String get linkIssueStudentCode;
+
+  /// No description provided for @linkIssueGuardianCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود ربط ولي الأمر'**
+  String get linkIssueGuardianCode;
+
+  /// No description provided for @linkIssueRelationTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'صلة القرابة'**
+  String get linkIssueRelationTitle;
+
+  /// No description provided for @linkIssueExpires.
+  ///
+  /// In ar, this message translates to:
+  /// **'صالح حتى {date}'**
+  String linkIssueExpires(String date);
+
+  /// No description provided for @linkIssueCopy.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسخ'**
+  String get linkIssueCopy;
+
+  /// No description provided for @linkIssueCopied.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم نسخ الكود'**
+  String get linkIssueCopied;
+
+  /// No description provided for @linkIssueClose.
+  ///
+  /// In ar, this message translates to:
+  /// **'إغلاق'**
+  String get linkIssueClose;
+
+  /// No description provided for @relationFather.
+  ///
+  /// In ar, this message translates to:
+  /// **'أب'**
+  String get relationFather;
+
+  /// No description provided for @relationMother.
+  ///
+  /// In ar, this message translates to:
+  /// **'أم'**
+  String get relationMother;
+
+  /// No description provided for @relationBrother.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخ'**
+  String get relationBrother;
+
+  /// No description provided for @relationSister.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخت'**
+  String get relationSister;
+
+  /// No description provided for @relationOther.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخرى'**
+  String get relationOther;
+
 }
 
 class _AppLocalizationsDelegate

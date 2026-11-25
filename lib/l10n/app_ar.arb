@@ -421,5 +421,52 @@
   "scoreNotYet": "لسه",
   "scoreFieldScore": "الدرجة",
   "scoreFieldComment": "تعليق (اختياري)",
-  "scoreSave": "حفظ"
+  "scoreSave": "حفظ",
+  "linkEnterTitle": "ربط الحساب بالطالب",
+  "linkStudentIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.",
+  "linkGuardianIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.",
+  "linkCodeLabel": "كود الربط",
+  "linkCodeHint": "مثال: AB3CD4EF",
+  "linkConsentTitle": "الموافقة على الربط",
+  "linkConsentStudent": "بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.",
+  "linkConsentGuardian": "بربط حسابك أنت توافق على عرض البيانات الدراسية للطالب لك (الحضور والدرجات والجدول). الحد الأقصى {max} أولياء أمور لكل طالب، وتقدر تفك الربط في أي وقت.",
+  "@linkConsentGuardian": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "linkConsentAgree": "أوافق",
+  "linkSubmit": "ربط",
+  "linkSuccess": "تم الربط بنجاح",
+  "linkUnlink": "فك الربط",
+  "linkUnlinkTitle": "فك الربط",
+  "linkUnlinkMessage": "هل تريد فك ربط حسابك بالطالب {name}؟ لن تتمكن من رؤية بياناته بعد ذلك.",
+  "@linkUnlinkMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "linkIssueStudentCode": "كود ربط الطالب",
+  "linkIssueGuardianCode": "كود ربط ولي الأمر",
+  "linkIssueRelationTitle": "صلة القرابة",
+  "linkIssueExpires": "صالح حتى {date}",
+  "@linkIssueExpires": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "linkIssueCopy": "نسخ",
+  "linkIssueCopied": "تم نسخ الكود",
+  "linkIssueClose": "إغلاق",
+  "relationFather": "أب",
+  "relationMother": "أم",
+  "relationBrother": "أخ",
+  "relationSister": "أخت",
+  "relationOther": "أخرى"
 }

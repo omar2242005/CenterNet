@@ -12,6 +12,7 @@ import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/qr_card.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../linking/widgets/issue_link_code_section.dart';
 import '../cubit/student_detail_cubit.dart';
 import '../models/student.dart';
 import '../repository/students_repository.dart';
@@ -112,6 +113,8 @@ class _StudentDetailView extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(height: AppSpacing.md),
+                IssueLinkCodeSection(student: s),
                 const SizedBox(height: AppSpacing.lg),
                 AppButton(
                   label: l10n.studentEdit,
