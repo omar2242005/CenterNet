@@ -19,7 +19,9 @@ class PendingScanStore {
   List<PendingScan> all() {
     final raw = _store.getJson(storageKey);
     if (raw == null) return <PendingScan>[];
-    if (raw is! List) throw const FormatException('قائمة المسحات المحلية تالفة');
+    if (raw is! List) {
+      throw const FormatException('قائمة المسحات المحلية تالفة');
+    }
     return raw
         .map((e) => PendingScan.fromMap(Map<String, dynamic>.from(e as Map)))
         .toList();
@@ -27,6 +29,10 @@ class PendingScanStore {
 
   int get pendingCount =>
       all().where((s) => s.status == PendingScanStatus.pending).length;
+
+  /// كل المسحات التي لم تُرفع بنجاح بعد، بما فيها التي فشلت وتحتاج إجراء.
+  int get unsyncedCount =>
+      all().where((s) => s.status != PendingScanStatus.synced).length;
 
   List<PendingScan> get failed =>
       all().where((s) => s.status == PendingScanStatus.failed).toList();
@@ -47,15 +53,19 @@ class PendingScanStore {
 
   /// بيشيل المسحات المتزامنة (تمت) بس. الفاشلة والمعلّقة بتفضل.
   Future<void> clearSynced() async {
-    final list = all()..removeWhere((s) => s.status == PendingScanStatus.synced);
+    final list = all()
+      ..removeWhere((s) => s.status == PendingScanStatus.synced);
     await _save(list);
   }
 
   /// بيزامن عدّاد الحارس مع المحفوظ (يتنادى مرة عند فتح التطبيق).
-  void syncGuard() => _guard.setPending(pendingCount);
+  void syncGuard() => _guard.setPending(unsyncedCount);
 
-  Future<void> _update(String id, PendingScanStatus status,
-      {String? reason}) async {
+  Future<void> _update(
+    String id,
+    PendingScanStatus status, {
+    String? reason,
+  }) async {
     final list = all();
     final i = list.indexWhere((s) => s.id == id);
     if (i < 0) throw StateError('مسحة غير موجودة: $id');
@@ -69,7 +79,7 @@ class PendingScanStore {
       jsonDecode(jsonEncode(list.map((s) => s.toMap()).toList())) as Object,
     );
     _guard.setPending(
-      list.where((s) => s.status == PendingScanStatus.pending).length,
+      list.where((s) => s.status != PendingScanStatus.synced).length,
     );
   }
 }

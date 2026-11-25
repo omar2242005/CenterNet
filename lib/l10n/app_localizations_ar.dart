@@ -500,6 +500,55 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scanManualSubmit => 'تجربة الرمز';
 
   @override
+  String get syncTitle => 'مزامنة المسحات';
+
+  @override
+  String get syncSignOutWarning =>
+      'تسجيل الخروج قبل اكتمال المزامنة قد يؤدي إلى فقد بيانات حضور الطلاب.';
+
+  @override
+  String get syncNoConnection => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get syncNoConnectionHint =>
+      'أعد الاتصال بالإنترنت ثم حاول المزامنة مرة أخرى.';
+
+  @override
+  String get syncInProgress => 'جارٍ رفع المسحات';
+
+  @override
+  String syncProgress(int completed, int total) {
+    return 'تمت مزامنة $completed من $total';
+  }
+
+  @override
+  String get syncDone => 'اكتملت المزامنة';
+
+  @override
+  String syncDoneCount(int count) {
+    return 'تم رفع $count مسحة بنجاح.';
+  }
+
+  @override
+  String syncNeedsAction(int count) {
+    return '$count مسحة تحتاج إلى إجراء.';
+  }
+
+  @override
+  String get syncRetryFailed => 'إعادة محاولة المسحات الفاشلة';
+
+  @override
+  String syncPending(int count) {
+    return '$count مسحة بانتظار المزامنة';
+  }
+
+  @override
+  String get syncStart => 'بدء المزامنة';
+
+  @override
+  String get syncEmpty => 'لا توجد مسحات بانتظار المزامنة';
+
+  @override
   String get studentsListTitle => 'الطلاب';
 
   @override
