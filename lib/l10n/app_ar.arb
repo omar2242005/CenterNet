@@ -450,6 +450,29 @@
   "scoreFieldScore": "الدرجة",
   "scoreFieldComment": "تعليق (اختياري)",
   "scoreSave": "حفظ",
+    "myGroupsTitle": "مجموعاتي",
+  "myGroupsEmpty": "لا توجد مجموعات مسندة إليك",
+  "groupExamsButton": "الامتحانات والدرجات",
+  "groupNoStudents": "لا يوجد طلاب في المجموعة",
+  "groupStudentsSummary": "{students} طالب · {sessions} حصة سابقة",
+  "@groupStudentsSummary": {
+    "placeholders": {
+      "students": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+  "groupAbsencesBadge": "غياب {count}",
+  "@groupAbsencesBadge": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "linkEnterTitle": "ربط الحساب بالطالب",
   "linkStudentIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.",
   "linkGuardianIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.",

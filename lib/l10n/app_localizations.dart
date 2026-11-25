@@ -1346,6 +1346,43 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حفظ'**
   String get scoreSave;
+
+  /// No description provided for @myGroupsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مجموعاتي'**
+  String get myGroupsTitle;
+
+  /// No description provided for @myGroupsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مجموعات مسندة إليك'**
+  String get myGroupsEmpty;
+
+  /// No description provided for @groupExamsButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'الامتحانات والدرجات'**
+  String get groupExamsButton;
+
+  /// No description provided for @groupNoStudents.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد طلاب في المجموعة'**
+  String get groupNoStudents;
+
+  /// No description provided for @groupStudentsSummary.
+  ///
+  /// In ar, this message translates to:
+  /// **'{students} طالب · {sessions} حصة سابقة'**
+  String groupStudentsSummary(int students, int sessions);
+
+  /// No description provided for @groupAbsencesBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'غياب {count}'**
+  String groupAbsencesBadge(int count);
+
   /// No description provided for @linkEnterTitle.
   ///
   /// In ar, this message translates to:
@@ -1657,7 +1694,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اختر الطالب'**
   String get guardianChooseChild;
-
 }
 
 class _AppLocalizationsDelegate
