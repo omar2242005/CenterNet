@@ -19,8 +19,9 @@ class PendingScanStore {
   List<PendingScan> all() {
     final raw = _store.getJson(storageKey);
     if (raw == null) return <PendingScan>[];
-    if (raw is! List)
+    if (raw is! List) {
       throw const FormatException('قائمة المسحات المحلية تالفة');
+    }
     return raw
         .map((e) => PendingScan.fromMap(Map<String, dynamic>.from(e as Map)))
         .toList();
