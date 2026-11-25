@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import '../../core/services/local_store.dart';
 import '../../core/services/pending_ops_guard.dart';
 import 'assistant_route_names.dart';
+import 'cubit/home_cubit.dart';
+import 'cubit/sessions_cubit.dart';
 import 'cubit/sync_cubit.dart';
 import 'models/scan_setup.dart';
 import 'repository/assistant_repository.dart';
@@ -28,6 +30,15 @@ void registerAssistant(GetIt g) {
   g.registerLazySingleton<AssistantRepository>(
     () =>
         FirestoreAssistantRepository(g<FirebaseAuth>(), g<FirebaseFirestore>()),
+  );
+  g.registerFactory<AssistantHomeCubit>(
+    () => AssistantHomeCubit(
+      g<AssistantRepository>(),
+      g<ConnectivityMonitor>(),
+    ),
+  );
+  g.registerFactory<SessionsCubit>(
+    () => SessionsCubit(g<AssistantRepository>()),
   );
   g.registerFactory<SyncCubit>(
     () => SyncCubit(

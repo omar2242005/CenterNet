@@ -1,3 +1,5 @@
+import '../../../core/errors/failure.dart';
+import '../../sessions/models/session.dart';
 import '../rules/scan_validator.dart';
 
 /// كل اللي شاشة المسح محتاجاه عشان تشتغل من غير شبكة: السنتر والجلسة
@@ -25,6 +27,31 @@ class ScanSetup {
       sessionStart: t.subtract(const Duration(minutes: 10)),
       groupStudentIds: demoStudentIds.toSet(),
       isDemo: true,
+    );
+  }
+
+  /// setup حقيقي من جلسة حقيقية ("تحضير للأوفلاين").
+  ///
+  /// [groupStudentIds] = طلاب مجموعة الجلسة من Firestore. مجموعة فاضية
+  /// معناها إن المسح هيرفض كل الطلاب، فده خطأ تحضير (Failure.validation)
+  /// ومينفعش نفتح الماسح ببيانات ناقصة.
+  factory ScanSetup.forSession({
+    required Session session,
+    required Set<String> groupStudentIds,
+    int lateAfterMinutes = ScanValidator.defaultLateAfterMinutes,
+  }) {
+    if (groupStudentIds.isEmpty) {
+      throw const Failure.validation(
+        'مفيش طلاب مسجّلين في مجموعة الحصة دي. راجع إدارة السنتر.',
+      );
+    }
+    return ScanSetup(
+      centerId: session.centerId,
+      sessionId: session.id,
+      sessionStart: session.startAt,
+      groupStudentIds: groupStudentIds,
+      lateAfterMinutes: lateAfterMinutes,
+      isDemo: false,
     );
   }
 

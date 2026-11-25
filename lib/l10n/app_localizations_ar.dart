@@ -734,10 +734,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override
-  String get linkStudentIntro => 'اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.';
+  String get linkStudentIntro =>
+      'اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.';
 
   @override
-  String get linkGuardianIntro => 'اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.';
+  String get linkGuardianIntro =>
+      'اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.';
 
   @override
   String get linkCodeLabel => 'كود الربط';
@@ -749,7 +751,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get linkConsentTitle => 'الموافقة على الربط';
 
   @override
-  String get linkConsentStudent => 'بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.';
+  String get linkConsentStudent =>
+      'بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.';
 
   @override
   String linkConsentGuardian(int max) {
@@ -916,4 +919,95 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get guardianChooseChild => 'اختر الطالب';
+
+  @override
+  String get appName => 'CenterNet';
+
+  @override
+  String get assistantHomeTitle => 'الرئيسية';
+
+  @override
+  String assistantGreeting(String name) {
+    return 'أهلاً، $name';
+  }
+
+  @override
+  String get assistantOnline => 'متصل بالإنترنت';
+
+  @override
+  String get assistantOffline => 'غير متصل بالإنترنت';
+
+  @override
+  String assistantTodayCount(int count) {
+    return 'عندك $count حصص النهارده';
+  }
+
+  @override
+  String get assistantNoSessionsToday => 'مفيش حصص النهارده';
+
+  @override
+  String get assistantCurrentSession => 'الحصة الجارية دلوقتي';
+
+  @override
+  String get assistantNoCurrentSession => 'مفيش حصة جارية حاليًا';
+
+  @override
+  String get assistantStartScanning => 'ابدأ المسح';
+
+  @override
+  String get assistantSessionsTitle => 'حصص النهارده';
+
+  @override
+  String get assistantSessionDetailsTitle => 'تفاصيل الحصة';
+
+  @override
+  String get sessionStatusCurrent => 'جارية';
+
+  @override
+  String get sessionStatusUpcoming => 'قادمة';
+
+  @override
+  String get sessionStatusEnded => 'انتهت';
+
+  @override
+  String get sessionStatusCancelled => 'ملغاة';
+
+  @override
+  String get sessionGroupLabel => 'المجموعة';
+
+  @override
+  String get sessionTimeLabel => 'الوقت';
+
+  @override
+  String get sessionRoomLabel => 'القاعة';
+
+  @override
+  String get sessionNoRoom => 'غير محددة';
+
+  @override
+  String get sessionScanStudent => 'مسح كود الطالب';
+
+  @override
+  String get sessionAttendanceSummarySoon =>
+      'ملخص الحضور هيظهر هنا في الجزء الرابع';
+
+  @override
+  String get sessionAttendanceListSoon =>
+      'قائمة الحضور (هتتفعّل في الجزء الرابع)';
+
+  @override
+  String get assistantNavHome => 'الرئيسية';
+
+  @override
+  String get assistantNavSessions => 'الحصص';
+
+  @override
+  String get assistantNavAttendance => 'الحضور';
+
+  @override
+  String get assistantNavSync => 'المزامنة';
+
+  @override
+  String get assistantNavAttendanceSoon =>
+      'شاشة الحضور هتتفعّل في الجزء الرابع';
 }

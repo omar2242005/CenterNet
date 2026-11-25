@@ -1346,6 +1346,7 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حفظ'**
   String get scoreSave;
+
   /// No description provided for @linkEnterTitle.
   ///
   /// In ar, this message translates to:
@@ -1658,6 +1659,173 @@ abstract class AppLocalizations {
   /// **'اختر الطالب'**
   String get guardianChooseChild;
 
+  /// No description provided for @appName.
+  ///
+  /// In ar, this message translates to:
+  /// **'CenterNet'**
+  String get appName;
+
+  /// No description provided for @assistantHomeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرئيسية'**
+  String get assistantHomeTitle;
+
+  /// No description provided for @assistantGreeting.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً، {name}'**
+  String assistantGreeting(String name);
+
+  /// No description provided for @assistantOnline.
+  ///
+  /// In ar, this message translates to:
+  /// **'متصل بالإنترنت'**
+  String get assistantOnline;
+
+  /// No description provided for @assistantOffline.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متصل بالإنترنت'**
+  String get assistantOffline;
+
+  /// No description provided for @assistantTodayCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'عندك {count} حصص النهارده'**
+  String assistantTodayCount(int count);
+
+  /// No description provided for @assistantNoSessionsToday.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش حصص النهارده'**
+  String get assistantNoSessionsToday;
+
+  /// No description provided for @assistantCurrentSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحصة الجارية دلوقتي'**
+  String get assistantCurrentSession;
+
+  /// No description provided for @assistantNoCurrentSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش حصة جارية حاليًا'**
+  String get assistantNoCurrentSession;
+
+  /// No description provided for @assistantStartScanning.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ المسح'**
+  String get assistantStartScanning;
+
+  /// No description provided for @assistantSessionsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حصص النهارده'**
+  String get assistantSessionsTitle;
+
+  /// No description provided for @assistantSessionDetailsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل الحصة'**
+  String get assistantSessionDetailsTitle;
+
+  /// No description provided for @sessionStatusCurrent.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارية'**
+  String get sessionStatusCurrent;
+
+  /// No description provided for @sessionStatusUpcoming.
+  ///
+  /// In ar, this message translates to:
+  /// **'قادمة'**
+  String get sessionStatusUpcoming;
+
+  /// No description provided for @sessionStatusEnded.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت'**
+  String get sessionStatusEnded;
+
+  /// No description provided for @sessionStatusCancelled.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملغاة'**
+  String get sessionStatusCancelled;
+
+  /// No description provided for @sessionGroupLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'المجموعة'**
+  String get sessionGroupLabel;
+
+  /// No description provided for @sessionTimeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'الوقت'**
+  String get sessionTimeLabel;
+
+  /// No description provided for @sessionRoomLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'القاعة'**
+  String get sessionRoomLabel;
+
+  /// No description provided for @sessionNoRoom.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير محددة'**
+  String get sessionNoRoom;
+
+  /// No description provided for @sessionScanStudent.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسح كود الطالب'**
+  String get sessionScanStudent;
+
+  /// No description provided for @sessionAttendanceSummarySoon.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملخص الحضور هيظهر هنا في الجزء الرابع'**
+  String get sessionAttendanceSummarySoon;
+
+  /// No description provided for @sessionAttendanceListSoon.
+  ///
+  /// In ar, this message translates to:
+  /// **'قائمة الحضور (هتتفعّل في الجزء الرابع)'**
+  String get sessionAttendanceListSoon;
+
+  /// No description provided for @assistantNavHome.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرئيسية'**
+  String get assistantNavHome;
+
+  /// No description provided for @assistantNavSessions.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحصص'**
+  String get assistantNavSessions;
+
+  /// No description provided for @assistantNavAttendance.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحضور'**
+  String get assistantNavAttendance;
+
+  /// No description provided for @assistantNavSync.
+  ///
+  /// In ar, this message translates to:
+  /// **'المزامنة'**
+  String get assistantNavSync;
+
+  /// No description provided for @assistantNavAttendanceSoon.
+  ///
+  /// In ar, this message translates to:
+  /// **'شاشة الحضور هتتفعّل في الجزء الرابع'**
+  String get assistantNavAttendanceSoon;
 }
 
 class _AppLocalizationsDelegate

@@ -43,6 +43,11 @@ class _FakeRepository implements AssistantRepository {
     writes.add(scan);
     await onWrite(scan);
   }
+
+  // باقي الـ interface (الجزء 3) مش مستخدم في اختبارات المزامنة.
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('AssistantRepository.${invocation.memberName}');
 }
 
 void main() {

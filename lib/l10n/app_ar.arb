@@ -590,5 +590,47 @@
       }
     }
   },
-  "guardianChooseChild": "اختر الطالب"
+  "guardianChooseChild": "اختر الطالب",
+  "appName": "CenterNet",
+  "assistantHomeTitle": "الرئيسية",
+  "assistantGreeting": "أهلاً، {name}",
+  "@assistantGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "assistantOnline": "متصل بالإنترنت",
+  "assistantOffline": "غير متصل بالإنترنت",
+  "assistantTodayCount": "عندك {count} حصص النهارده",
+  "@assistantTodayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "assistantNoSessionsToday": "مفيش حصص النهارده",
+  "assistantCurrentSession": "الحصة الجارية دلوقتي",
+  "assistantNoCurrentSession": "مفيش حصة جارية حاليًا",
+  "assistantStartScanning": "ابدأ المسح",
+  "assistantSessionsTitle": "حصص النهارده",
+  "assistantSessionDetailsTitle": "تفاصيل الحصة",
+  "sessionStatusCurrent": "جارية",
+  "sessionStatusUpcoming": "قادمة",
+  "sessionStatusEnded": "انتهت",
+  "sessionStatusCancelled": "ملغاة",
+  "sessionGroupLabel": "المجموعة",
+  "sessionTimeLabel": "الوقت",
+  "sessionRoomLabel": "القاعة",
+  "sessionNoRoom": "غير محددة",
+  "sessionScanStudent": "مسح كود الطالب",
+  "sessionAttendanceSummarySoon": "ملخص الحضور هيظهر هنا في الجزء الرابع",
+  "sessionAttendanceListSoon": "قائمة الحضور (هتتفعّل في الجزء الرابع)",
+  "assistantNavHome": "الرئيسية",
+  "assistantNavSessions": "الحصص",
+  "assistantNavAttendance": "الحضور",
+  "assistantNavSync": "المزامنة",
+  "assistantNavAttendanceSoon": "شاشة الحضور هتتفعّل في الجزء الرابع"
 }
