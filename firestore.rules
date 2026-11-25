@@ -724,8 +724,10 @@ service cloud.firestore {
       allow get: if isAdmin(c) || isSessionStaff(c, resource.data.sessionId)
         || hasLink(c, resource.data.studentId);
 
-      // list: أي موظف نشط يقرا قوائم حضور السنتر (الكتابة للأدمن بس).
-      allow list: if isAdmin(c) || isStaff(c);
+      // list: أي موظف نشط يقرا قوائم حضور السنتر (الكتابة للأدمن بس)،
+      // والطالب/ولي الأمر المربوط يقرا حضور الطالب المربوط بيه بس
+      // (استعلامه لازم يكون مقيّد بـ studentId).
+      allow list: if isAdmin(c) || isStaff(c) || hasLink(c, resource.data.studentId);
 
       allow create: if validAttendance(request.resource.data, c, aid)
         && (isAdmin(c) || isSessionStaff(c, request.resource.data.sessionId))

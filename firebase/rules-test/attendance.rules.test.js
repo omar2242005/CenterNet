@@ -238,12 +238,20 @@ describe('attendance — القراءة', () => {
     await assertFails(getDoc(attRef(env.unauthenticatedContext().firestore(), attId(G1_SESSION, 'st1'))));
   });
 
-  it('list بفلتر sessionId: حصة مجموعتي تنجح وحصة حد تاني لأ', async () => {
+  it('list: الموظف النشط يقرا حضور أي حصة في السنتر، والأدمن الكل', async () => {
     const col = (db) => collection(db, `centers/${A}/attendance`);
     const q = (db, s) => query(col(db), where('sessionId', '==', s));
     await assertSucceeds(getDocs(q(as('assistantA'), G1_SESSION)));
     await assertSucceeds(getDocs(q(as('teacherA'), G1_SESSION)));
-    await assertFails(getDocs(q(as('teacherA'), G2_SESSION)));
+    await assertSucceeds(getDocs(q(as('teacherA'), G2_SESSION)));
     await assertSucceeds(getDocs(col(as('adminA'))));
+  });
+
+  it('list: معطّل أو غير مسجل أو غير مربوط مرفوضين', async () => {
+    const col = (db) => collection(db, `centers/${A}/attendance`);
+    await assertFails(getDocs(col(as('offTeacher'))));
+    await assertFails(getDocs(col(env.unauthenticatedContext().firestore())));
+    // مستخدم مسجل من غير عضوية ولا ربط: مرفوض حتى بفلتر studentId.
+    await assertFails(getDocs(query(col(as('randomUser')), where('studentId', '==', 'st1'))));
   });
 });
