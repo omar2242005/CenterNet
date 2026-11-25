@@ -613,5 +613,94 @@
       }
     }
   },
-  "guardianChooseChild": "اختر الطالب"
+  "guardianChooseChild": "اختر الطالب",
+  "appName": "CenterNet",
+  "assistantHomeTitle": "الرئيسية",
+  "assistantGreeting": "أهلاً، {name}",
+  "@assistantGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "assistantOnline": "متصل بالإنترنت",
+  "assistantOffline": "غير متصل بالإنترنت",
+  "assistantTodayCount": "عندك {count} حصص النهارده",
+  "@assistantTodayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "assistantNoSessionsToday": "مفيش حصص النهارده",
+  "assistantCurrentSession": "الحصة الجارية دلوقتي",
+  "assistantNoCurrentSession": "مفيش حصة جارية حاليًا",
+  "assistantStartScanning": "ابدأ المسح",
+  "assistantSessionsTitle": "حصص النهارده",
+  "assistantSessionDetailsTitle": "تفاصيل الحصة",
+  "sessionStatusCurrent": "جارية",
+  "sessionStatusUpcoming": "قادمة",
+  "sessionStatusEnded": "انتهت",
+  "sessionStatusCancelled": "ملغاة",
+  "sessionGroupLabel": "المجموعة",
+  "sessionTimeLabel": "الوقت",
+  "sessionRoomLabel": "القاعة",
+  "sessionNoRoom": "غير محددة",
+  "sessionScanStudent": "مسح كود الطالب",
+  "sessionAttendanceSummary": "حضر {attended} من {total} طالب",
+  "@sessionAttendanceSummary": {
+    "placeholders": {
+      "attended": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionAttendanceWaiting": "{count} بانتظار المزامنة",
+  "@sessionAttendanceWaiting": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionAttendanceNotYetLabel": "لسه ما حضروش",
+  "sessionAttendanceNotYet": "{count} طالب",
+  "@sessionAttendanceNotYet": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionLastScansTitle": "آخر عمليات المسح",
+  "sessionAttendanceListButton": "قائمة الحضور",
+  "assistantAttendanceTitle": "قائمة الحضور",
+  "assistantAttendanceNoSessions": "مفيش حصص النهارده",
+  "attendanceSearchHint": "ابحث بالاسم أو الكود",
+  "attendanceFilterAll": "الكل",
+  "attendanceFilterWaiting": "بانتظار المزامنة",
+  "attendanceFilterFailed": "فشلت المزامنة",
+  "attendanceEmpty": "مفيش حضور مسجل في الحصة دي لحد دلوقتي",
+  "attendanceNoResults": "لا توجد نتائج مطابقة للبحث",
+  "attendanceSyncSynced": "تمت المزامنة",
+  "attendanceSyncWaiting": "بانتظار المزامنة",
+  "attendanceSyncFailed": "فشلت المزامنة",
+  "attendanceUnknownStudent": "طالب مش في المجموعة",
+  "attendanceStudentCode": "كود {code}",
+  "@attendanceStudentCode": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+  "assistantNavHome": "الرئيسية",
+  "assistantNavSessions": "الحصص",
+  "assistantNavAttendance": "الحضور",
+  "assistantNavSync": "المزامنة"
 }

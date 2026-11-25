@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../app/session_role.dart';
 import '../../l10n/app_localizations.dart';
 
-import '../assistant/assistant_route_names.dart';
+import '../assistant/screens/assistant_home_screen.dart';
 import '../auth/auth_route_names.dart';
 import '../guardian/screens/guardian_home_screen.dart';
 import '../student_area/screens/student_home_screen.dart';
@@ -56,15 +56,7 @@ final List<RouteBase> homeRoutes = <RouteBase>[
   ),
   GoRoute(
     path: HomeRoutes.assistant,
-    builder: (context, state) {
-      final l10n = AppLocalizations.of(context);
-      return RoleHomeScreen(
-        title: l10n.homeAssistantTitle,
-        actions: [
-          (label: l10n.scanTitleDemo, route: AssistantRouteNames.scan),
-        ],
-      );
-    },
+    builder: (context, state) => const AssistantHomeScreen(),
   ),
   GoRoute(
     path: HomeRoutes.student,
