@@ -100,7 +100,7 @@ class _GroupDetailsView extends StatelessWidget {
                   ),
                 ),
               ],
-            );
+            ),
           ),
         );
       },
