@@ -11,8 +11,10 @@ import '../features/centers/centers_module.dart';
 import '../features/grades/grades_module.dart';
 import '../features/groups/groups_module.dart';
 import '../features/home/home_module.dart';
+import '../features/linking/linking_module.dart';
 import '../features/sessions/sessions_module.dart';
 import '../features/staff/staff_module.dart';
+import '../features/student_area/student_area_module.dart';
 import '../features/students/students_module.dart';
 import '../features/teacher/teacher_module.dart';
 
@@ -48,4 +50,6 @@ void registerFeatures(GetIt g) {
   registerGrades(g);
   registerAssistant(g);
   registerTeacher(g);
+  registerLinking(g);
+  registerStudentArea(g);
 }
