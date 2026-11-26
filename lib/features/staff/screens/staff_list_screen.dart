@@ -117,8 +117,9 @@ class _StaffTile extends StatelessWidget {
       message: disabling
           ? l10n.staffDisableMessage(member.name)
           : l10n.staffEnableMessage(member.name),
-      confirmLabel:
-          disabling ? l10n.staffActionDisable : l10n.staffActionEnable,
+      confirmLabel: disabling
+          ? l10n.staffActionDisable
+          : l10n.staffActionEnable,
       destructive: disabling,
     );
     if (ok) await cubit.setActive(member, !disabling);
@@ -150,9 +151,7 @@ class _StaffTile extends StatelessWidget {
           PopupMenuItem<_StaffAction>(
             value: _StaffAction.toggleActive,
             child: Text(
-              member.active
-                  ? l10n.staffActionDisable
-                  : l10n.staffActionEnable,
+              member.active ? l10n.staffActionDisable : l10n.staffActionEnable,
             ),
           ),
         ],

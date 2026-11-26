@@ -83,6 +83,8 @@
   "authCreateAccountButton": "إنشاء الحساب",
   "accountTypeAdmin": "مدير سنتر",
   "accountTypeStaff": "معلم أو مساعد",
+  "accountTypeTeacher": "معلم",
+  "accountTypeAssistant": "مساعد",
   "accountTypeGuardian": "ولي أمر",
   "accountTypeStudent": "طالب",
   "authVerifyTitle": "تأكيد البريد الإلكتروني",
@@ -186,6 +188,19 @@
     }
   },
   "staffJoinContinue": "متابعة",
+  "staffJoinCheckButton": "متابعة",
+  "staffJoinConfirmTitle": "راجع بيانات الدعوة",
+  "staffJoinConfirmBody": "الكود ده هيضيفك للسنتر بصفة {role}.",
+  "@staffJoinConfirmBody": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "staffJoinConfirmNote": "هيظهر اسم السنتر بعد ما تنضم. لو الدور مش اللي المفروض يوصلك، اطلب كود تاني من مدير السنتر.",
+  "staffJoinConfirmButton": "تأكيد الانضمام",
+  "staffJoinChangeCode": "تعديل الكود",
   "staffListTitle": "الموظفون",
   "staffListEmpty": "لا يوجد موظفون",
   "staffRoleAdmin": "مدير",

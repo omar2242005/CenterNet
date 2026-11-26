@@ -15,6 +15,15 @@ void main() {
       );
     });
 
+    test('معلم ومساعد (تسجيل جديد) يروحوا لإدخال كود الدعوة', () {
+      for (final t in [AccountType.teacher, AccountType.assistant]) {
+        expect(
+          decideHome(accountType: t, centerId: null),
+          HomeDestination.joinCenter,
+        );
+      }
+    });
+
     test('موظف يروح لإدخال كود الدعوة', () {
       expect(
         decideHome(accountType: AccountType.staff, centerId: null),

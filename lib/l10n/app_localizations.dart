@@ -346,6 +346,18 @@ abstract class AppLocalizations {
   /// **'معلم أو مساعد'**
   String get accountTypeStaff;
 
+  /// No description provided for @accountTypeTeacher.
+  ///
+  /// In ar, this message translates to:
+  /// **'معلم'**
+  String get accountTypeTeacher;
+
+  /// No description provided for @accountTypeAssistant.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد'**
+  String get accountTypeAssistant;
+
   /// No description provided for @accountTypeGuardian.
   ///
   /// In ar, this message translates to:
@@ -686,6 +698,42 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'متابعة'**
   String get staffJoinContinue;
+
+  /// No description provided for @staffJoinCheckButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get staffJoinCheckButton;
+
+  /// No description provided for @staffJoinConfirmTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'راجع بيانات الدعوة'**
+  String get staffJoinConfirmTitle;
+
+  /// No description provided for @staffJoinConfirmBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكود ده هيضيفك للسنتر بصفة {role}.'**
+  String staffJoinConfirmBody(String role);
+
+  /// No description provided for @staffJoinConfirmNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'هيظهر اسم السنتر بعد ما تنضم. لو الدور مش اللي المفروض يوصلك، اطلب كود تاني من مدير السنتر.'**
+  String get staffJoinConfirmNote;
+
+  /// No description provided for @staffJoinConfirmButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد الانضمام'**
+  String get staffJoinConfirmButton;
+
+  /// No description provided for @staffJoinChangeCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل الكود'**
+  String get staffJoinChangeCode;
 
   /// No description provided for @staffListTitle.
   ///

@@ -102,8 +102,10 @@ void main() {
         role: StaffMemberRole.teacher,
         active: true,
       );
-      final changed =
-          m.copyWith(role: StaffMemberRole.assistant, active: false);
+      final changed = m.copyWith(
+        role: StaffMemberRole.assistant,
+        active: false,
+      );
       expect(changed.uid, 't');
       expect(changed.name, 'سارة');
       expect(changed.role, StaffMemberRole.assistant);

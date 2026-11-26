@@ -43,7 +43,9 @@ void main() {
   testWidgets('فورم فاضي: بيظهر رسالة التحقق ومبينادش الـ Repository', (
     tester,
   ) async {
-    await tester.pumpApp(const StaffInviteScreen(role: StaffInviteRole.teacher));
+    await tester.pumpApp(
+      const StaffInviteScreen(role: StaffInviteRole.teacher),
+    );
 
     await tapText(tester, arL10n.staffInviteCreate);
 
@@ -54,7 +56,9 @@ void main() {
   testWidgets('موبايل غلط: بيظهر رسالة التحقق ومبينادش الـ Repository', (
     tester,
   ) async {
-    await tester.pumpApp(const StaffInviteScreen(role: StaffInviteRole.teacher));
+    await tester.pumpApp(
+      const StaffInviteScreen(role: StaffInviteRole.teacher),
+    );
 
     await tester.enterText(find.byType(TextFormField).at(0), 'سارة أحمد');
     await tester.enterText(find.byType(TextFormField).at(1), '123');
@@ -67,7 +71,9 @@ void main() {
   testWidgets('نجاح بدور معلم (الافتراضي): بيعرض الكود من غير زر واتساب', (
     tester,
   ) async {
-    await tester.pumpApp(const StaffInviteScreen(role: StaffInviteRole.teacher));
+    await tester.pumpApp(
+      const StaffInviteScreen(role: StaffInviteRole.teacher),
+    );
 
     await tester.enterText(find.byType(TextFormField).at(0), 'سارة أحمد');
     await tapText(tester, arL10n.staffInviteCreate);
@@ -103,7 +109,9 @@ void main() {
   });
 
   testWidgets('واتساب: بيفتح رابط برقم الموظف وفيه الكود', (tester) async {
-    await tester.pumpApp(const StaffInviteScreen(role: StaffInviteRole.teacher));
+    await tester.pumpApp(
+      const StaffInviteScreen(role: StaffInviteRole.teacher),
+    );
 
     await tester.enterText(find.byType(TextFormField).at(0), 'سارة أحمد');
     await tester.enterText(find.byType(TextFormField).at(1), '01012345678');
@@ -129,11 +137,15 @@ void main() {
       },
     );
     addTearDown(() {
-      tester.binding.defaultBinaryMessenger
-          .setMockMethodCallHandler(SystemChannels.platform, null);
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        null,
+      );
     });
 
-    await tester.pumpApp(const StaffInviteScreen(role: StaffInviteRole.teacher));
+    await tester.pumpApp(
+      const StaffInviteScreen(role: StaffInviteRole.teacher),
+    );
     await tester.enterText(find.byType(TextFormField).at(0), 'سارة أحمد');
     await tapText(tester, arL10n.staffInviteCreate);
     await tapText(tester, arL10n.staffInviteCopy);
@@ -143,7 +155,9 @@ void main() {
   });
 
   testWidgets('إضافة موظف آخر: بيرجّع فورم فاضي', (tester) async {
-    await tester.pumpApp(const StaffInviteScreen(role: StaffInviteRole.teacher));
+    await tester.pumpApp(
+      const StaffInviteScreen(role: StaffInviteRole.teacher),
+    );
 
     await tester.enterText(find.byType(TextFormField).at(0), 'سارة أحمد');
     await tapText(tester, arL10n.staffInviteCreate);
@@ -158,7 +172,9 @@ void main() {
 
   testWidgets('فشل: بتظهر رسالة الخطأ العربية ومفيش كود', (tester) async {
     repo.failure = const Failure.permission(message: 'غير مسموح لك بالدعوة');
-    await tester.pumpApp(const StaffInviteScreen(role: StaffInviteRole.teacher));
+    await tester.pumpApp(
+      const StaffInviteScreen(role: StaffInviteRole.teacher),
+    );
 
     await tester.enterText(find.byType(TextFormField).at(0), 'سارة أحمد');
     await tapText(tester, arL10n.staffInviteCreate);

@@ -17,6 +17,8 @@ import 'auth_page.dart';
 extension AccountTypeText on AccountType {
   String label(AppLocalizations l10n) => switch (this) {
         AccountType.admin => l10n.accountTypeAdmin,
+        AccountType.teacher => l10n.accountTypeTeacher,
+        AccountType.assistant => l10n.accountTypeAssistant,
         AccountType.staff => l10n.accountTypeStaff,
         AccountType.guardian => l10n.accountTypeGuardian,
         AccountType.student => l10n.accountTypeStudent,
@@ -24,6 +26,8 @@ extension AccountTypeText on AccountType {
 
   IconData get icon => switch (this) {
         AccountType.admin => Icons.admin_panel_settings_outlined,
+        AccountType.teacher => Icons.school_outlined,
+        AccountType.assistant => Icons.support_agent_outlined,
         AccountType.staff => Icons.school_outlined,
         AccountType.guardian => Icons.family_restroom_outlined,
         AccountType.student => Icons.backpack_outlined,
@@ -89,7 +93,7 @@ class _AccountTypeViewState extends State<_AccountTypeView> {
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              for (final type in AccountType.values)
+              for (final type in AccountType.selectable)
                 Padding(
                   padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                   child: _TypeTile(
@@ -137,10 +141,11 @@ class _TypeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Container(
-      decoration: BoxDecoration(
-        color: selected ? AppColors.primaryContainer : AppColors.surface,
-        border: Border.all(
+    return Material(
+      color: selected ? AppColors.primaryContainer : AppColors.surface,
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
           color: selected ? AppColors.primary : AppColors.border,
           width: selected ? 2 : 1,
         ),
