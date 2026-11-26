@@ -10,6 +10,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/sign_out_action.dart';
 import '../cubit/link_code_cubit.dart';
 import '../models/invite_code.dart';
 import '../models/student_link.dart';
@@ -64,7 +65,18 @@ class _LinkCodeViewState extends State<_LinkCodeView> {
     final isGuardian = widget.kind == LinkKind.guardian;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.linkEnterTitle)),
+      appBar: AppBar(
+        title: Text(l10n.linkEnterTitle),
+        // مخرج للمستخدم اللي دخل بالغلط أو ندمان: تسجيل خروج بتأكيد
+        // (نفس مسار باقي الشاشات، وفيه حارس العمليات المعلّقة).
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: l10n.authSignOut,
+            onPressed: () => confirmAndSignOut(context),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: BlocConsumer<LinkCodeCubit, LinkCodeState>(
           listener: (context, state) {
