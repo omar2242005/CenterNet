@@ -16,6 +16,9 @@ class FakeSessionsRepository implements SessionsRepository {
   /// نتيجة [generateUpcoming] عند النجاح.
   GenerateResult generateResult = (created: 0, skipped: 0);
 
+  /// بيفشّل المسح النهائي بس (مثلًا: الحصة عليها حضور).
+  Failure? deleteFailure;
+
   final List<String> calls = <String>[];
 
   void _maybeFail() {
@@ -49,5 +52,14 @@ class FakeSessionsRepository implements SessionsRepository {
       ...session.toCreateMap(createdAt: DateTime(2026)),
       'status': 'cancelled',
     });
+  }
+
+  @override
+  Future<void> deleteCancelledSession(Session session) async {
+    calls.add('delete:${session.id}');
+    _maybeFail();
+    final f = deleteFailure;
+    if (f != null) throw f;
+    sessions.removeWhere((s) => s.id == session.id);
   }
 }

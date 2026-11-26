@@ -559,6 +559,16 @@
       }
     }
   },
+  "sessionDeleteAction": "مسح الحصة نهائيًا",
+  "sessionDeleteTitle": "مسح الحصة نهائيًا؟",
+  "sessionDeleteMessage": "حصة يوم {date} الملغاة هتتمسح من التطبيق ومن قاعدة البيانات ومش هترجع. هل تريد المتابعة؟",
+  "@sessionDeleteMessage": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "sessionDeleteConfirm": "مسح نهائيًا",
+  "sessionDeleted": "تم مسح الحصة.",
   "sessionCancelConfirm": "إلغاء الحصة",
   "myAccountTitle": "حسابي",
   "myAccountName": "الاسم",

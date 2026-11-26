@@ -12,7 +12,7 @@ import '../rules/session_generator.dart';
 /// نتيجة "إنشاء الأسابيع الجاية": كام حصة اتكتبت وكام كانت موجودة.
 typedef GenerateResult = ({int created, int skipped});
 
-/// حصص المجموعات: توليد، قراءة، إلغاء.
+/// حصص المجموعات: توليد، قراءة، إلغاء، ومسح الملغاة.
 ///
 /// * الـ ID حتمي (gid_yyyyMMdd_HHmm)، والـ Rules بتمنع أي تعديل على حصة
 ///   موجودة غير الإلغاء. عشان كده التوليد Transaction: بيقرا الأول
@@ -128,6 +128,30 @@ class SessionsRepository {
       } on FormatException {
         throw const Failure.unknown();
       }
+    });
+  }
+
+  /// مسح حصة **ملغاة** نهائيًا. بيرفض لو الحصة مش ملغاة، أو لو عليها حضور
+  /// مسجّل (الحضور مبيتمسحش، فمسح الحصة هيسيبه يتيم). الفحص بيتم من السيرفر
+  /// مش من الكاش. الـ Rules بتسمح للأدمن بمسح الملغاة بس.
+  Future<void> deleteCancelledSession(Session session) {
+    return ErrorMapper.guard(() async {
+      _requireUid();
+      if (!session.isCancelled) {
+        throw const Failure.validation('مينفعش تمسح حصة مش ملغاة. الغيها الأول.');
+      }
+      final attendance = await _db
+          .collection(FirestorePaths.attendance(session.centerId))
+          .where('sessionId', isEqualTo: session.id)
+          .limit(1)
+          .get(const GetOptions(source: Source.server))
+          .timeout(timeout);
+      if (attendance.docs.isNotEmpty) {
+        throw const Failure.validation(
+          'الحصة دي عليها حضور مسجّل، مينفعش تتمسح.',
+        );
+      }
+      await _ref(session.centerId, session.id).delete().timeout(timeout);
     });
   }
 

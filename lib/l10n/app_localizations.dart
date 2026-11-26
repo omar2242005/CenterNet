@@ -1671,6 +1671,36 @@ abstract class AppLocalizations {
   /// **'حصة يوم {date} هتتلغي ولن تُعاد تلقائيًا. هل تريد المتابعة؟'**
   String sessionCancelMessage(String date);
 
+  /// No description provided for @sessionDeleteAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسح الحصة نهائيًا'**
+  String get sessionDeleteAction;
+
+  /// No description provided for @sessionDeleteTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسح الحصة نهائيًا؟'**
+  String get sessionDeleteTitle;
+
+  /// No description provided for @sessionDeleteMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'حصة يوم {date} الملغاة هتتمسح من التطبيق ومن قاعدة البيانات ومش هترجع. هل تريد المتابعة؟'**
+  String sessionDeleteMessage(String date);
+
+  /// No description provided for @sessionDeleteConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسح نهائيًا'**
+  String get sessionDeleteConfirm;
+
+  /// No description provided for @sessionDeleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم مسح الحصة.'**
+  String get sessionDeleted;
+
   /// No description provided for @sessionCancelConfirm.
   ///
   /// In ar, this message translates to:
