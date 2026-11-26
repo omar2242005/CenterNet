@@ -1,0 +1,871 @@
+{
+  "@@locale": "ar",
+  "retry": "إعادة المحاولة",
+  "loading": "جارٍ التحميل",
+  "emptyDefault": "لا توجد بيانات لعرضها",
+  "confirm": "تأكيد",
+  "cancel": "إلغاء",
+  "searchHint": "بحث",
+  "clearSearch": "مسح البحث",
+  "showPassword": "إظهار كلمة السر",
+  "hidePassword": "إخفاء كلمة السر",
+  "qrSemantics": "رمز QR الخاص بالطالب",
+  "validationRequired": "هذا الحقل مطلوب",
+  "validationNameTooShort": "الاسم قصير جدًا",
+  "validationNameTooLong": "الاسم طويل جدًا",
+  "validationNameInvalid": "الاسم يجب أن يحتوي على حروف فقط",
+  "validationMobileInvalid": "رقم الموبايل غير صالح، مثال: 01012345678",
+  "validationEmailInvalid": "البريد الإلكتروني غير صالح",
+  "validationPasswordTooShort": "كلمة السر يجب ألا تقل عن 8 أحرف",
+  "validationScoreInvalid": "الدرجة غير صالحة",
+  "validationScoreOutOfRange": "الدرجة خارج النطاق المسموح",
+  "validationScoreStep": "الدرجة تُكتب بخطوة 0.5 فقط",
+  "currencyEgp": "{amount} ج.م",
+  "@currencyEgp": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dateFull": "{day} {month} {year}",
+  "@dateFull": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "monthName": "{month, select, m1{يناير} m2{فبراير} m3{مارس} m4{أبريل} m5{مايو} m6{يونيو} m7{يوليو} m8{أغسطس} m9{سبتمبر} m10{أكتوبر} m11{نوفمبر} other{ديسمبر}}",
+  "@monthName": {
+    "description": "اسم الشهر. القيمة m1..m12، وأي قيمة تانية بترجّع ديسمبر.",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "timeFormat": "{hour}:{minute} {period}",
+  "@timeFormat": {
+    "placeholders": {
+      "hour": {
+        "type": "String"
+      },
+      "minute": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "am": "ص",
+  "pm": "م",
+  "authLoginTitle": "تسجيل الدخول",
+  "authEmail": "البريد الإلكتروني",
+  "authPassword": "كلمة السر",
+  "authLoginButton": "دخول",
+  "authForgotPassword": "نسيت كلمة السر؟",
+  "authCreateAccount": "إنشاء حساب جديد",
+  "authRegisterTitle": "إنشاء حساب",
+  "authName": "الاسم",
+  "authPhone": "رقم الموبايل",
+  "authContinue": "متابعة",
+  "authHaveAccount": "لدي حساب بالفعل",
+  "authAccountTypeTitle": "نوع الحساب",
+  "authAccountTypeNotice": "اختيارك لنوع الحساب لا يمنحك أي صلاحيات. تحصل على الصلاحيات بإنشاء سنتر أو بإدخال كود دعوة.",
+  "authCreateAccountButton": "إنشاء الحساب",
+  "accountTypeAdmin": "مدير سنتر",
+  "accountTypeStaff": "معلم أو مساعد",
+  "accountTypeTeacher": "معلم",
+  "accountTypeAssistant": "مساعد",
+  "accountTypeGuardian": "ولي أمر",
+  "accountTypeStudent": "طالب",
+  "authVerifyTitle": "تأكيد البريد الإلكتروني",
+  "authVerifyBody": "أرسلنا رابط التأكيد إلى {email}. افتح الرابط ثم اضغط \"تم التأكيد\".",
+  "@authVerifyBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerifyCheck": "تم التأكيد",
+  "authVerifyResend": "إعادة إرسال الرابط",
+  "authVerifyNotYet": "لم يتم تأكيد البريد بعد. افتح الرابط في الرسالة ثم حاول مرة أخرى.",
+  "authVerifySent": "تم إرسال الرابط من جديد.",
+  "authForgotTitle": "استعادة كلمة السر",
+  "authForgotBody": "اكتب بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة السر.",
+  "authForgotSend": "إرسال الرابط",
+  "authResetSent": "لو كان البريد مسجلًا لدينا فسيصلك رابط إعادة التعيين خلال دقائق.",
+  "authBackToLogin": "العودة لتسجيل الدخول",
+  "authSignOut": "تسجيل الخروج",
+  "authSignOutTitle": "تسجيل الخروج",
+  "authSignOutMessage": "هل تريد تسجيل الخروج من حسابك؟",
+  "authSignOutFailed": "تعذر تسجيل الخروج. حاول مرة أخرى.",
+  "authSignedInTitle": "تم تسجيل الدخول",
+  "authSignedInBody": "أنت مسجل الدخول بالحساب {email}.",
+  "@authSignedInBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "centerCreateTitle": "إنشاء سنتر",
+  "centerCreateButton": "إنشاء السنتر",
+  "centerSettingsTitle": "إعدادات السنتر",
+  "centerName": "اسم السنتر",
+  "centerYear": "السنة الدراسية",
+  "centerLateAfter": "مدة التأخير (بالدقائق)",
+  "centerSave": "حفظ",
+  "centerSaved": "تم حفظ الإعدادات.",
+  "centerNone": "ليس لديك سنتر بعد.",
+  "centerYearInvalid": "السنة غير صالحة",
+  "centerLateInvalid": "المدة لازم تكون من 0 إلى 180 دقيقة",
+  "staffInviteTeacherTitle": "إضافة معلم",
+  "staffInviteAssistantTitle": "إضافة مساعد",
+  "staffInviteTeacherName": "اسم المعلم",
+  "staffInviteAssistantName": "اسم المساعد",
+  "staffRoleTeacher": "معلم",
+  "staffRoleAssistant": "مساعد",
+  "staffInvitePhone": "موبايل الموظف (اختياري، لإرسال الكود عبر واتساب)",
+  "staffInviteCreate": "إنشاء الكود",
+  "staffInviteReadyTitle": "تم إنشاء كود الدعوة",
+  "staffInviteCodeLabel": "كود الدعوة",
+  "staffInviteValidUntil": "صالح حتى {date}",
+  "@staffInviteValidUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "staffInviteNote": "الكود يُستخدم مرة واحدة فقط. بعد قبوله يصبح الموظف عضوًا في السنتر بالدور المحدد.",
+  "staffInviteCopy": "نسخ الكود",
+  "staffInviteCopied": "تم نسخ الكود",
+  "staffInviteWhatsapp": "إرسال عبر واتساب",
+  "staffInviteAnother": "إضافة موظف آخر",
+  "staffInviteMessage": "مرحبًا {name}، تمت دعوتك للانضمام إلى {center} بصفة {role} على تطبيق CenterNet.\nكود الدعوة: {code}\nالكود صالح لمدة 7 أيام ويُستخدم مرة واحدة. سجّل حسابك في التطبيق ثم أدخل الكود.",
+  "@staffInviteMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "center": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "staffJoinEntry": "لدي كود دعوة",
+  "staffJoinTitle": "الانضمام بكود دعوة",
+  "staffJoinIntro": "اكتب كود الدعوة اللي وصلك من مدير السنتر.",
+  "staffJoinCodeLabel": "كود الدعوة",
+  "staffJoinCodeInvalid": "الكود يتكون من 8 رموز (حروف إنجليزية وأرقام)",
+  "staffJoinButton": "انضمام",
+  "staffJoinSuccessTitle": "تم الانضمام بنجاح",
+  "staffJoinSuccessBody": "أصبحت عضوًا في {center} بصفة {role}.",
+  "@staffJoinSuccessBody": {
+    "placeholders": {
+      "center": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "staffJoinContinue": "متابعة",
+  "staffJoinCheckButton": "متابعة",
+  "staffJoinConfirmTitle": "راجع بيانات الدعوة",
+  "staffJoinConfirmBody": "الكود ده هيضيفك للسنتر بصفة {role}.",
+  "@staffJoinConfirmBody": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "staffJoinConfirmNote": "هيظهر اسم السنتر بعد ما تنضم. لو الدور مش اللي المفروض يوصلك، اطلب كود تاني من مدير السنتر.",
+  "staffJoinConfirmButton": "تأكيد الانضمام",
+  "staffJoinChangeCode": "تعديل الكود",
+  "staffListTitle": "الموظفون",
+  "staffListEmpty": "لا يوجد موظفون",
+  "staffRoleAdmin": "مدير",
+  "staffStatusActive": "نشط",
+  "staffStatusDisabled": "معطّل",
+  "staffMenuTooltip": "خيارات الموظف",
+  "staffActionDisable": "تعطيل",
+  "staffActionEnable": "تفعيل",
+  "staffDisableTitle": "تعطيل الموظف",
+  "staffDisableMessage": "{name} لن يتمكن من استخدام السنتر حتى تعيد تفعيله. هل تريد المتابعة؟",
+  "@staffDisableMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "staffEnableTitle": "تفعيل الموظف",
+  "staffEnableMessage": "هل تريد إعادة تفعيل {name}؟",
+  "@staffEnableMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "scanTitle": "مسح الحضور",
+  "scanTitleDemo": "مسح الحضور (تجريبي)",
+  "scanHint": "وجّه الكاميرا ناحية رمز الـ QR الخاص بالطالب",
+  "scanWaiting": "في انتظار مسح أول رمز",
+  "scanTorch": "الفلاش",
+  "scanSwitchCamera": "تبديل الكاميرا",
+  "scanPermissionDenied": "نحتاج إذن الكاميرا لمسح الحضور. فعّله من إعدادات الجهاز ثم ارجع للشاشة.",
+  "scanCameraUnsupported": "الكاميرا غير متاحة على هذا الجهاز",
+  "scanCameraError": "تعذّر تشغيل الكاميرا",
+  "scanRecordedPresent": "تم تسجيل حضور {student}",
+  "@scanRecordedPresent": {
+    "placeholders": {
+      "student": {
+        "type": "String"
+      }
+    }
+  },
+  "scanRecordedLate": "تم تسجيل {student} متأخرًا",
+  "@scanRecordedLate": {
+    "placeholders": {
+      "student": {
+        "type": "String"
+      }
+    }
+  },
+  "scanAlreadyRegistered": "{student} مسجّل بالفعل",
+  "@scanAlreadyRegistered": {
+    "placeholders": {
+      "student": {
+        "type": "String"
+      }
+    }
+  },
+  "scanVoidedBefore": "{student} ملغى سابقًا — راجع المصحح",
+  "@scanVoidedBefore": {
+    "placeholders": {
+      "student": {
+        "type": "String"
+      }
+    }
+  },
+  "scanNotRegistered": "{student} غير مسجّل في مجموعة هذه الحصة",
+  "@scanNotRegistered": {
+    "placeholders": {
+      "student": {
+        "type": "String"
+      }
+    }
+  },
+  "scanOtherCenter": "هذا الرمز تابع لسنتر آخر",
+  "scanInvalidCode": "رمز غير صالح",
+  "scanStorageError": "تعذّر حفظ المسحة على الجهاز، حاول مرة أخرى",
+  "scanLocalListCorrupt": "قائمة المسحات المحلية تالفة، المسح متوقف",
+  "scanCountPresent": "حاضر {count}",
+  "@scanCountPresent": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scanCountLate": "متأخر {count}",
+  "@scanCountLate": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scanCountRejected": "مرفوض {count}",
+  "@scanCountRejected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scanPendingCount": "{count} بانتظار المزامنة",
+  "@scanPendingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scanDemoBanner": "نموذج أولي: بيانات تجريبية، والمسحات لا تُحفظ على الجهاز",
+  "scanManualTitle": "إدخال يدوي للتجربة",
+  "scanManualHint": "مثال: demo:s1",
+  "scanManualSubmit": "تجربة الرمز",
+  "syncTitle": "مزامنة المسحات",
+  "syncSignOutWarning": "تسجيل الخروج قبل اكتمال المزامنة قد يؤدي إلى فقد بيانات حضور الطلاب.",
+  "syncNoConnection": "لا يوجد اتصال بالإنترنت",
+  "syncNoConnectionHint": "أعد الاتصال بالإنترنت ثم حاول المزامنة مرة أخرى.",
+  "syncInProgress": "جارٍ رفع المسحات",
+  "syncProgress": "تمت مزامنة {completed} من {total}",
+  "@syncProgress": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "syncDone": "اكتملت المزامنة",
+  "syncDoneCount": "تم رفع {count} مسحة بنجاح.",
+  "@syncDoneCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "syncNeedsAction": "{count} مسحة تحتاج إلى إجراء.",
+  "@syncNeedsAction": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "syncRetryFailed": "إعادة محاولة المسحات الفاشلة",
+  "syncPending": "{count} مسحة بانتظار المزامنة",
+  "@syncPending": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "syncStart": "بدء المزامنة",
+  "syncEmpty": "لا توجد مسحات بانتظار المزامنة",
+  "studentsListTitle": "الطلاب",
+  "studentsEmpty": "لم تتم إضافة طلاب بعد",
+  "studentsNoResults": "لا يوجد طالب مطابق للبحث",
+  "studentsSearchHint": "ابحث بالاسم أو الرقم أو الموبايل",
+  "studentsAddTitle": "إضافة طالب",
+  "studentsEditTitle": "تعديل بيانات الطالب",
+  "studentsShowArchived": "إظهار المؤرشفين",
+  "studentsHideArchived": "إخفاء المؤرشفين",
+  "studentFieldName": "اسم الطالب",
+  "studentFieldPhone": "رقم الموبايل",
+  "studentFieldGrade": "الصف الدراسي (اختياري)",
+  "studentSave": "حفظ",
+  "studentNumber": "رقم الطالب: {no}",
+  "@studentNumber": {
+    "placeholders": {
+      "no": {
+        "type": "int"
+      }
+    }
+  },
+  "studentDetailTitle": "ملف الطالب",
+  "studentEdit": "تعديل البيانات",
+  "studentArchive": "أرشفة الطالب",
+  "studentRestore": "استرجاع الطالب",
+  "studentArchiveTitle": "أرشفة الطالب",
+  "studentArchiveMessage": "سيتم إخفاء {name} من القوائم، ولن يُحذف أي من بياناته أو سجل حضوره. هل تريد المتابعة؟",
+  "@studentArchiveMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "studentArchiveConfirm": "أرشفة",
+  "studentArchivedBadge": "مؤرشف",
+  "studentQrHint": "يعرض الطالب هذا الرمز عند دخول الحصة",
+  "studentPhoneLabel": "الموبايل: {phone}",
+  "@studentPhoneLabel": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "studentGradeLabel": "الصف: {grade}",
+  "@studentGradeLabel": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "homeAdminTitle": "رئيسية الأدمن",
+  "adminNavHome": "الرئيسية",
+  "adminHomeTitle": "إدارة السنتر",
+  "adminGreeting": "أهلاً، {name}",
+  "@adminGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminShortcuts": "الاختصارات",
+  "homeTeacherTitle": "رئيسية المعلم",
+  "homeAssistantTitle": "رئيسية المساعد",
+  "homeStudentTitle": "رئيسية الطالب",
+  "homeGuardianTitle": "رئيسية ولي الأمر",
+  "homeComingSoon": "هذه الشاشة قيد التطوير.",
+  "homeInactiveTitle": "الحساب معطّل",
+  "homeInactiveBody": "تم تعطيل حسابك من إدارة السنتر. تواصل مع الأدمن.",
+  "homeNoAccessTitle": "لا توجد صلاحيات",
+  "homeNoAccessBody": "حسابك غير مرتبط بسنتر بشكل صحيح. تواصل مع الأدمن أو سجّل الخروج.",
+    "examsTitle": "الامتحانات",
+  "examsEmpty": "لم تتم إضافة امتحانات بعد",
+  "examAddTitle": "إنشاء امتحان",
+  "examFieldTitle": "عنوان الامتحان",
+  "examFieldMax": "الدرجة النهائية",
+  "examMaxInvalid": "الدرجة النهائية لازم تكون رقمًا أكبر من صفر",
+  "examSave": "حفظ الامتحان",
+  "examPublished": "منشور",
+  "examDraft": "مسودة",
+  "examPublish": "نشر الدرجات",
+  "examUnpublish": "إلغاء النشر",
+  "examMaxLabel": "من {max}",
+  "@examMaxLabel": {
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "scoresTitle": "إدخال الدرجات",
+  "scoresEmpty": "لا يوجد طلاب في المجموعة",
+  "scoresRecorded": "تم رصد {done} من {total}",
+  "@scoresRecorded": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreStateScored": "له درجة",
+  "scoreStateAbsent": "غائب",
+  "scoreStateExcused": "معفى",
+  "scoreNotYet": "لسه",
+  "scoreFieldScore": "الدرجة",
+  "scoreFieldComment": "تعليق (اختياري)",
+  "scoreSave": "حفظ",
+    "myGroupsTitle": "مجموعاتي",
+  "myGroupsEmpty": "لا توجد مجموعات مسندة إليك",
+  "groupExamsButton": "الامتحانات والدرجات",
+  "groupNoStudents": "لا يوجد طلاب في المجموعة",
+  "groupStudentsSummary": "{students} طالب · {sessions} حصة سابقة",
+  "@groupStudentsSummary": {
+    "placeholders": {
+      "students": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+  "groupAbsencesBadge": "غياب {count}",
+  "@groupAbsencesBadge": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "groupsListTitle": "المجموعات",
+  "groupsEmpty": "لا توجد مجموعات بعد",
+  "groupsNoResults": "لا توجد مجموعة مطابقة للبحث",
+  "groupsSearchHint": "ابحث بالاسم أو المادة أو الصف",
+  "groupsShowArchived": "عرض المؤرشفة",
+  "groupsHideArchived": "إخفاء المؤرشفة",
+  "groupArchivedBadge": "مؤرشفة",
+  "groupArchiveAction": "أرشفة",
+  "groupArchiveTitle": "أرشفة المجموعة؟",
+  "groupArchiveMessage": "سيتم إخفاء {name} من القوائم، ولن تُحذف بياناتها أو حصصها. هل تريد المتابعة؟",
+  "@groupArchiveMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "groupArchiveConfirm": "أرشفة",
+  "groupsAddTitle": "إضافة مجموعة",
+  "groupEditTitle": "تعديل المجموعة",
+  "groupFieldName": "اسم المجموعة",
+  "groupFieldSubject": "المادة (اختياري)",
+  "groupFieldGrade": "الصف (اختياري)",
+  "groupFieldRoom": "القاعة (اختياري)",
+  "groupFieldTeacher": "المعلم",
+  "groupFieldAssistants": "المساعدون (اختياري)",
+  "groupFieldCapacity": "السعة القصوى (اختياري)",
+  "groupFieldFee": "السعر الشهري بالجنيه (اختياري)",
+  "groupSlotsTitle": "المواعيد الأسبوعية",
+  "groupSlotDay": "اليوم",
+  "groupSlotDuration": "المدة بالدقائق",
+  "groupAddSlot": "إضافة ميعاد",
+  "groupSlotRemove": "حذف الميعاد",
+  "groupNoTeachers": "لا يوجد معلمون نشطون. أضفهم من شاشة الفريق أولًا.",
+  "groupInvalidCapacity": "اكتب رقمًا صحيحًا (1 أو أكثر)",
+  "groupInvalidFee": "اكتب سعرًا صحيحًا (0 أو أكثر)",
+  "groupInvalidDuration": "المدة لازم تكون من 1 لـ 480 دقيقة",
+  "groupStudentsMenu": "تسجيل الطلاب",
+  "groupEnrolledCount": "{count} طالب مسجّل",
+  "@groupEnrolledCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "groupFullBadge": "مكتملة العدد",
+  "groupStudentsSearchHint": "ابحث بالاسم أو الرقم",
+  "groupStudentsEmpty": "لا يوجد طلاب لعرضهم",
+  "groupSessionsMenu": "الحصص",
+  "sessionsGenerateButton": "إنشاء حصص الأسابيع الجاية",
+  "sessionsGenerateResult": "اتكتبت {created} حصة جديدة ({skipped} موجودة بالفعل)",
+  "@sessionsGenerateResult": {
+    "placeholders": {
+      "created": {
+        "type": "int"
+      },
+      "skipped": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionsEmpty": "لا توجد حصص قادمة. أنشئ حصص الأسابيع الجاية من الزر بالأعلى.",
+  "sessionScheduledBadge": "مجدولة",
+  "sessionCancelledBadge": "ملغاة",
+  "sessionCancelAction": "إلغاء الحصة",
+  "sessionCancelTitle": "إلغاء الحصة؟",
+  "sessionCancelMessage": "حصة يوم {date} هتتلغي ولن تُعاد تلقائيًا. هل تريد المتابعة؟",
+  "@sessionCancelMessage": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionDeleteAction": "مسح الحصة نهائيًا",
+  "sessionDeleteTitle": "مسح الحصة نهائيًا؟",
+  "sessionDeleteMessage": "حصة يوم {date} الملغاة هتتمسح من التطبيق ومن قاعدة البيانات ومش هترجع. هل تريد المتابعة؟",
+  "@sessionDeleteMessage": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "sessionDeleteConfirm": "مسح نهائيًا",
+  "sessionDeleted": "تم مسح الحصة.",
+  "sessionCancelConfirm": "إلغاء الحصة",
+  "myAccountTitle": "حسابي",
+  "myAccountName": "الاسم",
+  "myAccountEmail": "البريد الإلكتروني",
+  "myAccountPhone": "الموبايل",
+  "myAccountType": "نوع الحساب",
+  "myAccountLoadError": "تعذر تحميل بيانات الحساب",
+  "accountDeleteAction": "حذف الحساب نهائيًا",
+  "accountDeleteTitle": "حذف الحساب نهائيًا",
+  "accountDeleteMessage": "هيتحذف حسابك وبياناته نهائيًا ومش هينفع ترجع. اكتب كلمة السر للتأكيد.",
+  "accountDeleteConfirm": "حذف نهائي",
+  "accountDeleteFailed": "تعذر حذف الحساب. حاول مرة أخرى.",
+  "groupRoomConflict": "القاعة دي محجوزة لمجموعة «{group}» يوم {day} من {start} لـ {end}",
+  "@groupRoomConflict": {
+    "placeholders": {
+      "group": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "groupUnarchiveAction": "استرجاع",
+  "groupDeleteAction": "حذف نهائي",
+  "groupDeleteTitle": "حذف نهائي للمجموعة؟",
+  "groupDeleteMessage": "«{name}» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص (مجدولة أو ملغية) ولا طلاب مسجلين — الأرشفة أأمن.",
+  "@groupDeleteMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "groupDeleteConfirm": "حذف نهائي",
+  "linkEnterTitle": "ربط الحساب بالطالب",
+  "linkStudentIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.",
+  "linkGuardianIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.",
+  "linkCodeLabel": "كود الربط",
+  "linkCodeHint": "مثال: AB3CD4EF",
+  "linkConsentTitle": "الموافقة على الربط",
+  "linkConsentStudent": "بربط حسابك سيظهر لك جدولك وحضورك ونتايجك، ويقدر السنتر يربط بياناتك الدراسية بحسابك. تقدر تفك الربط في أي وقت.",
+  "linkConsentGuardian": "بربط حسابك أنت توافق على عرض البيانات الدراسية للطالب لك (الحضور والدرجات والجدول). الحد الأقصى {max} أولياء أمور لكل طالب، وتقدر تفك الربط في أي وقت.",
+  "@linkConsentGuardian": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "linkConsentAgree": "أوافق",
+  "linkSubmit": "ربط",
+  "linkSuccess": "تم الربط بنجاح",
+  "linkUnlink": "فك الربط",
+  "linkUnlinkTitle": "فك الربط",
+  "linkUnlinkMessage": "هل تريد فك ربط حسابك بالطالب {name}؟ لن تتمكن من رؤية بياناته بعد ذلك.",
+  "@linkUnlinkMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "linkIssueStudentCode": "كود ربط الطالب",
+  "linkIssueGuardianCode": "كود ربط ولي الأمر",
+  "linkIssueRelationTitle": "صلة القرابة",
+  "linkIssueExpires": "صالح حتى {date}",
+  "@linkIssueExpires": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "linkIssueCopy": "نسخ",
+  "linkIssueCopied": "تم نسخ الكود",
+  "linkIssueClose": "إغلاق",
+  "relationFather": "أب",
+  "relationMother": "أم",
+  "relationBrother": "أخ",
+  "relationSister": "أخت",
+  "relationOther": "أخرى",
+  "areaNotLinked": "حسابك غير مربوط بطالب بعد.",
+  "areaLinkStudentButton": "ربط حسابي بكود الطالب",
+  "areaScheduleTitle": "الجدول الأسبوعي",
+  "areaAttendanceTitle": "سجل الحضور",
+  "areaResultsTitle": "النتائج",
+  "areaScheduleEmpty": "لا توجد مواعيد مسجلة",
+  "areaAttendanceEmpty": "لا يوجد حضور مسجل بعد",
+  "areaResultsEmpty": "لا توجد نتائج منشورة بعد",
+  "weekdayName": "{day, select, d1{الاثنين} d2{الثلاثاء} d3{الأربعاء} d4{الخميس} d5{الجمعة} d6{السبت} other{الأحد}}",
+  "@weekdayName": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "scheduleRoom": "القاعة: {room}",
+  "@scheduleRoom": {
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "scheduleTimeRange": "{start} - {end}",
+  "@scheduleTimeRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceStatusPresent": "حاضر",
+  "attendanceStatusLate": "متأخر",
+  "attendanceStatusExcused": "غائب بعذر",
+  "attendanceSummary": "حضر {attended} من {total} حصة",
+  "@attendanceSummary": {
+    "placeholders": {
+      "attended": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceDateTime": "{date} - {time}",
+  "@attendanceDateTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsAverage": "المتوسط العام: {percent}%",
+  "@resultsAverage": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsScoreOf": "{score} من {max}",
+  "@resultsScoreOf": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsAbsent": "غائب",
+  "resultsExcused": "معفى",
+  "resultsPending": "لم تُرصد بعد",
+  "guardianNoChildren": "لم تربط أي طالب بعد.",
+  "guardianLinkChild": "ربط طالب بكود",
+  "guardianAddChild": "ربط طالب آخر",
+  "guardianRelation": "صلتك: {relation}",
+  "@guardianRelation": {
+    "placeholders": {
+      "relation": {
+        "type": "String"
+      }
+    }
+  },
+  "guardianChooseChild": "اختر الطالب",
+  "appName": "CenterNet",
+  "assistantHomeTitle": "لوحة المساعد",
+  "assistantGreeting": "أهلاً، {name}",
+  "@assistantGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "assistantOnline": "متصل بالإنترنت",
+  "assistantOffline": "غير متصل بالإنترنت",
+  "assistantTodayCount": "عندك {count} حصص النهارده",
+  "@assistantTodayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "assistantNoSessionsToday": "مفيش حصص النهارده",
+  "assistantCurrentSession": "الحصة الجارية دلوقتي",
+  "assistantNoCurrentSession": "مفيش حصة جارية حاليًا",
+  "assistantStartScanning": "ابدأ المسح",
+  "assistantSessionsTitle": "حصص النهارده",
+  "assistantSessionDetailsTitle": "تفاصيل الحصة",
+  "sessionStatusCurrent": "جارية",
+  "sessionStatusUpcoming": "قادمة",
+  "sessionStatusEnded": "انتهت",
+  "sessionStatusCancelled": "ملغاة",
+  "sessionGroupLabel": "المجموعة",
+  "sessionTimeLabel": "الوقت",
+  "sessionRoomLabel": "القاعة",
+  "sessionNoRoom": "غير محددة",
+  "sessionScanStudent": "مسح كود الطالب",
+  "sessionAttendanceSummary": "حضر {attended} من {total} طالب",
+  "@sessionAttendanceSummary": {
+    "placeholders": {
+      "attended": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionAttendanceWaiting": "{count} بانتظار المزامنة",
+  "@sessionAttendanceWaiting": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionAttendanceNotYetLabel": "لسه ما حضروش",
+  "sessionAttendanceNotYet": "{count} طالب",
+  "@sessionAttendanceNotYet": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionLastScansTitle": "آخر عمليات المسح",
+  "sessionAttendanceListButton": "قائمة الحضور",
+  "assistantAttendanceTitle": "قائمة الحضور",
+  "assistantAttendanceNoSessions": "مفيش حصص النهارده",
+  "attendanceSearchHint": "ابحث بالاسم أو الكود",
+  "attendanceFilterAll": "الكل",
+  "attendanceFilterWaiting": "بانتظار المزامنة",
+  "attendanceFilterFailed": "فشلت المزامنة",
+  "attendanceEmpty": "مفيش حضور مسجل في الحصة دي لحد دلوقتي",
+  "attendanceNoResults": "لا توجد نتائج مطابقة للبحث",
+  "attendanceSyncSynced": "تمت المزامنة",
+  "attendanceSyncWaiting": "بانتظار المزامنة",
+  "attendanceSyncFailed": "فشلت المزامنة",
+  "attendanceUnknownStudent": "طالب مش في المجموعة",
+  "attendanceStudentCode": "كود {code}",
+  "@attendanceStudentCode": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+  "assistantNavHome": "الرئيسية",
+  "assistantNavSessions": "الحصص",
+  "assistantNavAttendance": "الحضور",
+  "assistantNavSync": "المزامنة",
+  "teacherNavHome": "الرئيسية",
+  "teacherGreeting": "أهلاً، {name}",
+  "@teacherGreeting": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "teacherActiveGroups": "مجموعاتك النشطة",
+  "teacherAcademicYear": "العام الدراسي {from} – {to}",
+  "@teacherAcademicYear": {
+    "placeholders": {
+      "from": { "type": "String" },
+      "to": { "type": "String" }
+    }
+  },
+  "teacherGroupUnit": "مجموعة",
+  "teacherStudentsCount": "{count} طالبًا",
+  "@teacherStudentsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "teacherSubjects": "المواد: {subjects}",
+  "@teacherSubjects": {
+    "placeholders": {
+      "subjects": { "type": "String" }
+    }
+  },
+  "teacherNextSession": "الحصة القادمة",
+  "teacherNoNextSession": "مفيش حصص قادمة في جدولك دلوقتي.",
+  "teacherToday": "اليوم",
+  "teacherTomorrow": "غدًا",
+  "teacherViewMyGroups": "عرض مجموعاتي"
+}
