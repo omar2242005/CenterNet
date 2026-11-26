@@ -13,7 +13,6 @@ import '../centers/center_route_names.dart';
 import '../staff/staff_route_names.dart';
 import '../students/student_route_names.dart';
 import '../teacher/teacher_route_names.dart';
-import '../teacher/teacher_route_names.dart';
 import 'home_route_names.dart';
 import 'repository/role_repository.dart';
 import 'screens/blocked_account_screen.dart';
