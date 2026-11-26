@@ -241,12 +241,10 @@ class _GroupTile extends StatelessWidget {
   final VoidCallback? onDelete;
 
   String _slotsSummary(AppLocalizations l10n) {
-    const base = 1700; // يوم مرجعي ثابت، formatTime بيقرأ الساعة والدقيقة بس.
-    final origin = DateTime.fromMillisecondsSinceEpoch(base);
     return [
       for (final slot in group.slots)
         '${l10n.weekdayName('d${slot.weekday}')} '
-            '${formatTime(l10n, origin.add(Duration(minutes: slot.startMinutes)))}',
+            '${formatMinutesOfDay(l10n, slot.startMinutes)}',
     ].join(' · ');
   }
 

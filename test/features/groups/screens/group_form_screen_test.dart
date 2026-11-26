@@ -335,4 +335,24 @@ void main() {
       expect(groupsRepo.calls.where((c) => c.startsWith('create:')), isEmpty);
     });
   });
+  testWidgets('ميعاد محفوظ 12:00 م بيتعرض 12:00 م (مش بيزيد ساعتين)',
+      (tester) async {
+    await openForm(
+      tester,
+      editing: _roomGroup(
+        'g1',
+        'مجموعة',
+        room: 'قاعة 1',
+        weekday: DateTime.thursday,
+        start: 720,
+      ),
+    );
+    await tester.scrollUntilVisible(
+      find.text('12:00 م'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('12:00 م'), findsOneWidget);
+    expect(find.text('2:00 م'), findsNothing);
+  });
 }

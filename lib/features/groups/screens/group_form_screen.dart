@@ -196,19 +196,13 @@ class _GroupFormViewState extends State<_GroupFormView> {
       final conflict = await cubit.findRoomConflict(input);
       if (!mounted) return;
       if (conflict != null) {
-        final origin = DateTime.fromMillisecondsSinceEpoch(0);
         final slot = conflict.slot;
         setState(
           () => _formError = l10n.groupRoomConflict(
             conflict.group.name,
             l10n.weekdayName('d${slot.weekday}'),
-            formatTime(l10n, origin.add(Duration(minutes: slot.startMinutes))),
-            formatTime(
-              l10n,
-              origin.add(
-                Duration(minutes: slot.startMinutes + slot.durationMinutes),
-              ),
-            ),
+            formatMinutesOfDay(l10n, slot.startMinutes),
+            formatMinutesOfDay(l10n, slot.startMinutes + slot.durationMinutes),
           ),
         );
         return;
@@ -486,7 +480,6 @@ class _SlotCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final origin = DateTime.fromMillisecondsSinceEpoch(0);
 
     return AppCard(
       child: Column(
@@ -528,10 +521,7 @@ class _SlotCard extends StatelessWidget {
                   onPressed: enabled ? () => _pickTime(context) : null,
                   icon: const Icon(Icons.schedule),
                   label: Text(
-                    formatTime(
-                      l10n,
-                      origin.add(Duration(minutes: slot.startMinutes)),
-                    ),
+                    formatMinutesOfDay(l10n, slot.startMinutes),
                   ),
                 ),
               ),
