@@ -140,10 +140,22 @@ describe('groups — التعديل والأرشفة', () => {
     await assertFails(updateDoc(groupRef(db, 'g1'), { createdBy: 'teacherA' }));
   });
 
-  it('المعلم والمساعد ما يعدّلوش، والحذف ممنوع حتى للأدمن', async () => {
+  it('المعلم والمساعد ما يعدّلوش', async () => {
     await assertFails(updateDoc(groupRef(as('teacherA'), 'g1'), { name: 'x' }));
     await assertFails(updateDoc(groupRef(as('assistantA'), 'g1'), { name: 'x' }));
-    await assertFails(deleteDoc(groupRef(as('adminA'), 'g1')));
+  });
+
+  it('الأدمن يسترجع المؤرشفة لنشطة', async () => {
+    const db = as('adminA');
+    await assertSucceeds(updateDoc(groupRef(db, 'g1'), { status: 'archived' }));
+    await assertSucceeds(updateDoc(groupRef(db, 'g1'), { status: 'active' }));
+  });
+
+  it('الحذف النهائي للأدمن بس', async () => {
+    await assertSucceeds(setDoc(groupRef(as('adminA'), 'gDel'), groupData({ name: 'مجموعة مؤقتة' })));
+    await assertFails(deleteDoc(groupRef(as('teacherA'), 'gDel')));
+    await assertFails(deleteDoc(groupRef(as('assistantA'), 'gDel')));
+    await assertSucceeds(deleteDoc(groupRef(as('adminA'), 'gDel')));
   });
 });
 

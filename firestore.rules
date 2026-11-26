@@ -677,7 +677,9 @@ service cloud.firestore {
              .hasOnly(['name', 'subject', 'grade', 'teacherId', 'assistantIds',
                        'room', 'capacity', 'monthlyFee', 'slots', 'status']);
 
-      allow delete: if false;
+      // الحذف النهائي للأدمن بس. الواجهة بتمنع حذف مجموعة ليها حصص أو طلاب
+      // (الحصص والحضور نفسها مفيش حذف ليها، فهيبقوا يتامى).
+      allow delete: if isAdmin(c);
     }
 
     // ------------------------------------------------------------------
