@@ -1695,6 +1695,36 @@ abstract class AppLocalizations {
   /// **'القاعة دي محجوزة لمجموعة «{group}» يوم {day} من {start} لـ {end}'**
   String groupRoomConflict(String group, String day, String start, String end);
 
+  /// No description provided for @groupUnarchiveAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'استرجاع'**
+  String get groupUnarchiveAction;
+
+  /// No description provided for @groupDeleteAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف نهائي'**
+  String get groupDeleteAction;
+
+  /// No description provided for @groupDeleteTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف نهائي للمجموعة؟'**
+  String get groupDeleteTitle;
+
+  /// No description provided for @groupDeleteMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'«{name}» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص ولا طلاب مسجلين — الأرشفة أأمن.'**
+  String groupDeleteMessage(String name);
+
+  /// No description provided for @groupDeleteConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف نهائي'**
+  String get groupDeleteConfirm;
+
   /// No description provided for @linkEnterTitle.
   ///
   /// In ar, this message translates to:

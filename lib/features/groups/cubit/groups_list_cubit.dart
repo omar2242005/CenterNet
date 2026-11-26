@@ -86,4 +86,37 @@ class GroupsListCubit extends Cubit<GroupsListState> {
       return f;
     }
   }
+
+  /// بيسترجع المجموعة المؤرشفة ويحدّث القائمة محليًا. بيرجّع الخطأ أو null.
+  Future<Failure?> unarchive(Group group) async {
+    try {
+      final updated = await _repo.unarchiveGroup(group);
+      if (isClosed) return null;
+      emit(
+        state.copyWith(
+          all: [for (final g in state.all) g.id == updated.id ? updated : g],
+        ),
+      );
+      return null;
+    } on Failure catch (f) {
+      return f;
+    }
+  }
+
+  /// بيحذف المجموعة نهائيًا ويشيلها من القائمة. الريبو بيرفض لو ليها حصص
+  /// أو طلاب — بيرجّع الخطأ (للـ SnackBar) أو null.
+  Future<Failure?> deletePermanently(Group group) async {
+    try {
+      await _repo.deleteGroup(group);
+      if (isClosed) return null;
+      emit(
+        state.copyWith(
+          all: [for (final g in state.all) if (g.id != group.id) g],
+        ),
+      );
+      return null;
+    } on Failure catch (f) {
+      return f;
+    }
+  }
 }

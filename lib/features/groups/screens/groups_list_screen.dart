@@ -49,6 +49,32 @@ class _GroupsListViewState extends State<_GroupsListView> {
     if (!cubit.isClosed) await cubit.load();
   }
 
+  Future<void> _unarchive(Group group) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final failure = await context.read<GroupsListCubit>().unarchive(group);
+    if (failure != null) {
+      messenger.showSnackBar(SnackBar(content: Text(failure.message)));
+    }
+  }
+
+  Future<void> _deletePermanently(Group group) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final cubit = context.read<GroupsListCubit>();
+    final ok = await showConfirmDialog(
+      context,
+      title: l10n.groupDeleteTitle,
+      message: l10n.groupDeleteMessage(group.name),
+      confirmLabel: l10n.groupDeleteConfirm,
+      destructive: true,
+    );
+    if (!ok) return;
+    final failure = await cubit.deletePermanently(group);
+    if (failure != null) {
+      messenger.showSnackBar(SnackBar(content: Text(failure.message)));
+    }
+  }
+
   Future<void> _archive(Group group) async {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
@@ -168,6 +194,12 @@ class _GroupsListViewState extends State<_GroupsListView> {
                             onArchive: group.isArchived
                                 ? null
                                 : () => _archive(group),
+                            onUnarchive: group.isArchived
+                                ? () => _unarchive(group)
+                                : null,
+                            onDelete: group.isArchived
+                                ? () => _deletePermanently(group)
+                                : null,
                           );
                         },
                       );
@@ -190,6 +222,8 @@ class _GroupTile extends StatelessWidget {
     required this.onOpenStudents,
     required this.onOpenSessions,
     this.onArchive,
+    this.onUnarchive,
+    this.onDelete,
   });
 
   final Group group;
@@ -197,8 +231,14 @@ class _GroupTile extends StatelessWidget {
   final VoidCallback onOpenStudents;
   final VoidCallback onOpenSessions;
 
-  /// null للمؤرشفة (مفيش إجراءات عليها من القائمة).
+  /// غير null للنشطة بس.
   final VoidCallback? onArchive;
+
+  /// غير null للمؤرشفة بس.
+  final VoidCallback? onUnarchive;
+
+  /// غير null للمؤرشفة بس.
+  final VoidCallback? onDelete;
 
   String _slotsSummary(AppLocalizations l10n) {
     const base = 1700; // يوم مرجعي ثابت، formatTime بيقرأ الساعة والدقيقة بس.
@@ -263,6 +303,10 @@ class _GroupTile extends StatelessWidget {
                 onSelected: (value) {
                   if (value == 'archive') {
                     onArchive?.call();
+                  } else if (value == 'unarchive') {
+                    onUnarchive?.call();
+                  } else if (value == 'delete') {
+                    onDelete?.call();
                   } else if (value == 'students') {
                     onOpenStudents();
                   } else if (value == 'sessions') {
@@ -282,6 +326,16 @@ class _GroupTile extends StatelessWidget {
                     PopupMenuItem(
                       value: 'archive',
                       child: Text(l10n.groupArchiveAction),
+                    ),
+                  if (onUnarchive != null)
+                    PopupMenuItem(
+                      value: 'unarchive',
+                      child: Text(l10n.groupUnarchiveAction),
+                    ),
+                  if (onDelete != null)
+                    PopupMenuItem(
+                      value: 'delete',
+                      child: Text(l10n.groupDeleteAction),
                     ),
                 ],
               ),
