@@ -834,5 +834,38 @@
   "assistantNavHome": "الرئيسية",
   "assistantNavSessions": "الحصص",
   "assistantNavAttendance": "الحضور",
-  "assistantNavSync": "المزامنة"
+  "assistantNavSync": "المزامنة",
+  "teacherNavHome": "الرئيسية",
+  "teacherGreeting": "أهلاً، {name}",
+  "@teacherGreeting": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "teacherActiveGroups": "مجموعاتك النشطة",
+  "teacherAcademicYear": "العام الدراسي {from} – {to}",
+  "@teacherAcademicYear": {
+    "placeholders": {
+      "from": { "type": "String" },
+      "to": { "type": "String" }
+    }
+  },
+  "teacherGroupUnit": "مجموعة",
+  "teacherStudentsCount": "{count} طالبًا",
+  "@teacherStudentsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "teacherSubjects": "المواد: {subjects}",
+  "@teacherSubjects": {
+    "placeholders": {
+      "subjects": { "type": "String" }
+    }
+  },
+  "teacherNextSession": "الحصة القادمة",
+  "teacherNoNextSession": "مفيش حصص قادمة في جدولك دلوقتي.",
+  "teacherToday": "اليوم",
+  "teacherTomorrow": "غدًا",
+  "teacherViewMyGroups": "عرض مجموعاتي"
 }

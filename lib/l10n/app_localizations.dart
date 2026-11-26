@@ -2414,6 +2414,78 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'المزامنة'**
   String get assistantNavSync;
+
+  /// No description provided for @teacherNavHome.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرئيسية'**
+  String get teacherNavHome;
+
+  /// No description provided for @teacherGreeting.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً، {name}'**
+  String teacherGreeting(String name);
+
+  /// No description provided for @teacherActiveGroups.
+  ///
+  /// In ar, this message translates to:
+  /// **'مجموعاتك النشطة'**
+  String get teacherActiveGroups;
+
+  /// No description provided for @teacherAcademicYear.
+  ///
+  /// In ar, this message translates to:
+  /// **'العام الدراسي {from} – {to}'**
+  String teacherAcademicYear(String from, String to);
+
+  /// No description provided for @teacherGroupUnit.
+  ///
+  /// In ar, this message translates to:
+  /// **'مجموعة'**
+  String get teacherGroupUnit;
+
+  /// No description provided for @teacherStudentsCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} طالبًا'**
+  String teacherStudentsCount(int count);
+
+  /// No description provided for @teacherSubjects.
+  ///
+  /// In ar, this message translates to:
+  /// **'المواد: {subjects}'**
+  String teacherSubjects(String subjects);
+
+  /// No description provided for @teacherNextSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحصة القادمة'**
+  String get teacherNextSession;
+
+  /// No description provided for @teacherNoNextSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش حصص قادمة في جدولك دلوقتي.'**
+  String get teacherNoNextSession;
+
+  /// No description provided for @teacherToday.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get teacherToday;
+
+  /// No description provided for @teacherTomorrow.
+  ///
+  /// In ar, this message translates to:
+  /// **'غدًا'**
+  String get teacherTomorrow;
+
+  /// No description provided for @teacherViewMyGroups.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض مجموعاتي'**
+  String get teacherViewMyGroups;
 }
 
 class _AppLocalizationsDelegate
