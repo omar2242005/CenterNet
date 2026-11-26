@@ -921,6 +921,23 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get groupUnarchiveAction => 'استرجاع';
+
+  @override
+  String get groupDeleteAction => 'حذف نهائي';
+
+  @override
+  String get groupDeleteTitle => 'حذف نهائي للمجموعة؟';
+
+  @override
+  String groupDeleteMessage(String name) {
+    return '«$name» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص ولا طلاب مسجلين — الأرشفة أأمن.';
+  }
+
+  @override
+  String get groupDeleteConfirm => 'حذف نهائي';
+
+  @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override

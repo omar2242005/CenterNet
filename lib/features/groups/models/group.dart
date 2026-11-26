@@ -281,6 +281,10 @@ class Group {
   static Map<String, dynamic> toArchiveMap() =>
       <String, dynamic>{'status': GroupStatus.archived.wire};
 
+  /// الاسترجاع من الأرشيف.
+  static Map<String, dynamic> toUnarchiveMap() =>
+      <String, dynamic>{'status': GroupStatus.active.wire};
+
   bool get isArchived => status == GroupStatus.archived;
 
   /// المعلم أو أي مساعد في المجموعة؟ (نفس منطق الـ Rules بتاعة الحضور، للعرض
