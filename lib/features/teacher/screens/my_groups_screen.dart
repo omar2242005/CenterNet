@@ -12,6 +12,7 @@ import '../../groups/cubit/groups_list_cubit.dart';
 import '../../groups/models/group.dart';
 import '../../groups/repository/groups_repository.dart';
 import '../teacher_route_names.dart';
+import '../widgets/teacher_shell.dart';
 
 /// "مجموعاتي": المجموعات اللي المعلم أو المساعد فيها.
 class MyGroupsScreen extends StatelessWidget {
@@ -34,32 +35,30 @@ class _MyGroupsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.myGroupsTitle)),
-      body: SafeArea(
-        child: BlocBuilder<GroupsListCubit, GroupsListState>(
-          builder: (context, state) {
-            return AsyncView<List<Group>>(
-              state: state.view,
-              onRetry: context.read<GroupsListCubit>().load,
-              emptyMessage: l10n.myGroupsEmpty,
-              emptyIcon: Icons.groups_outlined,
-              builder: (context, groups) => ListView.separated(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                itemCount: groups.length,
-                separatorBuilder: (_, _) =>
-                    const SizedBox(height: AppSpacing.sm),
-                itemBuilder: (context, index) => _GroupTile(
-                  group: groups[index],
-                  onTap: () => context.push(
-                    TeacherRoutes.groupDetails,
-                    extra: groups[index],
-                  ),
+    return TeacherShell(
+      current: TeacherTab.groups,
+      title: l10n.myGroupsTitle,
+      body: BlocBuilder<GroupsListCubit, GroupsListState>(
+        builder: (context, state) {
+          return AsyncView<List<Group>>(
+            state: state.view,
+            onRetry: context.read<GroupsListCubit>().load,
+            emptyMessage: l10n.myGroupsEmpty,
+            emptyIcon: Icons.groups_outlined,
+            builder: (context, groups) => ListView.separated(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              itemCount: groups.length,
+              separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
+              itemBuilder: (context, index) => _GroupTile(
+                group: groups[index],
+                onTap: () => context.push(
+                  TeacherRoutes.groupDetails,
+                  extra: groups[index],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -9,13 +9,12 @@ import '../assistant/screens/assistant_home_screen.dart';
 import '../auth/auth_route_names.dart';
 import '../guardian/screens/guardian_home_screen.dart';
 import '../student_area/screens/student_home_screen.dart';
-import '../teacher/teacher_route_names.dart';
+import '../teacher/screens/teacher_home_screen.dart';
 import 'home_route_names.dart';
 import 'repository/role_repository.dart';
 import 'screens/blocked_account_screen.dart';
 import 'screens/home_gate_screen.dart';
 import 'screens/admin_home_screen.dart';
-import 'screens/role_home_screen.dart';
 
 /// سطر الـ DI بتاع الـ feature.
 void registerHome(GetIt g) {
@@ -39,16 +38,7 @@ final List<RouteBase> homeRoutes = <RouteBase>[
   ),
   GoRoute(
     path: HomeRoutes.teacher,
-    builder: (context, state) =>
-        RoleHomeScreen(
-          title: AppLocalizations.of(context).homeTeacherTitle,
-          actions: [
-            (
-              label: AppLocalizations.of(context).myGroupsTitle,
-              route: TeacherRoutes.groups,
-            ),
-          ],
-        ),
+    builder: (context, state) => const TeacherHomeScreen(),
   ),
   GoRoute(
     path: HomeRoutes.assistant,
