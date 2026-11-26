@@ -555,6 +555,11 @@
   "myAccountPhone": "الموبايل",
   "myAccountType": "نوع الحساب",
   "myAccountLoadError": "تعذر تحميل بيانات الحساب",
+  "accountDeleteAction": "حذف الحساب نهائيًا",
+  "accountDeleteTitle": "حذف الحساب نهائيًا",
+  "accountDeleteMessage": "هيتحذف حسابك وبياناته نهائيًا ومش هينفع ترجع. اكتب كلمة السر للتأكيد.",
+  "accountDeleteConfirm": "حذف نهائي",
+  "accountDeleteFailed": "تعذر حذف الحساب. حاول مرة أخرى.",
   "groupRoomConflict": "القاعة دي محجوزة لمجموعة «{group}» يوم {day} من {start} لـ {end}",
   "@groupRoomConflict": {
     "placeholders": {

@@ -916,6 +916,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get myAccountLoadError => 'تعذر تحميل بيانات الحساب';
 
   @override
+  String get accountDeleteAction => 'حذف الحساب نهائيًا';
+
+  @override
+  String get accountDeleteTitle => 'حذف الحساب نهائيًا';
+
+  @override
+  String get accountDeleteMessage =>
+      'هيتحذف حسابك وبياناته نهائيًا ومش هينفع ترجع. اكتب كلمة السر للتأكيد.';
+
+  @override
+  String get accountDeleteConfirm => 'حذف نهائي';
+
+  @override
+  String get accountDeleteFailed => 'تعذر حذف الحساب. حاول مرة أخرى.';
+
+  @override
   String groupRoomConflict(String group, String day, String start, String end) {
     return 'القاعة دي محجوزة لمجموعة «$group» يوم $day من $start لـ $end';
   }

@@ -104,10 +104,16 @@ describe('users', () => {
     await assertFails(getDocs(collection(as('u1'), 'users')));
   });
 
-  it('delete ممنوع', async () => {
+  it('صاحب الحساب يمسح مستنده', async () => {
     const db = as('u1');
     await setDoc(doc(db, 'users/u1'), userDoc('u1'));
-    await assertFails(deleteDoc(doc(db, 'users/u1')));
+    await assertSucceeds(deleteDoc(doc(db, 'users/u1')));
+  });
+
+  it('مينفعش يمسح مستند حد تاني', async () => {
+    await env.withSecurityRulesDisabled((ctx) => setDoc(doc(ctx.firestore(), 'users/u2'), userDoc('u2')));
+    await assertFails(deleteDoc(doc(as('u1'), 'users/u2')));
+    await assertFails(deleteDoc(doc(anon(), 'users/u2')));
   });
 
   it('حقل غريب مرفوض', async () => {
@@ -186,6 +192,22 @@ describe('centers — الإنشاء', () => {
 
   it('lateAfterMinutes برا الحدود مرفوض', async () => {
     await assertFails(createCenter(as('owner'), 'owner', 'centerNew', { center: { lateAfterMinutes: 500 } }));
+  });
+});
+
+describe('members — حذف الحساب', () => {
+  it('المعلم والمساعد يمسحوا عضويتهم هم', async () => {
+    await assertSucceeds(deleteDoc(doc(as('teacherA'), `centers/${A}/members/teacherA`)));
+    await assertSucceeds(deleteDoc(doc(as('assistantA'), `centers/${A}/members/assistantA`)));
+  });
+
+  it('الأدمن مينفعش يمسح عضويته', async () => {
+    await assertFails(deleteDoc(doc(as('adminA'), `centers/${A}/members/adminA`)));
+  });
+
+  it('مينفعش يمسح عضوية حد تاني (حتى الأدمن)', async () => {
+    await assertFails(deleteDoc(doc(as('teacherA'), `centers/${A}/members/assistantA`)));
+    await assertFails(deleteDoc(doc(as('adminA'), `centers/${A}/members/teacherA`)));
   });
 });
 

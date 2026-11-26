@@ -1689,6 +1689,36 @@ abstract class AppLocalizations {
   /// **'تعذر تحميل بيانات الحساب'**
   String get myAccountLoadError;
 
+  /// No description provided for @accountDeleteAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الحساب نهائيًا'**
+  String get accountDeleteAction;
+
+  /// No description provided for @accountDeleteTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الحساب نهائيًا'**
+  String get accountDeleteTitle;
+
+  /// No description provided for @accountDeleteMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'هيتحذف حسابك وبياناته نهائيًا ومش هينفع ترجع. اكتب كلمة السر للتأكيد.'**
+  String get accountDeleteMessage;
+
+  /// No description provided for @accountDeleteConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف نهائي'**
+  String get accountDeleteConfirm;
+
+  /// No description provided for @accountDeleteFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر حذف الحساب. حاول مرة أخرى.'**
+  String get accountDeleteFailed;
+
   /// No description provided for @groupRoomConflict.
   ///
   /// In ar, this message translates to:
