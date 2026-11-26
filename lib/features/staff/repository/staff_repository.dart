@@ -21,8 +21,8 @@ class StaffRepository {
     this._db, {
     DateTime Function()? now,
     String Function()? generateCode,
-  })  : _now = now ?? DateTime.now,
-        _generateCode = generateCode ?? (() => LinkCodeGenerator.generate());
+  }) : _now = now ?? DateTime.now,
+       _generateCode = generateCode ?? (() => LinkCodeGenerator.generate());
 
   final FirebaseAuth _auth;
   final FirebaseFirestore _db;
@@ -124,7 +124,8 @@ class StaffRepository {
       _guardNotSelf(uid, 'لا يمكنك تعطيل حسابك أنت.');
       await _db
           .doc(FirestorePaths.member(centerId, uid))
-          .update(<String, dynamic>{'active': active}).timeout(createTimeout);
+          .update(<String, dynamic>{'active': active})
+          .timeout(createTimeout);
     });
   }
 

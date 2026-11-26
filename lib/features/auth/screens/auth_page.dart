@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../l10n/app_localizations.dart';
+import '../sign_out_action.dart';
 
 /// هيكل مشترك لشاشات الـ auth: عنوان + محتوى متمركز بعرض أقصى.
 class AuthPage extends StatelessWidget {
@@ -10,16 +12,31 @@ class AuthPage extends StatelessWidget {
     required this.title,
     required this.child,
     this.showBack = true,
+    this.showSignOut = false,
   });
 
   final String title;
   final Widget child;
   final bool showBack;
 
+  /// زرار تسجيل خروج ظاهر في الشريط (لشاشات المستخدم اللي لسه من غير سنتر).
+  final bool showSignOut;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title), automaticallyImplyLeading: showBack),
+      appBar: AppBar(
+        title: Text(title),
+        automaticallyImplyLeading: showBack,
+        actions: [
+          if (showSignOut)
+            TextButton.icon(
+              onPressed: () => confirmAndSignOut(context),
+              icon: const Icon(Icons.logout),
+              label: Text(AppLocalizations.of(context).authSignOut),
+            ),
+        ],
+      ),
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(

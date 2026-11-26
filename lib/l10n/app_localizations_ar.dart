@@ -160,6 +160,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountTypeStaff => 'معلم أو مساعد';
 
   @override
+  String get accountTypeTeacher => 'معلم';
+
+  @override
+  String get accountTypeAssistant => 'مساعد';
+
+  @override
   String get accountTypeGuardian => 'ولي أمر';
 
   @override
@@ -347,6 +353,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get staffJoinContinue => 'متابعة';
+
+  @override
+  String get staffJoinCheckButton => 'متابعة';
+
+  @override
+  String get staffJoinConfirmTitle => 'راجع بيانات الدعوة';
+
+  @override
+  String staffJoinConfirmBody(String role) {
+    return 'الكود ده هيضيفك للسنتر بصفة $role.';
+  }
+
+  @override
+  String get staffJoinConfirmNote =>
+      'هيظهر اسم السنتر بعد ما تنضم. لو الدور مش اللي المفروض يوصلك، اطلب كود تاني من مدير السنتر.';
+
+  @override
+  String get staffJoinConfirmButton => 'تأكيد الانضمام';
+
+  @override
+  String get staffJoinChangeCode => 'تعديل الكود';
 
   @override
   String get staffListTitle => 'الموظفون';

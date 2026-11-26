@@ -20,6 +20,8 @@ class MyAccountScreen extends StatelessWidget {
   static String _typeLabel(AppLocalizations l10n, AccountType type) {
     return switch (type) {
       AccountType.admin => l10n.accountTypeAdmin,
+      AccountType.teacher => l10n.accountTypeTeacher,
+      AccountType.assistant => l10n.accountTypeAssistant,
       AccountType.staff => l10n.accountTypeStaff,
       AccountType.guardian => l10n.accountTypeGuardian,
       AccountType.student => l10n.accountTypeStudent,

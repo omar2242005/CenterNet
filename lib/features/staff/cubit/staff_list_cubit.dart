@@ -30,8 +30,9 @@ class StaffListState {
     return StaffListState(
       view: view,
       busyUid: clearBusy ? null : (busyUid ?? this.busyUid),
-      actionFailure:
-          clearFailure ? null : (actionFailure ?? this.actionFailure),
+      actionFailure: clearFailure
+          ? null
+          : (actionFailure ?? this.actionFailure),
     );
   }
 }
@@ -60,11 +61,8 @@ class StaffListCubit extends Cubit<StaffListState> {
     if (member.active == active) return Future<void>.value();
     return _apply(
       member,
-      (centerId) => _repo.setActive(
-        centerId: centerId,
-        uid: member.uid,
-        active: active,
-      ),
+      (centerId) =>
+          _repo.setActive(centerId: centerId, uid: member.uid, active: active),
       member.copyWith(active: active),
     );
   }

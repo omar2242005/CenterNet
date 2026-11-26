@@ -50,7 +50,7 @@ class _StaffJoinViewState extends State<_StaffJoinView> {
 
   void _submit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    context.read<StaffJoinCubit>().submit(_code.text);
+    context.read<StaffJoinCubit>().check(_code.text);
   }
 
   @override
@@ -62,9 +62,14 @@ class _StaffJoinViewState extends State<_StaffJoinView> {
         final result = state.result;
         return AuthPage(
           title: l10n.staffJoinTitle,
-          showBack: result == null,
+          showBack: false,
+          showSignOut: result == null,
           child: (state.status == StaffJoinStatus.success && result != null)
               ? _buildSuccess(context, l10n, result)
+              : (state.status == StaffJoinStatus.confirm ||
+                    (state.status == StaffJoinStatus.submitting &&
+                        state.preview != null))
+              ? _buildConfirm(context, l10n, state)
               : _buildForm(context, l10n, state),
         );
       },
@@ -83,9 +88,7 @@ class _StaffJoinViewState extends State<_StaffJoinView> {
         children: [
           Text(
             l10n.staffJoinIntro,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
+            style: Theme.of(context).textTheme.bodyMedium
                 ?.copyWith(color: AppColors.textSecondary),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -115,12 +118,67 @@ class _StaffJoinViewState extends State<_StaffJoinView> {
           if (state.status == StaffJoinStatus.failure && state.failure != null)
             AuthErrorText(state.failure!.message),
           AppButton(
-            label: l10n.staffJoinButton,
+            label: l10n.staffJoinCheckButton,
             isLoading: state.isSubmitting,
             onPressed: _submit,
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildConfirm(
+    BuildContext context,
+    AppLocalizations l10n,
+    StaffJoinState state,
+  ) {
+    final theme = Theme.of(context);
+    final preview = state.preview!;
+    final cubit = context.read<StaffJoinCubit>();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: AppColors.primaryContainer,
+            borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                l10n.staffJoinConfirmTitle,
+                style: theme.textTheme.titleMedium,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                l10n.staffJoinConfirmBody(preview.role.label(l10n)),
+                style: theme.textTheme.bodyLarge,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                l10n.staffJoinConfirmNote,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        AppButton(
+          label: l10n.staffJoinConfirmButton,
+          isLoading: state.isSubmitting,
+          onPressed: cubit.confirm,
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        AppButton(
+          label: l10n.staffJoinChangeCode,
+          variant: AppButtonVariant.secondary,
+          onPressed: state.isSubmitting ? null : cubit.back,
+        ),
+      ],
     );
   }
 

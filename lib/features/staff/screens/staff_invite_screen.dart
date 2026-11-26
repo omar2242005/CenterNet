@@ -193,8 +193,9 @@ class _StaffInviteViewState extends State<_StaffInviteView> {
               Text(
                 l10n.staffInviteCodeLabel,
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: AppColors.textSecondary),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
               const SizedBox(height: AppSpacing.xs),
               SelectableText(
@@ -208,12 +209,11 @@ class _StaffInviteViewState extends State<_StaffInviteView> {
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                l10n.staffInviteValidUntil(
-                  formatDate(l10n, invite.expiresAt),
-                ),
+                l10n.staffInviteValidUntil(formatDate(l10n, invite.expiresAt)),
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: AppColors.textSecondary),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -222,8 +222,9 @@ class _StaffInviteViewState extends State<_StaffInviteView> {
         Text(
           l10n.staffInviteNote,
           textAlign: TextAlign.center,
-          style: theme.textTheme.bodyMedium
-              ?.copyWith(color: AppColors.textSecondary),
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         const SizedBox(height: AppSpacing.lg),
         AppButton(

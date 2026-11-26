@@ -21,9 +21,9 @@ enum StaffMemberRole {
 
   /// نفس الدور بس من نوع دور الدعوة (معلم / مساعد).
   static StaffMemberRole fromInvite(StaffInviteRole role) => switch (role) {
-        StaffInviteRole.teacher => StaffMemberRole.teacher,
-        StaffInviteRole.assistant => StaffMemberRole.assistant,
-      };
+    StaffInviteRole.teacher => StaffMemberRole.teacher,
+    StaffInviteRole.assistant => StaffMemberRole.assistant,
+  };
 }
 
 /// مستند `centers/{c}/members/{uid}` للعرض في قائمة الموظفين.
