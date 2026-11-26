@@ -549,6 +549,12 @@
     }
   },
   "sessionCancelConfirm": "إلغاء الحصة",
+  "myAccountTitle": "حسابي",
+  "myAccountName": "الاسم",
+  "myAccountEmail": "البريد الإلكتروني",
+  "myAccountPhone": "الموبايل",
+  "myAccountType": "نوع الحساب",
+  "myAccountLoadError": "تعذر تحميل بيانات الحساب",
   "linkEnterTitle": "ربط الحساب بالطالب",
   "linkStudentIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.",
   "linkGuardianIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.",

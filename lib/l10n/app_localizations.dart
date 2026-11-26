@@ -1653,6 +1653,42 @@ abstract class AppLocalizations {
   /// **'إلغاء الحصة'**
   String get sessionCancelConfirm;
 
+  /// No description provided for @myAccountTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسابي'**
+  String get myAccountTitle;
+
+  /// No description provided for @myAccountName.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم'**
+  String get myAccountName;
+
+  /// No description provided for @myAccountEmail.
+  ///
+  /// In ar, this message translates to:
+  /// **'البريد الإلكتروني'**
+  String get myAccountEmail;
+
+  /// No description provided for @myAccountPhone.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموبايل'**
+  String get myAccountPhone;
+
+  /// No description provided for @myAccountType.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع الحساب'**
+  String get myAccountType;
+
+  /// No description provided for @myAccountLoadError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل بيانات الحساب'**
+  String get myAccountLoadError;
+
   /// No description provided for @linkEnterTitle.
   ///
   /// In ar, this message translates to:

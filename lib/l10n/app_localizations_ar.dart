@@ -898,6 +898,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sessionCancelConfirm => 'إلغاء الحصة';
 
   @override
+  String get myAccountTitle => 'حسابي';
+
+  @override
+  String get myAccountName => 'الاسم';
+
+  @override
+  String get myAccountEmail => 'البريد الإلكتروني';
+
+  @override
+  String get myAccountPhone => 'الموبايل';
+
+  @override
+  String get myAccountType => 'نوع الحساب';
+
+  @override
+  String get myAccountLoadError => 'تعذر تحميل بيانات الحساب';
+
+  @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override
