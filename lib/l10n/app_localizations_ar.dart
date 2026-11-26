@@ -788,6 +788,64 @@ class AppLocalizationsAr extends AppLocalizations {
   String get groupArchiveConfirm => 'أرشفة';
 
   @override
+  String get groupsAddTitle => 'إضافة مجموعة';
+
+  @override
+  String get groupEditTitle => 'تعديل المجموعة';
+
+  @override
+  String get groupFieldName => 'اسم المجموعة';
+
+  @override
+  String get groupFieldSubject => 'المادة (اختياري)';
+
+  @override
+  String get groupFieldGrade => 'الصف (اختياري)';
+
+  @override
+  String get groupFieldRoom => 'القاعة (اختياري)';
+
+  @override
+  String get groupFieldTeacher => 'المعلم';
+
+  @override
+  String get groupFieldAssistants => 'المساعدون (اختياري)';
+
+  @override
+  String get groupFieldCapacity => 'السعة القصوى (اختياري)';
+
+  @override
+  String get groupFieldFee => 'السعر الشهري بالجنيه (اختياري)';
+
+  @override
+  String get groupSlotsTitle => 'المواعيد الأسبوعية';
+
+  @override
+  String get groupSlotDay => 'اليوم';
+
+  @override
+  String get groupSlotDuration => 'المدة بالدقائق';
+
+  @override
+  String get groupAddSlot => 'إضافة ميعاد';
+
+  @override
+  String get groupSlotRemove => 'حذف الميعاد';
+
+  @override
+  String get groupNoTeachers =>
+      'لا يوجد معلمون نشطون. أضفهم من شاشة الفريق أولًا.';
+
+  @override
+  String get groupInvalidCapacity => 'اكتب رقمًا صحيحًا (1 أو أكثر)';
+
+  @override
+  String get groupInvalidFee => 'اكتب سعرًا صحيحًا (0 أو أكثر)';
+
+  @override
+  String get groupInvalidDuration => 'المدة لازم تكون من 1 لـ 480 دقيقة';
+
+  @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override

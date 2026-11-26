@@ -1449,6 +1449,120 @@ abstract class AppLocalizations {
   /// **'أرشفة'**
   String get groupArchiveConfirm;
 
+  /// No description provided for @groupsAddTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة مجموعة'**
+  String get groupsAddTitle;
+
+  /// No description provided for @groupEditTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل المجموعة'**
+  String get groupEditTitle;
+
+  /// No description provided for @groupFieldName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم المجموعة'**
+  String get groupFieldName;
+
+  /// No description provided for @groupFieldSubject.
+  ///
+  /// In ar, this message translates to:
+  /// **'المادة (اختياري)'**
+  String get groupFieldSubject;
+
+  /// No description provided for @groupFieldGrade.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصف (اختياري)'**
+  String get groupFieldGrade;
+
+  /// No description provided for @groupFieldRoom.
+  ///
+  /// In ar, this message translates to:
+  /// **'القاعة (اختياري)'**
+  String get groupFieldRoom;
+
+  /// No description provided for @groupFieldTeacher.
+  ///
+  /// In ar, this message translates to:
+  /// **'المعلم'**
+  String get groupFieldTeacher;
+
+  /// No description provided for @groupFieldAssistants.
+  ///
+  /// In ar, this message translates to:
+  /// **'المساعدون (اختياري)'**
+  String get groupFieldAssistants;
+
+  /// No description provided for @groupFieldCapacity.
+  ///
+  /// In ar, this message translates to:
+  /// **'السعة القصوى (اختياري)'**
+  String get groupFieldCapacity;
+
+  /// No description provided for @groupFieldFee.
+  ///
+  /// In ar, this message translates to:
+  /// **'السعر الشهري بالجنيه (اختياري)'**
+  String get groupFieldFee;
+
+  /// No description provided for @groupSlotsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المواعيد الأسبوعية'**
+  String get groupSlotsTitle;
+
+  /// No description provided for @groupSlotDay.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get groupSlotDay;
+
+  /// No description provided for @groupSlotDuration.
+  ///
+  /// In ar, this message translates to:
+  /// **'المدة بالدقائق'**
+  String get groupSlotDuration;
+
+  /// No description provided for @groupAddSlot.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة ميعاد'**
+  String get groupAddSlot;
+
+  /// No description provided for @groupSlotRemove.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الميعاد'**
+  String get groupSlotRemove;
+
+  /// No description provided for @groupNoTeachers.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد معلمون نشطون. أضفهم من شاشة الفريق أولًا.'**
+  String get groupNoTeachers;
+
+  /// No description provided for @groupInvalidCapacity.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب رقمًا صحيحًا (1 أو أكثر)'**
+  String get groupInvalidCapacity;
+
+  /// No description provided for @groupInvalidFee.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب سعرًا صحيحًا (0 أو أكثر)'**
+  String get groupInvalidFee;
+
+  /// No description provided for @groupInvalidDuration.
+  ///
+  /// In ar, this message translates to:
+  /// **'المدة لازم تكون من 1 لـ 480 دقيقة'**
+  String get groupInvalidDuration;
+
   /// No description provided for @linkEnterTitle.
   ///
   /// In ar, this message translates to:

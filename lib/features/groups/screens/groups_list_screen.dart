@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../app/di.dart';
 import '../../../core/theme/app_colors.dart';
@@ -13,6 +14,7 @@ import '../../../core/widgets/search_field.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
 import '../cubit/groups_list_cubit.dart';
+import '../group_route_names.dart';
 import '../models/group.dart';
 import '../repository/groups_repository.dart';
 
@@ -39,6 +41,13 @@ class _GroupsListView extends StatefulWidget {
 
 class _GroupsListViewState extends State<_GroupsListView> {
   String _query = '';
+
+  /// بنفتح الإضافة/التعديل وبعد الرجوع بنحمّل القائمة من جديد.
+  Future<void> _open(String route, {Group? extra}) async {
+    final cubit = context.read<GroupsListCubit>();
+    await context.push(route, extra: extra);
+    if (!cubit.isClosed) await cubit.load();
+  }
 
   Future<void> _archive(Group group) async {
     final l10n = AppLocalizations.of(context);
@@ -84,6 +93,11 @@ class _GroupsListViewState extends State<_GroupsListView> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _open(GroupRoutes.create),
+        icon: const Icon(Icons.group_add_outlined),
+        label: Text(l10n.groupsAddTitle),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -125,7 +139,13 @@ class _GroupsListViewState extends State<_GroupsListView> {
                         );
                       }
                       return ListView.separated(
-                        padding: const EdgeInsets.all(AppSpacing.md),
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.md,
+                          AppSpacing.md,
+                          AppSpacing.md,
+                          // مسافة تحت عشان الزر العايم مايغطيش آخر مجموعة.
+                          AppSpacing.xl * 3,
+                        ),
                         itemCount: filtered.length,
                         separatorBuilder: (_, _) =>
                             const SizedBox(height: AppSpacing.sm),
@@ -133,6 +153,10 @@ class _GroupsListViewState extends State<_GroupsListView> {
                           final group = filtered[index];
                           return _GroupTile(
                             group: group,
+                            onTap: () => _open(
+                              GroupRoutes.edit,
+                              extra: group,
+                            ),
                             onArchive: group.isArchived
                                 ? null
                                 : () => _archive(group),
@@ -152,9 +176,10 @@ class _GroupsListViewState extends State<_GroupsListView> {
 }
 
 class _GroupTile extends StatelessWidget {
-  const _GroupTile({required this.group, this.onArchive});
+  const _GroupTile({required this.group, required this.onTap, this.onArchive});
 
   final Group group;
+  final VoidCallback onTap;
 
   /// null للمؤرشفة (مفيش إجراءات عليها من القائمة).
   final VoidCallback? onArchive;
@@ -184,6 +209,7 @@ class _GroupTile extends StatelessWidget {
     ].join(' · ');
 
     return AppCard(
+      onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
