@@ -716,7 +716,10 @@ service cloud.firestore {
         && request.resource.data.status == 'cancelled'
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
 
-      allow delete: if false;
+      // المسح النهائي: الأدمن وللحصة الملغاة بس. الحصة المجدولة مبتتمسحش أبدًا
+      // (بتتلغي الأول). فحص "عليها حضور؟" في الـ repository لأن الـ Rules
+      // مبتقدرش تعمل query.
+      allow delete: if isAdmin(c) && resource.data.status == 'cancelled';
     }
 
         // ------------------------------------------------------------------

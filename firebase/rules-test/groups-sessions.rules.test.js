@@ -236,9 +236,25 @@ describe('sessions — الإنشاء والإلغاء', () => {
     await assertFails(updateDoc(sessionRef(db, G1_SESSION), { status: 'scheduled' }));
   });
 
-  it('المعلم مينفعش يلغي، والحذف ممنوع', async () => {
+  it('المعلم مينفعش يلغي، ومسح الجلسة المجدولة ممنوع', async () => {
     await assertFails(updateDoc(sessionRef(as('teacherA'), G1_SESSION), { status: 'cancelled' }));
     await assertFails(deleteDoc(sessionRef(as('adminA'), G1_SESSION)));
+  });
+
+  it('v5: الأدمن يمسح الجلسة الملغاة بس، وغيره لأ', async () => {
+    const admin = as('adminA');
+    await assertSucceeds(updateDoc(sessionRef(admin, G1_SESSION), { status: 'cancelled' }));
+    await assertFails(deleteDoc(sessionRef(as('teacherA'), G1_SESSION)));
+    await assertFails(deleteDoc(sessionRef(as('assistantA'), G1_SESSION)));
+    await assertFails(deleteDoc(sessionRef(as('adminB'), G1_SESSION)));
+    await assertFails(deleteDoc(sessionRef(env.unauthenticatedContext().firestore(), G1_SESSION)));
+    await assertSucceeds(deleteDoc(sessionRef(admin, G1_SESSION)));
+    const snap = await getDoc(sessionRef(admin, G1_SESSION));
+    assert.equal(snap.exists(), false);
+  });
+
+  it('v5: مسح جلسة مجدولة مرفوض حتى للأدمن', async () => {
+    await assertFails(deleteDoc(sessionRef(as('adminA'), G2_SESSION)));
   });
 });
 
