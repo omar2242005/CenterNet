@@ -560,8 +560,8 @@ service cloud.firestore {
         && validUser(request.resource.data)
         && request.resource.data.createdBy == resource.data.createdBy;
 
-      // TODO: "حذف حسابي" محتاج استثناء ضيق هنا (أو soft-delete) — قرار مفتوح.
-      allow delete: if false;
+      // حذف حسابي: صاحب الحساب بس (التطبيق بيمسح حساب Auth بعدها).
+      allow delete: if signedIn() && request.auth.uid == uid;
     }
 
     // ------------------------------------------------------------------
@@ -604,7 +604,11 @@ service cloud.firestore {
           && request.resource.data.diff(resource.data).affectedKeys()
                .hasOnly(['role', 'name', 'active']);
 
-        allow delete: if false;
+        // العضو يمسح عضويته هو (حذف حسابي). الأدمن لأ: السنتر ملوش حذف
+        // فهيفضل من غير أدمن.
+        allow delete: if signedIn()
+          && request.auth.uid == uid
+          && resource.data.role in ['teacher', 'assistant'];
       }
     }
 

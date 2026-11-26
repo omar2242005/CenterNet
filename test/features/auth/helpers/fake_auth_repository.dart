@@ -75,4 +75,10 @@ class FakeAuthRepository implements AuthRepository {
   Future<void> signOut() async {
     calls.add('signOut');
   }
+
+  @override
+  Future<void> deleteAccount({required String password}) async {
+    calls.add('delete:$password');
+    _maybeFail();
+  }
 }

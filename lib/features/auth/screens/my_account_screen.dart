@@ -9,6 +9,7 @@ import '../../../l10n/app_localizations.dart';
 import '../models/account_type.dart';
 import '../models/app_user.dart';
 import '../repository/auth_repository.dart';
+import '../delete_account_action.dart';
 import '../sign_out_action.dart';
 
 /// شاشة "حسابي": بيانات الحساب الأساسية + تسجيل الخروج.
@@ -86,6 +87,15 @@ class MyAccountScreen extends StatelessWidget {
                   variant: AppButtonVariant.secondary,
                   icon: Icons.logout,
                   onPressed: () => confirmAndSignOut(context),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                TextButton.icon(
+                  onPressed: () => confirmAndDeleteAccount(context),
+                  icon: const Icon(Icons.delete_forever_outlined),
+                  label: Text(l10n.accountDeleteAction),
+                  style: TextButton.styleFrom(
+                    foregroundColor: AppColors.error,
+                  ),
                 ),
               ],
             );

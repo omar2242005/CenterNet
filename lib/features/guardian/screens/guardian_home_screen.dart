@@ -10,6 +10,7 @@ import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/auth_route_names.dart';
 import '../../auth/sign_out_action.dart';
 import '../../linking/cubit/my_students_cubit.dart';
 import '../../linking/link_route_names.dart';
@@ -74,6 +75,11 @@ class _GuardianHomeViewState extends State<_GuardianHomeView> {
       appBar: AppBar(
         title: Text(l10n.homeGuardianTitle),
         actions: [
+          IconButton(
+            tooltip: l10n.myAccountTitle,
+            icon: const Icon(Icons.person_outline),
+            onPressed: () => context.push(AuthRoutes.myAccount),
+          ),
           IconButton(
             tooltip: l10n.authSignOut,
             icon: const Icon(Icons.logout),

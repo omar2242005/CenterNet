@@ -1,4 +1,11 @@
 import 'package:center_net/app/di.dart';
+import 'package:center_net/app/session_role.dart';
+import 'package:center_net/core/services/pending_ops_guard.dart';
+import 'package:center_net/core/theme/app_theme.dart';
+import 'package:center_net/features/auth/auth_route_names.dart';
+import 'package:center_net/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:center_net/core/errors/failure.dart';
 import 'package:center_net/features/auth/models/account_type.dart';
 import 'package:center_net/features/auth/models/app_user.dart';
@@ -23,6 +30,8 @@ void main() {
         centerId: 'c1',
       );
     sl.registerSingleton<AuthRepository>(repo);
+    sl.registerSingleton<PendingOpsGuard>(PendingOpsGuard());
+    sl.registerSingleton<SessionRole>(SessionRole());
   });
 
   tearDown(() async {
@@ -72,5 +81,94 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(arL10n.myAccountLoadError), findsOneWidget);
+  });
+
+  Future<void> pumpRouted(WidgetTester tester) async {
+    final router = GoRouter(
+      initialLocation: '/acc',
+      routes: [
+        GoRoute(path: '/acc', builder: (_, _) => const MyAccountScreen()),
+        GoRoute(
+          path: AuthRoutes.login,
+          builder: (_, _) => const Scaffold(body: Text('LOGIN')),
+        ),
+      ],
+    );
+    addTearDown(router.dispose);
+    await tester.pumpWidget(
+      MaterialApp.router(
+        theme: AppTheme.light(),
+        locale: const Locale('ar'),
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        routerConfig: router,
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('زرار حذف الحساب ظاهر', (tester) async {
+    await pumpRouted(tester);
+    expect(find.text(arL10n.accountDeleteAction), findsOneWidget);
+  });
+
+  testWidgets('الحذف بكلمة السر بيمسح ويروح للدخول', (tester) async {
+    await pumpRouted(tester);
+    await tester.tap(find.text(arL10n.accountDeleteAction));
+    await tester.pumpAndSettle();
+    expect(find.text(arL10n.accountDeleteMessage), findsOneWidget);
+
+    await tester.enterText(find.byType(TextField), 'secret123');
+    await tester.pump();
+    await tester.tap(find.text(arL10n.accountDeleteConfirm));
+    await tester.pumpAndSettle();
+
+    expect(repo.calls, contains('delete:secret123'));
+    expect(find.text('LOGIN'), findsOneWidget);
+  });
+
+  testWidgets('الإلغاء مبيمسحش حاجة', (tester) async {
+    await pumpRouted(tester);
+    await tester.tap(find.text(arL10n.accountDeleteAction));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(arL10n.cancel));
+    await tester.pumpAndSettle();
+
+    expect(repo.calls.where((c) => c.startsWith('delete')), isEmpty);
+    expect(find.text(arL10n.myAccountTitle), findsOneWidget);
+  });
+
+  testWidgets('زرار التأكيد متعطل من غير كلمة سر', (tester) async {
+    await pumpRouted(tester);
+    await tester.tap(find.text(arL10n.accountDeleteAction));
+    await tester.pumpAndSettle();
+    final btn = tester.widget<FilledButton>(
+      find.widgetWithText(FilledButton, arL10n.accountDeleteConfirm),
+    );
+    expect(btn.onPressed, isNull);
+  });
+
+  testWidgets('فشل الحذف برسالة وبيفضل في الشاشة', (tester) async {
+    await pumpRouted(tester);
+    await tester.tap(find.text(arL10n.accountDeleteAction));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'x');
+    await tester.pump();
+    repo.failure = const Failure.validation('كلمة السر غير صحيحة.');
+    await tester.tap(find.text(arL10n.accountDeleteConfirm));
+    await tester.pumpAndSettle();
+
+    expect(find.text('كلمة السر غير صحيحة.'), findsOneWidget);
+    expect(find.text('LOGIN'), findsNothing);
+  });
+
+  testWidgets('عمليات معلّقة بتمنع الحذف', (tester) async {
+    sl<PendingOpsGuard>().setPending(3);
+    await pumpRouted(tester);
+    await tester.tap(find.text(arL10n.accountDeleteAction));
+    await tester.pumpAndSettle();
+
+    expect(find.text(sl<PendingOpsGuard>().blockReason!), findsOneWidget);
+    expect(find.text(arL10n.accountDeleteMessage), findsNothing);
   });
 }
