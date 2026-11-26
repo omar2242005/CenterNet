@@ -22,6 +22,20 @@ String formatTime(AppLocalizations l10n, DateTime time) {
   );
 }
 
+/// "12:00 م" من دقائق اليوم (0..1439، أو أكتر فتلف حوالين 24 ساعة).
+/// من غير أي DateTime، فمش بيتأثر بتوقيت الجهاز.
+String formatMinutesOfDay(AppLocalizations l10n, int minutes) {
+  final m = ((minutes % 1440) + 1440) % 1440;
+  final isPm = m >= 720;
+  var h = (m ~/ 60) % 12;
+  if (h == 0) h = 12;
+  return l10n.timeFormat(
+    h.toString(),
+    (m % 60).toString().padLeft(2, '0'),
+    isPm ? l10n.pm : l10n.am,
+  );
+}
+
 /// الفلوس بتتخزن بالقروش (450 ج.م = 45000): "450 ج.م" أو "1,250.50 ج.م".
 String formatMoney(AppLocalizations l10n, int piasters) {
   return l10n.currencyEgp(piastersToDecimalString(piasters));

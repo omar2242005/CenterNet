@@ -76,6 +76,25 @@ class _GroupSessionsView extends StatelessWidget {
     }
   }
 
+  Future<void> _delete(BuildContext context, Session session) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final cubit = context.read<GroupSessionsCubit>();
+    final start = toCairoWallTime(session.startAt);
+    final ok = await showConfirmDialog(
+      context,
+      title: l10n.sessionDeleteTitle,
+      message: l10n.sessionDeleteMessage(formatDate(l10n, start)),
+      confirmLabel: l10n.sessionDeleteConfirm,
+      destructive: true,
+    );
+    if (!ok) return;
+    final failure = await cubit.deleteCancelled(session);
+    messenger.showSnackBar(
+      SnackBar(content: Text(failure?.message ?? l10n.sessionDeleted)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -126,7 +145,10 @@ class _GroupSessionsView extends StatelessWidget {
                           const SizedBox(height: AppSpacing.sm),
                       itemBuilder: (context, index) => _SessionTile(
                         session: sessions[index],
-                        busy: state.cancellingId != null,
+                        busy: state.cancellingId != null ||
+                            state.deletingId != null,
+                        deleting: state.deletingId == sessions[index].id,
+                        onDelete: () => _delete(context, sessions[index]),
                         cancelling: state.cancellingId == sessions[index].id,
                         onCancel: () => _cancel(context, sessions[index]),
                       ),
@@ -148,6 +170,8 @@ class _SessionTile extends StatelessWidget {
     required this.busy,
     required this.cancelling,
     required this.onCancel,
+    required this.deleting,
+    required this.onDelete,
   });
 
   final Session session;
@@ -158,6 +182,10 @@ class _SessionTile extends StatelessWidget {
   /// الإلغاء شغال على الحصة دي بالذات.
   final bool cancelling;
   final VoidCallback onCancel;
+
+  /// المسح النهائي شغال على الحصة دي بالذات (للملغاة بس).
+  final bool deleting;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -208,6 +236,21 @@ class _SessionTile extends StatelessWidget {
                     tooltip: l10n.sessionCancelAction,
                     icon: const Icon(Icons.cancel_outlined),
                     onPressed: busy ? null : onCancel,
+                  )
+          else
+            deleting
+                ? const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                    child: SizedBox(
+                      width: AppSpacing.lg,
+                      height: AppSpacing.lg,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  )
+                : IconButton(
+                    tooltip: l10n.sessionDeleteAction,
+                    icon: const Icon(Icons.delete_outline),
+                    onPressed: busy ? null : onDelete,
                   ),
         ],
       ),

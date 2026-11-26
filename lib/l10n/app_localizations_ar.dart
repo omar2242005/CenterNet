@@ -909,6 +909,23 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get sessionDeleteAction => 'مسح الحصة نهائيًا';
+
+  @override
+  String get sessionDeleteTitle => 'مسح الحصة نهائيًا؟';
+
+  @override
+  String sessionDeleteMessage(String date) {
+    return 'حصة يوم $date الملغاة هتتمسح من التطبيق ومن قاعدة البيانات ومش هترجع. هل تريد المتابعة؟';
+  }
+
+  @override
+  String get sessionDeleteConfirm => 'مسح نهائيًا';
+
+  @override
+  String get sessionDeleted => 'تم مسح الحصة.';
+
+  @override
   String get sessionCancelConfirm => 'إلغاء الحصة';
 
   @override

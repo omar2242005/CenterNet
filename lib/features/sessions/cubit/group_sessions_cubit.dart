@@ -13,6 +13,7 @@ class GroupSessionsState {
     this.failure,
     this.generating = false,
     this.cancellingId,
+    this.deletingId,
   });
 
   final List<Session> sessions;
@@ -25,6 +26,9 @@ class GroupSessionsState {
   /// الحصة اللي عليها إلغاء شغال دلوقتي (إلغاء واحد في المرة).
   final String? cancellingId;
 
+  /// الحصة اللي عليها مسح نهائي شغال دلوقتي.
+  final String? deletingId;
+
   GroupSessionsState copyWith({
     List<Session>? sessions,
     bool? loading,
@@ -33,6 +37,8 @@ class GroupSessionsState {
     bool? generating,
     String? cancellingId,
     bool clearCancelling = false,
+    String? deletingId,
+    bool clearDeleting = false,
   }) {
     return GroupSessionsState(
       sessions: sessions ?? this.sessions,
@@ -40,6 +46,7 @@ class GroupSessionsState {
       failure: clearFailure ? null : (failure ?? this.failure),
       generating: generating ?? this.generating,
       cancellingId: clearCancelling ? null : (cancellingId ?? this.cancellingId),
+      deletingId: clearDeleting ? null : (deletingId ?? this.deletingId),
     );
   }
 
@@ -108,6 +115,29 @@ class GroupSessionsCubit extends Cubit<GroupSessionsState> {
       return null;
     } on Failure catch (f) {
       if (!isClosed) emit(state.copyWith(clearCancelling: true));
+      return f;
+    }
+  }
+
+  /// بيمسح حصة ملغاة نهائيًا ويشيلها من القائمة. بيرجّع الخطأ أو null.
+  Future<Failure?> deleteCancelled(Session session) async {
+    if (state.deletingId != null || state.cancellingId != null) return null;
+    emit(state.copyWith(deletingId: session.id));
+    try {
+      await _repo.deleteCancelledSession(session);
+      if (isClosed) return null;
+      emit(
+        state.copyWith(
+          sessions: [
+            for (final s in state.sessions)
+              if (s.id != session.id) s,
+          ],
+          clearDeleting: true,
+        ),
+      );
+      return null;
+    } on Failure catch (f) {
+      if (!isClosed) emit(state.copyWith(clearDeleting: true));
       return f;
     }
   }

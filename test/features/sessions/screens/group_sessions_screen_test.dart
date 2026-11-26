@@ -4,6 +4,7 @@ import 'package:center_net/features/groups/models/group.dart';
 import 'package:center_net/features/sessions/models/session.dart';
 import 'package:center_net/features/sessions/repository/sessions_repository.dart';
 import 'package:center_net/features/sessions/screens/group_sessions_screen.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
@@ -120,6 +121,53 @@ void main() {
 
     // 3 حصص: 2 مجدولة بزر إلغاء لكل منها، والملغاة من غير زر.
     expect(find.byTooltip(arL10n.sessionCancelAction), findsNWidgets(2));
+  });
+
+  testWidgets('زر المسح النهائي للملغاة بس', (tester) async {
+    await open(tester);
+
+    expect(find.byTooltip(arL10n.sessionDeleteAction), findsOneWidget);
+  });
+
+  testWidgets('المسح النهائي بعد التأكيد بيشيل الحصة من القائمة', (tester) async {
+    await open(tester);
+
+    await tester.tap(find.byTooltip(arL10n.sessionDeleteAction));
+    await tester.pumpAndSettle();
+    expect(find.text(arL10n.sessionDeleteTitle), findsOneWidget);
+    await tester.tap(find.text(arL10n.sessionDeleteConfirm));
+    await tester.pumpAndSettle();
+
+    expect(repo.calls, contains('delete:${sessionAt(12).id}'));
+    expect(find.text(arL10n.sessionCancelledBadge), findsNothing);
+    expect(find.text(arL10n.sessionDeleted), findsOneWidget);
+  });
+
+  testWidgets('رفض نافذة المسح مبيمسحش حاجة', (tester) async {
+    await open(tester);
+
+    await tester.tap(find.byTooltip(arL10n.sessionDeleteAction));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(arL10n.cancel));
+    await tester.pumpAndSettle();
+
+    expect(repo.calls.where((c) => c.startsWith('delete:')), isEmpty);
+    expect(find.text(arL10n.sessionCancelledBadge), findsOneWidget);
+  });
+
+  testWidgets('حصة عليها حضور: رسالة الرفض وبتفضل في القائمة', (tester) async {
+    repo.deleteFailure = const Failure.validation(
+      'الحصة دي عليها حضور مسجّل، مينفعش تتمسح.',
+    );
+    await open(tester);
+
+    await tester.tap(find.byTooltip(arL10n.sessionDeleteAction));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(arL10n.sessionDeleteConfirm));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('عليها حضور مسجّل'), findsOneWidget);
+    expect(find.text(arL10n.sessionCancelledBadge), findsOneWidget);
   });
 
   testWidgets('فشل التحميل بيظهر مع إعادة المحاولة', (tester) async {
