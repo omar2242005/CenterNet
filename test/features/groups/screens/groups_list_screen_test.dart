@@ -204,7 +204,7 @@ void main() {
     expect(find.text('مجموعة قديمة'), findsOneWidget);
   });
 
-  testWidgets('قائمة المجموعة النشطة مفيهاش استرجاع ولا حذف نهائي',
+  testWidgets('قائمة المجموعة النشطة فيها أرشفة وحذف نهائي من غير استرجاع',
       (tester) async {
     await openList(tester);
 
@@ -212,7 +212,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(arL10n.groupUnarchiveAction), findsNothing);
-    expect(find.text(arL10n.groupDeleteAction), findsNothing);
+    expect(find.text(arL10n.groupDeleteAction), findsOneWidget);
     expect(find.text(arL10n.groupArchiveAction), findsOneWidget);
   });
 }

@@ -114,20 +114,6 @@ class StaffRepository {
     });
   }
 
-  /// بيبدّل دور موظف (معلم أو مساعد بس. مفيش ترقية لأدمن).
-  Future<void> changeRole({
-    required String centerId,
-    required String uid,
-    required StaffInviteRole role,
-  }) {
-    return ErrorMapper.guard(() async {
-      _guardNotSelf(uid, 'لا يمكنك تغيير دورك أنت.');
-      await _db
-          .doc(FirestorePaths.member(centerId, uid))
-          .update(<String, dynamic>{'role': role.wire}).timeout(createTimeout);
-    });
-  }
-
   /// بيعطّل الموظف (`active=false`) أو بيرجّع تفعيله. مفيش حذف.
   Future<void> setActive({
     required String centerId,

@@ -257,13 +257,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get centerLateInvalid => 'المدة لازم تكون من 0 إلى 180 دقيقة';
 
   @override
-  String get staffInviteTitle => 'إضافة موظف';
+  String get staffInviteTeacherTitle => 'إضافة معلم';
 
   @override
-  String get staffInviteName => 'اسم الموظف';
+  String get staffInviteAssistantTitle => 'إضافة مساعد';
 
   @override
-  String get staffInviteRole => 'الدور';
+  String get staffInviteTeacherName => 'اسم المعلم';
+
+  @override
+  String get staffInviteAssistantName => 'اسم المساعد';
 
   @override
   String get staffRoleTeacher => 'معلم';
@@ -364,26 +367,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffMenuTooltip => 'خيارات الموظف';
 
   @override
-  String staffActionChangeRoleTo(String role) {
-    return 'تغيير الدور إلى $role';
-  }
-
-  @override
   String get staffActionDisable => 'تعطيل';
 
   @override
   String get staffActionEnable => 'تفعيل';
-
-  @override
-  String get staffChangeRoleTitle => 'تغيير دور الموظف';
-
-  @override
-  String staffChangeRoleMessage(String name, String role) {
-    return 'هل تريد تغيير دور $name إلى $role؟';
-  }
-
-  @override
-  String get staffChangeRoleConfirm => 'تغيير';
 
   @override
   String get staffDisableTitle => 'تعطيل الموظف';
@@ -978,7 +965,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String groupDeleteMessage(String name) {
-    return '«$name» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص ولا طلاب مسجلين — الأرشفة أأمن.';
+    return '«$name» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص (مجدولة أو ملغية) ولا طلاب مسجلين — الأرشفة أأمن.';
   }
 
   @override

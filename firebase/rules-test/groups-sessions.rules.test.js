@@ -55,6 +55,10 @@ async function seed() {
     await put(`centers/${A}/members/assistantA`, { role: 'assistant', name: 'Assistant A', active: true, createdBy: 'assistantA' });
     await put(`centers/${A}/members/offTeacher`, { role: 'teacher', name: 'Off', active: false, createdBy: 'offTeacher' });
     await put(`centers/${B}`, { name: 'مركز تاني', year: 2026, createdBy: 'adminB', lateAfterMinutes: 15 });
+    for (let i = 1; i <= 9; i += 1) {
+      await put(`centers/${A}/members/asst${i}`, { role: 'assistant', name: `Asst ${i}`, active: true, createdBy: `asst${i}` });
+    }
+    await put(`centers/${A}/members/offAssistant`, { role: 'assistant', name: 'Off Asst', active: false, createdBy: 'offAssistant' });
     await put(`centers/${B}/members/adminB`, { role: 'admin', name: 'Admin B', active: true, createdBy: 'adminB' });
 
     // g1: معلم A + مساعد A. g2: معلم B من غير مساعدين.
@@ -123,6 +127,44 @@ describe('groups — الإنشاء', () => {
 
   it('createdBy لحد تاني مرفوض', async () => {
     await assertFails(setDoc(groupRef(as('adminA'), 'g3'), groupData({ createdBy: 'teacherA' })));
+  });
+});
+
+describe('groups — v6 فصل المعلم عن المساعد', () => {
+  const admin = () => as('adminA');
+
+  it('مساعد في خانة المعلم مرفوض، ومعلم في خانة المساعدين مرفوض', async () => {
+    await assertFails(setDoc(groupRef(admin(), 'g3'), groupData({ teacherId: 'assistantA', assistantIds: [] })));
+    await assertFails(setDoc(groupRef(admin(), 'g3'), groupData({ assistantIds: ['teacherB'] })));
+  });
+
+  it('معلم أو مساعد معطّل أو مش موجود أو من سنتر تاني مرفوض', async () => {
+    await assertFails(setDoc(groupRef(admin(), 'g3'), groupData({ teacherId: 'offTeacher' })));
+    await assertFails(setDoc(groupRef(admin(), 'g3'), groupData({ assistantIds: ['offAssistant'] })));
+    await assertFails(setDoc(groupRef(admin(), 'g3'), groupData({ teacherId: 'ghost' })));
+    await assertFails(setDoc(groupRef(admin(), 'g3'), groupData({ assistantIds: ['ghost'] })));
+    await assertFails(setDoc(groupRef(admin(), 'g3'), groupData({ teacherId: 'adminB' })));
+  });
+
+  it('معلم نشط + 6 مساعدين نشطين (الحد) بيعدّوا، و7 لأ', async () => {
+    const six = ['asst1', 'asst2', 'asst3', 'asst4', 'asst5', 'asst6'];
+    await assertSucceeds(setDoc(groupRef(admin(), 'g3'), groupData({ assistantIds: six })));
+    await assertFails(setDoc(groupRef(admin(), 'g4'), groupData({ assistantIds: [...six, 'asst7'] })));
+  });
+
+  it('تعديل التعيين بيتفحص: مساعد جديد صح بينجح، معلم غلط لأ', async () => {
+    await assertSucceeds(updateDoc(groupRef(admin(), 'g1'), { assistantIds: ['asst1', 'assistantA'] }));
+    await assertFails(updateDoc(groupRef(admin(), 'g1'), { teacherId: 'assistantA' }));
+    await assertFails(updateDoc(groupRef(admin(), 'g1'), { assistantIds: ['teacherB'] }));
+    await assertSucceeds(updateDoc(groupRef(admin(), 'g1'), { teacherId: 'teacherB' }));
+  });
+
+  it('أرشفة/تعديل اسم مجموعة معلمها اتعطّل مبيتعطلش', async () => {
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      await updateDoc(doc(ctx.firestore(), `centers/${A}/members/teacherA`), { active: false });
+    });
+    await assertSucceeds(updateDoc(groupRef(admin(), 'g1'), { status: 'archived', name: 'اسم' }));
+    await assertFails(updateDoc(groupRef(admin(), 'g1'), { assistantIds: ['teacherB'] }));
   });
 });
 

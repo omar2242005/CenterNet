@@ -274,10 +274,13 @@ describe('members', () => {
     await assertFails(getDocs(collection(db, `centers/${A}/members`)));
   });
 
-  it('الأدمن يعطّل معلم ويغيّر دوره', async () => {
+  it('v6: الأدمن يعطّل ويغيّر الاسم، لكن الدور ثابت (معلم ومساعد)', async () => {
     const db = as('adminA');
     await assertSucceeds(updateDoc(doc(db, `centers/${A}/members/teacherA`), { active: false }));
-    await assertSucceeds(updateDoc(doc(db, `centers/${A}/members/assistantA`), { role: 'teacher' }));
+    await assertSucceeds(updateDoc(doc(db, `centers/${A}/members/assistantA`), { name: 'اسم جديد' }));
+    await assertFails(updateDoc(doc(db, `centers/${A}/members/assistantA`), { role: 'teacher' }));
+    await assertFails(updateDoc(doc(db, `centers/${A}/members/teacherA`), { role: 'assistant' }));
+    await assertFails(updateDoc(doc(db, `centers/${A}/members/assistantA`), { role: 'teacher', name: 'x' }));
   });
 
   it('الأدمن مينفعش يرقّي حد لأدمن', async () => {

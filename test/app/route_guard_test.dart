@@ -90,7 +90,8 @@ void main() {
         StudentRoutes.detail,
         StudentRoutes.edit,
         StaffRoutes.list,
-        StaffRoutes.invite,
+        StaffRoutes.inviteTeacher,
+        StaffRoutes.inviteAssistant,
         CenterRoutes.settings,
       ]) {
         expect(g(p, role: HomeDestination.admin), isNull, reason: p);
@@ -102,7 +103,8 @@ void main() {
         StudentRoutes.list,
         StudentRoutes.create,
         StaffRoutes.list,
-        StaffRoutes.invite,
+        StaffRoutes.inviteTeacher,
+        StaffRoutes.inviteAssistant,
         CenterRoutes.settings,
         HomeRoutes.admin,
       ]) {

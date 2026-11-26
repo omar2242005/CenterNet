@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
+import '../linking/models/invite_code.dart';
 import 'repository/staff_join_repository.dart';
 import 'repository/staff_repository.dart';
 import 'screens/staff_invite_screen.dart';
@@ -27,8 +28,14 @@ final List<RouteBase> staffRoutes = <RouteBase>[
     builder: (context, state) => const StaffListScreen(),
   ),
   GoRoute(
-    path: StaffRoutes.invite,
-    builder: (context, state) => const StaffInviteScreen(),
+    path: StaffRoutes.inviteTeacher,
+    builder: (context, state) =>
+        const StaffInviteScreen(role: StaffInviteRole.teacher),
+  ),
+  GoRoute(
+    path: StaffRoutes.inviteAssistant,
+    builder: (context, state) =>
+        const StaffInviteScreen(role: StaffInviteRole.assistant),
   ),
   GoRoute(
     path: StaffRoutes.join,

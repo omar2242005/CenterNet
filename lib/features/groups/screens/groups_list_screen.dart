@@ -197,9 +197,7 @@ class _GroupsListViewState extends State<_GroupsListView> {
                             onUnarchive: group.isArchived
                                 ? () => _unarchive(group)
                                 : null,
-                            onDelete: group.isArchived
-                                ? () => _deletePermanently(group)
-                                : null,
+                            onDelete: () => _deletePermanently(group),
                           );
                         },
                       );

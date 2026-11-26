@@ -22,6 +22,9 @@ import '../repository/groups_repository.dart';
 
 /// إنشاء مجموعة جديدة، أو تعديل [editing]. بيرجّع المجموعة المحفوظة بـ pop.
 /// المعلم والمساعدين بيتجابوا من قائمة فريق السنتر (النشطين بس).
+/// الحد الأقصى للمساعدين في المجموعة (نفس حد الـ Rules v6).
+const int maxAssistantsPerGroup = 6;
+
 class GroupFormScreen extends StatelessWidget {
   const GroupFormScreen({super.key, this.editing});
 
@@ -433,7 +436,9 @@ class _GroupFormViewState extends State<_GroupFormView> {
                 FilterChip(
                   label: Text(a.name),
                   selected: _assistantIds.contains(a.uid),
-                  onSelected: enabled
+                  onSelected: enabled &&
+                          (_assistantIds.contains(a.uid) ||
+                              _assistantIds.length < maxAssistantsPerGroup)
                       ? (selected) => setState(() {
                             if (selected) {
                               _assistantIds.add(a.uid);
