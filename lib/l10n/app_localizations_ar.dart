@@ -632,6 +632,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeAdminTitle => 'رئيسية الأدمن';
 
   @override
+  String get adminNavHome => 'الرئيسية';
+
+  @override
+  String adminGreeting(String name) {
+    return 'أهلاً، $name';
+  }
+
+  @override
+  String get adminShortcuts => 'الاختصارات';
+
+  @override
   String get homeTeacherTitle => 'رئيسية المعلم';
 
   @override

@@ -10,6 +10,7 @@ import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../home/widgets/admin_shell.dart';
 import '../../linking/models/invite_code.dart';
 import '../cubit/staff_list_cubit.dart';
 import '../models/staff_member.dart';
@@ -37,17 +38,16 @@ class _StaffListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.staffListTitle),
-        actions: [
-          IconButton(
-            tooltip: l10n.staffInviteTitle,
-            icon: const Icon(Icons.person_add_alt_1),
-            onPressed: () => context.push(StaffRoutes.invite),
-          ),
-        ],
-      ),
+    return AdminShell(
+      current: AdminTab.staff,
+      title: l10n.staffListTitle,
+      actions: [
+        IconButton(
+          tooltip: l10n.staffInviteTitle,
+          icon: const Icon(Icons.person_add_alt_1),
+          onPressed: () => context.push(StaffRoutes.invite),
+        ),
+      ],
       body: SafeArea(
         child: BlocConsumer<StaffListCubit, StaffListState>(
           listenWhen: (previous, current) =>

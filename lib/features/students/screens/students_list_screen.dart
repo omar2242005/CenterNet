@@ -10,6 +10,7 @@ import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/search_field.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../home/widgets/admin_shell.dart';
 import '../cubit/students_list_cubit.dart';
 import '../models/student.dart';
 import '../repository/students_repository.dart';
@@ -42,28 +43,27 @@ class _StudentsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.studentsListTitle),
-        actions: [
-          BlocBuilder<StudentsListCubit, StudentsListState>(
-            buildWhen: (a, b) => a.showArchived != b.showArchived,
-            builder: (context, state) => IconButton(
-              tooltip: state.showArchived
-                  ? l10n.studentsHideArchived
-                  : l10n.studentsShowArchived,
-              icon: Icon(
-                state.showArchived
-                    ? Icons.inventory_2
-                    : Icons.inventory_2_outlined,
-              ),
-              onPressed: () => context
-                  .read<StudentsListCubit>()
-                  .setShowArchived(!state.showArchived),
+    return AdminShell(
+      current: AdminTab.students,
+      title: l10n.studentsListTitle,
+      actions: [
+        BlocBuilder<StudentsListCubit, StudentsListState>(
+          buildWhen: (a, b) => a.showArchived != b.showArchived,
+          builder: (context, state) => IconButton(
+            tooltip: state.showArchived
+                ? l10n.studentsHideArchived
+                : l10n.studentsShowArchived,
+            icon: Icon(
+              state.showArchived
+                  ? Icons.inventory_2
+                  : Icons.inventory_2_outlined,
             ),
+            onPressed: () => context
+                .read<StudentsListCubit>()
+                .setShowArchived(!state.showArchived),
           ),
-        ],
-      ),
+        ),
+      ],
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _open(context, StudentRoutes.create),
         icon: const Icon(Icons.person_add_alt_1),

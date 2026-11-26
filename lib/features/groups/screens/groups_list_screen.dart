@@ -13,6 +13,7 @@ import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/search_field.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../home/widgets/admin_shell.dart';
 import '../cubit/groups_list_cubit.dart';
 import '../group_route_names.dart';
 import '../models/group.dart';
@@ -97,28 +98,27 @@ class _GroupsListViewState extends State<_GroupsListView> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.groupsListTitle),
-        actions: [
-          BlocBuilder<GroupsListCubit, GroupsListState>(
-            buildWhen: (a, b) => a.showArchived != b.showArchived,
-            builder: (context, state) => IconButton(
-              tooltip: state.showArchived
-                  ? l10n.groupsHideArchived
-                  : l10n.groupsShowArchived,
-              icon: Icon(
-                state.showArchived
-                    ? Icons.inventory_2
-                    : Icons.inventory_2_outlined,
-              ),
-              onPressed: () => context
-                  .read<GroupsListCubit>()
-                  .setShowArchived(!state.showArchived),
+    return AdminShell(
+      current: AdminTab.groups,
+      title: l10n.groupsListTitle,
+      actions: [
+        BlocBuilder<GroupsListCubit, GroupsListState>(
+          buildWhen: (a, b) => a.showArchived != b.showArchived,
+          builder: (context, state) => IconButton(
+            tooltip: state.showArchived
+                ? l10n.groupsHideArchived
+                : l10n.groupsShowArchived,
+            icon: Icon(
+              state.showArchived
+                  ? Icons.inventory_2
+                  : Icons.inventory_2_outlined,
             ),
+            onPressed: () => context
+                .read<GroupsListCubit>()
+                .setShowArchived(!state.showArchived),
           ),
-        ],
-      ),
+        ),
+      ],
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _open(GroupRoutes.create),
         icon: const Icon(Icons.group_add_outlined),

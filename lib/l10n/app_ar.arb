@@ -402,6 +402,16 @@
     }
   },
   "homeAdminTitle": "رئيسية الأدمن",
+  "adminNavHome": "الرئيسية",
+  "adminGreeting": "أهلاً، {name}",
+  "@adminGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminShortcuts": "الاختصارات",
   "homeTeacherTitle": "رئيسية المعلم",
   "homeAssistantTitle": "رئيسية المساعد",
   "homeStudentTitle": "رئيسية الطالب",

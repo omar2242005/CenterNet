@@ -13,11 +13,11 @@ import '../centers/center_route_names.dart';
 import '../groups/group_route_names.dart';
 import '../staff/staff_route_names.dart';
 import '../students/student_route_names.dart';
-import '../teacher/teacher_route_names.dart';
 import 'home_route_names.dart';
 import 'repository/role_repository.dart';
 import 'screens/blocked_account_screen.dart';
 import 'screens/home_gate_screen.dart';
+import 'screens/admin_home_screen.dart';
 import 'screens/role_home_screen.dart';
 
 /// سطر الـ DI بتاع الـ feature.
@@ -38,31 +38,12 @@ final List<RouteBase> homeRoutes = <RouteBase>[
   ),
   GoRoute(
     path: HomeRoutes.admin,
-    builder: (context, state) {
-      final l10n = AppLocalizations.of(context);
-      return RoleHomeScreen(
-        title: l10n.homeAdminTitle,
-        actions: [
-          (label: l10n.studentsListTitle, route: StudentRoutes.list),
-          (label: l10n.groupsListTitle, route: GroupRoutes.list),
-          (label: l10n.staffListTitle, route: StaffRoutes.list),
-          (label: l10n.staffInviteTitle, route: StaffRoutes.invite),
-          (label: l10n.centerSettingsTitle, route: CenterRoutes.settings),
-        ],
-      );
-    },
+    builder: (context, state) => const AdminHomeScreen(),
   ),
-    GoRoute(
+  GoRoute(
     path: HomeRoutes.teacher,
-    builder: (context, state) {
-      final l10n = AppLocalizations.of(context);
-      return RoleHomeScreen(
-        title: l10n.homeTeacherTitle,
-        actions: [
-          (label: l10n.myGroupsTitle, route: TeacherRoutes.groups),
-        ],
-      );
-    },
+    builder: (context, state) =>
+        RoleHomeScreen(title: AppLocalizations.of(context).homeTeacherTitle),
   ),
   GoRoute(
     path: HomeRoutes.assistant,
