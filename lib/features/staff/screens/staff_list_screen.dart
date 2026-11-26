@@ -11,7 +11,6 @@ import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../home/widgets/admin_shell.dart';
-import '../../linking/models/invite_code.dart';
 import '../cubit/staff_list_cubit.dart';
 import '../models/staff_member.dart';
 import '../models/staff_role_text.dart';
@@ -43,9 +42,14 @@ class _StaffListView extends StatelessWidget {
       title: l10n.staffListTitle,
       actions: [
         IconButton(
-          tooltip: l10n.staffInviteTitle,
+          tooltip: l10n.staffInviteTeacherTitle,
+          icon: const Icon(Icons.school_outlined),
+          onPressed: () => context.push(StaffRoutes.inviteTeacher),
+        ),
+        IconButton(
+          tooltip: l10n.staffInviteAssistantTitle,
           icon: const Icon(Icons.person_add_alt_1),
-          onPressed: () => context.push(StaffRoutes.invite),
+          onPressed: () => context.push(StaffRoutes.inviteAssistant),
         ),
       ],
       body: SafeArea(
@@ -86,7 +90,7 @@ class _StaffListView extends StatelessWidget {
   }
 }
 
-enum _StaffAction { changeRole, toggleActive }
+enum _StaffAction { toggleActive }
 
 class _StaffTile extends StatelessWidget {
   const _StaffTile({
@@ -102,18 +106,6 @@ class _StaffTile extends StatelessWidget {
 
   /// فيه تعديل شغال على أي موظف (بنمنع تعديلين مع بعض).
   final bool locked;
-
-  Future<void> _changeRole(BuildContext context, StaffInviteRole target) async {
-    final l10n = AppLocalizations.of(context);
-    final cubit = context.read<StaffListCubit>();
-    final ok = await showConfirmDialog(
-      context,
-      title: l10n.staffChangeRoleTitle,
-      message: l10n.staffChangeRoleMessage(member.name, target.label(l10n)),
-      confirmLabel: l10n.staffChangeRoleConfirm,
-    );
-    if (ok) await cubit.changeRole(member, target);
-  }
 
   Future<void> _toggleActive(BuildContext context) async {
     final l10n = AppLocalizations.of(context);
@@ -136,7 +128,6 @@ class _StaffTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final other = member.otherRole;
 
     Widget? trailing;
     if (busy) {
@@ -145,23 +136,17 @@ class _StaffTile extends StatelessWidget {
         height: 24,
         child: CircularProgressIndicator(strokeWidth: 2.5),
       );
-    } else if (member.editable && other != null) {
+    } else if (member.editable) {
       trailing = PopupMenuButton<_StaffAction>(
         tooltip: l10n.staffMenuTooltip,
         enabled: !locked,
         onSelected: (action) {
           switch (action) {
-            case _StaffAction.changeRole:
-              _changeRole(context, other);
             case _StaffAction.toggleActive:
               _toggleActive(context);
           }
         },
         itemBuilder: (_) => [
-          PopupMenuItem<_StaffAction>(
-            value: _StaffAction.changeRole,
-            child: Text(l10n.staffActionChangeRoleTo(other.label(l10n))),
-          ),
           PopupMenuItem<_StaffAction>(
             value: _StaffAction.toggleActive,
             child: Text(

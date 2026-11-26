@@ -63,17 +63,6 @@ class FakeStaffRepository implements StaffRepository {
   }
 
   @override
-  Future<void> changeRole({
-    required String centerId,
-    required String uid,
-    required StaffInviteRole role,
-  }) async {
-    calls.add('role:$centerId:$uid:${role.wire}');
-    final f = writeFailure;
-    if (f != null) throw f;
-  }
-
-  @override
   Future<void> setActive({
     required String centerId,
     required String uid,

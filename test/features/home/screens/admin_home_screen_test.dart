@@ -33,7 +33,14 @@ Future<void> _pump(WidgetTester tester) async {
       GoRoute(path: StudentRoutes.list, builder: (_, _) => stub('STUDENTS')),
       GoRoute(path: GroupRoutes.list, builder: (_, _) => stub('GROUPS')),
       GoRoute(path: StaffRoutes.list, builder: (_, _) => stub('STAFF')),
-      GoRoute(path: StaffRoutes.invite, builder: (_, _) => stub('INVITE')),
+      GoRoute(
+        path: StaffRoutes.inviteTeacher,
+        builder: (_, _) => stub('INVITE_T'),
+      ),
+      GoRoute(
+        path: StaffRoutes.inviteAssistant,
+        builder: (_, _) => stub('INVITE_A'),
+      ),
       GoRoute(path: CenterRoutes.settings, builder: (_, _) => stub('SETTINGS')),
     ],
   );
@@ -123,8 +130,39 @@ void main() {
     expect(find.text('STUDENTS'), findsOneWidget);
   });
 
+  testWidgets('كارت إضافة معلم بيفتح دعوة المعلم', (tester) async {
+    await _pump(tester);
+    await tester.scrollUntilVisible(
+      find.text(arL10n.staffInviteTeacherTitle),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text(arL10n.staffInviteTeacherTitle));
+    await tester.pumpAndSettle();
+    expect(find.text('INVITE_T'), findsOneWidget);
+  });
+
+  testWidgets('كارت إضافة مساعد بيفتح دعوة المساعد', (tester) async {
+    await _pump(tester);
+    await tester.scrollUntilVisible(
+      find.text(arL10n.staffInviteAssistantTitle),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text(arL10n.staffInviteAssistantTitle));
+    await tester.pumpAndSettle();
+    expect(find.text('INVITE_A'), findsOneWidget);
+  });
+
   testWidgets('كارت إعدادات السنتر بيفتح الإعدادات', (tester) async {
     await _pump(tester);
+    await tester.scrollUntilVisible(
+      find.text(arL10n.centerSettingsTitle),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.drag(find.byType(ListView).first, const Offset(0, -200));
+    await tester.pumpAndSettle();
     await tester.tap(find.text(arL10n.centerSettingsTitle));
     await tester.pumpAndSettle();
     expect(find.text('SETTINGS'), findsOneWidget);
@@ -138,7 +176,8 @@ void main() {
     await tester.pumpAndSettle();
     final drawer = find.byType(Drawer);
     for (final label in [
-      arL10n.staffInviteTitle,
+      arL10n.staffInviteTeacherTitle,
+      arL10n.staffInviteAssistantTitle,
       arL10n.centerSettingsTitle,
       arL10n.myAccountTitle,
       arL10n.authSignOut,

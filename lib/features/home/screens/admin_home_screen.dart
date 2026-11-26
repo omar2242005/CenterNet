@@ -48,9 +48,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       _Shortcut(Icons.groups_outlined, l10n.groupsListTitle, GroupRoutes.list),
       _Shortcut(Icons.badge_outlined, l10n.staffListTitle, StaffRoutes.list),
       _Shortcut(
+        Icons.school_outlined,
+        l10n.staffInviteTeacherTitle,
+        StaffRoutes.inviteTeacher,
+        push: true,
+      ),
+      _Shortcut(
         Icons.person_add_alt_1_outlined,
-        l10n.staffInviteTitle,
-        StaffRoutes.invite,
+        l10n.staffInviteAssistantTitle,
+        StaffRoutes.inviteAssistant,
         push: true,
       ),
       _Shortcut(

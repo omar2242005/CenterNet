@@ -526,23 +526,29 @@ abstract class AppLocalizations {
   /// **'المدة لازم تكون من 0 إلى 180 دقيقة'**
   String get centerLateInvalid;
 
-  /// No description provided for @staffInviteTitle.
+  /// No description provided for @staffInviteTeacherTitle.
   ///
   /// In ar, this message translates to:
-  /// **'إضافة موظف'**
-  String get staffInviteTitle;
+  /// **'إضافة معلم'**
+  String get staffInviteTeacherTitle;
 
-  /// No description provided for @staffInviteName.
+  /// No description provided for @staffInviteAssistantTitle.
   ///
   /// In ar, this message translates to:
-  /// **'اسم الموظف'**
-  String get staffInviteName;
+  /// **'إضافة مساعد'**
+  String get staffInviteAssistantTitle;
 
-  /// No description provided for @staffInviteRole.
+  /// No description provided for @staffInviteTeacherName.
   ///
   /// In ar, this message translates to:
-  /// **'الدور'**
-  String get staffInviteRole;
+  /// **'اسم المعلم'**
+  String get staffInviteTeacherName;
+
+  /// No description provided for @staffInviteAssistantName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم المساعد'**
+  String get staffInviteAssistantName;
 
   /// No description provided for @staffRoleTeacher.
   ///
@@ -717,12 +723,6 @@ abstract class AppLocalizations {
   /// **'خيارات الموظف'**
   String get staffMenuTooltip;
 
-  /// No description provided for @staffActionChangeRoleTo.
-  ///
-  /// In ar, this message translates to:
-  /// **'تغيير الدور إلى {role}'**
-  String staffActionChangeRoleTo(String role);
-
   /// No description provided for @staffActionDisable.
   ///
   /// In ar, this message translates to:
@@ -734,24 +734,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تفعيل'**
   String get staffActionEnable;
-
-  /// No description provided for @staffChangeRoleTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'تغيير دور الموظف'**
-  String get staffChangeRoleTitle;
-
-  /// No description provided for @staffChangeRoleMessage.
-  ///
-  /// In ar, this message translates to:
-  /// **'هل تريد تغيير دور {name} إلى {role}؟'**
-  String staffChangeRoleMessage(String name, String role);
-
-  /// No description provided for @staffChangeRoleConfirm.
-  ///
-  /// In ar, this message translates to:
-  /// **'تغيير'**
-  String get staffChangeRoleConfirm;
 
   /// No description provided for @staffDisableTitle.
   ///

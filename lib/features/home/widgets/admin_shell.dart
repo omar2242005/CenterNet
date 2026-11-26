@@ -78,9 +78,14 @@ class AdminShell extends StatelessWidget {
           onTap: () => _goTab(context, AdminTab.home),
         ),
         AppShellDrawerItem(
+          icon: Icons.school_outlined,
+          label: l10n.staffInviteTeacherTitle,
+          onTap: () => context.push(StaffRoutes.inviteTeacher),
+        ),
+        AppShellDrawerItem(
           icon: Icons.person_add_alt_1_outlined,
-          label: l10n.staffInviteTitle,
-          onTap: () => context.push(StaffRoutes.invite),
+          label: l10n.staffInviteAssistantTitle,
+          onTap: () => context.push(StaffRoutes.inviteAssistant),
         ),
         AppShellDrawerItem(
           icon: Icons.settings_outlined,

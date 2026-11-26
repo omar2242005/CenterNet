@@ -33,7 +33,8 @@ final Map<String, Set<HomeDestination>> _exactAccess = {
   CenterRoutes.create: {HomeDestination.createCenter},
   CenterRoutes.settings: _admin,
   StaffRoutes.list: _admin,
-  StaffRoutes.invite: _admin,
+  StaffRoutes.inviteTeacher: _admin,
+  StaffRoutes.inviteAssistant: _admin,
   StaffRoutes.join: {HomeDestination.joinCenter},
   // matchedLocation دايمًا بشرطة مائلة في الأول.
   '/${AssistantRouteNames.scan}': {

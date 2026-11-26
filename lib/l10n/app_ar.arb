@@ -127,9 +127,10 @@
   "centerNone": "ليس لديك سنتر بعد.",
   "centerYearInvalid": "السنة غير صالحة",
   "centerLateInvalid": "المدة لازم تكون من 0 إلى 180 دقيقة",
-  "staffInviteTitle": "إضافة موظف",
-  "staffInviteName": "اسم الموظف",
-  "staffInviteRole": "الدور",
+  "staffInviteTeacherTitle": "إضافة معلم",
+  "staffInviteAssistantTitle": "إضافة مساعد",
+  "staffInviteTeacherName": "اسم المعلم",
+  "staffInviteAssistantName": "اسم المساعد",
   "staffRoleTeacher": "معلم",
   "staffRoleAssistant": "مساعد",
   "staffInvitePhone": "موبايل الموظف (اختياري، لإرسال الكود عبر واتساب)",
@@ -191,29 +192,8 @@
   "staffStatusActive": "نشط",
   "staffStatusDisabled": "معطّل",
   "staffMenuTooltip": "خيارات الموظف",
-  "staffActionChangeRoleTo": "تغيير الدور إلى {role}",
-  "@staffActionChangeRoleTo": {
-    "placeholders": {
-      "role": {
-        "type": "String"
-      }
-    }
-  },
   "staffActionDisable": "تعطيل",
   "staffActionEnable": "تفعيل",
-  "staffChangeRoleTitle": "تغيير دور الموظف",
-  "staffChangeRoleMessage": "هل تريد تغيير دور {name} إلى {role}؟",
-  "@staffChangeRoleMessage": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      },
-      "role": {
-        "type": "String"
-      }
-    }
-  },
-  "staffChangeRoleConfirm": "تغيير",
   "staffDisableTitle": "تعطيل الموظف",
   "staffDisableMessage": "{name} لن يتمكن من استخدام السنتر حتى تعيد تفعيله. هل تريد المتابعة؟",
   "@staffDisableMessage": {

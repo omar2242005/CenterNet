@@ -1,6 +1,5 @@
 import 'package:center_net/core/errors/failure.dart';
 import 'package:center_net/core/state/view_state.dart';
-import 'package:center_net/features/linking/models/invite_code.dart';
 import 'package:center_net/features/staff/cubit/staff_list_cubit.dart';
 import 'package:center_net/features/staff/models/staff_member.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -81,32 +80,6 @@ void main() {
       await cubit.close();
     });
 
-    test('changeRole نجاح: بيكتب ويحدّث القائمة', () async {
-      final repo = FakeStaffRepository(members: [_admin, _sara, _karim]);
-      final cubit = StaffListCubit(repo);
-      await cubit.load();
-
-      await cubit.changeRole(_sara, StaffInviteRole.assistant);
-
-      expect(repo.calls.last, 'role:c1:t1:assistant');
-      expect(_byUid(cubit, 't1').role, StaffMemberRole.assistant);
-      expect(_byUid(cubit, 's1').role, StaffMemberRole.assistant);
-      expect(cubit.state.busyUid, isNull);
-      expect(cubit.state.actionFailure, isNull);
-      await cubit.close();
-    });
-
-    test('changeRole لنفس الدور بيتتجاهل', () async {
-      final repo = FakeStaffRepository(members: [_admin, _sara]);
-      final cubit = StaffListCubit(repo);
-      await cubit.load();
-
-      await cubit.changeRole(_sara, StaffInviteRole.teacher);
-
-      expect(repo.calls, ['load']);
-      await cubit.close();
-    });
-
     test('setActive(false): بيعطّل الموظف', () async {
       final repo = FakeStaffRepository(members: [_admin, _sara]);
       final cubit = StaffListCubit(repo);
@@ -180,7 +153,6 @@ void main() {
       await cubit.load();
 
       await cubit.setActive(_admin, false);
-      await cubit.changeRole(_admin, StaffInviteRole.assistant);
 
       expect(repo.calls, ['load']);
       expect(_byUid(cubit, 'a1').role, StaffMemberRole.admin);

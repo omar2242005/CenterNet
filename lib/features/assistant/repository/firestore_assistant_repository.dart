@@ -97,13 +97,10 @@ class FirestoreAssistantRepository implements AssistantRepository {
       final uid = _requireUid();
       final centerId = await _myCenterId();
       final col = _db.collection(FirestorePaths.groups(centerId));
-      // استعلامان مقيّدان بالـ uid نفسه: كل مستند محتمل يحقق شرط الـ Rules
-      // (rules are not filters)، فيعدي من غير تعديل في القواعد.
+      // المساعد بيشوف مجموعاته من assistantIds بس (الدورين منفصلين: خانة
+      // المعلم teacherId مش بتخلي حد مساعد). استعلام مقيّد بالـ uid نفسه عشان
+      // يعدي من الـ Rules (rules are not filters).
       final snaps = await Future.wait([
-        col
-            .where('teacherId', isEqualTo: uid)
-            .get()
-            .timeout(serverConfirmationTimeout),
         col
             .where('assistantIds', arrayContains: uid)
             .get()

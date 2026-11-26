@@ -45,13 +45,6 @@ class StaffMember {
   /// الأدمن مش بيتعدّل من التطبيق.
   bool get editable => !isAdmin;
 
-  /// الدور اللي ينفع نبدّل له (معلم ↔ مساعد). null للأدمن.
-  StaffInviteRole? get otherRole => switch (role) {
-        StaffMemberRole.teacher => StaffInviteRole.assistant,
-        StaffMemberRole.assistant => StaffInviteRole.teacher,
-        StaffMemberRole.admin => null,
-      };
-
   factory StaffMember.fromMap(String uid, Map<String, dynamic> map) {
     final name = map['name'];
     final active = map['active'];
