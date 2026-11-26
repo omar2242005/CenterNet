@@ -1331,4 +1331,48 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get assistantNavSync => 'المزامنة';
+
+  @override
+  String get teacherNavHome => 'الرئيسية';
+
+  @override
+  String teacherGreeting(String name) {
+    return 'أهلاً، $name';
+  }
+
+  @override
+  String get teacherActiveGroups => 'مجموعاتك النشطة';
+
+  @override
+  String teacherAcademicYear(String from, String to) {
+    return 'العام الدراسي $from – $to';
+  }
+
+  @override
+  String get teacherGroupUnit => 'مجموعة';
+
+  @override
+  String teacherStudentsCount(int count) {
+    return '$count طالبًا';
+  }
+
+  @override
+  String teacherSubjects(String subjects) {
+    return 'المواد: $subjects';
+  }
+
+  @override
+  String get teacherNextSession => 'الحصة القادمة';
+
+  @override
+  String get teacherNoNextSession => 'مفيش حصص قادمة في جدولك دلوقتي.';
+
+  @override
+  String get teacherToday => 'اليوم';
+
+  @override
+  String get teacherTomorrow => 'غدًا';
+
+  @override
+  String get teacherViewMyGroups => 'عرض مجموعاتي';
 }
