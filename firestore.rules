@@ -696,7 +696,12 @@ service cloud.firestore {
       // list: أي موظف نشط يقرا قوائم مجموعات السنتر (الكتابة للأدمن بس).
       allow list: if isAdmin(c) || isStaff(c) || isLinkedUser(c);
 
-      allow create: if isAdmin(c)
+      // [v8] المعلم النشط ينشئ مجموعة لنفسه بس (teacherId == uid). كل فحوصات
+      // validGroup / validStaffAssignment (المساعدين نشطين وبدور مساعد) زي ما هي.
+      // المساعد والمعلم المعطّل مرفوضين (isActiveRole). التعديل والحذف للأدمن بس.
+      allow create: if (isAdmin(c)
+            || (isActiveRole(c, request.auth.uid, 'teacher')
+                && request.resource.data.get('teacherId', null) == request.auth.uid))
         && validGroup(request.resource.data, c)
         && validStaffAssignment(request.resource.data, c)
         && request.resource.data.status == 'active'
