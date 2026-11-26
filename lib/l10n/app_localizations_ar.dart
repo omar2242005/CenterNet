@@ -846,6 +846,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get groupInvalidDuration => 'المدة لازم تكون من 1 لـ 480 دقيقة';
 
   @override
+  String get groupStudentsMenu => 'تسجيل الطلاب';
+
+  @override
+  String groupEnrolledCount(int count) {
+    return '$count طالب مسجّل';
+  }
+
+  @override
+  String get groupFullBadge => 'مكتملة العدد';
+
+  @override
+  String get groupStudentsSearchHint => 'ابحث بالاسم أو الرقم';
+
+  @override
+  String get groupStudentsEmpty => 'لا يوجد طلاب لعرضهم';
+
+  @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override

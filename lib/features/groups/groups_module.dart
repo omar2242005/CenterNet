@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'group_route_names.dart';
 import 'models/group.dart';
 import 'repository/groups_repository.dart';
+import 'screens/group_enrollment_screen.dart';
 import 'screens/group_form_screen.dart';
 import 'screens/groups_list_screen.dart';
 
@@ -32,5 +33,12 @@ final List<RouteBase> groupRoutes = <RouteBase>[
         state.extra is Group ? null : GroupRoutes.list,
     builder: (context, state) =>
         GroupFormScreen(editing: state.extra! as Group),
+  ),
+  GoRoute(
+    path: GroupRoutes.students,
+    redirect: (context, state) =>
+        state.extra is Group ? null : GroupRoutes.list,
+    builder: (context, state) =>
+        GroupEnrollmentScreen(group: state.extra! as Group),
   ),
 ];

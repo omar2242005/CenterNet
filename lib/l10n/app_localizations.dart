@@ -1563,6 +1563,36 @@ abstract class AppLocalizations {
   /// **'المدة لازم تكون من 1 لـ 480 دقيقة'**
   String get groupInvalidDuration;
 
+  /// No description provided for @groupStudentsMenu.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الطلاب'**
+  String get groupStudentsMenu;
+
+  /// No description provided for @groupEnrolledCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} طالب مسجّل'**
+  String groupEnrolledCount(int count);
+
+  /// No description provided for @groupFullBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكتملة العدد'**
+  String get groupFullBadge;
+
+  /// No description provided for @groupStudentsSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث بالاسم أو الرقم'**
+  String get groupStudentsSearchHint;
+
+  /// No description provided for @groupStudentsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد طلاب لعرضهم'**
+  String get groupStudentsEmpty;
+
   /// No description provided for @linkEnterTitle.
   ///
   /// In ar, this message translates to:

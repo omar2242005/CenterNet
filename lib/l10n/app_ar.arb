@@ -510,6 +510,18 @@
   "groupInvalidCapacity": "اكتب رقمًا صحيحًا (1 أو أكثر)",
   "groupInvalidFee": "اكتب سعرًا صحيحًا (0 أو أكثر)",
   "groupInvalidDuration": "المدة لازم تكون من 1 لـ 480 دقيقة",
+  "groupStudentsMenu": "تسجيل الطلاب",
+  "groupEnrolledCount": "{count} طالب مسجّل",
+  "@groupEnrolledCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "groupFullBadge": "مكتملة العدد",
+  "groupStudentsSearchHint": "ابحث بالاسم أو الرقم",
+  "groupStudentsEmpty": "لا يوجد طلاب لعرضهم",
   "linkEnterTitle": "ربط الحساب بالطالب",
   "linkStudentIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.",
   "linkGuardianIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.",

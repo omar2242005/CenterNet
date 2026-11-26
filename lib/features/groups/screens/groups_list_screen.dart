@@ -157,6 +157,10 @@ class _GroupsListViewState extends State<_GroupsListView> {
                               GroupRoutes.edit,
                               extra: group,
                             ),
+                            onOpenStudents: () => _open(
+                              GroupRoutes.students,
+                              extra: group,
+                            ),
                             onArchive: group.isArchived
                                 ? null
                                 : () => _archive(group),
@@ -176,10 +180,16 @@ class _GroupsListViewState extends State<_GroupsListView> {
 }
 
 class _GroupTile extends StatelessWidget {
-  const _GroupTile({required this.group, required this.onTap, this.onArchive});
+  const _GroupTile({
+    required this.group,
+    required this.onTap,
+    required this.onOpenStudents,
+    this.onArchive,
+  });
 
   final Group group;
   final VoidCallback onTap;
+  final VoidCallback onOpenStudents;
 
   /// null للمؤرشفة (مفيش إجراءات عليها من القائمة).
   final VoidCallback? onArchive;
@@ -243,16 +253,26 @@ class _GroupTile extends StatelessWidget {
                 const SizedBox(width: AppSpacing.sm),
                 StatusBadge(label: l10n.groupArchivedBadge),
               ],
-              if (onArchive != null)
-                PopupMenuButton<String>(
-                  onSelected: (_) => onArchive!(),
-                  itemBuilder: (context) => [
+              PopupMenuButton<String>(
+                onSelected: (value) {
+                  if (value == 'archive') {
+                    onArchive?.call();
+                  } else if (value == 'students') {
+                    onOpenStudents();
+                  }
+                },
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 'students',
+                    child: Text(l10n.groupStudentsMenu),
+                  ),
+                  if (onArchive != null)
                     PopupMenuItem(
                       value: 'archive',
                       child: Text(l10n.groupArchiveAction),
                     ),
-                  ],
-                ),
+                ],
+              ),
             ],
           ),
           if (group.slots.isNotEmpty) ...[
