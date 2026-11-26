@@ -15,6 +15,33 @@ import '../../../helpers/pump_app.dart';
 import '../../staff/helpers/fake_staff_repository.dart';
 import '../helpers/fake_groups_repository.dart';
 
+
+Group _roomGroup(
+  String id,
+  String name, {
+  required String room,
+  required int weekday,
+  required int start,
+  int duration = 90,
+  bool archived = false,
+}) =>
+    Group.fromMap(id, <String, dynamic>{
+      'centerId': 'c1',
+      'name': name,
+      'teacherId': 't1',
+      'createdBy': 'u1',
+      'assistantIds': <String>[],
+      'room': room,
+      'status': archived ? 'archived' : 'active',
+      'slots': <Map<String, dynamic>>[
+        <String, dynamic>{
+          'weekday': weekday,
+          'startMinutes': start,
+          'durationMinutes': duration,
+        },
+      ],
+    });
+
 const _sara = StaffMember(
   uid: 't1',
   name: 'سارة',
@@ -77,6 +104,30 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('سارة').last);
     await tester.pumpAndSettle();
+  }
+
+  Future<void> addDefaultSlot(WidgetTester tester) async {
+    final add = find.text(arL10n.groupAddSlot);
+    await tester.scrollUntilVisible(
+      add,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(add);
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> fillNameRoomTeacher(
+    WidgetTester tester, {
+    String name = 'مجموعة جديدة',
+    String room = 'قاعة 1',
+  }) async {
+    await tester.enterText(find.byType(TextFormField).at(0), name);
+    if (room.isNotEmpty) {
+      await tester.enterText(find.byType(TextFormField).at(3), room);
+    }
+    await pickTeacher(tester);
   }
 
   Future<void> tapSave(WidgetTester tester) async {
@@ -183,5 +234,105 @@ void main() {
     await tapSave(tester);
 
     expect(find.text(const Failure.permission().message), findsOneWidget);
+  });
+
+  group('تعارض القاعة والميعاد', () {
+    testWidgets('نفس القاعة وتقاطع وقت = رسالة باسم المجموعة المعادية ومن غير حفظ',
+        (tester) async {
+      groupsRepo.groups.add(
+        _roomGroup('g9', 'حصة المغرب', room: 'قاعة 1', weekday: 6, start: 1020),
+      );
+      await openForm(tester);
+      await fillNameRoomTeacher(tester);
+      await addDefaultSlot(tester); // السبت 5:00 م لمدة 90 دقيقة (الافتراضي)
+      await tapSave(tester);
+
+      expect(find.textContaining('محجوزة لمجموعة'), findsOneWidget);
+      expect(find.textContaining('حصة المغرب'), findsOneWidget);
+      expect(groupsRepo.calls.where((c) => c.startsWith('create:')), isEmpty);
+    });
+
+    testWidgets('نفس القاعة لكن يوم مختلف = بيحفظ عادي', (tester) async {
+      groupsRepo.groups.add(
+        _roomGroup('g9', 'حصة المغرب', room: 'قاعة 1', weekday: 7, start: 1020),
+      );
+      await openForm(tester);
+      await fillNameRoomTeacher(tester);
+      await addDefaultSlot(tester);
+      await tapSave(tester);
+
+      expect(groupsRepo.calls, contains('create:مجموعة جديدة'));
+    });
+
+    testWidgets('أوقات متجاورة (5-6:30 و6:30-8) مش تعارض = بيحفظ', (tester) async {
+      groupsRepo.groups.add(
+        _roomGroup('g9', 'حصة المغرب', room: 'قاعة 1', weekday: 6, start: 1110),
+      );
+      await openForm(tester);
+      await fillNameRoomTeacher(tester);
+      await addDefaultSlot(tester);
+      await tapSave(tester);
+
+      expect(groupsRepo.calls, contains('create:مجموعة جديدة'));
+    });
+
+    testWidgets('التعارض مع مجموعة مؤرشفة مبيتحسبش = بيحفظ', (tester) async {
+      groupsRepo.groups.add(
+        _roomGroup(
+          'g9',
+          'حصة قديمة',
+          room: 'قاعة 1',
+          weekday: 6,
+          start: 1020,
+          archived: true,
+        ),
+      );
+      await openForm(tester);
+      await fillNameRoomTeacher(tester);
+      await addDefaultSlot(tester);
+      await tapSave(tester);
+
+      expect(groupsRepo.calls, contains('create:مجموعة جديدة'));
+    });
+
+    testWidgets('تعديل المجموعة بنفس مواعيدها مبيتعارضش مع نفسها', (tester) async {
+      final existing = _roomGroup(
+        'g1',
+        'مجموعة الأحد',
+        room: 'قاعة 1',
+        weekday: 6,
+        start: 1020,
+      );
+      groupsRepo.groups.add(existing);
+      await openForm(tester, editing: existing);
+      await tapSave(tester);
+
+      expect(groupsRepo.calls, contains('update:g1:مجموعة الأحد'));
+    });
+
+    testWidgets('قاعة فاضية = مفيش فحص تعارض وبيحفظ', (tester) async {
+      groupsRepo.groups.add(
+        _roomGroup('g9', 'حصة المغرب', room: 'قاعة 1', weekday: 6, start: 1020),
+      );
+      await openForm(tester);
+      await fillNameRoomTeacher(tester, room: '');
+      await addDefaultSlot(tester);
+      await tapSave(tester);
+
+      expect(groupsRepo.calls, contains('create:مجموعة جديدة'));
+    });
+
+    testWidgets('اسم القاعة بيتطبّع: «قاعة ١» = «قاعة 1»', (tester) async {
+      groupsRepo.groups.add(
+        _roomGroup('g9', 'حصة المغرب', room: 'قاعة ١', weekday: 6, start: 1020),
+      );
+      await openForm(tester);
+      await fillNameRoomTeacher(tester, room: 'قاعة 1');
+      await addDefaultSlot(tester);
+      await tapSave(tester);
+
+      expect(find.textContaining('حصة المغرب'), findsOneWidget);
+      expect(groupsRepo.calls.where((c) => c.startsWith('create:')), isEmpty);
+    });
   });
 }

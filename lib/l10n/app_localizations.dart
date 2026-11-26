@@ -1689,6 +1689,12 @@ abstract class AppLocalizations {
   /// **'تعذر تحميل بيانات الحساب'**
   String get myAccountLoadError;
 
+  /// No description provided for @groupRoomConflict.
+  ///
+  /// In ar, this message translates to:
+  /// **'القاعة دي محجوزة لمجموعة «{group}» يوم {day} من {start} لـ {end}'**
+  String groupRoomConflict(String group, String day, String start, String end);
+
   /// No description provided for @linkEnterTitle.
   ///
   /// In ar, this message translates to:

@@ -58,12 +58,7 @@ class GroupInput {
   static bool _hasOverlap(List<GroupSlot> slots) {
     for (var i = 0; i < slots.length; i++) {
       for (var j = i + 1; j < slots.length; j++) {
-        final a = slots[i];
-        final b = slots[j];
-        if (a.weekday != b.weekday) continue;
-        final aEnd = a.startMinutes + a.durationMinutes;
-        final bEnd = b.startMinutes + b.durationMinutes;
-        if (a.startMinutes < bEnd && b.startMinutes < aEnd) return true;
+        if (slotsOverlap(slots[i], slots[j])) return true;
       }
     }
     return false;
