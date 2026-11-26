@@ -98,8 +98,8 @@ describe('groups — الإنشاء', () => {
     await assertSucceeds(setDoc(groupRef(as('adminA'), 'g3'), groupData()));
   });
 
-  it('المعلم والمساعد وأدمن سنتر تاني مينفعش', async () => {
-    await assertFails(setDoc(groupRef(as('teacherA'), 'g3'), groupData({ createdBy: 'teacherA' })));
+  it('[v8] المعلم لمعلم تاني، المساعد وأدمن سنتر تاني مينفعش', async () => {
+    await assertFails(setDoc(groupRef(as('teacherA'), 'g3'), groupData({ teacherId: 'teacherB', createdBy: 'teacherA' })));
     await assertFails(setDoc(groupRef(as('assistantA'), 'g3'), groupData({ createdBy: 'assistantA' })));
     await assertFails(setDoc(groupRef(as('adminB'), 'g3'), groupData({ createdBy: 'adminB' })));
   });
