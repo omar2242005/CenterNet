@@ -12,6 +12,8 @@ import '../student_area/screens/student_home_screen.dart';
 import '../centers/center_route_names.dart';
 import '../staff/staff_route_names.dart';
 import '../students/student_route_names.dart';
+import '../teacher/teacher_route_names.dart';
+import '../teacher/teacher_route_names.dart';
 import 'home_route_names.dart';
 import 'repository/role_repository.dart';
 import 'screens/blocked_account_screen.dart';
@@ -49,10 +51,17 @@ final List<RouteBase> homeRoutes = <RouteBase>[
       );
     },
   ),
-  GoRoute(
+    GoRoute(
     path: HomeRoutes.teacher,
-    builder: (context, state) =>
-        RoleHomeScreen(title: AppLocalizations.of(context).homeTeacherTitle),
+    builder: (context, state) {
+      final l10n = AppLocalizations.of(context);
+      return RoleHomeScreen(
+        title: l10n.homeTeacherTitle,
+        actions: [
+          (label: l10n.myGroupsTitle, route: TeacherRoutes.groups),
+        ],
+      );
+    },
   ),
   GoRoute(
     path: HomeRoutes.assistant,
