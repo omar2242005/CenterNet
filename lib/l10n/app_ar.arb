@@ -555,6 +555,23 @@
   "myAccountPhone": "الموبايل",
   "myAccountType": "نوع الحساب",
   "myAccountLoadError": "تعذر تحميل بيانات الحساب",
+  "groupRoomConflict": "القاعة دي محجوزة لمجموعة «{group}» يوم {day} من {start} لـ {end}",
+  "@groupRoomConflict": {
+    "placeholders": {
+      "group": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
   "linkEnterTitle": "ربط الحساب بالطالب",
   "linkStudentIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.",
   "linkGuardianIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.",

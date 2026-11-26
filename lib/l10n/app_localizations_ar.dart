@@ -916,6 +916,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get myAccountLoadError => 'تعذر تحميل بيانات الحساب';
 
   @override
+  String groupRoomConflict(String group, String day, String start, String end) {
+    return 'القاعة دي محجوزة لمجموعة «$group» يوم $day من $start لـ $end';
+  }
+
+  @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override

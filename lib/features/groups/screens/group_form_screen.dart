@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/di.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/errors/failure.dart';
 import '../../../core/utils/digits.dart';
 import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/app_button.dart';
@@ -160,8 +161,9 @@ class _GroupFormViewState extends State<_GroupFormView> {
     });
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     final l10n = AppLocalizations.of(context);
+    final cubit = context.read<GroupFormCubit>();
     setState(() => _formError = null);
     if (!(_formKey.currentState?.validate() ?? false)) return;
     for (final s in _slots) {
@@ -189,7 +191,34 @@ class _GroupFormViewState extends State<_GroupFormView> {
       setState(() => _formError = error);
       return;
     }
-    context.read<GroupFormCubit>().submit(input);
+    // تعارض القاعة والميعاد مع باقي المجموعات قبل الحفظ.
+    try {
+      final conflict = await cubit.findRoomConflict(input);
+      if (!mounted) return;
+      if (conflict != null) {
+        final origin = DateTime.fromMillisecondsSinceEpoch(0);
+        final slot = conflict.slot;
+        setState(
+          () => _formError = l10n.groupRoomConflict(
+            conflict.group.name,
+            l10n.weekdayName('d${slot.weekday}'),
+            formatTime(l10n, origin.add(Duration(minutes: slot.startMinutes))),
+            formatTime(
+              l10n,
+              origin.add(
+                Duration(minutes: slot.startMinutes + slot.durationMinutes),
+              ),
+            ),
+          ),
+        );
+        return;
+      }
+    } on Failure catch (f) {
+      if (!mounted) return;
+      setState(() => _formError = f.message);
+      return;
+    }
+    cubit.submit(input);
   }
 
   @override

@@ -91,6 +91,15 @@ class GroupSlot {
   int get hashCode => Object.hash(weekday, startMinutes, durationMinutes);
 }
 
+/// هل ميعادان أسبوعيان بيتقاطعا؟ (نفس اليوم + تقاطع الفترتين).
+/// المتجاور (واحد بيخلص وقت ما التاني بيبدأ) مش تقاطع.
+bool slotsOverlap(GroupSlot a, GroupSlot b) {
+  if (a.weekday != b.weekday) return false;
+  final aEnd = a.startMinutes + a.durationMinutes;
+  final bEnd = b.startMinutes + b.durationMinutes;
+  return a.startMinutes < bEnd && b.startMinutes < aEnd;
+}
+
 /// مستند `centers/{c}/groups/{gid}`.
 ///
 /// * [teacherId] و[assistantIds] هما أساس صلاحيات الحضور (قرار "مجموعات
