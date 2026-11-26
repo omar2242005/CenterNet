@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/auth_route_names.dart';
 import '../../auth/sign_out_action.dart';
 import '../assistant_route_names.dart';
 
@@ -55,6 +56,14 @@ class AssistantShell extends StatelessWidget {
                 onTap: () => _go(context, _syncPath),
               ),
               const Divider(),
+              ListTile(
+                leading: const Icon(Icons.person_outline),
+                title: Text(l10n.myAccountTitle),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  context.push(AuthRoutes.myAccount);
+                },
+              ),
               ListTile(
                 leading: const Icon(Icons.logout, color: AppColors.error),
                 title: Text(
