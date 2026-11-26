@@ -116,10 +116,16 @@ void main() {
     expect(find.text('MY_GROUPS'), findsOneWidget);
   });
 
-  testWidgets('تبويب حسابي بيفتح حسابي، ومفيش تبويب امتحانات', (tester) async {
+  testWidgets('تبويب حسابي بيفتح حسابي، وفيه تبويب الامتحانات', (tester) async {
     withData();
     await open(tester);
-    expect(find.text('الامتحانات'), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byType(NavigationBar),
+        matching: find.text('الامتحانات'),
+      ),
+      findsOneWidget,
+    );
     await tester.tap(
       find.descendant(
         of: find.byType(NavigationBar),
