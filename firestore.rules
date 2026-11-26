@@ -818,7 +818,23 @@ service cloud.firestore {
     // ------------------------------------------------------------------
     match /centers/{c}/scores/{aid} {
       // [Person 3] الطالب/ولي الأمر يقرا درجات الطالب المربوط بيه في الامتحانات المنشورة بس.
-      allow get, list: if isAdmin(c)
+      // [v7] get على مستند مش موجود: resource بيبقى null و resource.data بيرمي خطأ = رفض،
+      // وده كان بيكسر أول رصد للمعلم (الـ transaction بتعمل get قبل الـ create).
+      // لو المستند مش موجود بنطلّع الامتحان من الـ id (examId_studentId) ونسمح للأدمن
+      // أو معلم/مساعد مجموعة الامتحان بس. مفيش قراءة لطالب/ولي أمر على مستند مش موجود.
+      allow get: if resource == null
+        ? (isAdmin(c)
+            || (aid.matches('[A-Za-z0-9]+_[A-Za-z0-9]+')
+                && exists(examPath(c, aid.split('_')[0]))
+                && isGroupStaff(c, get(examPath(c, aid.split('_')[0])).data.groupId)))
+        : (isAdmin(c)
+            || (exists(examPath(c, resource.data.examId))
+                && isGroupStaff(c, get(examPath(c, resource.data.examId)).data.groupId))
+            || (hasLink(c, resource.data.studentId)
+                && exists(examPath(c, resource.data.examId))
+                && get(examPath(c, resource.data.examId)).data.published == true));
+
+      allow list: if isAdmin(c)
         || (exists(examPath(c, resource.data.examId))
             && isGroupStaff(c, get(examPath(c, resource.data.examId)).data.groupId))
         || (hasLink(c, resource.data.studentId)
