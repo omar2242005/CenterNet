@@ -21,8 +21,8 @@ class StaffRepository {
     this._db, {
     DateTime Function()? now,
     String Function()? generateCode,
-  })  : _now = now ?? DateTime.now,
-        _generateCode = generateCode ?? (() => LinkCodeGenerator.generate());
+  }) : _now = now ?? DateTime.now,
+       _generateCode = generateCode ?? (() => LinkCodeGenerator.generate());
 
   final FirebaseAuth _auth;
   final FirebaseFirestore _db;
@@ -114,20 +114,6 @@ class StaffRepository {
     });
   }
 
-  /// بيبدّل دور موظف (معلم أو مساعد بس. مفيش ترقية لأدمن).
-  Future<void> changeRole({
-    required String centerId,
-    required String uid,
-    required StaffInviteRole role,
-  }) {
-    return ErrorMapper.guard(() async {
-      _guardNotSelf(uid, 'لا يمكنك تغيير دورك أنت.');
-      await _db
-          .doc(FirestorePaths.member(centerId, uid))
-          .update(<String, dynamic>{'role': role.wire}).timeout(createTimeout);
-    });
-  }
-
   /// بيعطّل الموظف (`active=false`) أو بيرجّع تفعيله. مفيش حذف.
   Future<void> setActive({
     required String centerId,
@@ -138,7 +124,8 @@ class StaffRepository {
       _guardNotSelf(uid, 'لا يمكنك تعطيل حسابك أنت.');
       await _db
           .doc(FirestorePaths.member(centerId, uid))
-          .update(<String, dynamic>{'active': active}).timeout(createTimeout);
+          .update(<String, dynamic>{'active': active})
+          .timeout(createTimeout);
     });
   }
 

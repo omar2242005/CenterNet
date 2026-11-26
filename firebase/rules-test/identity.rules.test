@@ -104,10 +104,16 @@ describe('users', () => {
     await assertFails(getDocs(collection(as('u1'), 'users')));
   });
 
-  it('delete ممنوع', async () => {
+  it('صاحب الحساب يمسح مستنده', async () => {
     const db = as('u1');
     await setDoc(doc(db, 'users/u1'), userDoc('u1'));
-    await assertFails(deleteDoc(doc(db, 'users/u1')));
+    await assertSucceeds(deleteDoc(doc(db, 'users/u1')));
+  });
+
+  it('مينفعش يمسح مستند حد تاني', async () => {
+    await env.withSecurityRulesDisabled((ctx) => setDoc(doc(ctx.firestore(), 'users/u2'), userDoc('u2')));
+    await assertFails(deleteDoc(doc(as('u1'), 'users/u2')));
+    await assertFails(deleteDoc(doc(anon(), 'users/u2')));
   });
 
   it('حقل غريب مرفوض', async () => {
@@ -189,6 +195,22 @@ describe('centers — الإنشاء', () => {
   });
 });
 
+describe('members — حذف الحساب', () => {
+  it('المعلم والمساعد يمسحوا عضويتهم هم', async () => {
+    await assertSucceeds(deleteDoc(doc(as('teacherA'), `centers/${A}/members/teacherA`)));
+    await assertSucceeds(deleteDoc(doc(as('assistantA'), `centers/${A}/members/assistantA`)));
+  });
+
+  it('الأدمن مينفعش يمسح عضويته', async () => {
+    await assertFails(deleteDoc(doc(as('adminA'), `centers/${A}/members/adminA`)));
+  });
+
+  it('مينفعش يمسح عضوية حد تاني (حتى الأدمن)', async () => {
+    await assertFails(deleteDoc(doc(as('teacherA'), `centers/${A}/members/assistantA`)));
+    await assertFails(deleteDoc(doc(as('adminA'), `centers/${A}/members/teacherA`)));
+  });
+});
+
 describe('centers — القراءة والتعديل', () => {
   it('عضو نشط يقرا سنتره', async () => {
     await assertSucceeds(getDoc(doc(as('teacherA'), `centers/${A}`)));
@@ -252,10 +274,13 @@ describe('members', () => {
     await assertFails(getDocs(collection(db, `centers/${A}/members`)));
   });
 
-  it('الأدمن يعطّل معلم ويغيّر دوره', async () => {
+  it('v6: الأدمن يعطّل ويغيّر الاسم، لكن الدور ثابت (معلم ومساعد)', async () => {
     const db = as('adminA');
     await assertSucceeds(updateDoc(doc(db, `centers/${A}/members/teacherA`), { active: false }));
-    await assertSucceeds(updateDoc(doc(db, `centers/${A}/members/assistantA`), { role: 'teacher' }));
+    await assertSucceeds(updateDoc(doc(db, `centers/${A}/members/assistantA`), { name: 'اسم جديد' }));
+    await assertFails(updateDoc(doc(db, `centers/${A}/members/assistantA`), { role: 'teacher' }));
+    await assertFails(updateDoc(doc(db, `centers/${A}/members/teacherA`), { role: 'assistant' }));
+    await assertFails(updateDoc(doc(db, `centers/${A}/members/assistantA`), { role: 'teacher', name: 'x' }));
   });
 
   it('الأدمن مينفعش يرقّي حد لأدمن', async () => {

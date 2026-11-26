@@ -166,6 +166,32 @@ service cloud.firestore {
         && s.durationMinutes >= 1 && s.durationMinutes <= 480;
     }
 
+    // [v6] فصل المعلم عن المساعد: العضو لازم يكون نشط وبالدور المطلوب بالظبط.
+    // get واحدة بس (عضو مش موجود = خطأ تقييم = رفض) عشان نوفّر قراءات الـ Rules.
+    function isActiveRole(c, u, role) {
+      let m = get(memberPath(c, u)).data;
+      return m.active == true && m.role == role;
+    }
+
+    // مساعد رقم i (لو موجود) لازم يكون مساعد نشط. مفيش loop في الـ Rules فبنكرر
+    // لحد 6 (الحد الأقصى للمساعدين في المجموعة). حد الـ Rules 10 قراءات للكتابة
+    // الواحدة: الأدمن 1 + المعلم 1 + المساعدين. جرّبنا على الـ Emulator: 7 بيعدّوا
+    // و8 لأ، فاخترنا 6 وسيبنا هامش أمان.
+    function assistantOk(d, c, i) {
+      return d.assistantIds.size() <= i || isActiveRole(c, d.assistantIds[i], 'assistant');
+    }
+
+    // [v6] teacherId لازم معلم نشط، وكل assistantIds مساعدين نشطين.
+    // المعلم والمساعد مينفعش يتبدلوا مكان بعض.
+    function validStaffAssignment(d, c) {
+      return d.get('teacherId', null) is string
+        && d.get('assistantIds', null) is list && d.assistantIds.size() <= 6
+        && isActiveRole(c, d.teacherId, 'teacher')
+        && assistantOk(d, c, 0) && assistantOk(d, c, 1)
+        && assistantOk(d, c, 2) && assistantOk(d, c, 3)
+        && assistantOk(d, c, 4) && assistantOk(d, c, 5);
+    }
+
     // Rules مش بتعمل loop، فبنتحقق من أول ميعاد بس. ده كفاية كحارس،
     // والـ model في Dart هو اللي بيتحقق من الباقي.
     function validGroup(d, c) {
@@ -560,8 +586,8 @@ service cloud.firestore {
         && validUser(request.resource.data)
         && request.resource.data.createdBy == resource.data.createdBy;
 
-      // TODO: "حذف حسابي" محتاج استثناء ضيق هنا (أو soft-delete) — قرار مفتوح.
-      allow delete: if false;
+      // حذف حسابي: صاحب الحساب بس (التطبيق بيمسح حساب Auth بعدها).
+      allow delete: if signedIn() && request.auth.uid == uid;
     }
 
     // ------------------------------------------------------------------
@@ -595,16 +621,21 @@ service cloud.firestore {
           && request.resource.data.createdBy == uid
           && (bootstrapsCenter(c) || acceptsStaffInvite(c));
 
-        // الأدمن بيغيّر دور/اسم/تفعيل الموظفين (معلم/مساعد فقط).
-        // مفيش تعديل على الأدمن نفسه، ومفيش ترقية لأدمن.
+        // الأدمن بيغيّر اسم/تفعيل الموظفين (معلم/مساعد فقط). مفيش تعديل على
+        // الأدمن نفسه، ومفيش تغيير دور.
+        // [v6] الدور ثابت من وقت إنشاء الحساب: الأدمن يغيّر الاسم والتفعيل بس.
         allow update: if isAdmin(c)
           && resource.data.role in ['teacher', 'assistant']
-          && request.resource.data.role in ['teacher', 'assistant']
+          && request.resource.data.role == resource.data.role
           && request.resource.data.active is bool
           && request.resource.data.diff(resource.data).affectedKeys()
-               .hasOnly(['role', 'name', 'active']);
+               .hasOnly(['name', 'active']);
 
-        allow delete: if false;
+        // العضو يمسح عضويته هو (حذف حسابي). الأدمن لأ: السنتر ملوش حذف
+        // فهيفضل من غير أدمن.
+        allow delete: if signedIn()
+          && request.auth.uid == uid
+          && resource.data.role in ['teacher', 'assistant'];
       }
     }
 
@@ -667,17 +698,25 @@ service cloud.firestore {
 
       allow create: if isAdmin(c)
         && validGroup(request.resource.data, c)
+        && validStaffAssignment(request.resource.data, c)
         && request.resource.data.status == 'active'
         && request.resource.data.createdBy == request.auth.uid
         && request.resource.data.createdAt == request.time;
 
+      // [v6] لو التعيين (teacherId/assistantIds) اتغيّر لازم يعدي فحص الأدوار.
+      // تعديلات تانية (أرشفة، اسم..) متتعطلش لو معلم قديم اتعطّل.
       allow update: if isAdmin(c)
         && validGroup(request.resource.data, c)
+        && (!request.resource.data.diff(resource.data).affectedKeys()
+               .hasAny(['teacherId', 'assistantIds'])
+            || validStaffAssignment(request.resource.data, c))
         && request.resource.data.diff(resource.data).affectedKeys()
              .hasOnly(['name', 'subject', 'grade', 'teacherId', 'assistantIds',
                        'room', 'capacity', 'monthlyFee', 'slots', 'status']);
 
-      allow delete: if false;
+      // الحذف النهائي للأدمن بس. الواجهة بتمنع حذف مجموعة ليها حصص أو طلاب
+      // (الحصص والحضور نفسها مفيش حذف ليها، فهيبقوا يتامى).
+      allow delete: if isAdmin(c);
     }
 
     // ------------------------------------------------------------------
@@ -710,7 +749,10 @@ service cloud.firestore {
         && request.resource.data.status == 'cancelled'
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
 
-      allow delete: if false;
+      // المسح النهائي: الأدمن وللحصة الملغاة بس. الحصة المجدولة مبتتمسحش أبدًا
+      // (بتتلغي الأول). فحص "عليها حضور؟" في الـ repository لأن الـ Rules
+      // مبتقدرش تعمل query.
+      allow delete: if isAdmin(c) && resource.data.status == 'cancelled';
     }
 
         // ------------------------------------------------------------------

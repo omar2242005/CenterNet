@@ -83,6 +83,23 @@ class FakeGroupsRepository implements GroupsRepository {
   }
 
   @override
+  Future<Group> unarchiveGroup(Group group) async {
+    calls.add('unarchive:${group.id}');
+    _maybeFailWrite();
+    final updated = makeGroup(group.id, group.name, teacherId: group.teacherId);
+    final i = groups.indexWhere((g) => g.id == group.id);
+    if (i >= 0) groups[i] = updated;
+    return updated;
+  }
+
+  @override
+  Future<void> deleteGroup(Group group) async {
+    calls.add('delete:${group.id}');
+    _maybeFailWrite();
+    groups.removeWhere((g) => g.id == group.id);
+  }
+
+  @override
   Future<Group> archiveGroup(Group group) async {
     calls.add('archive:${group.id}');
     _maybeFailWrite();

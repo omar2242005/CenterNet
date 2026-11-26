@@ -160,6 +160,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountTypeStaff => 'معلم أو مساعد';
 
   @override
+  String get accountTypeTeacher => 'معلم';
+
+  @override
+  String get accountTypeAssistant => 'مساعد';
+
+  @override
   String get accountTypeGuardian => 'ولي أمر';
 
   @override
@@ -257,13 +263,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get centerLateInvalid => 'المدة لازم تكون من 0 إلى 180 دقيقة';
 
   @override
-  String get staffInviteTitle => 'إضافة موظف';
+  String get staffInviteTeacherTitle => 'إضافة معلم';
 
   @override
-  String get staffInviteName => 'اسم الموظف';
+  String get staffInviteAssistantTitle => 'إضافة مساعد';
 
   @override
-  String get staffInviteRole => 'الدور';
+  String get staffInviteTeacherName => 'اسم المعلم';
+
+  @override
+  String get staffInviteAssistantName => 'اسم المساعد';
 
   @override
   String get staffRoleTeacher => 'معلم';
@@ -346,6 +355,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffJoinContinue => 'متابعة';
 
   @override
+  String get staffJoinCheckButton => 'متابعة';
+
+  @override
+  String get staffJoinConfirmTitle => 'راجع بيانات الدعوة';
+
+  @override
+  String staffJoinConfirmBody(String role) {
+    return 'الكود ده هيضيفك للسنتر بصفة $role.';
+  }
+
+  @override
+  String get staffJoinConfirmNote =>
+      'هيظهر اسم السنتر بعد ما تنضم. لو الدور مش اللي المفروض يوصلك، اطلب كود تاني من مدير السنتر.';
+
+  @override
+  String get staffJoinConfirmButton => 'تأكيد الانضمام';
+
+  @override
+  String get staffJoinChangeCode => 'تعديل الكود';
+
+  @override
   String get staffListTitle => 'الموظفون';
 
   @override
@@ -364,26 +394,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffMenuTooltip => 'خيارات الموظف';
 
   @override
-  String staffActionChangeRoleTo(String role) {
-    return 'تغيير الدور إلى $role';
-  }
-
-  @override
   String get staffActionDisable => 'تعطيل';
 
   @override
   String get staffActionEnable => 'تفعيل';
-
-  @override
-  String get staffChangeRoleTitle => 'تغيير دور الموظف';
-
-  @override
-  String staffChangeRoleMessage(String name, String role) {
-    return 'هل تريد تغيير دور $name إلى $role؟';
-  }
-
-  @override
-  String get staffChangeRoleConfirm => 'تغيير';
 
   @override
   String get staffDisableTitle => 'تعطيل الموظف';
@@ -632,6 +646,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeAdminTitle => 'رئيسية الأدمن';
 
   @override
+  String get adminNavHome => 'الرئيسية';
+
+  @override
+  String get adminHomeTitle => 'إدارة السنتر';
+
+  @override
+  String adminGreeting(String name) {
+    return 'أهلاً، $name';
+  }
+
+  @override
+  String get adminShortcuts => 'الاختصارات';
+
+  @override
   String get homeTeacherTitle => 'رئيسية المعلم';
 
   @override
@@ -751,6 +779,224 @@ class AppLocalizationsAr extends AppLocalizations {
   String groupAbsencesBadge(int count) {
     return 'غياب $count';
   }
+
+  @override
+  String get groupsListTitle => 'المجموعات';
+
+  @override
+  String get groupsEmpty => 'لا توجد مجموعات بعد';
+
+  @override
+  String get groupsNoResults => 'لا توجد مجموعة مطابقة للبحث';
+
+  @override
+  String get groupsSearchHint => 'ابحث بالاسم أو المادة أو الصف';
+
+  @override
+  String get groupsShowArchived => 'عرض المؤرشفة';
+
+  @override
+  String get groupsHideArchived => 'إخفاء المؤرشفة';
+
+  @override
+  String get groupArchivedBadge => 'مؤرشفة';
+
+  @override
+  String get groupArchiveAction => 'أرشفة';
+
+  @override
+  String get groupArchiveTitle => 'أرشفة المجموعة؟';
+
+  @override
+  String groupArchiveMessage(String name) {
+    return 'سيتم إخفاء $name من القوائم، ولن تُحذف بياناتها أو حصصها. هل تريد المتابعة؟';
+  }
+
+  @override
+  String get groupArchiveConfirm => 'أرشفة';
+
+  @override
+  String get groupsAddTitle => 'إضافة مجموعة';
+
+  @override
+  String get groupEditTitle => 'تعديل المجموعة';
+
+  @override
+  String get groupFieldName => 'اسم المجموعة';
+
+  @override
+  String get groupFieldSubject => 'المادة (اختياري)';
+
+  @override
+  String get groupFieldGrade => 'الصف (اختياري)';
+
+  @override
+  String get groupFieldRoom => 'القاعة (اختياري)';
+
+  @override
+  String get groupFieldTeacher => 'المعلم';
+
+  @override
+  String get groupFieldAssistants => 'المساعدون (اختياري)';
+
+  @override
+  String get groupFieldCapacity => 'السعة القصوى (اختياري)';
+
+  @override
+  String get groupFieldFee => 'السعر الشهري بالجنيه (اختياري)';
+
+  @override
+  String get groupSlotsTitle => 'المواعيد الأسبوعية';
+
+  @override
+  String get groupSlotDay => 'اليوم';
+
+  @override
+  String get groupSlotDuration => 'المدة بالدقائق';
+
+  @override
+  String get groupAddSlot => 'إضافة ميعاد';
+
+  @override
+  String get groupSlotRemove => 'حذف الميعاد';
+
+  @override
+  String get groupNoTeachers =>
+      'لا يوجد معلمون نشطون. أضفهم من شاشة الفريق أولًا.';
+
+  @override
+  String get groupInvalidCapacity => 'اكتب رقمًا صحيحًا (1 أو أكثر)';
+
+  @override
+  String get groupInvalidFee => 'اكتب سعرًا صحيحًا (0 أو أكثر)';
+
+  @override
+  String get groupInvalidDuration => 'المدة لازم تكون من 1 لـ 480 دقيقة';
+
+  @override
+  String get groupStudentsMenu => 'تسجيل الطلاب';
+
+  @override
+  String groupEnrolledCount(int count) {
+    return '$count طالب مسجّل';
+  }
+
+  @override
+  String get groupFullBadge => 'مكتملة العدد';
+
+  @override
+  String get groupStudentsSearchHint => 'ابحث بالاسم أو الرقم';
+
+  @override
+  String get groupStudentsEmpty => 'لا يوجد طلاب لعرضهم';
+
+  @override
+  String get groupSessionsMenu => 'الحصص';
+
+  @override
+  String get sessionsGenerateButton => 'إنشاء حصص الأسابيع الجاية';
+
+  @override
+  String sessionsGenerateResult(int created, int skipped) {
+    return 'اتكتبت $created حصة جديدة ($skipped موجودة بالفعل)';
+  }
+
+  @override
+  String get sessionsEmpty =>
+      'لا توجد حصص قادمة. أنشئ حصص الأسابيع الجاية من الزر بالأعلى.';
+
+  @override
+  String get sessionScheduledBadge => 'مجدولة';
+
+  @override
+  String get sessionCancelledBadge => 'ملغاة';
+
+  @override
+  String get sessionCancelAction => 'إلغاء الحصة';
+
+  @override
+  String get sessionCancelTitle => 'إلغاء الحصة؟';
+
+  @override
+  String sessionCancelMessage(String date) {
+    return 'حصة يوم $date هتتلغي ولن تُعاد تلقائيًا. هل تريد المتابعة؟';
+  }
+
+  @override
+  String get sessionDeleteAction => 'مسح الحصة نهائيًا';
+
+  @override
+  String get sessionDeleteTitle => 'مسح الحصة نهائيًا؟';
+
+  @override
+  String sessionDeleteMessage(String date) {
+    return 'حصة يوم $date الملغاة هتتمسح من التطبيق ومن قاعدة البيانات ومش هترجع. هل تريد المتابعة؟';
+  }
+
+  @override
+  String get sessionDeleteConfirm => 'مسح نهائيًا';
+
+  @override
+  String get sessionDeleted => 'تم مسح الحصة.';
+
+  @override
+  String get sessionCancelConfirm => 'إلغاء الحصة';
+
+  @override
+  String get myAccountTitle => 'حسابي';
+
+  @override
+  String get myAccountName => 'الاسم';
+
+  @override
+  String get myAccountEmail => 'البريد الإلكتروني';
+
+  @override
+  String get myAccountPhone => 'الموبايل';
+
+  @override
+  String get myAccountType => 'نوع الحساب';
+
+  @override
+  String get myAccountLoadError => 'تعذر تحميل بيانات الحساب';
+
+  @override
+  String get accountDeleteAction => 'حذف الحساب نهائيًا';
+
+  @override
+  String get accountDeleteTitle => 'حذف الحساب نهائيًا';
+
+  @override
+  String get accountDeleteMessage =>
+      'هيتحذف حسابك وبياناته نهائيًا ومش هينفع ترجع. اكتب كلمة السر للتأكيد.';
+
+  @override
+  String get accountDeleteConfirm => 'حذف نهائي';
+
+  @override
+  String get accountDeleteFailed => 'تعذر حذف الحساب. حاول مرة أخرى.';
+
+  @override
+  String groupRoomConflict(String group, String day, String start, String end) {
+    return 'القاعة دي محجوزة لمجموعة «$group» يوم $day من $start لـ $end';
+  }
+
+  @override
+  String get groupUnarchiveAction => 'استرجاع';
+
+  @override
+  String get groupDeleteAction => 'حذف نهائي';
+
+  @override
+  String get groupDeleteTitle => 'حذف نهائي للمجموعة؟';
+
+  @override
+  String groupDeleteMessage(String name) {
+    return '«$name» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص (مجدولة أو ملغية) ولا طلاب مسجلين — الأرشفة أأمن.';
+  }
+
+  @override
+  String get groupDeleteConfirm => 'حذف نهائي';
 
   @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
@@ -946,7 +1192,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appName => 'CenterNet';
 
   @override
-  String get assistantHomeTitle => 'الرئيسية';
+  String get assistantHomeTitle => 'لوحة المساعد';
 
   @override
   String assistantGreeting(String name) {

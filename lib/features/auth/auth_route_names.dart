@@ -9,4 +9,7 @@ abstract final class AuthRoutes {
   /// نقطة الدخول بعد أي تسجيل دخول: شاشة بتحدد الدور وتوجّه للرئيسية
   /// المناسبة (feature الـ home).
   static const String signedIn = '/signed-in';
+
+  /// شاشة "حسابي" — لكل مستخدم مسجّل (مش محتاجة صلاحية دور).
+  static const String myAccount = '/my-account';
 }

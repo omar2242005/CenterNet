@@ -31,6 +31,23 @@ void main() {
     });
   });
 
+  group('formatMinutesOfDay', () {
+    test('12 ساعة بدون الاعتماد على توقيت الجهاز', () {
+      expect(formatMinutesOfDay(l10n, 0), '12:00 ص');
+      expect(formatMinutesOfDay(l10n, 5), '12:05 ص');
+      expect(formatMinutesOfDay(l10n, 540), '9:00 ص');
+      expect(formatMinutesOfDay(l10n, 720), '12:00 م');
+      expect(formatMinutesOfDay(l10n, 780), '1:00 م');
+      expect(formatMinutesOfDay(l10n, 840), '2:00 م');
+      expect(formatMinutesOfDay(l10n, 1020), '5:00 م');
+      expect(formatMinutesOfDay(l10n, 1439), '11:59 م');
+    });
+
+    test('نهاية بعد منتصف الليل بتلف حوالين 24 ساعة', () {
+      expect(formatMinutesOfDay(l10n, 1440 + 30), '12:30 ص');
+    });
+  });
+
   group('formatMoney', () {
     test('450 ج.م = 45000 قرش', () {
       expect(formatMoney(l10n, 45000), '450 ج.م');

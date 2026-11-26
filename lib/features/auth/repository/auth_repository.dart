@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../../core/errors/error_mapper.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/firestore_paths.dart';
+import '../../linking/models/student_link.dart';
 import '../models/account_type.dart';
 import '../models/app_user.dart';
 
@@ -114,4 +115,90 @@ class AuthRepository {
   }
 
   Future<void> signOut() => ErrorMapper.guard(() => _auth.signOut());
+
+  /// حذف الحساب الحالي نهائيًا (بيانات + حساب Auth).
+  ///
+  /// الترتيب: منع الأدمن (السنتر ملوش حذف فهيتيتّم) ثم إعادة تحقق بكلمة السر
+  /// ثم فك الربط النشط (عشان العدّادات) ثم مسح العضوية ومستند المستخدم
+  /// ثم مسح حساب Auth نفسه. تاريخ الحضور والحصص بيفضل لأنه تابع للطالب.
+  Future<void> deleteAccount({required String password}) {
+    return ErrorMapper.guard(() async {
+      final user = _auth.currentUser;
+      final email = user?.email;
+      if (user == null || email == null) throw const Failure.permission();
+      final uid = user.uid;
+
+      final userRef = _db.doc(FirestorePaths.user(uid));
+      final userSnap = await userRef.get();
+      final centerId = userSnap.data()?['centerId'];
+
+      DocumentReference<Map<String, dynamic>>? memberRef;
+      if (centerId is String) {
+        final ref = _db.doc(FirestorePaths.member(centerId, uid));
+        final m = await ref.get();
+        if (m.exists) {
+          if (m.data()?['role'] == 'admin') {
+            throw const Failure.validation(
+              'مينفعش تحذف حساب أدمن سنتر شغال. السنتر هيفضل من غير أدمن.',
+            );
+          }
+          memberRef = ref;
+        }
+      }
+
+      try {
+        await user.reauthenticateWithCredential(
+          EmailAuthProvider.credential(email: email, password: password),
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'wrong-password' ||
+            e.code == 'invalid-credential' ||
+            e.code == 'invalid-login-credentials') {
+          throw const Failure.validation('كلمة السر غير صحيحة.');
+        }
+        rethrow;
+      }
+
+      if (centerId is String) {
+        final snap = await _db
+            .collection(FirestorePaths.studentLinks(centerId))
+            .where('uid', isEqualTo: uid)
+            .get(const GetOptions(source: Source.server));
+        for (final doc in snap.docs) {
+          final StudentLink link;
+          try {
+            link = StudentLink.fromMap(doc.id, doc.data());
+          } on FormatException {
+            continue;
+          }
+          if (!link.isActive) continue;
+          final batch = _db.batch();
+          batch.update(doc.reference, StudentLink.toUnlinkMap());
+          batch.set(
+            _db.doc(FirestorePaths.linkedUser(centerId, uid)),
+            <String, dynamic>{
+              'count': FieldValue.increment(-1),
+              'sid': link.studentId,
+            },
+            SetOptions(merge: true),
+          );
+          if (link.kind == LinkKind.guardian) {
+            batch.set(
+              _db.doc(FirestorePaths.guardianCount(centerId, link.studentId)),
+              <String, dynamic>{'count': FieldValue.increment(-1)},
+              SetOptions(merge: true),
+            );
+          }
+          await batch.commit();
+        }
+      }
+
+      final del = _db.batch();
+      if (memberRef != null) del.delete(memberRef);
+      del.delete(userRef);
+      await del.commit();
+
+      await user.delete();
+    });
+  }
 }

@@ -67,7 +67,7 @@ void main() {
       );
     });
 
-    test('الأدمن مش قابل للتعديل ومالوش دور بديل', () {
+    test('الأدمن مش قابل للتعديل', () {
       const admin = StaffMember(
         uid: 'a',
         name: 'مدير',
@@ -76,10 +76,9 @@ void main() {
       );
       expect(admin.isAdmin, isTrue);
       expect(admin.editable, isFalse);
-      expect(admin.otherRole, isNull);
     });
 
-    test('المعلم والمساعد قابلين للتعديل ودورهم البديل العكس', () {
+    test('المعلم والمساعد قابلين للتعديل (الدور ثابت)', () {
       const teacher = StaffMember(
         uid: 't',
         name: 'سارة',
@@ -93,8 +92,7 @@ void main() {
         active: true,
       );
       expect(teacher.editable, isTrue);
-      expect(teacher.otherRole, StaffInviteRole.assistant);
-      expect(assistant.otherRole, StaffInviteRole.teacher);
+      expect(assistant.editable, isTrue);
     });
 
     test('copyWith بيغيّر الدور والتفعيل بس', () {
@@ -104,8 +102,10 @@ void main() {
         role: StaffMemberRole.teacher,
         active: true,
       );
-      final changed =
-          m.copyWith(role: StaffMemberRole.assistant, active: false);
+      final changed = m.copyWith(
+        role: StaffMemberRole.assistant,
+        active: false,
+      );
       expect(changed.uid, 't');
       expect(changed.name, 'سارة');
       expect(changed.role, StaffMemberRole.assistant);

@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/errors/failure.dart';
 import '../../../core/state/view_state.dart';
-import '../../linking/models/invite_code.dart';
 import '../models/staff_member.dart';
 import '../repository/staff_repository.dart';
 
@@ -31,8 +30,9 @@ class StaffListState {
     return StaffListState(
       view: view,
       busyUid: clearBusy ? null : (busyUid ?? this.busyUid),
-      actionFailure:
-          clearFailure ? null : (actionFailure ?? this.actionFailure),
+      actionFailure: clearFailure
+          ? null
+          : (actionFailure ?? this.actionFailure),
     );
   }
 }
@@ -56,32 +56,13 @@ class StaffListCubit extends Cubit<StaffListState> {
     }
   }
 
-  /// تبديل دور موظف (معلم ↔ مساعد).
-  Future<void> changeRole(StaffMember member, StaffInviteRole role) {
-    if (member.role == StaffMemberRole.fromInvite(role)) {
-      return Future<void>.value();
-    }
-    return _apply(
-      member,
-      (centerId) => _repo.changeRole(
-        centerId: centerId,
-        uid: member.uid,
-        role: role,
-      ),
-      member.copyWith(role: StaffMemberRole.fromInvite(role)),
-    );
-  }
-
   /// تعطيل أو إعادة تفعيل موظف.
   Future<void> setActive(StaffMember member, bool active) {
     if (member.active == active) return Future<void>.value();
     return _apply(
       member,
-      (centerId) => _repo.setActive(
-        centerId: centerId,
-        uid: member.uid,
-        active: active,
-      ),
+      (centerId) =>
+          _repo.setActive(centerId: centerId, uid: member.uid, active: active),
       member.copyWith(active: active),
     );
   }

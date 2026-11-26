@@ -66,6 +66,7 @@ class _CreateCenterViewState extends State<_CreateCenterView> {
       builder: (context, state) {
         return AuthPage(
           title: l10n.centerCreateTitle,
+          showSignOut: true,
           child: Form(
             key: _formKey,
             child: Column(

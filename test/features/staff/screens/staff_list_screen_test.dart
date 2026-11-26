@@ -137,19 +137,16 @@ void main() {
     expect(find.text(arL10n.staffStatusDisabled), findsNothing);
   });
 
-  testWidgets('تغيير الدور بتأكيد: معلم يبقى مساعد', (tester) async {
+  testWidgets('مفيش تغيير دور في القائمة: التعطيل/التفعيل بس', (tester) async {
     await openScreen(tester);
 
     await openSaraMenu(tester);
-    await tapText(
-      tester,
-      arL10n.staffActionChangeRoleTo(arL10n.staffRoleAssistant),
-    );
-    await tapDialogConfirm(tester, arL10n.staffChangeRoleConfirm);
 
-    expect(repo.calls.last, 'role:c1:t1:assistant');
-    expect(find.text(arL10n.staffRoleTeacher), findsNothing);
-    expect(find.text(arL10n.staffRoleAssistant), findsNWidgets(2));
+    expect(find.text(arL10n.staffActionDisable), findsOneWidget);
+    expect(find.textContaining('تغيير الدور'), findsNothing);
+    // سارة لسه معلمة ومفيش كتابة اتعملت.
+    expect(find.text(arL10n.staffRoleTeacher), findsOneWidget);
+    expect(repo.calls.where((c) => c.startsWith('role:')), isEmpty);
   });
 
   testWidgets('فشل الكتابة: رسالة خطأ والقائمة زي ما هي', (tester) async {

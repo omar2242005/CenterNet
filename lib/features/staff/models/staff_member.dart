@@ -21,9 +21,9 @@ enum StaffMemberRole {
 
   /// نفس الدور بس من نوع دور الدعوة (معلم / مساعد).
   static StaffMemberRole fromInvite(StaffInviteRole role) => switch (role) {
-        StaffInviteRole.teacher => StaffMemberRole.teacher,
-        StaffInviteRole.assistant => StaffMemberRole.assistant,
-      };
+    StaffInviteRole.teacher => StaffMemberRole.teacher,
+    StaffInviteRole.assistant => StaffMemberRole.assistant,
+  };
 }
 
 /// مستند `centers/{c}/members/{uid}` للعرض في قائمة الموظفين.
@@ -44,13 +44,6 @@ class StaffMember {
 
   /// الأدمن مش بيتعدّل من التطبيق.
   bool get editable => !isAdmin;
-
-  /// الدور اللي ينفع نبدّل له (معلم ↔ مساعد). null للأدمن.
-  StaffInviteRole? get otherRole => switch (role) {
-        StaffMemberRole.teacher => StaffInviteRole.assistant,
-        StaffMemberRole.assistant => StaffInviteRole.teacher,
-        StaffMemberRole.admin => null,
-      };
 
   factory StaffMember.fromMap(String uid, Map<String, dynamic> map) {
     final name = map['name'];

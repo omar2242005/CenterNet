@@ -11,6 +11,7 @@ import '../features/linking/link_route_names.dart';
 import '../features/staff/staff_route_names.dart';
 import '../features/student_area/child_route_names.dart';
 import '../features/students/student_route_names.dart';
+import '../features/groups/group_route_names.dart';
 import 'di.dart';
 import 'router.dart';
 import 'session_role.dart';
@@ -32,7 +33,8 @@ final Map<String, Set<HomeDestination>> _exactAccess = {
   CenterRoutes.create: {HomeDestination.createCenter},
   CenterRoutes.settings: _admin,
   StaffRoutes.list: _admin,
-  StaffRoutes.invite: _admin,
+  StaffRoutes.inviteTeacher: _admin,
+  StaffRoutes.inviteAssistant: _admin,
   StaffRoutes.join: {HomeDestination.joinCenter},
   // matchedLocation دايمًا بشرطة مائلة في الأول.
   '/${AssistantRouteNames.scan}': {
@@ -49,6 +51,7 @@ final Map<String, Set<HomeDestination>> _exactAccess = {
 /// المسار نفسه وكل اللي تحته (`/students` و`/students/new` ...).
 final Map<String, Set<HomeDestination>> _prefixAccess = {
   StudentRoutes.list: _admin,
+  GroupRoutes.list: _admin,
 };
 
 Set<HomeDestination>? _rolesFor(String location) {

@@ -21,21 +21,27 @@ import '../models/staff_invite_issued.dart';
 import '../models/staff_role_text.dart';
 import '../repository/staff_repository.dart';
 
-/// شاشة "إضافة موظف" (للأدمن): الاسم + الدور ← كود دعوة يتبعت واتساب أو يتنسخ.
+/// شاشة "إضافة معلم" أو "إضافة مساعد" (للأدمن): الاسم ← كود دعوة يتبعت واتساب
+/// أو يتنسخ. الدور ثابت من المسار ومفيش اختيار دور: كل دور له شاشة دعوة
+/// منفصلة.
 class StaffInviteScreen extends StatelessWidget {
-  const StaffInviteScreen({super.key});
+  const StaffInviteScreen({required this.role, super.key});
+
+  final StaffInviteRole role;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => StaffInviteCubit(sl<StaffRepository>()),
-      child: const _StaffInviteView(),
+      child: _StaffInviteView(role: role),
     );
   }
 }
 
 class _StaffInviteView extends StatefulWidget {
-  const _StaffInviteView();
+  const _StaffInviteView({required this.role});
+
+  final StaffInviteRole role;
 
   @override
   State<_StaffInviteView> createState() => _StaffInviteViewState();
@@ -45,7 +51,7 @@ class _StaffInviteViewState extends State<_StaffInviteView> {
   final _formKey = GlobalKey<FormState>();
   final _name = TextEditingController();
   final _phone = TextEditingController();
-  StaffInviteRole _role = StaffInviteRole.teacher;
+  StaffInviteRole get _role => widget.role;
 
   @override
   void dispose() {
@@ -62,7 +68,6 @@ class _StaffInviteViewState extends State<_StaffInviteView> {
   void _addAnother() {
     _name.clear();
     _phone.clear();
-    setState(() => _role = StaffInviteRole.teacher);
     context.read<StaffInviteCubit>().reset();
   }
 
@@ -98,7 +103,9 @@ class _StaffInviteViewState extends State<_StaffInviteView> {
       builder: (context, state) {
         final issued = state.issued;
         return AuthPage(
-          title: l10n.staffInviteTitle,
+          title: _role == StaffInviteRole.teacher
+              ? l10n.staffInviteTeacherTitle
+              : l10n.staffInviteAssistantTitle,
           child: (state.status == StaffInviteStatus.success && issued != null)
               ? _buildResult(context, l10n, issued)
               : _buildForm(context, l10n, state),
@@ -119,29 +126,12 @@ class _StaffInviteViewState extends State<_StaffInviteView> {
         children: [
           AppTextField(
             controller: _name,
-            label: l10n.staffInviteName,
+            label: _role == StaffInviteRole.teacher
+                ? l10n.staffInviteTeacherName
+                : l10n.staffInviteAssistantName,
             textInputAction: TextInputAction.next,
             enabled: !state.isSubmitting,
             validator: (v) => Validators.name(v ?? '')?.message(l10n),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            l10n.staffInviteRole,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          SegmentedButton<StaffInviteRole>(
-            segments: [
-              for (final r in StaffInviteRole.values)
-                ButtonSegment<StaffInviteRole>(
-                  value: r,
-                  label: Text(r.label(l10n)),
-                ),
-            ],
-            selected: <StaffInviteRole>{_role},
-            onSelectionChanged: state.isSubmitting
-                ? null
-                : (selection) => setState(() => _role = selection.first),
           ),
           const SizedBox(height: AppSpacing.md),
           AppTextField(
@@ -203,8 +193,9 @@ class _StaffInviteViewState extends State<_StaffInviteView> {
               Text(
                 l10n.staffInviteCodeLabel,
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: AppColors.textSecondary),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
               const SizedBox(height: AppSpacing.xs),
               SelectableText(
@@ -218,12 +209,11 @@ class _StaffInviteViewState extends State<_StaffInviteView> {
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                l10n.staffInviteValidUntil(
-                  formatDate(l10n, invite.expiresAt),
-                ),
+                l10n.staffInviteValidUntil(formatDate(l10n, invite.expiresAt)),
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: AppColors.textSecondary),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -232,8 +222,9 @@ class _StaffInviteViewState extends State<_StaffInviteView> {
         Text(
           l10n.staffInviteNote,
           textAlign: TextAlign.center,
-          style: theme.textTheme.bodyMedium
-              ?.copyWith(color: AppColors.textSecondary),
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         const SizedBox(height: AppSpacing.lg),
         AppButton(

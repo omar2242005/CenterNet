@@ -13,7 +13,8 @@ import '../models/groups_roster.dart';
 /// وإنشاء وتعديل وأرشفة (الأدمن)، وتسجيل الطلاب فيها.
 ///
 /// * الـ Rules هي الحكم. لو المستخدم مش أدمن الكتابة بتترفض → [Failure.permission].
-/// * مفيش حذف نهائي: الأرشفة بدل الحذف.
+/// * الحذف النهائي (أدمن) مسموح لأي مجموعة (نشطة أو مؤرشفة) بشرط إنها فاضية:
+///   ملهاش حصص (مجدولة أو ملغية) ولا طلاب مسجلين. الأرشفة بديل أأمن.
 /// * الإنشاء Transaction عشان يفشل فورًا لو أوفلاين (set عادي كان هيتحفظ
 ///   محليًا ويتكرر لو الأدمن ضغط تاني).
 class GroupsRepository {
@@ -124,6 +125,48 @@ class GroupsRepository {
       final ref = _groupRef(group);
       await ref.update(Group.toArchiveMap()).timeout(timeout);
       return _reload(ref);
+    });
+  }
+
+  /// بيرجّع مجموعة مؤرشفة لنشطة.
+  Future<Group> unarchiveGroup(Group group) {
+    return ErrorMapper.guard(() async {
+      _requireUid();
+      final ref = _groupRef(group);
+      await ref.update(Group.toUnarchiveMap()).timeout(timeout);
+      return _reload(ref);
+    });
+  }
+
+  /// حذف نهائي لمجموعة **فاضية**: مالهاش حصص (أي حالة) ولا طلاب مسجلين.
+  /// بيرفض برسالة عربية لو ليها حصص أو طلاب. مفيش حذف متتالي للحضور.
+  /// المجموعة مستند واحد من غير subcollections، فالحذف نضيف.
+  Future<void> deleteGroup(Group group) {
+    return ErrorMapper.guard(() async {
+      _requireUid();
+      final sessions = await _db
+          .collection(FirestorePaths.sessions(group.centerId))
+          .where('groupId', isEqualTo: group.id)
+          .limit(1)
+          .get()
+          .timeout(timeout);
+      if (sessions.docs.isNotEmpty) {
+        throw const Failure.validation(
+          'لا يمكن حذف المجموعة لأن لها حصصًا (مجدولة أو ملغية). احذف الحصص الملغية من شاشة الحصص، وألغِ ثم احذف المجدولة، وبعدها احذف المجموعة. ولو حصص فيها حضور اتسجل، اعمل أرشفة بدل الحذف.',
+        );
+      }
+      final students = await _db
+          .collection(FirestorePaths.students(group.centerId))
+          .where('groupIds', arrayContains: group.id)
+          .limit(1)
+          .get()
+          .timeout(timeout);
+      if (students.docs.isNotEmpty) {
+        throw const Failure.validation(
+          'لا يمكن حذف المجموعة لأن بها طلابًا مسجلين. ألغِ تسجيلهم من شاشة تسجيل الطلاب أولًا.',
+        );
+      }
+      await _groupRef(group).delete().timeout(timeout);
     });
   }
 
