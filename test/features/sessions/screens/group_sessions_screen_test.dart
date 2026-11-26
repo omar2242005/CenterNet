@@ -4,7 +4,6 @@ import 'package:center_net/features/groups/models/group.dart';
 import 'package:center_net/features/sessions/models/session.dart';
 import 'package:center_net/features/sessions/repository/sessions_repository.dart';
 import 'package:center_net/features/sessions/screens/group_sessions_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
