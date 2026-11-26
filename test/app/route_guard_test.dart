@@ -158,7 +158,7 @@ void main() {
     });
 
     test('مسار مش في الجدول بيعدّي (عشان باقي الفريق)', () {
-      expect(g('/groups', role: HomeDestination.teacher), isNull);
+      expect(g('/grades/exams', role: HomeDestination.teacher), isNull);
       expect(g('/my-account', role: HomeDestination.student), isNull);
     });
 

@@ -1383,6 +1383,72 @@ abstract class AppLocalizations {
   /// **'غياب {count}'**
   String groupAbsencesBadge(int count);
 
+  /// No description provided for @groupsListTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المجموعات'**
+  String get groupsListTitle;
+
+  /// No description provided for @groupsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مجموعات بعد'**
+  String get groupsEmpty;
+
+  /// No description provided for @groupsNoResults.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مجموعة مطابقة للبحث'**
+  String get groupsNoResults;
+
+  /// No description provided for @groupsSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث بالاسم أو المادة أو الصف'**
+  String get groupsSearchHint;
+
+  /// No description provided for @groupsShowArchived.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض المؤرشفة'**
+  String get groupsShowArchived;
+
+  /// No description provided for @groupsHideArchived.
+  ///
+  /// In ar, this message translates to:
+  /// **'إخفاء المؤرشفة'**
+  String get groupsHideArchived;
+
+  /// No description provided for @groupArchivedBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'مؤرشفة'**
+  String get groupArchivedBadge;
+
+  /// No description provided for @groupArchiveAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرشفة'**
+  String get groupArchiveAction;
+
+  /// No description provided for @groupArchiveTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرشفة المجموعة؟'**
+  String get groupArchiveTitle;
+
+  /// No description provided for @groupArchiveMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم إخفاء {name} من القوائم، ولن تُحذف بياناتها أو حصصها. هل تريد المتابعة؟'**
+  String groupArchiveMessage(String name);
+
+  /// No description provided for @groupArchiveConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرشفة'**
+  String get groupArchiveConfirm;
+
   /// No description provided for @linkEnterTitle.
   ///
   /// In ar, this message translates to:

@@ -753,6 +753,41 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get groupsListTitle => 'المجموعات';
+
+  @override
+  String get groupsEmpty => 'لا توجد مجموعات بعد';
+
+  @override
+  String get groupsNoResults => 'لا توجد مجموعة مطابقة للبحث';
+
+  @override
+  String get groupsSearchHint => 'ابحث بالاسم أو المادة أو الصف';
+
+  @override
+  String get groupsShowArchived => 'عرض المؤرشفة';
+
+  @override
+  String get groupsHideArchived => 'إخفاء المؤرشفة';
+
+  @override
+  String get groupArchivedBadge => 'مؤرشفة';
+
+  @override
+  String get groupArchiveAction => 'أرشفة';
+
+  @override
+  String get groupArchiveTitle => 'أرشفة المجموعة؟';
+
+  @override
+  String groupArchiveMessage(String name) {
+    return 'سيتم إخفاء $name من القوائم، ولن تُحذف بياناتها أو حصصها. هل تريد المتابعة؟';
+  }
+
+  @override
+  String get groupArchiveConfirm => 'أرشفة';
+
+  @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override

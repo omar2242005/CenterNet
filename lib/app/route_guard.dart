@@ -11,6 +11,7 @@ import '../features/linking/link_route_names.dart';
 import '../features/staff/staff_route_names.dart';
 import '../features/student_area/child_route_names.dart';
 import '../features/students/student_route_names.dart';
+import '../features/groups/group_route_names.dart';
 import 'di.dart';
 import 'router.dart';
 import 'session_role.dart';
@@ -49,6 +50,7 @@ final Map<String, Set<HomeDestination>> _exactAccess = {
 /// المسار نفسه وكل اللي تحته (`/students` و`/students/new` ...).
 final Map<String, Set<HomeDestination>> _prefixAccess = {
   StudentRoutes.list: _admin,
+  GroupRoutes.list: _admin,
 };
 
 Set<HomeDestination>? _rolesFor(String location) {

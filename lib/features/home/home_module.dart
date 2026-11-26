@@ -10,6 +10,7 @@ import '../auth/auth_route_names.dart';
 import '../guardian/screens/guardian_home_screen.dart';
 import '../student_area/screens/student_home_screen.dart';
 import '../centers/center_route_names.dart';
+import '../groups/group_route_names.dart';
 import '../staff/staff_route_names.dart';
 import '../students/student_route_names.dart';
 import 'home_route_names.dart';
@@ -42,6 +43,7 @@ final List<RouteBase> homeRoutes = <RouteBase>[
         title: l10n.homeAdminTitle,
         actions: [
           (label: l10n.studentsListTitle, route: StudentRoutes.list),
+          (label: l10n.groupsListTitle, route: GroupRoutes.list),
           (label: l10n.staffListTitle, route: StaffRoutes.list),
           (label: l10n.staffInviteTitle, route: StaffRoutes.invite),
           (label: l10n.centerSettingsTitle, route: CenterRoutes.settings),

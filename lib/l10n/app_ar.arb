@@ -473,6 +473,24 @@
       }
     }
   },
+  "groupsListTitle": "المجموعات",
+  "groupsEmpty": "لا توجد مجموعات بعد",
+  "groupsNoResults": "لا توجد مجموعة مطابقة للبحث",
+  "groupsSearchHint": "ابحث بالاسم أو المادة أو الصف",
+  "groupsShowArchived": "عرض المؤرشفة",
+  "groupsHideArchived": "إخفاء المؤرشفة",
+  "groupArchivedBadge": "مؤرشفة",
+  "groupArchiveAction": "أرشفة",
+  "groupArchiveTitle": "أرشفة المجموعة؟",
+  "groupArchiveMessage": "سيتم إخفاء {name} من القوائم، ولن تُحذف بياناتها أو حصصها. هل تريد المتابعة؟",
+  "@groupArchiveMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "groupArchiveConfirm": "أرشفة",
   "linkEnterTitle": "ربط الحساب بالطالب",
   "linkStudentIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.",
   "linkGuardianIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.",
