@@ -94,6 +94,21 @@ void main() {
     final bar = tester.widget<NavigationBar>(find.byType(NavigationBar));
     expect(bar.destinations.length, 4);
     expect(bar.selectedIndex, 0);
+    // عنوان الشريط العلوي معبّر، وتبويب التنقل فضل "الرئيسية".
+    expect(
+      find.descendant(
+        of: find.byType(AppBar),
+        matching: find.text('إدارة السنتر'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byType(NavigationBar),
+        matching: find.text('الرئيسية'),
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('تبويب الطلاب بيودّي لقائمة الطلاب', (tester) async {

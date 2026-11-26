@@ -403,6 +403,7 @@
   },
   "homeAdminTitle": "رئيسية الأدمن",
   "adminNavHome": "الرئيسية",
+  "adminHomeTitle": "إدارة السنتر",
   "adminGreeting": "أهلاً، {name}",
   "@adminGreeting": {
     "placeholders": {
@@ -741,7 +742,7 @@
   },
   "guardianChooseChild": "اختر الطالب",
   "appName": "CenterNet",
-  "assistantHomeTitle": "الرئيسية",
+  "assistantHomeTitle": "لوحة المساعد",
   "assistantGreeting": "أهلاً، {name}",
   "@assistantGreeting": {
     "placeholders": {

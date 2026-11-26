@@ -63,7 +63,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
     return AdminShell(
       current: AdminTab.home,
-      title: l10n.adminNavHome,
+      title: l10n.adminHomeTitle,
       body: FutureBuilder<({String? name, String? center})>(
         future: _future,
         builder: (context, snap) {
