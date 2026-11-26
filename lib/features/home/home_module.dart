@@ -9,6 +9,7 @@ import '../assistant/screens/assistant_home_screen.dart';
 import '../auth/auth_route_names.dart';
 import '../guardian/screens/guardian_home_screen.dart';
 import '../student_area/screens/student_home_screen.dart';
+import '../teacher/teacher_route_names.dart';
 import 'home_route_names.dart';
 import 'repository/role_repository.dart';
 import 'screens/blocked_account_screen.dart';
@@ -39,7 +40,15 @@ final List<RouteBase> homeRoutes = <RouteBase>[
   GoRoute(
     path: HomeRoutes.teacher,
     builder: (context, state) =>
-        RoleHomeScreen(title: AppLocalizations.of(context).homeTeacherTitle),
+        RoleHomeScreen(
+          title: AppLocalizations.of(context).homeTeacherTitle,
+          actions: [
+            (
+              label: AppLocalizations.of(context).myGroupsTitle,
+              route: TeacherRoutes.groups,
+            ),
+          ],
+        ),
   ),
   GoRoute(
     path: HomeRoutes.assistant,
