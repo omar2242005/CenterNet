@@ -581,7 +581,7 @@
   "groupUnarchiveAction": "استرجاع",
   "groupDeleteAction": "حذف نهائي",
   "groupDeleteTitle": "حذف نهائي للمجموعة؟",
-  "groupDeleteMessage": "«{name}» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص ولا طلاب مسجلين — الأرشفة أأمن.",
+  "groupDeleteMessage": "«{name}» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص (مجدولة أو ملغية) ولا طلاب مسجلين — الأرشفة أأمن.",
   "@groupDeleteMessage": {
     "placeholders": {
       "name": {

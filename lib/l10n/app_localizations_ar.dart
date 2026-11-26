@@ -965,7 +965,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String groupDeleteMessage(String name) {
-    return '«$name» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص ولا طلاب مسجلين — الأرشفة أأمن.';
+    return '«$name» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص (مجدولة أو ملغية) ولا طلاب مسجلين — الأرشفة أأمن.';
   }
 
   @override

@@ -1782,7 +1782,7 @@ abstract class AppLocalizations {
   /// No description provided for @groupDeleteMessage.
   ///
   /// In ar, this message translates to:
-  /// **'«{name}» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص ولا طلاب مسجلين — الأرشفة أأمن.'**
+  /// **'«{name}» هتتحذف نهائيًا ومش هينفع ترجع. الحذف ممكن بس لمجموعة ملهاش حصص (مجدولة أو ملغية) ولا طلاب مسجلين — الأرشفة أأمن.'**
   String groupDeleteMessage(String name);
 
   /// No description provided for @groupDeleteConfirm.
