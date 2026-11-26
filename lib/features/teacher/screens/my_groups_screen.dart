@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/di.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/async_view.dart';
 import '../../../l10n/app_localizations.dart';
@@ -38,27 +39,53 @@ class _MyGroupsView extends StatelessWidget {
     return TeacherShell(
       current: TeacherTab.groups,
       title: l10n.myGroupsTitle,
-      body: BlocBuilder<GroupsListCubit, GroupsListState>(
-        builder: (context, state) {
-          return AsyncView<List<Group>>(
-            state: state.view,
-            onRetry: context.read<GroupsListCubit>().load,
-            emptyMessage: l10n.myGroupsEmpty,
-            emptyIcon: Icons.groups_outlined,
-            builder: (context, groups) => ListView.separated(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              itemCount: groups.length,
-              separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
-              itemBuilder: (context, index) => _GroupTile(
-                group: groups[index],
-                onTap: () => context.push(
-                  TeacherRoutes.groupDetails,
-                  extra: groups[index],
-                ),
-              ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.md,
+              AppSpacing.md,
+              AppSpacing.md,
+              0,
             ),
-          );
-        },
+            child: AppButton(
+              label: l10n.teacherGroupsAdd,
+              onPressed: () async {
+                final created = await context.push<Group>(
+                  TeacherRoutes.groupCreate,
+                );
+                if (created != null && context.mounted) {
+                  context.read<GroupsListCubit>().load();
+                }
+              },
+            ),
+          ),
+          Expanded(
+            child: BlocBuilder<GroupsListCubit, GroupsListState>(
+              builder: (context, state) {
+                return AsyncView<List<Group>>(
+                  state: state.view,
+                  onRetry: context.read<GroupsListCubit>().load,
+                  emptyMessage: l10n.myGroupsEmpty,
+                  emptyIcon: Icons.groups_outlined,
+                  builder: (context, groups) => ListView.separated(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    itemCount: groups.length,
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(height: AppSpacing.sm),
+                    itemBuilder: (context, index) => _GroupTile(
+                      group: groups[index],
+                      onTap: () => context.push(
+                        TeacherRoutes.groupDetails,
+                        extra: groups[index],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

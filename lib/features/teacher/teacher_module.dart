@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../groups/models/group.dart';
+import '../groups/screens/group_form_screen.dart';
 import '../groups/repository/groups_repository.dart';
 import '../students/repository/students_repository.dart';
 import '../grades/repositories/exams_repository.dart';
@@ -57,6 +58,14 @@ final List<RouteBase> teacherRoutes = <RouteBase>[
   GoRoute(
     path: TeacherRoutes.groups,
     builder: (context, state) => const MyGroupsScreen(),
+  ),
+  GoRoute(
+    path: TeacherRoutes.groupCreate,
+    builder: (context, state) {
+      final uid = GetIt.I<FirebaseAuth>().currentUser?.uid;
+      if (uid == null) return const Scaffold(body: SizedBox.shrink());
+      return GroupFormScreen(fixedTeacherId: uid);
+    },
   ),
   GoRoute(
     path: TeacherRoutes.groupDetails,

@@ -1,6 +1,7 @@
 /// مسارات شاشات المعلم. الشاشتين بياخدوا البيانات من extra.
 abstract final class TeacherRoutes {
   static const String groups = '/teacher/groups';
+  static const String groupCreate = '/teacher/groups/new';
   static const String groupDetails = '/teacher/group'; // extra: Group
   static const String exams = '/teacher/exams';
   static const String examCreate = '/teacher/exams/new';
