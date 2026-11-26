@@ -458,6 +458,7 @@
   "scoreSave": "حفظ",
     "myGroupsTitle": "مجموعاتي",
   "myGroupsEmpty": "لا توجد مجموعات مسندة إليك",
+  "teacherGroupsAdd": "إنشاء مجموعة جديدة",
   "groupExamsButton": "الامتحانات والدرجات",
   "groupNoStudents": "لا يوجد طلاب في المجموعة",
   "groupStudentsSummary": "{students} طالب · {sessions} حصة سابقة",

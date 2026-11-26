@@ -765,6 +765,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get myGroupsEmpty => 'لا توجد مجموعات مسندة إليك';
 
   @override
+  String get teacherGroupsAdd => 'إنشاء مجموعة جديدة';
+
+  @override
   String get groupExamsButton => 'الامتحانات والدرجات';
 
   @override

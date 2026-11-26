@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../app/di.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../grades/grade_route_names.dart';
 import '../../groups/models/group.dart';
 import '../../students/models/student.dart';
 import '../../students/repository/students_repository.dart';
@@ -50,17 +47,6 @@ class _GroupDetailsView extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: AppButton(
-                    label: l10n.groupExamsButton,
-                    icon: Icons.quiz_outlined,
-                    onPressed: () => context.push(
-                      GradeRoutes.exams,
-                      extra: state.group,
-                    ),
-                  ),
-                ),
                 if (!state.loading && state.failure == null)
                   Padding(
                     padding: const EdgeInsets.symmetric(

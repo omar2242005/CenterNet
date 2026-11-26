@@ -1413,6 +1413,12 @@ abstract class AppLocalizations {
   /// **'لا توجد مجموعات مسندة إليك'**
   String get myGroupsEmpty;
 
+  /// No description provided for @teacherGroupsAdd.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء مجموعة جديدة'**
+  String get teacherGroupsAdd;
+
   /// No description provided for @groupExamsButton.
   ///
   /// In ar, this message translates to:

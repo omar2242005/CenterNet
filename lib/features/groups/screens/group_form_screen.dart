@@ -26,15 +26,18 @@ import '../repository/groups_repository.dart';
 const int maxAssistantsPerGroup = 6;
 
 class GroupFormScreen extends StatelessWidget {
-  const GroupFormScreen({super.key, this.editing});
+  const GroupFormScreen({super.key, this.editing, this.fixedTeacherId});
 
   final Group? editing;
+
+  /// لو متحدد (المعلم بينشئ مجموعته): المعلم ثابت ومنتقي المعلم مخفي.
+  final String? fixedTeacherId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => GroupFormCubit(sl<GroupsRepository>(), editing: editing),
-      child: _GroupFormView(editing: editing),
+      child: _GroupFormView(editing: editing, fixedTeacherId: fixedTeacherId),
     );
   }
 }
@@ -70,9 +73,10 @@ class _SlotDraft {
 }
 
 class _GroupFormView extends StatefulWidget {
-  const _GroupFormView({this.editing});
+  const _GroupFormView({this.editing, this.fixedTeacherId});
 
   final Group? editing;
+  final String? fixedTeacherId;
 
   @override
   State<_GroupFormView> createState() => _GroupFormViewState();
@@ -97,7 +101,7 @@ class _GroupFormViewState extends State<_GroupFormView> {
         : '',
   );
 
-  late String? _teacherId = widget.editing?.teacherId;
+  late String? _teacherId = widget.fixedTeacherId ?? widget.editing?.teacherId;
   late final Set<String> _assistantIds = <String>{
     ...widget.editing?.assistantIds ?? const <String>[],
   };
@@ -399,7 +403,7 @@ class _GroupFormViewState extends State<_GroupFormView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (teachers.isEmpty)
+        if (widget.fixedTeacherId == null && teachers.isEmpty)
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: Text(
@@ -408,6 +412,7 @@ class _GroupFormViewState extends State<_GroupFormView> {
                   ?.copyWith(color: AppColors.error),
             ),
           ),
+        if (widget.fixedTeacherId == null)
         DropdownButtonFormField<String>(
           initialValue: teacherValue,
           decoration: InputDecoration(labelText: l10n.groupFieldTeacher),
@@ -421,7 +426,8 @@ class _GroupFormViewState extends State<_GroupFormView> {
               value == null ? l10n.validationRequired : null,
         ),
         if (assistants.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.md),
+          if (widget.fixedTeacherId == null)
+            const SizedBox(height: AppSpacing.md),
           Text(
             l10n.groupFieldAssistants,
             style: theme.textTheme.bodyMedium
