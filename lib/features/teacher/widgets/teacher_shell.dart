@@ -9,12 +9,10 @@ import '../../home/home_route_names.dart';
 import '../teacher_route_names.dart';
 
 /// تبويبات المعلم في شريط التنقل السفلي.
-/// "الامتحانات" مش تبويب: شاشة الامتحانات محتاجة مجموعة، فبتتفتح من تفاصيل
-/// المجموعة (زر "الامتحانات والدرجات").
-enum TeacherTab { home, groups, account }
+enum TeacherTab { home, groups, exams, account }
 
 /// الهيكل المشترك لشاشات المعلم: AppBar + Drawer (فيه تسجيل الخروج) +
-/// شريط تنقل سفلي (رئيسية / مجموعاتي / حسابي).
+/// شريط تنقل سفلي (رئيسية / مجموعاتي / الامتحانات / حسابي).
 class TeacherShell extends StatelessWidget {
   const TeacherShell({
     super.key,
@@ -48,6 +46,11 @@ class TeacherShell extends StatelessWidget {
           label: l10n.myGroupsTitle,
         ),
         AppShellDestination(
+          icon: Icons.school_outlined,
+          selectedIcon: Icons.school,
+          label: l10n.teacherNavExams,
+        ),
+        AppShellDestination(
           icon: Icons.person_outline,
           selectedIcon: Icons.person,
           label: l10n.myAccountTitle,
@@ -63,6 +66,11 @@ class TeacherShell extends StatelessWidget {
           icon: Icons.groups_outlined,
           label: l10n.myGroupsTitle,
           onTap: () => _go(context, TeacherTab.groups),
+        ),
+        AppShellDrawerItem(
+          icon: Icons.school_outlined,
+          label: l10n.teacherNavExams,
+          onTap: () => _go(context, TeacherTab.exams),
         ),
         AppShellDrawerItem(
           icon: Icons.person_outline,
@@ -91,8 +99,11 @@ class TeacherShell extends StatelessWidget {
 
   void _go(BuildContext context, TeacherTab tab) {
     if (current == tab) return;
-    context.go(
-      tab == TeacherTab.home ? HomeRoutes.teacher : TeacherRoutes.groups,
-    );
+    context.go(switch (tab) {
+      TeacherTab.home => HomeRoutes.teacher,
+      TeacherTab.groups => TeacherRoutes.groups,
+      TeacherTab.exams => TeacherRoutes.exams,
+      TeacherTab.account => AuthRoutes.myAccount,
+    });
   }
 }

@@ -867,5 +867,77 @@
   "teacherNoNextSession": "مفيش حصص قادمة في جدولك دلوقتي.",
   "teacherToday": "اليوم",
   "teacherTomorrow": "غدًا",
-  "teacherViewMyGroups": "عرض مجموعاتي"
+  "teacherViewMyGroups": "عرض مجموعاتي",
+  "teacherNavExams": "الامتحانات",
+  "teacherExamsTitle": "قائمة الاختبارات",
+  "teacherExamsOfSubject": "اختبارات {subject}",
+  "@teacherExamsOfSubject": {
+    "placeholders": {
+      "subject": { "type": "String" }
+    }
+  },
+  "teacherExamsOther": "اختبارات أخرى",
+  "teacherExamsEmpty": "لسه مفيش اختبارات. أنشئ أول اختبار.",
+  "teacherExamCreateButton": "إنشاء اختبار جديد",
+  "teacherExamStatusGraded": "تم الرصد",
+  "teacherExamStatusInProgress": "قيد الرصد",
+  "teacherExamStatusUpcoming": "قادم",
+  "teacherExamSummaryLine": "{recorded} من {total} درجة مسجلة · من {max}",
+  "@teacherExamSummaryLine": {
+    "placeholders": {
+      "recorded": { "type": "int" },
+      "total": { "type": "int" },
+      "max": { "type": "String" }
+    }
+  },
+  "teacherExamFormTitle": "إنشاء اختبار",
+  "teacherExamFieldName": "اسم الاختبار",
+  "teacherExamFieldGroup": "المجموعة",
+  "teacherExamFieldDate": "تاريخ الاختبار",
+  "teacherExamFieldStart": "وقت البداية",
+  "teacherExamGroupRequired": "اختر المجموعة",
+  "teacherExamNoGroups": "مفيش مجموعات نشطة تقدر تعمل فيها اختبار.",
+  "teacherExamDetailsTitle": "تفاصيل الاختبار",
+  "teacherExamAverage": "المتوسط",
+  "teacherExamRecordedCount": "تم رصد {done} من {total}",
+  "@teacherExamRecordedCount": {
+    "placeholders": {
+      "done": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "teacherExamStudentScores": "درجات الطلاب",
+  "teacherExamScoreRecorded": "تم رصد الدرجة",
+  "teacherExamNotRecorded": "لم تُرصد بعد",
+  "teacherExamRecordButton": "رصد الدرجات",
+  "teacherStudentNo": "رقم الطالب: {no}",
+  "@teacherStudentNo": {
+    "placeholders": {
+      "no": { "type": "String" }
+    }
+  },
+  "teacherScoresTitle": "رصد الدرجات",
+  "teacherScoresSearchHint": "الاسم أو رقم الطالب",
+  "teacherScoresSaveAll": "حفظ الدرجات",
+  "teacherScoresNote": "الخانة الفاضية لا تُحسب صفرًا. أي درجة أكبر من الدرجة النهائية تُرفض.",
+  "teacherScoresFinal": "الدرجة النهائية: {max}",
+  "@teacherScoresFinal": {
+    "placeholders": {
+      "max": { "type": "String" }
+    }
+  },
+  "teacherScoresSaved": "تم حفظ {count} درجة",
+  "@teacherScoresSaved": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "teacherScoresNothing": "مفيش درجات جديدة للحفظ",
+  "teacherScoresSomeFailed": "تعذر حفظ {count} درجة. راجع الخانات الحمراء.",
+  "@teacherScoresSomeFailed": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "teacherScoresNoMatch": "مفيش طالب بالاسم أو الرقم ده"
 }

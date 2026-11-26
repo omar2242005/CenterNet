@@ -2486,6 +2486,210 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'عرض مجموعاتي'**
   String get teacherViewMyGroups;
+
+  /// No description provided for @teacherNavExams.
+  ///
+  /// In ar, this message translates to:
+  /// **'الامتحانات'**
+  String get teacherNavExams;
+
+  /// No description provided for @teacherExamsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'قائمة الاختبارات'**
+  String get teacherExamsTitle;
+
+  /// No description provided for @teacherExamsOfSubject.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختبارات {subject}'**
+  String teacherExamsOfSubject(String subject);
+
+  /// No description provided for @teacherExamsOther.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختبارات أخرى'**
+  String get teacherExamsOther;
+
+  /// No description provided for @teacherExamsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لسه مفيش اختبارات. أنشئ أول اختبار.'**
+  String get teacherExamsEmpty;
+
+  /// No description provided for @teacherExamCreateButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء اختبار جديد'**
+  String get teacherExamCreateButton;
+
+  /// No description provided for @teacherExamStatusGraded.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الرصد'**
+  String get teacherExamStatusGraded;
+
+  /// No description provided for @teacherExamStatusInProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيد الرصد'**
+  String get teacherExamStatusInProgress;
+
+  /// No description provided for @teacherExamStatusUpcoming.
+  ///
+  /// In ar, this message translates to:
+  /// **'قادم'**
+  String get teacherExamStatusUpcoming;
+
+  /// No description provided for @teacherExamSummaryLine.
+  ///
+  /// In ar, this message translates to:
+  /// **'{recorded} من {total} درجة مسجلة · من {max}'**
+  String teacherExamSummaryLine(int recorded, int total, String max);
+
+  /// No description provided for @teacherExamFormTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء اختبار'**
+  String get teacherExamFormTitle;
+
+  /// No description provided for @teacherExamFieldName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم الاختبار'**
+  String get teacherExamFieldName;
+
+  /// No description provided for @teacherExamFieldGroup.
+  ///
+  /// In ar, this message translates to:
+  /// **'المجموعة'**
+  String get teacherExamFieldGroup;
+
+  /// No description provided for @teacherExamFieldDate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الاختبار'**
+  String get teacherExamFieldDate;
+
+  /// No description provided for @teacherExamFieldStart.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت البداية'**
+  String get teacherExamFieldStart;
+
+  /// No description provided for @teacherExamGroupRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر المجموعة'**
+  String get teacherExamGroupRequired;
+
+  /// No description provided for @teacherExamNoGroups.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش مجموعات نشطة تقدر تعمل فيها اختبار.'**
+  String get teacherExamNoGroups;
+
+  /// No description provided for @teacherExamDetailsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل الاختبار'**
+  String get teacherExamDetailsTitle;
+
+  /// No description provided for @teacherExamAverage.
+  ///
+  /// In ar, this message translates to:
+  /// **'المتوسط'**
+  String get teacherExamAverage;
+
+  /// No description provided for @teacherExamRecordedCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم رصد {done} من {total}'**
+  String teacherExamRecordedCount(int done, int total);
+
+  /// No description provided for @teacherExamStudentScores.
+  ///
+  /// In ar, this message translates to:
+  /// **'درجات الطلاب'**
+  String get teacherExamStudentScores;
+
+  /// No description provided for @teacherExamScoreRecorded.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم رصد الدرجة'**
+  String get teacherExamScoreRecorded;
+
+  /// No description provided for @teacherExamNotRecorded.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تُرصد بعد'**
+  String get teacherExamNotRecorded;
+
+  /// No description provided for @teacherExamRecordButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'رصد الدرجات'**
+  String get teacherExamRecordButton;
+
+  /// No description provided for @teacherStudentNo.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم الطالب: {no}'**
+  String teacherStudentNo(String no);
+
+  /// No description provided for @teacherScoresTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رصد الدرجات'**
+  String get teacherScoresTitle;
+
+  /// No description provided for @teacherScoresSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم أو رقم الطالب'**
+  String get teacherScoresSearchHint;
+
+  /// No description provided for @teacherScoresSaveAll.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ الدرجات'**
+  String get teacherScoresSaveAll;
+
+  /// No description provided for @teacherScoresNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخانة الفاضية لا تُحسب صفرًا. أي درجة أكبر من الدرجة النهائية تُرفض.'**
+  String get teacherScoresNote;
+
+  /// No description provided for @teacherScoresFinal.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدرجة النهائية: {max}'**
+  String teacherScoresFinal(String max);
+
+  /// No description provided for @teacherScoresSaved.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم حفظ {count} درجة'**
+  String teacherScoresSaved(int count);
+
+  /// No description provided for @teacherScoresNothing.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش درجات جديدة للحفظ'**
+  String get teacherScoresNothing;
+
+  /// No description provided for @teacherScoresSomeFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر حفظ {count} درجة. راجع الخانات الحمراء.'**
+  String teacherScoresSomeFailed(int count);
+
+  /// No description provided for @teacherScoresNoMatch.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش طالب بالاسم أو الرقم ده'**
+  String get teacherScoresNoMatch;
 }
 
 class _AppLocalizationsDelegate

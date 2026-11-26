@@ -1375,4 +1375,121 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get teacherViewMyGroups => 'عرض مجموعاتي';
+
+  @override
+  String get teacherNavExams => 'الامتحانات';
+
+  @override
+  String get teacherExamsTitle => 'قائمة الاختبارات';
+
+  @override
+  String teacherExamsOfSubject(String subject) {
+    return 'اختبارات $subject';
+  }
+
+  @override
+  String get teacherExamsOther => 'اختبارات أخرى';
+
+  @override
+  String get teacherExamsEmpty => 'لسه مفيش اختبارات. أنشئ أول اختبار.';
+
+  @override
+  String get teacherExamCreateButton => 'إنشاء اختبار جديد';
+
+  @override
+  String get teacherExamStatusGraded => 'تم الرصد';
+
+  @override
+  String get teacherExamStatusInProgress => 'قيد الرصد';
+
+  @override
+  String get teacherExamStatusUpcoming => 'قادم';
+
+  @override
+  String teacherExamSummaryLine(int recorded, int total, String max) {
+    return '$recorded من $total درجة مسجلة · من $max';
+  }
+
+  @override
+  String get teacherExamFormTitle => 'إنشاء اختبار';
+
+  @override
+  String get teacherExamFieldName => 'اسم الاختبار';
+
+  @override
+  String get teacherExamFieldGroup => 'المجموعة';
+
+  @override
+  String get teacherExamFieldDate => 'تاريخ الاختبار';
+
+  @override
+  String get teacherExamFieldStart => 'وقت البداية';
+
+  @override
+  String get teacherExamGroupRequired => 'اختر المجموعة';
+
+  @override
+  String get teacherExamNoGroups => 'مفيش مجموعات نشطة تقدر تعمل فيها اختبار.';
+
+  @override
+  String get teacherExamDetailsTitle => 'تفاصيل الاختبار';
+
+  @override
+  String get teacherExamAverage => 'المتوسط';
+
+  @override
+  String teacherExamRecordedCount(int done, int total) {
+    return 'تم رصد $done من $total';
+  }
+
+  @override
+  String get teacherExamStudentScores => 'درجات الطلاب';
+
+  @override
+  String get teacherExamScoreRecorded => 'تم رصد الدرجة';
+
+  @override
+  String get teacherExamNotRecorded => 'لم تُرصد بعد';
+
+  @override
+  String get teacherExamRecordButton => 'رصد الدرجات';
+
+  @override
+  String teacherStudentNo(String no) {
+    return 'رقم الطالب: $no';
+  }
+
+  @override
+  String get teacherScoresTitle => 'رصد الدرجات';
+
+  @override
+  String get teacherScoresSearchHint => 'الاسم أو رقم الطالب';
+
+  @override
+  String get teacherScoresSaveAll => 'حفظ الدرجات';
+
+  @override
+  String get teacherScoresNote =>
+      'الخانة الفاضية لا تُحسب صفرًا. أي درجة أكبر من الدرجة النهائية تُرفض.';
+
+  @override
+  String teacherScoresFinal(String max) {
+    return 'الدرجة النهائية: $max';
+  }
+
+  @override
+  String teacherScoresSaved(int count) {
+    return 'تم حفظ $count درجة';
+  }
+
+  @override
+  String get teacherScoresNothing => 'مفيش درجات جديدة للحفظ';
+
+  @override
+  String teacherScoresSomeFailed(int count) {
+    return 'تعذر حفظ $count درجة. راجع الخانات الحمراء.';
+  }
+
+  @override
+  String get teacherScoresNoMatch => 'مفيش طالب بالاسم أو الرقم ده';
 }
