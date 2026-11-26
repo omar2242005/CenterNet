@@ -522,6 +522,33 @@
   "groupFullBadge": "مكتملة العدد",
   "groupStudentsSearchHint": "ابحث بالاسم أو الرقم",
   "groupStudentsEmpty": "لا يوجد طلاب لعرضهم",
+  "groupSessionsMenu": "الحصص",
+  "sessionsGenerateButton": "إنشاء حصص الأسابيع الجاية",
+  "sessionsGenerateResult": "اتكتبت {created} حصة جديدة ({skipped} موجودة بالفعل)",
+  "@sessionsGenerateResult": {
+    "placeholders": {
+      "created": {
+        "type": "int"
+      },
+      "skipped": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionsEmpty": "لا توجد حصص قادمة. أنشئ حصص الأسابيع الجاية من الزر بالأعلى.",
+  "sessionScheduledBadge": "مجدولة",
+  "sessionCancelledBadge": "ملغاة",
+  "sessionCancelAction": "إلغاء الحصة",
+  "sessionCancelTitle": "إلغاء الحصة؟",
+  "sessionCancelMessage": "حصة يوم {date} هتتلغي ولن تُعاد تلقائيًا. هل تريد المتابعة؟",
+  "@sessionCancelMessage": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionCancelConfirm": "إلغاء الحصة",
   "linkEnterTitle": "ربط الحساب بالطالب",
   "linkStudentIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.",
   "linkGuardianIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.",

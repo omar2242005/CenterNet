@@ -1593,6 +1593,66 @@ abstract class AppLocalizations {
   /// **'لا يوجد طلاب لعرضهم'**
   String get groupStudentsEmpty;
 
+  /// No description provided for @groupSessionsMenu.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحصص'**
+  String get groupSessionsMenu;
+
+  /// No description provided for @sessionsGenerateButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء حصص الأسابيع الجاية'**
+  String get sessionsGenerateButton;
+
+  /// No description provided for @sessionsGenerateResult.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتكتبت {created} حصة جديدة ({skipped} موجودة بالفعل)'**
+  String sessionsGenerateResult(int created, int skipped);
+
+  /// No description provided for @sessionsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد حصص قادمة. أنشئ حصص الأسابيع الجاية من الزر بالأعلى.'**
+  String get sessionsEmpty;
+
+  /// No description provided for @sessionScheduledBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'مجدولة'**
+  String get sessionScheduledBadge;
+
+  /// No description provided for @sessionCancelledBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملغاة'**
+  String get sessionCancelledBadge;
+
+  /// No description provided for @sessionCancelAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الحصة'**
+  String get sessionCancelAction;
+
+  /// No description provided for @sessionCancelTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الحصة؟'**
+  String get sessionCancelTitle;
+
+  /// No description provided for @sessionCancelMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'حصة يوم {date} هتتلغي ولن تُعاد تلقائيًا. هل تريد المتابعة؟'**
+  String sessionCancelMessage(String date);
+
+  /// No description provided for @sessionCancelConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الحصة'**
+  String get sessionCancelConfirm;
+
   /// No description provided for @linkEnterTitle.
   ///
   /// In ar, this message translates to:

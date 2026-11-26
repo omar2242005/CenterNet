@@ -161,6 +161,10 @@ class _GroupsListViewState extends State<_GroupsListView> {
                               GroupRoutes.students,
                               extra: group,
                             ),
+                            onOpenSessions: () => _open(
+                              GroupRoutes.sessions,
+                              extra: group,
+                            ),
                             onArchive: group.isArchived
                                 ? null
                                 : () => _archive(group),
@@ -184,12 +188,14 @@ class _GroupTile extends StatelessWidget {
     required this.group,
     required this.onTap,
     required this.onOpenStudents,
+    required this.onOpenSessions,
     this.onArchive,
   });
 
   final Group group;
   final VoidCallback onTap;
   final VoidCallback onOpenStudents;
+  final VoidCallback onOpenSessions;
 
   /// null للمؤرشفة (مفيش إجراءات عليها من القائمة).
   final VoidCallback? onArchive;
@@ -259,12 +265,18 @@ class _GroupTile extends StatelessWidget {
                     onArchive?.call();
                   } else if (value == 'students') {
                     onOpenStudents();
+                  } else if (value == 'sessions') {
+                    onOpenSessions();
                   }
                 },
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     value: 'students',
                     child: Text(l10n.groupStudentsMenu),
+                  ),
+                  PopupMenuItem(
+                    value: 'sessions',
+                    child: Text(l10n.groupSessionsMenu),
                   ),
                   if (onArchive != null)
                     PopupMenuItem(

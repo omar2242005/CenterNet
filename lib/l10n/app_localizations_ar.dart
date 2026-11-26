@@ -863,6 +863,41 @@ class AppLocalizationsAr extends AppLocalizations {
   String get groupStudentsEmpty => 'لا يوجد طلاب لعرضهم';
 
   @override
+  String get groupSessionsMenu => 'الحصص';
+
+  @override
+  String get sessionsGenerateButton => 'إنشاء حصص الأسابيع الجاية';
+
+  @override
+  String sessionsGenerateResult(int created, int skipped) {
+    return 'اتكتبت $created حصة جديدة ($skipped موجودة بالفعل)';
+  }
+
+  @override
+  String get sessionsEmpty =>
+      'لا توجد حصص قادمة. أنشئ حصص الأسابيع الجاية من الزر بالأعلى.';
+
+  @override
+  String get sessionScheduledBadge => 'مجدولة';
+
+  @override
+  String get sessionCancelledBadge => 'ملغاة';
+
+  @override
+  String get sessionCancelAction => 'إلغاء الحصة';
+
+  @override
+  String get sessionCancelTitle => 'إلغاء الحصة؟';
+
+  @override
+  String sessionCancelMessage(String date) {
+    return 'حصة يوم $date هتتلغي ولن تُعاد تلقائيًا. هل تريد المتابعة؟';
+  }
+
+  @override
+  String get sessionCancelConfirm => 'إلغاء الحصة';
+
+  @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override
