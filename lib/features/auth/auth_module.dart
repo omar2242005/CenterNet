@@ -9,6 +9,7 @@ import 'repository/auth_repository.dart';
 import 'screens/account_type_screen.dart';
 import 'screens/forgot_password_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/my_account_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/verify_email_screen.dart';
 
@@ -44,5 +45,9 @@ final List<RouteBase> authRoutes = <RouteBase>[
   GoRoute(
     path: AuthRoutes.forgotPassword,
     builder: (context, state) => const ForgotPasswordScreen(),
+  ),
+  GoRoute(
+    path: AuthRoutes.myAccount,
+    builder: (context, state) => const MyAccountScreen(),
   ),
 ];

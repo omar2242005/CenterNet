@@ -10,6 +10,10 @@ class FakeAuthRepository implements AuthRepository {
 
   Failure? failure;
   bool verified;
+
+  /// البروفايل اللي [loadProfile] بترجّعه.
+  AppUser? profile;
+
   final List<String> calls = <String>[];
 
   void _maybeFail() {
@@ -61,7 +65,11 @@ class FakeAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<AppUser?> loadProfile() async => null;
+  Future<AppUser?> loadProfile() async {
+    calls.add('profile');
+    _maybeFail();
+    return profile;
+  }
 
   @override
   Future<void> signOut() async {

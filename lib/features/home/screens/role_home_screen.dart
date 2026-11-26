@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/auth_route_names.dart';
 import '../../auth/screens/auth_page.dart';
 import '../../auth/sign_out_action.dart';
 
@@ -31,6 +32,13 @@ class RoleHomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (actions.isEmpty) Text(l10n.homeComingSoon),
+          AppButton(
+            label: l10n.myAccountTitle,
+            variant: AppButtonVariant.secondary,
+            icon: Icons.person_outline,
+            onPressed: () => context.push(AuthRoutes.myAccount),
+          ),
+          const SizedBox(height: AppSpacing.sm),
           for (final a in actions) ...[
             AppButton(
               label: a.label,

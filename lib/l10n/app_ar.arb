@@ -473,6 +473,88 @@
       }
     }
   },
+  "groupsListTitle": "المجموعات",
+  "groupsEmpty": "لا توجد مجموعات بعد",
+  "groupsNoResults": "لا توجد مجموعة مطابقة للبحث",
+  "groupsSearchHint": "ابحث بالاسم أو المادة أو الصف",
+  "groupsShowArchived": "عرض المؤرشفة",
+  "groupsHideArchived": "إخفاء المؤرشفة",
+  "groupArchivedBadge": "مؤرشفة",
+  "groupArchiveAction": "أرشفة",
+  "groupArchiveTitle": "أرشفة المجموعة؟",
+  "groupArchiveMessage": "سيتم إخفاء {name} من القوائم، ولن تُحذف بياناتها أو حصصها. هل تريد المتابعة؟",
+  "@groupArchiveMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "groupArchiveConfirm": "أرشفة",
+  "groupsAddTitle": "إضافة مجموعة",
+  "groupEditTitle": "تعديل المجموعة",
+  "groupFieldName": "اسم المجموعة",
+  "groupFieldSubject": "المادة (اختياري)",
+  "groupFieldGrade": "الصف (اختياري)",
+  "groupFieldRoom": "القاعة (اختياري)",
+  "groupFieldTeacher": "المعلم",
+  "groupFieldAssistants": "المساعدون (اختياري)",
+  "groupFieldCapacity": "السعة القصوى (اختياري)",
+  "groupFieldFee": "السعر الشهري بالجنيه (اختياري)",
+  "groupSlotsTitle": "المواعيد الأسبوعية",
+  "groupSlotDay": "اليوم",
+  "groupSlotDuration": "المدة بالدقائق",
+  "groupAddSlot": "إضافة ميعاد",
+  "groupSlotRemove": "حذف الميعاد",
+  "groupNoTeachers": "لا يوجد معلمون نشطون. أضفهم من شاشة الفريق أولًا.",
+  "groupInvalidCapacity": "اكتب رقمًا صحيحًا (1 أو أكثر)",
+  "groupInvalidFee": "اكتب سعرًا صحيحًا (0 أو أكثر)",
+  "groupInvalidDuration": "المدة لازم تكون من 1 لـ 480 دقيقة",
+  "groupStudentsMenu": "تسجيل الطلاب",
+  "groupEnrolledCount": "{count} طالب مسجّل",
+  "@groupEnrolledCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "groupFullBadge": "مكتملة العدد",
+  "groupStudentsSearchHint": "ابحث بالاسم أو الرقم",
+  "groupStudentsEmpty": "لا يوجد طلاب لعرضهم",
+  "groupSessionsMenu": "الحصص",
+  "sessionsGenerateButton": "إنشاء حصص الأسابيع الجاية",
+  "sessionsGenerateResult": "اتكتبت {created} حصة جديدة ({skipped} موجودة بالفعل)",
+  "@sessionsGenerateResult": {
+    "placeholders": {
+      "created": {
+        "type": "int"
+      },
+      "skipped": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionsEmpty": "لا توجد حصص قادمة. أنشئ حصص الأسابيع الجاية من الزر بالأعلى.",
+  "sessionScheduledBadge": "مجدولة",
+  "sessionCancelledBadge": "ملغاة",
+  "sessionCancelAction": "إلغاء الحصة",
+  "sessionCancelTitle": "إلغاء الحصة؟",
+  "sessionCancelMessage": "حصة يوم {date} هتتلغي ولن تُعاد تلقائيًا. هل تريد المتابعة؟",
+  "@sessionCancelMessage": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionCancelConfirm": "إلغاء الحصة",
+  "myAccountTitle": "حسابي",
+  "myAccountName": "الاسم",
+  "myAccountEmail": "البريد الإلكتروني",
+  "myAccountPhone": "الموبايل",
+  "myAccountType": "نوع الحساب",
+  "myAccountLoadError": "تعذر تحميل بيانات الحساب",
   "linkEnterTitle": "ربط الحساب بالطالب",
   "linkStudentIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تربط حسابك بملفك كطالب.",
   "linkGuardianIntro": "اكتب كود الربط اللي استلمته من السنتر عشان تتابع حضور ودرجات ابنك أو ابنتك.",

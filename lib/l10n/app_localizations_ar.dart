@@ -753,6 +753,169 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get groupsListTitle => 'المجموعات';
+
+  @override
+  String get groupsEmpty => 'لا توجد مجموعات بعد';
+
+  @override
+  String get groupsNoResults => 'لا توجد مجموعة مطابقة للبحث';
+
+  @override
+  String get groupsSearchHint => 'ابحث بالاسم أو المادة أو الصف';
+
+  @override
+  String get groupsShowArchived => 'عرض المؤرشفة';
+
+  @override
+  String get groupsHideArchived => 'إخفاء المؤرشفة';
+
+  @override
+  String get groupArchivedBadge => 'مؤرشفة';
+
+  @override
+  String get groupArchiveAction => 'أرشفة';
+
+  @override
+  String get groupArchiveTitle => 'أرشفة المجموعة؟';
+
+  @override
+  String groupArchiveMessage(String name) {
+    return 'سيتم إخفاء $name من القوائم، ولن تُحذف بياناتها أو حصصها. هل تريد المتابعة؟';
+  }
+
+  @override
+  String get groupArchiveConfirm => 'أرشفة';
+
+  @override
+  String get groupsAddTitle => 'إضافة مجموعة';
+
+  @override
+  String get groupEditTitle => 'تعديل المجموعة';
+
+  @override
+  String get groupFieldName => 'اسم المجموعة';
+
+  @override
+  String get groupFieldSubject => 'المادة (اختياري)';
+
+  @override
+  String get groupFieldGrade => 'الصف (اختياري)';
+
+  @override
+  String get groupFieldRoom => 'القاعة (اختياري)';
+
+  @override
+  String get groupFieldTeacher => 'المعلم';
+
+  @override
+  String get groupFieldAssistants => 'المساعدون (اختياري)';
+
+  @override
+  String get groupFieldCapacity => 'السعة القصوى (اختياري)';
+
+  @override
+  String get groupFieldFee => 'السعر الشهري بالجنيه (اختياري)';
+
+  @override
+  String get groupSlotsTitle => 'المواعيد الأسبوعية';
+
+  @override
+  String get groupSlotDay => 'اليوم';
+
+  @override
+  String get groupSlotDuration => 'المدة بالدقائق';
+
+  @override
+  String get groupAddSlot => 'إضافة ميعاد';
+
+  @override
+  String get groupSlotRemove => 'حذف الميعاد';
+
+  @override
+  String get groupNoTeachers =>
+      'لا يوجد معلمون نشطون. أضفهم من شاشة الفريق أولًا.';
+
+  @override
+  String get groupInvalidCapacity => 'اكتب رقمًا صحيحًا (1 أو أكثر)';
+
+  @override
+  String get groupInvalidFee => 'اكتب سعرًا صحيحًا (0 أو أكثر)';
+
+  @override
+  String get groupInvalidDuration => 'المدة لازم تكون من 1 لـ 480 دقيقة';
+
+  @override
+  String get groupStudentsMenu => 'تسجيل الطلاب';
+
+  @override
+  String groupEnrolledCount(int count) {
+    return '$count طالب مسجّل';
+  }
+
+  @override
+  String get groupFullBadge => 'مكتملة العدد';
+
+  @override
+  String get groupStudentsSearchHint => 'ابحث بالاسم أو الرقم';
+
+  @override
+  String get groupStudentsEmpty => 'لا يوجد طلاب لعرضهم';
+
+  @override
+  String get groupSessionsMenu => 'الحصص';
+
+  @override
+  String get sessionsGenerateButton => 'إنشاء حصص الأسابيع الجاية';
+
+  @override
+  String sessionsGenerateResult(int created, int skipped) {
+    return 'اتكتبت $created حصة جديدة ($skipped موجودة بالفعل)';
+  }
+
+  @override
+  String get sessionsEmpty =>
+      'لا توجد حصص قادمة. أنشئ حصص الأسابيع الجاية من الزر بالأعلى.';
+
+  @override
+  String get sessionScheduledBadge => 'مجدولة';
+
+  @override
+  String get sessionCancelledBadge => 'ملغاة';
+
+  @override
+  String get sessionCancelAction => 'إلغاء الحصة';
+
+  @override
+  String get sessionCancelTitle => 'إلغاء الحصة؟';
+
+  @override
+  String sessionCancelMessage(String date) {
+    return 'حصة يوم $date هتتلغي ولن تُعاد تلقائيًا. هل تريد المتابعة؟';
+  }
+
+  @override
+  String get sessionCancelConfirm => 'إلغاء الحصة';
+
+  @override
+  String get myAccountTitle => 'حسابي';
+
+  @override
+  String get myAccountName => 'الاسم';
+
+  @override
+  String get myAccountEmail => 'البريد الإلكتروني';
+
+  @override
+  String get myAccountPhone => 'الموبايل';
+
+  @override
+  String get myAccountType => 'نوع الحساب';
+
+  @override
+  String get myAccountLoadError => 'تعذر تحميل بيانات الحساب';
+
+  @override
   String get linkEnterTitle => 'ربط الحساب بالطالب';
 
   @override

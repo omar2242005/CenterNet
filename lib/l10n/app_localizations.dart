@@ -1383,6 +1383,312 @@ abstract class AppLocalizations {
   /// **'غياب {count}'**
   String groupAbsencesBadge(int count);
 
+  /// No description provided for @groupsListTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المجموعات'**
+  String get groupsListTitle;
+
+  /// No description provided for @groupsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مجموعات بعد'**
+  String get groupsEmpty;
+
+  /// No description provided for @groupsNoResults.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مجموعة مطابقة للبحث'**
+  String get groupsNoResults;
+
+  /// No description provided for @groupsSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث بالاسم أو المادة أو الصف'**
+  String get groupsSearchHint;
+
+  /// No description provided for @groupsShowArchived.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض المؤرشفة'**
+  String get groupsShowArchived;
+
+  /// No description provided for @groupsHideArchived.
+  ///
+  /// In ar, this message translates to:
+  /// **'إخفاء المؤرشفة'**
+  String get groupsHideArchived;
+
+  /// No description provided for @groupArchivedBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'مؤرشفة'**
+  String get groupArchivedBadge;
+
+  /// No description provided for @groupArchiveAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرشفة'**
+  String get groupArchiveAction;
+
+  /// No description provided for @groupArchiveTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرشفة المجموعة؟'**
+  String get groupArchiveTitle;
+
+  /// No description provided for @groupArchiveMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم إخفاء {name} من القوائم، ولن تُحذف بياناتها أو حصصها. هل تريد المتابعة؟'**
+  String groupArchiveMessage(String name);
+
+  /// No description provided for @groupArchiveConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرشفة'**
+  String get groupArchiveConfirm;
+
+  /// No description provided for @groupsAddTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة مجموعة'**
+  String get groupsAddTitle;
+
+  /// No description provided for @groupEditTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل المجموعة'**
+  String get groupEditTitle;
+
+  /// No description provided for @groupFieldName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم المجموعة'**
+  String get groupFieldName;
+
+  /// No description provided for @groupFieldSubject.
+  ///
+  /// In ar, this message translates to:
+  /// **'المادة (اختياري)'**
+  String get groupFieldSubject;
+
+  /// No description provided for @groupFieldGrade.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصف (اختياري)'**
+  String get groupFieldGrade;
+
+  /// No description provided for @groupFieldRoom.
+  ///
+  /// In ar, this message translates to:
+  /// **'القاعة (اختياري)'**
+  String get groupFieldRoom;
+
+  /// No description provided for @groupFieldTeacher.
+  ///
+  /// In ar, this message translates to:
+  /// **'المعلم'**
+  String get groupFieldTeacher;
+
+  /// No description provided for @groupFieldAssistants.
+  ///
+  /// In ar, this message translates to:
+  /// **'المساعدون (اختياري)'**
+  String get groupFieldAssistants;
+
+  /// No description provided for @groupFieldCapacity.
+  ///
+  /// In ar, this message translates to:
+  /// **'السعة القصوى (اختياري)'**
+  String get groupFieldCapacity;
+
+  /// No description provided for @groupFieldFee.
+  ///
+  /// In ar, this message translates to:
+  /// **'السعر الشهري بالجنيه (اختياري)'**
+  String get groupFieldFee;
+
+  /// No description provided for @groupSlotsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المواعيد الأسبوعية'**
+  String get groupSlotsTitle;
+
+  /// No description provided for @groupSlotDay.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get groupSlotDay;
+
+  /// No description provided for @groupSlotDuration.
+  ///
+  /// In ar, this message translates to:
+  /// **'المدة بالدقائق'**
+  String get groupSlotDuration;
+
+  /// No description provided for @groupAddSlot.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة ميعاد'**
+  String get groupAddSlot;
+
+  /// No description provided for @groupSlotRemove.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الميعاد'**
+  String get groupSlotRemove;
+
+  /// No description provided for @groupNoTeachers.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد معلمون نشطون. أضفهم من شاشة الفريق أولًا.'**
+  String get groupNoTeachers;
+
+  /// No description provided for @groupInvalidCapacity.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب رقمًا صحيحًا (1 أو أكثر)'**
+  String get groupInvalidCapacity;
+
+  /// No description provided for @groupInvalidFee.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب سعرًا صحيحًا (0 أو أكثر)'**
+  String get groupInvalidFee;
+
+  /// No description provided for @groupInvalidDuration.
+  ///
+  /// In ar, this message translates to:
+  /// **'المدة لازم تكون من 1 لـ 480 دقيقة'**
+  String get groupInvalidDuration;
+
+  /// No description provided for @groupStudentsMenu.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الطلاب'**
+  String get groupStudentsMenu;
+
+  /// No description provided for @groupEnrolledCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} طالب مسجّل'**
+  String groupEnrolledCount(int count);
+
+  /// No description provided for @groupFullBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكتملة العدد'**
+  String get groupFullBadge;
+
+  /// No description provided for @groupStudentsSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث بالاسم أو الرقم'**
+  String get groupStudentsSearchHint;
+
+  /// No description provided for @groupStudentsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد طلاب لعرضهم'**
+  String get groupStudentsEmpty;
+
+  /// No description provided for @groupSessionsMenu.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحصص'**
+  String get groupSessionsMenu;
+
+  /// No description provided for @sessionsGenerateButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء حصص الأسابيع الجاية'**
+  String get sessionsGenerateButton;
+
+  /// No description provided for @sessionsGenerateResult.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتكتبت {created} حصة جديدة ({skipped} موجودة بالفعل)'**
+  String sessionsGenerateResult(int created, int skipped);
+
+  /// No description provided for @sessionsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد حصص قادمة. أنشئ حصص الأسابيع الجاية من الزر بالأعلى.'**
+  String get sessionsEmpty;
+
+  /// No description provided for @sessionScheduledBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'مجدولة'**
+  String get sessionScheduledBadge;
+
+  /// No description provided for @sessionCancelledBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملغاة'**
+  String get sessionCancelledBadge;
+
+  /// No description provided for @sessionCancelAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الحصة'**
+  String get sessionCancelAction;
+
+  /// No description provided for @sessionCancelTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الحصة؟'**
+  String get sessionCancelTitle;
+
+  /// No description provided for @sessionCancelMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'حصة يوم {date} هتتلغي ولن تُعاد تلقائيًا. هل تريد المتابعة؟'**
+  String sessionCancelMessage(String date);
+
+  /// No description provided for @sessionCancelConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الحصة'**
+  String get sessionCancelConfirm;
+
+  /// No description provided for @myAccountTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسابي'**
+  String get myAccountTitle;
+
+  /// No description provided for @myAccountName.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم'**
+  String get myAccountName;
+
+  /// No description provided for @myAccountEmail.
+  ///
+  /// In ar, this message translates to:
+  /// **'البريد الإلكتروني'**
+  String get myAccountEmail;
+
+  /// No description provided for @myAccountPhone.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموبايل'**
+  String get myAccountPhone;
+
+  /// No description provided for @myAccountType.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع الحساب'**
+  String get myAccountType;
+
+  /// No description provided for @myAccountLoadError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل بيانات الحساب'**
+  String get myAccountLoadError;
+
   /// No description provided for @linkEnterTitle.
   ///
   /// In ar, this message translates to:
