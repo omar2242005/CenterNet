@@ -17,7 +17,7 @@ Future<void> pumpWithRouter(WidgetTester tester) {
     routes: [
       GoRoute(
         path: '/',
-        builder: (_, __) => const Scaffold(
+        builder: (_, _) => const Scaffold(
           body: AccountTypeScreen(
             draft: RegisterDraft(
               name: 'سارة',
@@ -28,7 +28,7 @@ Future<void> pumpWithRouter(WidgetTester tester) {
           ),
         ),
       ),
-      GoRoute(path: '/:any', builder: (_, __) => const Scaffold()),
+      GoRoute(path: '/:any', builder: (_, _) => const Scaffold()),
     ],
   );
   return tester.pumpWidget(
