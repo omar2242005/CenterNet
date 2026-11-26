@@ -402,6 +402,17 @@
     }
   },
   "homeAdminTitle": "رئيسية الأدمن",
+  "adminNavHome": "الرئيسية",
+  "adminHomeTitle": "إدارة السنتر",
+  "adminGreeting": "أهلاً، {name}",
+  "@adminGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminShortcuts": "الاختصارات",
   "homeTeacherTitle": "رئيسية المعلم",
   "homeAssistantTitle": "رئيسية المساعد",
   "homeStudentTitle": "رئيسية الطالب",
@@ -731,7 +742,7 @@
   },
   "guardianChooseChild": "اختر الطالب",
   "appName": "CenterNet",
-  "assistantHomeTitle": "الرئيسية",
+  "assistantHomeTitle": "لوحة المساعد",
   "assistantGreeting": "أهلاً، {name}",
   "@assistantGreeting": {
     "placeholders": {

@@ -1161,6 +1161,30 @@ abstract class AppLocalizations {
   /// **'رئيسية الأدمن'**
   String get homeAdminTitle;
 
+  /// No description provided for @adminNavHome.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرئيسية'**
+  String get adminNavHome;
+
+  /// No description provided for @adminHomeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إدارة السنتر'**
+  String get adminHomeTitle;
+
+  /// No description provided for @adminGreeting.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً، {name}'**
+  String adminGreeting(String name);
+
+  /// No description provided for @adminShortcuts.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاختصارات'**
+  String get adminShortcuts;
+
   /// No description provided for @homeTeacherTitle.
   ///
   /// In ar, this message translates to:
@@ -2076,7 +2100,7 @@ abstract class AppLocalizations {
   /// No description provided for @assistantHomeTitle.
   ///
   /// In ar, this message translates to:
-  /// **'الرئيسية'**
+  /// **'لوحة المساعد'**
   String get assistantHomeTitle;
 
   /// No description provided for @assistantGreeting.

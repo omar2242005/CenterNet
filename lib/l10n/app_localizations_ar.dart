@@ -632,6 +632,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeAdminTitle => 'رئيسية الأدمن';
 
   @override
+  String get adminNavHome => 'الرئيسية';
+
+  @override
+  String get adminHomeTitle => 'إدارة السنتر';
+
+  @override
+  String adminGreeting(String name) {
+    return 'أهلاً، $name';
+  }
+
+  @override
+  String get adminShortcuts => 'الاختصارات';
+
+  @override
   String get homeTeacherTitle => 'رئيسية المعلم';
 
   @override
@@ -1147,7 +1161,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appName => 'CenterNet';
 
   @override
-  String get assistantHomeTitle => 'الرئيسية';
+  String get assistantHomeTitle => 'لوحة المساعد';
 
   @override
   String assistantGreeting(String name) {
