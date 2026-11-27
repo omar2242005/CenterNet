@@ -10,6 +10,7 @@ import '../../auth/repository/auth_repository.dart';
 import '../../centers/center_route_names.dart';
 import '../../centers/repository/centers_repository.dart';
 import '../../groups/group_route_names.dart';
+import '../../linking/link_route_names.dart';
 import '../../staff/staff_route_names.dart';
 import '../../students/student_route_names.dart';
 import '../widgets/admin_shell.dart';
@@ -24,18 +25,21 @@ class AdminHomeScreen extends StatefulWidget {
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
-  late final Future<({String? name, String? center})> _future = _load();
+  late final Future<({String? name, String? center, String? code})> _future = _load();
 
-  Future<({String? name, String? center})> _load() async {
+  Future<({String? name, String? center, String? code})> _load() async {
     String? name;
     String? center;
+    String? code;
     try {
       name = (await sl<AuthRepository>().loadProfile())?.name;
     } catch (_) {}
     try {
-      center = (await sl<CentersRepository>().loadMyCenter())?.name;
+      final info = await sl<CentersRepository>().loadMyCenter();
+      center = info?.name;
+      code = info?.id;
     } catch (_) {}
-    return (name: name, center: center);
+    return (name: name, center: center, code: code);
   }
 
   @override
@@ -65,16 +69,23 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         CenterRoutes.settings,
         push: true,
       ),
+      _Shortcut(
+        Icons.link,
+        l10n.linkRequestsTitle,
+        LinkRoutes.requests,
+        push: true,
+      ),
     ];
 
     return AdminShell(
       current: AdminTab.home,
       title: l10n.adminHomeTitle,
-      body: FutureBuilder<({String? name, String? center})>(
+      body: FutureBuilder<({String? name, String? center, String? code})>(
         future: _future,
         builder: (context, snap) {
           final name = snap.data?.name;
           final center = snap.data?.center;
+          final code = snap.data?.code;
           return ListView(
             padding: AppSpacing.screenPadding,
             children: [
@@ -100,6 +111,14 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       ),
                     ),
                   ],
+                ),
+              ],
+              if (code != null) ...[
+                const SizedBox(height: AppSpacing.xs),
+                // الطالب/ولي الأمر محتاجينه في طلب الربط.
+                SelectableText(
+                  l10n.adminCenterCode(code),
+                  style: const TextStyle(color: AppColors.textSecondary),
                 ),
               ],
               const SizedBox(height: AppSpacing.lg),

@@ -1495,4 +1495,62 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get teacherScoresNoMatch => 'مفيش طالب بالاسم أو الرقم ده';
+
+  @override
+  String get linkRequestOpen => 'طلب الربط من السنتر';
+
+  @override
+  String get linkRequestTitle => 'طلب ربط';
+
+  @override
+  String get linkRequestIntro => 'أرسل طلبًا للسنتر برقم الطالب. بعد موافقة الأدمن تكمل الربط من هنا.';
+
+  @override
+  String get linkRequestCenterCode => 'كود السنتر (من الأدمن)';
+
+  @override
+  String get linkRequestStudentNo => 'رقم الطالب';
+
+  @override
+  String get linkRequestSend => 'إرسال الطلب';
+
+  @override
+  String get linkRequestPending => 'تم إرسال طلبك وبانتظار موافقة الأدمن.';
+
+  @override
+  String get linkRequestApproved => 'تمت الموافقة على طلبك. أكمل الربط الآن.';
+
+  @override
+  String get linkRequestRejected => 'تم رفض الطلب. تأكد من البيانات وحاول مرة أخرى.';
+
+  @override
+  String get linkRequestRefresh => 'تحديث الحالة';
+
+  @override
+  String get linkRequestComplete => 'إكمال الربط';
+
+  @override
+  String get linkRequestRetry => 'طلب جديد';
+
+  @override
+  String get linkRequestsTitle => 'طلبات الربط';
+
+  @override
+  String get linkRequestsEmpty => 'لا توجد طلبات معلقة';
+
+  @override
+  String get linkRequestApprove => 'موافقة';
+
+  @override
+  String get linkRequestReject => 'رفض';
+
+  @override
+  String linkRequestRelation(String relation) {
+    return 'الصلة: $relation';
+  }
+
+  @override
+  String adminCenterCode(String code) {
+    return 'كود السنتر: $code';
+  }
 }

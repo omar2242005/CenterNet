@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'link_route_names.dart';
 import 'repository/linking_repository.dart';
 import 'screens/link_code_screen.dart';
+import 'screens/link_request_screen.dart';
+import 'screens/link_requests_screen.dart';
 
 /// سطر الـ DI بتاع الـ feature.
 void registerLinking(GetIt g) {
@@ -20,5 +22,14 @@ final List<RouteBase> linkingRoutes = <RouteBase>[
     path: LinkRoutes.enter,
     builder: (context, state) =>
         LinkCodeScreen(kind: linkKindFromExtra(state.extra)),
+  ),
+  GoRoute(
+    path: LinkRoutes.request,
+    builder: (context, state) =>
+        LinkRequestScreen(kind: linkKindFromExtra(state.extra)),
+  ),
+  GoRoute(
+    path: LinkRoutes.requests,
+    builder: (context, state) => const LinkRequestsScreen(),
   ),
 ];

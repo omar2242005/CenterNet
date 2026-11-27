@@ -2696,6 +2696,113 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'مفيش طالب بالاسم أو الرقم ده'**
   String get teacherScoresNoMatch;
+  /// No description provided for @linkRequestOpen.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلب الربط من السنتر'**
+  String get linkRequestOpen;
+
+  /// No description provided for @linkRequestTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلب ربط'**
+  String get linkRequestTitle;
+
+  /// No description provided for @linkRequestIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرسل طلبًا للسنتر برقم الطالب. بعد موافقة الأدمن تكمل الربط من هنا.'**
+  String get linkRequestIntro;
+
+  /// No description provided for @linkRequestCenterCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود السنتر (من الأدمن)'**
+  String get linkRequestCenterCode;
+
+  /// No description provided for @linkRequestStudentNo.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم الطالب'**
+  String get linkRequestStudentNo;
+
+  /// No description provided for @linkRequestSend.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال الطلب'**
+  String get linkRequestSend;
+
+  /// No description provided for @linkRequestPending.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إرسال طلبك وبانتظار موافقة الأدمن.'**
+  String get linkRequestPending;
+
+  /// No description provided for @linkRequestApproved.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمت الموافقة على طلبك. أكمل الربط الآن.'**
+  String get linkRequestApproved;
+
+  /// No description provided for @linkRequestRejected.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم رفض الطلب. تأكد من البيانات وحاول مرة أخرى.'**
+  String get linkRequestRejected;
+
+  /// No description provided for @linkRequestRefresh.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحديث الحالة'**
+  String get linkRequestRefresh;
+
+  /// No description provided for @linkRequestComplete.
+  ///
+  /// In ar, this message translates to:
+  /// **'إكمال الربط'**
+  String get linkRequestComplete;
+
+  /// No description provided for @linkRequestRetry.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلب جديد'**
+  String get linkRequestRetry;
+
+  /// No description provided for @linkRequestsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلبات الربط'**
+  String get linkRequestsTitle;
+
+  /// No description provided for @linkRequestsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد طلبات معلقة'**
+  String get linkRequestsEmpty;
+
+  /// No description provided for @linkRequestApprove.
+  ///
+  /// In ar, this message translates to:
+  /// **'موافقة'**
+  String get linkRequestApprove;
+
+  /// No description provided for @linkRequestReject.
+  ///
+  /// In ar, this message translates to:
+  /// **'رفض'**
+  String get linkRequestReject;
+
+  /// No description provided for @linkRequestRelation.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصلة: {relation}'**
+  String linkRequestRelation(String relation);
+
+  /// No description provided for @adminCenterCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود السنتر: {code}'**
+  String adminCenterCode(String code);
 }
 
 class _AppLocalizationsDelegate
