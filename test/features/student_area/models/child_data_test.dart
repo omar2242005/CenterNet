@@ -2,6 +2,7 @@ import 'package:center_net/features/assistant/models/attendance.dart';
 import 'package:center_net/features/grades/models/exam.dart';
 import 'package:center_net/features/grades/models/score.dart';
 import 'package:center_net/features/groups/models/group.dart';
+import 'package:center_net/features/sessions/models/session.dart';
 import 'package:center_net/features/student_area/models/child_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -131,6 +132,63 @@ void main() {
       final data = buildResults([exam('e1', 20)], const <Score>[]);
       expect(data.average, isNull);
       expect(data.items.single.score, isNull);
+    });
+  });
+
+  group('الحصص بتواريخها', () {
+    Session sess(String id) {
+      return Session.fromMap(id, <String, dynamic>{
+        'centerId': 'c1',
+        'groupId': 'g1',
+        'startAt': DateTime(2026, 11, 1, 17),
+        'endAt': DateTime(2026, 11, 1, 18, 30),
+        'status': 'scheduled',
+        'createdBy': 'a1',
+      });
+    }
+
+    final groups = {'g1': makeGroup('g1', 'جبر', [])};
+    // 15 نوفمبر 2026 = الأحد، فأسبوعه بيبدأ السبت 14.
+    final now = DateTime(2026, 11, 15, 10);
+    final entries = buildSessionEntries(
+      [
+        sess('g1_20261128_1700'),
+        sess('g1_20261114_1700'),
+        sess('g1_20261121_1700'),
+      ],
+      groups,
+    );
+
+    test('weekStart بيرجع السبت', () {
+      expect(weekStart(now), DateTime(2026, 11, 14));
+    });
+
+    test('الترتيب بالوقت والفلتر بالأسبوع', () {
+      expect(entries.map((e) => e.when.day), [14, 21, 28]);
+      expect(filterByWeek(entries, WeekFilter.thisWeek, now).length, 1);
+      expect(filterByWeek(entries, WeekFilter.nextWeek, now).single.when.day, 21);
+      expect(filterByWeek(entries, WeekFilter.all, now).length, 3);
+    });
+
+    test('أقرب حصة لسه مخلصتش', () {
+      expect(nextSession(entries, now)?.when.day, 21);
+      expect(nextSession(entries, DateTime(2026, 12, 1)), isNull);
+    });
+
+    test('الحصة الفاتتة من غير حضور = غياب', () {
+      final past = buildSessionEntries(
+        [sess('g1_20261110_1700'), sess('g1_20261112_1700')],
+        groups,
+      );
+      final history = buildAttendanceHistory(
+        [att('g1_20261112_1700', 'present')],
+        {'g1': 'جبر'},
+        sessions: past,
+        now: now,
+      );
+      expect(history.absences.single.when.day, 10);
+      expect(history.total, 2);
+      expect(history.attended, 1);
     });
   });
 }
