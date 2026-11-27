@@ -2696,6 +2696,7 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'مفيش طالب بالاسم أو الرقم ده'**
   String get teacherScoresNoMatch;
+
   /// No description provided for @linkRequestOpen.
   ///
   /// In ar, this message translates to:
@@ -2803,6 +2804,7 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'كود السنتر: {code}'**
   String adminCenterCode(String code);
+
   /// No description provided for @childNavHome.
   ///
   /// In ar, this message translates to:
@@ -3018,6 +3020,120 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تعديل بيانات التواصل'**
   String get editContactAction;
+
+  /// No description provided for @paymentsSectionTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حساب الرسوم'**
+  String get paymentsSectionTitle;
+
+  /// No description provided for @paymentsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش دفعات مسجلة لسه.'**
+  String get paymentsEmpty;
+
+  /// No description provided for @paymentsRecord.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل دفعة'**
+  String get paymentsRecord;
+
+  /// No description provided for @paymentsGroupLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'المجموعة'**
+  String get paymentsGroupLabel;
+
+  /// No description provided for @paymentsMonthLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'الشهر'**
+  String get paymentsMonthLabel;
+
+  /// No description provided for @paymentsAmountLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'المبلغ'**
+  String get paymentsAmountLabel;
+
+  /// No description provided for @paymentsNoteLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظة (اختياري)'**
+  String get paymentsNoteLabel;
+
+  /// No description provided for @paymentsSave.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ الدفعة'**
+  String get paymentsSave;
+
+  /// No description provided for @paymentsInvalidAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار المجموعة واكتب مبلغ أكبر من صفر.'**
+  String get paymentsInvalidAmount;
+
+  /// No description provided for @paymentsStatusPaid.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدفوعة'**
+  String get paymentsStatusPaid;
+
+  /// No description provided for @paymentsStatusCancelled.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملغاة'**
+  String get paymentsStatusCancelled;
+
+  /// No description provided for @paymentsCancelAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء'**
+  String get paymentsCancelAction;
+
+  /// No description provided for @paymentsCancelTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الدفعة'**
+  String get paymentsCancelTitle;
+
+  /// No description provided for @paymentsCancelReasonLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'سبب الإلغاء'**
+  String get paymentsCancelReasonLabel;
+
+  /// No description provided for @paymentsCancelReasonRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'سبب الإلغاء مطلوب.'**
+  String get paymentsCancelReasonRequired;
+
+  /// No description provided for @paymentsCancelConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد الإلغاء'**
+  String get paymentsCancelConfirm;
+
+  /// No description provided for @paymentsBack.
+  ///
+  /// In ar, this message translates to:
+  /// **'رجوع'**
+  String get paymentsBack;
+
+  /// No description provided for @paymentsNoGroups.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطالب مش مسجل في أي مجموعة.'**
+  String get paymentsNoGroups;
+
+  /// No description provided for @paymentsCancelledReason.
+  ///
+  /// In ar, this message translates to:
+  /// **'السبب: {reason}'**
+  String paymentsCancelledReason(String reason);
 }
 
 class _AppLocalizationsDelegate

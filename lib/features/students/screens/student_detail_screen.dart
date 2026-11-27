@@ -13,6 +13,7 @@ import '../../../core/widgets/qr_card.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../linking/widgets/issue_link_code_section.dart';
+import '../../payments/widgets/student_payments_section.dart';
 import '../cubit/student_detail_cubit.dart';
 import '../models/student.dart';
 import '../repository/students_repository.dart';
@@ -69,9 +70,8 @@ class _StudentDetailView extends StatelessWidget {
         child: BlocConsumer<StudentDetailCubit, StudentDetailState>(
           listenWhen: (a, b) => b.failure != null && b.failure != a.failure,
           listener: (context, state) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.failure!.message)),
-            );
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.failure!.message)));
           },
           builder: (context, state) {
             final s = state.student;
@@ -115,6 +115,8 @@ class _StudentDetailView extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 IssueLinkCodeSection(student: s),
+                const SizedBox(height: AppSpacing.md),
+                StudentPaymentsSection(student: s),
                 const SizedBox(height: AppSpacing.lg),
                 AppButton(
                   label: l10n.studentEdit,
