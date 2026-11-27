@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/errors/failure.dart';
 import '../../../core/theme/app_colors.dart';
@@ -9,12 +8,45 @@ import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../l10n/app_localizations.dart';
-import '../cubit/student_payments_cubit.dart';
+import '../../groups/models/group.dart';
+import 'month_picker.dart';
+
+/// نتيجة محاولة الحفظ: null = نجحت، وغير كده الفشل اللي بيظهر في الشيت.
+typedef SavePayment =
+    Future<Failure?> Function({
+      required String groupId,
+      required int year,
+      required int month,
+      required int amountPiasters,
+      required String note,
+    });
 
 /// فورم تسجيل دفعة (bottom sheet): المجموعة والشهر والمبلغ وملاحظة.
 /// المبلغ بيتملّى من `monthlyFee` بتاع المجموعة المختارة ويفضل قابل للتعديل.
+///
+/// الشيت مش مربوط بـ cubit معيّن: بياخد [groups] و[onSave]، فبتتستخدم من
+/// قسم "حساب الرسوم" في ملف الطالب ومن شاشة المدفوعات (بلمسة واحدة على
+/// طالب غير مدفوع، مع [initialGroupId] و[initialMonth] جاهزين).
 class RecordPaymentSheet extends StatefulWidget {
-  const RecordPaymentSheet({super.key});
+  const RecordPaymentSheet({
+    super.key,
+    required this.groups,
+    required this.onSave,
+    this.initialGroupId,
+    this.initialMonth,
+  });
+
+  /// المجموعات المتاحة للاختيار (مثلًا مجموعات الطالب، أو كل المجموعات).
+  final List<Group> groups;
+
+  /// بيستدعى عند الحفظ. null = نجح والشيت بيقفل.
+  final SavePayment onSave;
+
+  /// مجموعة مختارة مسبقًا (لو null ومجموعة واحدة بس بتتختار لوحدها).
+  final String? initialGroupId;
+
+  /// (السنة، الشهر) المختارين مسبقًا. الافتراضي الشهر الحالي.
+  final (int, int)? initialMonth;
 
   @override
   State<RecordPaymentSheet> createState() => _RecordPaymentSheetState();
@@ -27,19 +59,29 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
   String? _groupId;
   late int _year;
   late int _month;
+  bool _saving = false;
   String? _error;
 
   @override
   void initState() {
     super.initState();
-    final now = DateTime.now();
-    _year = now.year;
-    _month = now.month;
-    final groups = context.read<StudentPaymentsCubit>().state.groups;
-    if (groups.length == 1) {
-      _groupId = groups.single.id;
-      _prefillAmount();
+    final initial = widget.initialMonth;
+    if (initial != null) {
+      _year = initial.$1;
+      _month = initial.$2;
+    } else {
+      final now = DateTime.now();
+      _year = now.year;
+      _month = now.month;
     }
+    final initialGroup = widget.initialGroupId;
+    if (initialGroup != null &&
+        widget.groups.any((g) => g.id == initialGroup)) {
+      _groupId = initialGroup;
+    } else if (widget.groups.length == 1) {
+      _groupId = widget.groups.single.id;
+    }
+    _prefillAmount();
   }
 
   @override
@@ -50,8 +92,7 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
   }
 
   void _prefillAmount() {
-    final groups = context.read<StudentPaymentsCubit>().state.groups;
-    for (final g in groups) {
+    for (final g in widget.groups) {
       if (g.id == _groupId) {
         _amount.text = g.monthlyFee > 0
             ? piastersToDecimalString(g.monthlyFee)
@@ -59,22 +100,6 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
         return;
       }
     }
-  }
-
-  /// الشهر الحالي و11 شهر قبله.
-  List<(int, int)> _monthChoices() {
-    final out = <(int, int)>[];
-    var y = DateTime.now().year;
-    var m = DateTime.now().month;
-    for (var i = 0; i < 12; i++) {
-      out.add((y, m));
-      m--;
-      if (m == 0) {
-        m = 12;
-        y--;
-      }
-    }
-    return out;
   }
 
   int? _parseAmount() {
@@ -93,7 +118,11 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
       setState(() => _error = l10n.paymentsInvalidAmount);
       return;
     }
-    final Failure? failure = await context.read<StudentPaymentsCubit>().record(
+    setState(() {
+      _saving = true;
+      _error = null;
+    });
+    final Failure? failure = await widget.onSave(
       groupId: groupId,
       year: _year,
       month: _month,
@@ -104,7 +133,10 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
     if (failure == null) {
       Navigator.of(context).pop();
     } else {
-      setState(() => _error = failure.message);
+      setState(() {
+        _saving = false;
+        _error = failure.message;
+      });
     }
   }
 
@@ -112,7 +144,6 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final state = context.watch<StudentPaymentsCubit>().state;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -131,7 +162,7 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
             initialValue: _groupId,
             decoration: InputDecoration(labelText: l10n.paymentsGroupLabel),
             items: [
-              for (final g in state.groups)
+              for (final g in widget.groups)
                 DropdownMenuItem(value: g.id, child: Text(g.name)),
             ],
             onChanged: (value) {
@@ -142,23 +173,14 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
             },
           ),
           const SizedBox(height: AppSpacing.sm),
-          DropdownButtonFormField<(int, int)>(
-            initialValue: (_year, _month),
-            decoration: InputDecoration(labelText: l10n.paymentsMonthLabel),
-            items: [
-              for (final (y, m) in _monthChoices())
-                DropdownMenuItem(
-                  value: (y, m),
-                  child: Text('${l10n.monthName('m$m')} $y'),
-                ),
-            ],
+          MonthDropdown(
+            value: (_year, _month),
+            label: l10n.paymentsMonthLabel,
             onChanged: (value) {
-              if (value != null) {
-                setState(() {
-                  _year = value.$1;
-                  _month = value.$2;
-                });
-              }
+              setState(() {
+                _year = value.$1;
+                _month = value.$2;
+              });
             },
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -181,8 +203,8 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
           const SizedBox(height: AppSpacing.md),
           AppButton(
             label: l10n.paymentsSave,
-            isLoading: state.busy,
-            onPressed: state.busy ? null : _save,
+            isLoading: _saving,
+            onPressed: _saving ? null : _save,
           ),
         ],
       ),

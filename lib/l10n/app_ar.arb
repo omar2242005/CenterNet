@@ -1033,5 +1033,19 @@
     "placeholders": {
       "reason": { "type": "String" }
     }
+  },
+  "paymentsScreenTitle": "المدفوعات",
+  "paymentsSearchHint": "ابحث باسم الطالب",
+  "paymentsFilterAll": "الكل",
+  "paymentsFilterPaid": "مدفوع",
+  "paymentsFilterUnpaid": "غير مدفوع",
+  "paymentsAllGroups": "كل المجموعات",
+  "paymentsEmptyMonth": "مفيش طلاب مسجلين في مجموعات نشطة.",
+  "paymentsNoResults": "مفيش نتايج مطابقة للبحث أو الفلاتر.",
+  "paymentsPaidOn": "اتدفع {date}",
+  "@paymentsPaidOn": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
   }
 }
