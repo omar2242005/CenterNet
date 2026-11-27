@@ -18,6 +18,7 @@ import '../models/attendance_entry.dart';
 import '../repository/assistant_repository.dart';
 import '../services/cairo_time.dart';
 import '../services/pending_scan_store.dart';
+import '../widgets/payment_status_badge.dart';
 import '../widgets/assistant_shell.dart';
 
 /// قائمة حضور جلسة: سجلات Firestore + المسحات المحلية غير المتزامنة،
@@ -160,6 +161,7 @@ class _AttendanceRow extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final student = entry.student;
     final scannedAt = entry.scannedAt;
+    final paymentStatus = entry.paymentStatus;
     final timeText = scannedAt == null
         ? ''
         : ' · ${formatTime(l10n, toCairoWallTime(scannedAt))}';
@@ -219,6 +221,9 @@ class _AttendanceRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               StatusBadge(label: statusLabel, tone: statusTone),
+              const SizedBox(height: AppSpacing.xs),
+              // [P1-خطوة4] حالة السداد لحظة التسجيل جنب علامة الحضور.
+              PaymentStatusBadge(status: paymentStatus),
               const SizedBox(height: AppSpacing.xs),
               StatusBadge(label: syncLabel, tone: syncTone, icon: syncIcon),
             ],

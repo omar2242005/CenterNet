@@ -1,3 +1,4 @@
+import 'package:center_net/features/assistant/models/attendance.dart';
 import 'package:center_net/features/assistant/models/pending_scan.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -6,6 +7,7 @@ void main() {
     String? centerId,
     PendingAttendanceStatus? attendanceStatus,
     PendingScanStatus status = PendingScanStatus.pending,
+    ScanPaymentStatus paymentStatus = ScanPaymentStatus.unknown,
   }) => PendingScan(
     id: 'g1_20261119_1700_s1',
     sessionId: 'g1_20261119_1700',
@@ -14,6 +16,7 @@ void main() {
     centerId: centerId,
     attendanceStatus: attendanceStatus,
     status: status,
+    paymentStatus: paymentStatus,
   );
 
   test('سجل قديم من غير الحقول الجديدة بيتقرا كما هو', () {
@@ -29,7 +32,17 @@ void main() {
     final result = PendingScan.fromMap(legacy);
     expect(result.centerId, isNull);
     expect(result.attendanceStatus, isNull);
-    expect(result.toMap(), legacy);
+    expect(result.paymentStatus, ScanPaymentStatus.unknown);
+    // إعادة الحفظ بتضيف حقل السداد (الـ Rules بتطلبه عند المزامنة).
+    expect(result.toMap(), {...legacy, 'paymentStatus': 'unknown'});
+  });
+
+  test('round-trip يحتفظ بحالة السداد وقت المسح', () {
+    final original = scan(paymentStatus: ScanPaymentStatus.unpaid);
+
+    final result = PendingScan.fromMap(original.toMap());
+    expect(result.paymentStatus, ScanPaymentStatus.unpaid);
+    expect(result.toMap(), original.toMap());
   });
 
   test('round-trip يحتفظ بحقول المزامنة الجديدة', () {

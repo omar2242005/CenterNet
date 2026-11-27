@@ -100,6 +100,12 @@ abstract final class FirestorePaths {
   static String payments(String centerId) => '${center(centerId)}/payments';
   static String payment(String centerId, String paymentId) =>
       '${payments(centerId)}/${_composite(paymentId, 'paymentId')}';
+
+  // P1-خطوة4: علامة الدفع في المسح (نفس الـ id بتاع الدفعة).
+  static String paymentStatus(String centerId) =>
+      '${center(centerId)}/paymentStatus';
+  static String paymentStatusDoc(String centerId, String paymentId) =>
+      '${paymentStatus(centerId)}/${_composite(paymentId, 'paymentId')}';
 }
 
 /// بيقبل ID مركّب (حروف وأرقام و `_`) بس من غير فواصل غريبة. بنستخدمه لما

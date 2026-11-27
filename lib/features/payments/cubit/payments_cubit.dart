@@ -144,6 +144,15 @@ class PaymentsCubit extends Cubit<PaymentsState> {
         year: state.year,
         month: state.month,
       );
+      // [P1-خطوة4] إصلاح علامات المسح للشهر (للدفعات الأقدم من خطوة 4).
+      // فشلها مش بيعطّل الشاشة: بتتصلّح في التحميل الجاي.
+      try {
+        await _payments.backfillMonthPaymentStatus(
+          studentsRoster.centerId,
+          year: state.year,
+          month: state.month,
+        );
+      } on Failure catch (_) {}
       if (isClosed) return;
       emit(
         _copy(

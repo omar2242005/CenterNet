@@ -54,11 +54,14 @@ class PaymentsRepository {
         throw Failure.validation(e.message.toString());
       }
       final ref = _ref(centerId, draft.id);
+      final statusRef = _statusRef(centerId, draft.id);
       await _db
           .runTransaction((tx) async {
             final snap = await tx.get(ref);
             if (!snap.exists) {
               tx.set(ref, draft.toCreateMap());
+              // [P1-خطوة4] علامة المسح بتتكتب مع الدفعة في نفس المعاملة.
+              tx.set(statusRef, _statusMap(draft, paid: true));
               return;
             }
             final data = snap.data();
@@ -84,6 +87,8 @@ class PaymentsRepository {
                 recordedBy: uid,
               ),
             );
+            // [P1-خطوة4] العلامة ترجع مدفوعة مع إعادة التسجيل.
+            tx.set(statusRef, _statusMap(existing, paid: true));
           })
           .timeout(timeout);
       return _read(ref);
@@ -104,7 +109,15 @@ class PaymentsRepository {
         throw Failure.validation(e.message.toString());
       }
       final ref = _ref(payment.centerId, payment.id);
-      await ref.update(map).timeout(timeout);
+      // [P1-خطوة4] الإلغاء وعلامة المسح في Batch واحد: العلامة بقت غير
+      // مدفوعة في نفس لحظة الإلغاء.
+      final batch = _db.batch()
+        ..update(ref, map)
+        ..set(
+          _statusRef(payment.centerId, payment.id),
+          _statusMap(payment, paid: false),
+        );
+      await batch.commit().timeout(timeout);
       return _read(ref);
     });
   }
@@ -184,6 +197,50 @@ class PaymentsRepository {
       return _parseAll(snap);
     });
   }
+
+  /// [P1-خطوة4] إصلاح علامات المسح لشهر كامل: كل دفعة مدفوعة بتحط
+  /// `paid=true` وكل ملغاة `paid=false`. شاشة المدفوعات (أدمن) بتناديه
+  /// بعد التحميل عشان الدفعات الأقدم من الخطوة دي (أو أي انحراف) يتصلّح
+  /// لوحده. مكتوب كتابة كاملة idempotent، فأمان يتعاد أي عدد مرات.
+  Future<void> backfillMonthPaymentStatus(
+    String centerId, {
+    required int year,
+    required int month,
+  }) {
+    return ErrorMapper.guard(() async {
+      _requireUid();
+      final payments = await loadMonthPayments(
+        centerId,
+        year: year,
+        month: month,
+      );
+      if (payments.isEmpty) return;
+      final batch = _db.batch();
+      for (final p in payments) {
+        batch.set(
+          _statusRef(centerId, p.id),
+          _statusMap(p, paid: p.isPaid),
+        );
+      }
+      await batch.commit().timeout(timeout);
+    });
+  }
+
+  /// خريطة مستند `paymentStatus`: أقل قدر من المعلومة (حالة فقط، من غير
+  /// مبالغ ولا أسباب) — دي اللي المعلم/المساعد بيقروها في المسح.
+  static Map<String, dynamic> _statusMap(Payment p, {required bool paid}) {
+    return <String, dynamic>{
+      'centerId': p.centerId,
+      'studentId': p.studentId,
+      'groupId': p.groupId,
+      'month': p.month,
+      'paid': paid,
+      'updatedAt': FieldValue.serverTimestamp(),
+    };
+  }
+
+  DocumentReference<Map<String, dynamic>> _statusRef(String centerId, String id) =>
+      _db.doc(FirestorePaths.paymentStatusDoc(centerId, id));
 
   List<Payment> _parseAll(
     QuerySnapshot<Map<String, dynamic>> snap, {

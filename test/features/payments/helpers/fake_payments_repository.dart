@@ -151,6 +151,15 @@ class FakePaymentsRepository implements PaymentsRepository {
   }
 
   @override
+  Future<void> backfillMonthPaymentStatus(
+    String centerId, {
+    required int year,
+    required int month,
+  }) async {
+    calls.add('backfill:${Payment.monthKey(year, month)}');
+  }
+
+  @override
   Future<List<Payment>> loadMonthPayments(
     String centerId, {
     required int year,

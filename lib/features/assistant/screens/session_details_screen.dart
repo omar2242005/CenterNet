@@ -22,6 +22,7 @@ import '../repository/assistant_repository.dart';
 import '../services/cairo_time.dart';
 import '../services/pending_scan_store.dart';
 import '../widgets/assistant_shell.dart';
+import '../widgets/payment_status_badge.dart';
 
 /// تفاصيل الحصة: المجموعة والوقت والقاعة + ملخص الحضور المدموج + آخر
 /// عمليات المسح + زرا "مسح كود الطالب" (تحضير للأوفلاين) و"قائمة الحضور".
@@ -352,6 +353,9 @@ class _LastScanRow extends StatelessWidget {
           ),
         ),
         StatusBadge(label: statusLabel, tone: statusTone),
+        const SizedBox(width: AppSpacing.sm),
+        // [P1-خطوة4] حالة السداد لحظة التسجيل جنب علامة الحضور.
+        PaymentStatusBadge(status: entry.paymentStatus),
         const SizedBox(width: AppSpacing.sm),
         StatusBadge(label: syncLabel, tone: syncTone),
       ],

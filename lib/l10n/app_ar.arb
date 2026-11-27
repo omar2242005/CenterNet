@@ -1040,6 +1040,7 @@
   "paymentsFilterPaid": "مدفوع",
   "paymentsFilterUnpaid": "غير مدفوع",
   "paymentsAllGroups": "كل المجموعات",
+  "paymentsStatusUnknown": "السداد غير معروف",
   "paymentsEmptyMonth": "مفيش طلاب مسجلين في مجموعات نشطة.",
   "paymentsNoResults": "مفيش نتايج مطابقة للبحث أو الفلاتر.",
   "paymentsPaidOn": "اتدفع {date}",

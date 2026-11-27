@@ -38,6 +38,7 @@ const attData = (over = {}) => ({
   voidedBy: null,
   voidReason: null,
   voidedAt: null,
+  paymentStatus: 'unknown',
   ...over,
 });
 
@@ -81,6 +82,8 @@ async function seed() {
 
     await put(`centers/${A}/students/st1`, { centerId: A, fullName: 'طالب 1', status: 'active', groupIds: ['g1'] });
     await put(`centers/${A}/students/st2`, { centerId: A, fullName: 'طالب 2', status: 'active', groupIds: ['g1'] });
+    await put(`centers/${A}/students/st3`, { centerId: A, fullName: 'طالب 3', status: 'active', groupIds: ['g1'] });
+    await put(`centers/${A}/students/st4`, { centerId: A, fullName: 'طالب 4', status: 'active', groupIds: ['g1'] });
 
     // سجلين موجودين: واحد في g1 وواحد في g2.
     await put(`centers/${A}/attendance/${attId(G1_SESSION, 'st1')}`,
@@ -175,6 +178,16 @@ describe('attendance — الإنشاء', () => {
 
   it('set فوق سجل موجود مرفوض (منع التكرار)', async () => {
     await assertFails(setDoc(attRef(as('assistantA'), attId(G1_SESSION, 'st1')), attData()));
+  });
+
+  it('[خطوة4] حالة سداد صالحة بتتسجل، والناقصة أو الغريبة مرفوضة', async () => {
+    await assertSucceeds(setDoc(attRef(as('assistantA'), id2), attData({ studentId: 'st2', paymentStatus: 'paid' })));
+    await assertSucceeds(setDoc(attRef(as('assistantA'), attId(G1_SESSION, 'st3')), attData({ studentId: 'st3', paymentStatus: 'unpaid' })));
+
+    const missing = attData({ studentId: 'st4' });
+    delete missing.paymentStatus;
+    await assertFails(setDoc(attRef(as('assistantA'), attId(G1_SESSION, 'st4')), missing));
+    await assertFails(setDoc(attRef(as('assistantA'), attId(G1_SESSION, 'st4')), attData({ studentId: 'st4', paymentStatus: 'rich' })));
   });
 });
 

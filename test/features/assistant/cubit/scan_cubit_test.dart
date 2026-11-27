@@ -1,4 +1,5 @@
 import 'package:center_net/features/assistant/cubit/scan_cubit.dart';
+import 'package:center_net/features/assistant/models/attendance.dart';
 import 'package:center_net/features/assistant/models/pending_scan.dart';
 import 'package:center_net/features/assistant/models/scan_setup.dart';
 import 'package:center_net/features/assistant/services/scan_recorder.dart';
@@ -36,21 +37,60 @@ void main() {
   late DateTime now;
   late MemoryScanRecorder recorder;
 
-  ScanSetup setup() => ScanSetup(
+  ScanSetup setup({
+    Map<String, bool>? paidByStudentId,
+    String? paymentStatusMonth,
+  }) => ScanSetup(
     centerId: 'c1',
     sessionId: sessionId,
     sessionStart: start,
     groupStudentIds: {'s1', 's2'},
     lateAfterMinutes: 15,
+    paidByStudentId: paidByStudentId,
+    paymentStatusMonth: paymentStatusMonth,
   );
 
-  ScanCubit build([ScanRecorder? r]) =>
-      ScanCubit(setup: setup(), recorder: r ?? recorder, clock: () => now)
+  ScanCubit build([ScanRecorder? r, ScanSetup? s]) =>
+      ScanCubit(setup: s ?? setup(), recorder: r ?? recorder, clock: () => now)
         ..load();
 
   setUp(() {
     now = start.add(const Duration(minutes: 5));
     recorder = MemoryScanRecorder();
+  });
+
+  test('علامة السداد: طالب مدفوع بيتسجل paid وغير المسجل unpaid', () async {
+    final cubit = build(null, setup(
+      paidByStudentId: {'s1': true},
+      paymentStatusMonth: '202611',
+    ));
+    await cubit.onCode('c1:s1');
+    await cubit.onCode('c1:s2');
+
+    expect(recorder.scans[0].paymentStatus, ScanPaymentStatus.paid);
+    expect(cubit.state.feedback!.paymentStatus, ScanPaymentStatus.unpaid);
+    expect(recorder.scans[1].paymentStatus, ScanPaymentStatus.unpaid);
+    await cubit.close();
+  });
+
+  test('علامة السداد: من غير علامات (تحضير أوفلاين) = unknown', () async {
+    final cubit = build();
+    await cubit.onCode('c1:s1');
+
+    expect(recorder.scans.single.paymentStatus, ScanPaymentStatus.unknown);
+    expect(cubit.state.feedback!.paymentStatus, ScanPaymentStatus.unknown);
+    await cubit.close();
+  });
+
+  test('علامة السداد: علامات شهر تاني = unknown (مش unpaid)', () async {
+    final cubit = build(null, setup(
+      paidByStudentId: {'s1': false},
+      paymentStatusMonth: '202610',
+    ));
+    await cubit.onCode('c1:s1');
+
+    expect(recorder.scans.single.paymentStatus, ScanPaymentStatus.unknown);
+    await cubit.close();
   });
 
   test('مسح صالح في الميعاد = حاضر وبيتسجل', () async {

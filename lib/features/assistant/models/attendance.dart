@@ -19,6 +19,29 @@ enum AttendanceStatus {
   }
 }
 
+/// حالة السداد وقت المسح (P1-خطوة4). بتتخزن في سجل الحضور لحظة التسجيل
+/// ومش بتتغير لو الطالب دفع بعدها؛ حالة \"لسه عليه فلوس دلوقتي\" مصدرها
+/// مجموعة payments/paymentStatus مش سجل الحضور.
+///
+/// unknown = المسح حصل أوفلاين أو علامة الشهر ما كانتش متاحة (مش معناها
+/// غير مدفوع).
+enum ScanPaymentStatus {
+  paid('paid'),
+  unpaid('unpaid'),
+  unknown('unknown');
+
+  const ScanPaymentStatus(this.wire);
+  final String wire;
+
+  /// المستندات القديمة (قبل خطوة 4) من غير الحقل بتقرا unknown.
+  static ScanPaymentStatus parse(Object? raw) {
+    for (final s in ScanPaymentStatus.values) {
+      if (s.wire == raw) return s;
+    }
+    return ScanPaymentStatus.unknown;
+  }
+}
+
 /// طريقة التسجيل.
 enum AttendanceMethod {
   qr('qr'),
@@ -63,6 +86,9 @@ class Attendance {
   final String? voidReason;
   final DateTime? voidedAt;
 
+  /// حالة السداد لحظة التسجيل. مستندات ما قبل خطوة 4 بتقرا unknown.
+  final ScanPaymentStatus paymentStatus;
+
   const Attendance._({
     required this.id,
     required this.centerId,
@@ -77,6 +103,7 @@ class Attendance {
     this.voidedBy,
     this.voidReason,
     this.voidedAt,
+    this.paymentStatus = ScanPaymentStatus.unknown,
   });
 
   /// تسجيل حضور جديد. الـ id بيتحسب من [sessionId] و[studentId].
@@ -88,6 +115,7 @@ class Attendance {
     required AttendanceMethod method,
     required String recordedBy,
     DateTime? scannedAt,
+    ScanPaymentStatus paymentStatus = ScanPaymentStatus.unknown,
   }) {
     if (centerId.isEmpty) {
       throw ArgumentError.value(centerId, 'centerId', 'مينفعش يكون فاضي');
@@ -107,6 +135,7 @@ class Attendance {
       method: method,
       scannedAt: scannedAt,
       recordedBy: recordedBy,
+      paymentStatus: paymentStatus,
     );
   }
 
@@ -140,6 +169,7 @@ class Attendance {
       voidedBy: voidedBy is String ? voidedBy : null,
       voidReason: voidReason is String ? voidReason : null,
       voidedAt: _toDate(map['voidedAt']),
+      paymentStatus: ScanPaymentStatus.parse(map['paymentStatus']),
     );
   }
 
@@ -162,6 +192,7 @@ class Attendance {
       'voidedBy': null,
       'voidReason': null,
       'voidedAt': null,
+      'paymentStatus': paymentStatus.wire,
     };
   }
 

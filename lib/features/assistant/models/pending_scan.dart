@@ -1,3 +1,5 @@
+import 'attendance.dart';
+
 /// حالة مسحة في القائمة المحلية.
 enum PendingScanStatus {
   pending('pending'),
@@ -47,6 +49,10 @@ class PendingScan {
   final String? centerId;
   final PendingAttendanceStatus? attendanceStatus;
 
+  /// حالة السداد لحظة المسح (بتتخزن في سجل الحضور عند المزامنة). المسحات
+  /// المحفوظة قبل خطوة 4 بتقرا unknown.
+  final ScanPaymentStatus paymentStatus;
+
   const PendingScan({
     required this.id,
     required this.sessionId,
@@ -56,6 +62,7 @@ class PendingScan {
     this.failReason,
     this.centerId,
     this.attendanceStatus,
+    this.paymentStatus = ScanPaymentStatus.unknown,
   });
 
   PendingScan copyWith({
@@ -63,6 +70,7 @@ class PendingScan {
     String? failReason,
     String? centerId,
     PendingAttendanceStatus? attendanceStatus,
+    ScanPaymentStatus? paymentStatus,
   }) => PendingScan(
     id: id,
     sessionId: sessionId,
@@ -72,6 +80,7 @@ class PendingScan {
     failReason: failReason,
     centerId: centerId ?? this.centerId,
     attendanceStatus: attendanceStatus ?? this.attendanceStatus,
+    paymentStatus: paymentStatus ?? this.paymentStatus,
   );
 
   Map<String, dynamic> toMap() => <String, dynamic>{
@@ -83,6 +92,7 @@ class PendingScan {
     'failReason': failReason,
     if (centerId != null) 'centerId': centerId,
     if (attendanceStatus != null) 'attendanceStatus': attendanceStatus!.wire,
+    'paymentStatus': paymentStatus.wire,
   };
 
   factory PendingScan.fromMap(Map<String, dynamic> m) {
@@ -115,6 +125,7 @@ class PendingScan {
       attendanceStatus: attendanceStatus == null
           ? null
           : PendingAttendanceStatus.parse(attendanceStatus),
+      paymentStatus: ScanPaymentStatus.parse(m['paymentStatus']),
     );
   }
 }

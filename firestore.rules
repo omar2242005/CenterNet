@@ -227,14 +227,19 @@ service cloud.firestore {
     }
 
         // سجل الحضور: الـ id لازم = sessionId_studentId، وحقول الإلغاء بقيمها الابتدائية.
+    // [P1-خطوة4] paymentStatus إلزامي: حالة السداد وقت المسح (paid/unpaid/unknown)،
+    // بتتخزن مع السجل ومش بتتغير لو الطالب دفع بعدها.
     function validAttendance(d, c, aid) {
       return d.keys().hasOnly(['centerId', 'sessionId', 'studentId', 'status', 'method',
                                'scannedAt', 'recordedBy', 'recordedAt',
-                               'voided', 'voidedBy', 'voidReason', 'voidedAt'])
+                               'voided', 'voidedBy', 'voidReason', 'voidedAt',
+                               'paymentStatus'])
         && d.keys().hasAll(['centerId', 'sessionId', 'studentId', 'status', 'method',
                             'recordedBy', 'recordedAt',
-                            'voided', 'voidedBy', 'voidReason', 'voidedAt'])
+                            'voided', 'voidedBy', 'voidReason', 'voidedAt',
+                            'paymentStatus'])
         && d.centerId == c
+        && d.paymentStatus in ['paid', 'unpaid', 'unknown']
         && d.sessionId is string && d.sessionId.matches('[A-Za-z0-9_]+')
         && d.studentId is string && d.studentId.matches('[A-Za-z0-9]+')
         && aid == d.sessionId + '_' + d.studentId
@@ -316,6 +321,22 @@ service cloud.firestore {
         && d.recordedBy == request.auth.uid
         && d.recordedAt == request.time
         && d.cancelledBy == null && d.cancelledAt == null && d.cancelReason == null;
+    }
+
+    // [P1-خطوة4] علامة الدفع في المسح: نفس الـ id بتاع الدفعة، حقول قليلة
+    // من غير مبالغ. paid منطقي، وupdatedAt وقت الطلب.
+    function validPaymentStatus(d, c, pid) {
+      return d.keys().hasOnly(['centerId', 'studentId', 'groupId', 'month',
+                               'paid', 'updatedAt'])
+        && d.keys().hasAll(['centerId', 'studentId', 'groupId', 'month',
+                            'paid', 'updatedAt'])
+        && d.centerId == c
+        && d.studentId is string && exists(studentPath(c, d.studentId))
+        && d.groupId is string && exists(groupPath(c, d.groupId))
+        && d.month is string && d.month.matches('^(19|20)[0-9]{2}(0[1-9]|1[0-2])$')
+        && pid == d.studentId + '_' + d.groupId + '_' + d.month
+        && d.paid is bool
+        && d.updatedAt == request.time;
     }
 
     // [P1] إلغاء دفعة مدفوعة: status + بيانات الإلغاء بس، وسبب إلزامي.
@@ -943,6 +964,20 @@ service cloud.firestore {
       allow update: if isAdmin(c)
         && (validPaymentCancel(resource.data, request.resource.data)
             || validPaymentRerecord(resource.data, request.resource.data));
+
+      allow delete: if false;
+    }
+
+    // ------------------------------------------------------------------
+    // [P1-خطوة4] centers/{c}/paymentStatus/{pid}   (pid = studentId_groupId_yyyyMM)
+    // علامة الدفع في المسح: أقل قدر من المعلومة للمعلم/المساعد — مدفوع أو لأ
+    // للشهر، من غير مبالغ ولا أسباب. الأدمن بيكتبها مع كل تسجيل/إلغاء دفعة.
+    // ------------------------------------------------------------------
+    match /centers/{c}/paymentStatus/{pid} {
+      allow get, list: if isAdmin(c) || isStaff(c);
+
+      allow create, update: if isAdmin(c)
+        && validPaymentStatus(request.resource.data, c, pid);
 
       allow delete: if false;
     }

@@ -7,7 +7,10 @@ void main() {
   final scanned = DateTime.utc(2026, 11, 19, 15, 5);
   final fakeServerTime = Timestamp.fromDate(DateTime.utc(2026, 11, 19, 15, 6));
 
-  Attendance qr({AttendanceStatus status = AttendanceStatus.present}) =>
+  Attendance qr({
+    AttendanceStatus status = AttendanceStatus.present,
+    ScanPaymentStatus paymentStatus = ScanPaymentStatus.unknown,
+  }) =>
       Attendance.create(
         centerId: 'c1',
         sessionId: 'g1_20261119_1700',
@@ -16,6 +19,7 @@ void main() {
         method: AttendanceMethod.qr,
         recordedBy: 'asst1',
         scannedAt: scanned,
+        paymentStatus: paymentStatus,
       );
 
   Attendance manual() => Attendance.create(
@@ -68,6 +72,7 @@ void main() {
         'centerId', 'sessionId', 'studentId', 'status', 'method',
         'scannedAt', 'recordedBy', 'recordedAt',
         'voided', 'voidedBy', 'voidReason', 'voidedAt',
+        'paymentStatus',
       });
       expect(m['status'], 'present');
       expect(m['method'], 'qr');
@@ -78,6 +83,14 @@ void main() {
       expect(m.containsKey('scannedAt'), isFalse);
       expect(m['status'], 'excused');
       expect(m['method'], 'manual');
+    });
+
+    test('حالة السداد بتتكتب، والافتراضي unknown', () {
+      expect(qr().toCreateMap()['paymentStatus'], 'unknown');
+      expect(
+        qr(paymentStatus: ScanPaymentStatus.paid).toCreateMap()['paymentStatus'],
+        'paid',
+      );
     });
 
     test('حقول الإلغاء بقيمها الابتدائية صراحة (الـ Rules محتاجاها)', () {
@@ -107,6 +120,18 @@ void main() {
       expect(back.recordedAt, isNotNull);
       expect(back.voided, isFalse);
       expect(back.voidedBy, isNull);
+    });
+
+    test('مستند قديم من غير paymentStatus بيتقرا unknown', () {
+      final m = qr(paymentStatus: ScanPaymentStatus.unpaid).toCreateMap(
+        recordedAt: fakeServerTime,
+      );
+      expect(Attendance.fromMap('x', m).paymentStatus, ScanPaymentStatus.unpaid);
+      m.remove('paymentStatus');
+      expect(
+        Attendance.fromMap('x', m).paymentStatus,
+        ScanPaymentStatus.unknown,
+      );
     });
 
     test('recordedAt = null لو السيرفر لسه ماكتبش الوقت', () {

@@ -7,6 +7,7 @@ import '../../../core/errors/failure.dart';
 import '../../../core/firestore_paths.dart';
 import '../../auth/models/app_user.dart';
 import '../../groups/models/group.dart';
+import '../../payments/models/payment.dart';
 import '../../sessions/models/session.dart';
 import '../../students/models/student.dart';
 import '../models/attendance.dart';
@@ -50,6 +51,7 @@ class FirestoreAssistantRepository implements AssistantRepository {
       method: AttendanceMethod.qr,
       scannedAt: scan.scannedAt,
       recordedBy: uid,
+      paymentStatus: scan.paymentStatus,
     );
     final ref = _db.doc(FirestorePaths.attendanceDoc(centerId, attendance.id));
 
@@ -289,12 +291,58 @@ class FirestoreAssistantRepository implements AssistantRepository {
       }
       final studentIds = await groupStudentIds(centerId, session.groupId);
       final lateAfter = await lateAfterMinutes(centerId);
+      // [P1-خطوة4] علامات الدفع للشهر الحالي. فشلها (أوفلاين مثلًا) مش
+      // بيعطّل المسح: null = الحالة غير معروفة لكل الطلاب.
+      final now = DateTime.now();
+      Map<String, bool>? paidByStudentId;
+      try {
+        paidByStudentId = await groupMonthPaymentStatus(
+          centerId,
+          session.groupId,
+          year: now.year,
+          month: now.month,
+        );
+      } on Failure catch (_) {
+        paidByStudentId = null;
+      }
       // مجموعة فاضية بترمي Failure.validation جوه forSession.
       return ScanSetup.forSession(
         session: session,
         groupStudentIds: studentIds,
         lateAfterMinutes: lateAfter,
+        paidByStudentId: paidByStudentId,
+        paymentStatusMonth: paidByStudentId == null
+            ? null
+            : Payment.monthKey(now.year, now.month),
       );
+    });
+  }
+
+  @override
+  Future<Map<String, bool>> groupMonthPaymentStatus(
+    String centerId,
+    String groupId, {
+    required int year,
+    required int month,
+  }) {
+    return ErrorMapper.guard(() async {
+      _requireUid();
+      final key = Payment.monthKey(year, month);
+      // فلترين equality بس = مفيش composite index.
+      final snap = await _db
+          .collection(FirestorePaths.paymentStatus(centerId))
+          .where('groupId', isEqualTo: groupId)
+          .where('month', isEqualTo: key)
+          .get()
+          .timeout(serverConfirmationTimeout);
+      final out = <String, bool>{};
+      for (final doc in snap.docs) {
+        final data = doc.data();
+        final sid = data['studentId'];
+        final paid = data['paid'];
+        if (sid is String && paid is bool) out[sid] = paid;
+      }
+      return out;
     });
   }
 

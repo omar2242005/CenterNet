@@ -13,6 +13,7 @@ import '../cubit/scan_cubit.dart';
 import '../models/scan_setup.dart';
 import '../services/pending_scan_store.dart';
 import '../services/scan_recorder.dart';
+import '../widgets/payment_status_badge.dart';
 import '../widgets/scan_camera.dart';
 
 /// شاشة المسح بالكاميرا (نموذج أولي).
@@ -209,6 +210,13 @@ class _ResultPanel extends StatelessWidget {
       view = _present(l10n, state.feedback!);
     }
 
+    // علامة السداد بتظهر مع المسحات المتسجلة (مش مع الرفض أو الأخطاء).
+    final kind = state.feedback?.kind;
+    final showPaymentBadge =
+        kind == ScanFeedbackKind.recordedPresent ||
+        kind == ScanFeedbackKind.recordedLate ||
+        kind == ScanFeedbackKind.alreadyRegistered;
+
     return Semantics(
       liveRegion: true,
       child: DecoratedBox(
@@ -223,13 +231,23 @@ class _ResultPanel extends StatelessWidget {
               Icon(view.icon, color: view.foreground, size: 28),
               const SizedBox(width: AppSpacing.md),
               Expanded(
-                child: Text(
-                  view.message,
-                  style: TextStyle(
-                    color: view.foreground,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      view.message,
+                      style: TextStyle(
+                        color: view.foreground,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    // [P1-خطوة4] علامة السداد جنب نتيجة المسحة الناجحة.
+                    if (showPaymentBadge) ...[
+                      const SizedBox(height: AppSpacing.sm),
+                      PaymentStatusBadge(status: state.feedback!.paymentStatus),
+                    ],
+                  ],
                 ),
               ),
             ],

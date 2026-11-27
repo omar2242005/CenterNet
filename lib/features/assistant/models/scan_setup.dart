@@ -14,8 +14,13 @@ class ScanSetup {
     required this.sessionStart,
     required Set<String> groupStudentIds,
     this.lateAfterMinutes = ScanValidator.defaultLateAfterMinutes,
+    Map<String, bool>? paidByStudentId,
+    this.paymentStatusMonth,
     this.isDemo = false,
-  }) : groupStudentIds = Set<String>.unmodifiable(groupStudentIds);
+  }) : groupStudentIds = Set<String>.unmodifiable(groupStudentIds),
+       paidByStudentId = paidByStudentId == null
+           ? null
+           : Map<String, bool>.unmodifiable(paidByStudentId);
 
   /// بيانات تجريبية: سنتر `demo`، خمس طلاب `s1..s5`، والحصة بدأت من 10 دقايق
   /// (يعني المسح "حاضر" لحد ما يعدّي 5 دقايق كمان، وبعدها "متأخر").
@@ -39,6 +44,8 @@ class ScanSetup {
     required Session session,
     required Set<String> groupStudentIds,
     int lateAfterMinutes = ScanValidator.defaultLateAfterMinutes,
+    Map<String, bool>? paidByStudentId,
+    String? paymentStatusMonth,
   }) {
     if (groupStudentIds.isEmpty) {
       throw const Failure.validation(
@@ -51,6 +58,8 @@ class ScanSetup {
       sessionStart: session.startAt,
       groupStudentIds: groupStudentIds,
       lateAfterMinutes: lateAfterMinutes,
+      paidByStudentId: paidByStudentId,
+      paymentStatusMonth: paymentStatusMonth,
       isDemo: false,
     );
   }
@@ -72,4 +81,13 @@ class ScanSetup {
 
   /// true = بيانات تجريبية، والمسحات مش بتتحفظ على الجهاز.
   final bool isDemo;
+
+  /// [P1-خطوة4] علامات دفع طلاب المجموعة لشهر [paymentStatusMonth]:
+  /// المفتاح = studentId، القيمة = مدفوع أو لأ. طالب مش موجود = غير مدفوع.
+  /// null = العلامات ما اتحمّلتش (أوفلاين وقت التحضير) فالحالة غير معروفة.
+  final Map<String, bool>? paidByStudentId;
+
+  /// الشهر (`yyyyMM`) اللي [paidByStudentId] بيخصه. لو المسح حصل في شهر
+  /// تاني (تحضير آخر الشهر ومسح أول اللي بعده) الحالة بتتحسب غير معروفة.
+  final String? paymentStatusMonth;
 }

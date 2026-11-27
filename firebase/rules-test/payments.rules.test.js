@@ -23,6 +23,13 @@ const asAnon = () => env.unauthenticatedContext().firestore();
 
 const payId = (s, g, m) => `${s}_${g}_${m}`;
 const payRef = (db, id) => doc(db, `centers/${A}/payments/${id}`);
+const statusRef = (db, id) => doc(db, `centers/${A}/paymentStatus/${id}`);
+
+// [P1-خطوة4] علامة المسح: نفس الـ id، حالة فقط من غير مبالغ.
+const statusData = (over = {}) => ({
+  centerId: A, studentId: 'st1', groupId: 'g1', month: '202611',
+  paid: true, updatedAt: serverTimestamp(), ...over,
+});
 
 const paymentData = (over = {}) => ({
   centerId: A, studentId: 'st1', groupId: 'g1', month: '202611', amount: 450,
@@ -61,6 +68,10 @@ async function seed() {
     // دفعة مدفوعة موجودة لاختبارات القراءة والإلغاء.
     await put(`centers/${A}/payments/${payId('st1', 'g1', '202611')}`,
       paymentData({ recordedAt: now }));
+
+    // علامة مسح موجودة لاختبارات القراءة والتحديث.
+    await put(`centers/${A}/paymentStatus/${payId('st1', 'g1', '202611')}`,
+      statusData({ updatedAt: now }));
   });
 }
 
@@ -215,5 +226,53 @@ describe('payments — إعادة التسجيل بعد الإلغاء', () => {
 describe('payments — الحذف', () => {
   it('ممنوع حتى للأدمن', async () => {
     await assertFails(deleteDoc(payRef(as('adminA'), payId('st1', 'g1', '202611'))));
+  });
+});
+
+describe('paymentStatus — القراءة (خطوة 4)', () => {
+  const id = payId('st1', 'g1', '202611');
+
+  it('الأدمن يقرا', async () => {
+    await assertSucceeds(getDoc(statusRef(as('adminA'), id)));
+    await assertSucceeds(getDocs(collection(as('adminA'), `centers/${A}/paymentStatus`)));
+  });
+
+  it('المعلم والمساعد النشطين يقروا (علامة المسح)', async () => {
+    await assertSucceeds(getDoc(statusRef(as('teacherA'), id)));
+    await assertSucceeds(getDoc(statusRef(as('assistantA'), id)));
+    await assertSucceeds(getDocs(collection(as('assistantA'), `centers/${A}/paymentStatus`)));
+  });
+
+  it('الموقوف وأدمن سنتر تاني ومجهول مرفوضين', async () => {
+    await assertFails(getDoc(statusRef(as('offAssistant'), id)));
+    await assertFails(getDoc(statusRef(as('adminB'), id)));
+    await assertFails(getDoc(statusRef(asAnon(), id)));
+  });
+});
+
+describe('paymentStatus — الكتابة', () => {
+  const id = payId('st1', 'g1', '202612');
+
+  it('الأدمن ينشئ علامة ويحدّثها', async () => {
+    const db = as('adminA');
+    await assertSucceeds(setDoc(statusRef(db, id), statusData({ month: '202612' })));
+    await assertSucceeds(setDoc(statusRef(db, id), statusData({ month: '202612', paid: false })));
+  });
+
+  it('المساعد ممنوع يكتب', async () => {
+    await assertFails(setDoc(statusRef(as('assistantA'), id), statusData({ month: '202612' })));
+    await assertFails(updateDoc(statusRef(as('assistantA'), payId('st1', 'g1', '202611')), { paid: false }));
+  });
+
+  it('حقول زيادة (تسريب مبلغ) أو paid مش bool أو id غلط مرفوضين', async () => {
+    const db = as('adminA');
+    await assertFails(setDoc(statusRef(db, id), statusData({ month: '202612', amount: 450 })));
+    await assertFails(setDoc(statusRef(db, id), statusData({ month: '202612', paid: 'yes' })));
+    await assertFails(setDoc(statusRef(db, id), statusData({ month: '202611' })));
+    await assertFails(setDoc(statusRef(db, id), statusData({ month: '202612', updatedAt: Timestamp.now() })));
+  });
+
+  it('الحذف ممنوع', async () => {
+    await assertFails(deleteDoc(statusRef(as('adminA'), payId('st1', 'g1', '202611'))));
   });
 });
