@@ -93,7 +93,7 @@ class LinkRequest {
       'name': name,
       'studentNo': studentNo,
       'kind': kind.wire,
-      if (relation != null) 'relation': relation,
+      'relation': ?relation,
       'status': LinkRequestStatus.pending.wire,
       'createdAt': FieldValue.serverTimestamp(),
     };

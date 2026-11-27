@@ -1,5 +1,6 @@
 import 'package:center_net/core/errors/failure.dart';
 import 'package:center_net/features/linking/models/invite_code.dart';
+import 'package:center_net/features/linking/models/link_request.dart';
 import 'package:center_net/features/linking/models/linked_student.dart';
 import 'package:center_net/features/linking/models/student_link.dart';
 import 'package:center_net/features/linking/repository/linking_repository.dart';
@@ -18,6 +19,10 @@ class FakeLinkingRepository implements LinkingRepository {
 
   final List<String> redeemedCodes = <String>[];
   final List<StudentLink> unlinked = <StudentLink>[];
+
+  /// طلبات الربط المخزنة، وسجل الاستدعاءات.
+  final List<LinkRequest> requests = <LinkRequest>[];
+  final List<String> calls = <String>[];
 
   @override
   Future<void> redeem(String raw, {required LinkKind expected}) async {
@@ -57,6 +62,68 @@ class FakeLinkingRepository implements LinkingRepository {
             relation: relation,
             now: DateTime(2026, 11, 1),
           );
+  }
+
+  @override
+  Future<LinkRequest> sendRequest({
+    required String centerId,
+    required int studentNo,
+    required LinkKind kind,
+    String? relation,
+  }) async {
+    if (failure != null) throw failure!;
+    calls.add('sendRequest:$studentNo');
+    final r = LinkRequest(
+      id: 'u1_$studentNo',
+      centerId: centerId,
+      uid: 'u1',
+      name: 'اسم',
+      studentNo: studentNo,
+      kind: kind,
+      status: LinkRequestStatus.pending,
+      relation: relation,
+    );
+    requests.add(r);
+    return r;
+  }
+
+  @override
+  Future<LinkRequest> loadRequest(LinkRequest r) async {
+    if (failure != null) throw failure!;
+    return requests.firstWhere((x) => x.id == r.id, orElse: () => r);
+  }
+
+  @override
+  Future<void> cancelRequest(LinkRequest r) async {
+    if (failure != null) throw failure!;
+    calls.add('cancelRequest:${r.studentNo}');
+    requests.removeWhere((x) => x.id == r.id);
+  }
+
+  @override
+  Future<void> completeRequest(LinkRequest r) async {
+    if (failure != null) throw failure!;
+    calls.add('completeRequest:${r.studentNo}');
+  }
+
+  @override
+  Future<List<LinkRequest>> loadPendingRequests() async {
+    if (failure != null) throw failure!;
+    return requests
+        .where((r) => r.status == LinkRequestStatus.pending)
+        .toList();
+  }
+
+  @override
+  Future<void> approveRequest(LinkRequest r) async {
+    if (failure != null) throw failure!;
+    calls.add('approveRequest:${r.studentNo}');
+  }
+
+  @override
+  Future<void> rejectRequest(LinkRequest r) async {
+    if (failure != null) throw failure!;
+    calls.add('rejectRequest:${r.studentNo}');
   }
 }
 

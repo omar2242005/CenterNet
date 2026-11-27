@@ -87,12 +87,10 @@ class _GuardianHomeViewState extends State<_GuardianHomeView> {
         final view = state.view;
         final all = view is ViewSuccess<List<LinkedStudent>> ? view.data : null;
         // الابن المختار؛ لو اختفى بعد فك ربط بنرجع لأول واحد.
-        final selected = all == null
-            ? null
-            : all.firstWhere(
-                (i) => i.student.id == _selectedId,
-                orElse: () => all.first,
-              );
+        final selected = all?.firstWhere(
+          (i) => i.student.id == _selectedId,
+          orElse: () => all.first,
+        );
         return ChildShell(
           current: ChildTab.home,
           title: l10n.homeGuardianTitle,
