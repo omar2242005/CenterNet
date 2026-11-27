@@ -1724,4 +1724,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String paymentsCancelledReason(String reason) {
     return 'السبب: $reason';
   }
+
+  @override
+  String get paymentsScreenTitle => 'المدفوعات';
+
+  @override
+  String get paymentsSearchHint => 'ابحث باسم الطالب';
+
+  @override
+  String get paymentsFilterAll => 'الكل';
+
+  @override
+  String get paymentsFilterPaid => 'مدفوع';
+
+  @override
+  String get paymentsFilterUnpaid => 'غير مدفوع';
+
+  @override
+  String get paymentsAllGroups => 'كل المجموعات';
+
+  @override
+  String get paymentsEmptyMonth => 'مفيش طلاب مسجلين في مجموعات نشطة.';
+
+  @override
+  String get paymentsNoResults => 'مفيش نتايج مطابقة للبحث أو الفلاتر.';
+
+  @override
+  String paymentsPaidOn(String date) {
+    return 'اتدفع $date';
+  }
 }

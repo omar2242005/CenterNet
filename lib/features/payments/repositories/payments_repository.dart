@@ -165,6 +165,26 @@ class PaymentsRepository {
     });
   }
 
+  /// دفعات السنتر كلها في شهر معيّن (فلتر واحد على `month` = مفيش
+  /// composite index). شاشة المدفوعات بتجمعها مع قوائم المجموعات عشان
+  /// تحسب غير المسددين.
+  Future<List<Payment>> loadMonthPayments(
+    String centerId, {
+    required int year,
+    required int month,
+  }) {
+    return ErrorMapper.guard(() async {
+      _requireUid();
+      final key = Payment.monthKey(year, month);
+      final snap = await _db
+          .collection(FirestorePaths.payments(centerId))
+          .where('month', isEqualTo: key)
+          .get()
+          .timeout(timeout);
+      return _parseAll(snap);
+    });
+  }
+
   List<Payment> _parseAll(
     QuerySnapshot<Map<String, dynamic>> snap, {
     String? month,

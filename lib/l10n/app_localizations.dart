@@ -3134,6 +3134,60 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'السبب: {reason}'**
   String paymentsCancelledReason(String reason);
+
+  /// No description provided for @paymentsScreenTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المدفوعات'**
+  String get paymentsScreenTitle;
+
+  /// No description provided for @paymentsSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث باسم الطالب'**
+  String get paymentsSearchHint;
+
+  /// No description provided for @paymentsFilterAll.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكل'**
+  String get paymentsFilterAll;
+
+  /// No description provided for @paymentsFilterPaid.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدفوع'**
+  String get paymentsFilterPaid;
+
+  /// No description provided for @paymentsFilterUnpaid.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير مدفوع'**
+  String get paymentsFilterUnpaid;
+
+  /// No description provided for @paymentsAllGroups.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل المجموعات'**
+  String get paymentsAllGroups;
+
+  /// No description provided for @paymentsEmptyMonth.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش طلاب مسجلين في مجموعات نشطة.'**
+  String get paymentsEmptyMonth;
+
+  /// No description provided for @paymentsNoResults.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش نتايج مطابقة للبحث أو الفلاتر.'**
+  String get paymentsNoResults;
+
+  /// No description provided for @paymentsPaidOn.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتدفع {date}'**
+  String paymentsPaidOn(String date);
 }
 
 class _AppLocalizationsDelegate

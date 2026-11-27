@@ -151,6 +151,21 @@ class FakePaymentsRepository implements PaymentsRepository {
   }
 
   @override
+  Future<List<Payment>> loadMonthPayments(
+    String centerId, {
+    required int year,
+    required int month,
+  }) async {
+    calls.add('month:${Payment.monthKey(year, month)}');
+    final f = loadFailure;
+    if (f != null) throw f;
+    final key = Payment.monthKey(year, month);
+    final out = payments.where((p) => p.month == key).toList(growable: false);
+    out.sort((a, b) => b.month.compareTo(a.month));
+    return out;
+  }
+
+  @override
   Future<List<Payment>> loadGroupMonthPayments(
     String centerId,
     String groupId, {

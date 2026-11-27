@@ -45,8 +45,10 @@ class _SectionView extends StatelessWidget {
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (_) =>
-          BlocProvider.value(value: cubit, child: const RecordPaymentSheet()),
+      builder: (_) => RecordPaymentSheet(
+        groups: cubit.state.groups,
+        onSave: cubit.record,
+      ),
     );
   }
 

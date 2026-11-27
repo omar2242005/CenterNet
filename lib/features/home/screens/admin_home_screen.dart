@@ -11,6 +11,7 @@ import '../../centers/center_route_names.dart';
 import '../../centers/repository/centers_repository.dart';
 import '../../groups/group_route_names.dart';
 import '../../linking/link_route_names.dart';
+import '../../payments/payment_route_names.dart';
 import '../../staff/staff_route_names.dart';
 import '../../students/student_route_names.dart';
 import '../widgets/admin_shell.dart';
@@ -73,6 +74,12 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         Icons.link,
         l10n.linkRequestsTitle,
         LinkRoutes.requests,
+        push: true,
+      ),
+      _Shortcut(
+        Icons.payments_outlined,
+        l10n.paymentsScreenTitle,
+        PaymentRoutes.list,
         push: true,
       ),
     ];
