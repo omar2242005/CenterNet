@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../app/di.dart';
 import '../../../core/theme/app_colors.dart';
@@ -6,6 +7,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../l10n/app_localizations.dart';
+import '../auth_route_names.dart';
 import '../models/account_type.dart';
 import '../models/app_user.dart';
 import '../repository/auth_repository.dart';
@@ -14,8 +16,23 @@ import '../sign_out_action.dart';
 
 /// شاشة "حسابي": بيانات الحساب الأساسية + تسجيل الخروج.
 /// متاحة لكل الأدوار (مش محتاجة سطر في حارس الصلاحيات).
-class MyAccountScreen extends StatelessWidget {
+class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen({super.key});
+
+  @override
+  State<MyAccountScreen> createState() => _MyAccountScreenState();
+}
+
+class _MyAccountScreenState extends State<MyAccountScreen> {
+  late Future<AppUser?> _profile = sl<AuthRepository>().loadProfile();
+
+  /// بيفتح شاشة التعديل، ولو اتحفظ بيعيد تحميل البيانات.
+  Future<void> _edit(AppUser user) async {
+    final saved = await context.push<bool>(AuthRoutes.editContact, extra: user);
+    if (saved == true && mounted) {
+      setState(() => _profile = sl<AuthRepository>().loadProfile());
+    }
+  }
 
   static String _typeLabel(AppLocalizations l10n, AccountType type) {
     return switch (type) {
@@ -36,7 +53,7 @@ class MyAccountScreen extends StatelessWidget {
       appBar: AppBar(title: Text(l10n.myAccountTitle)),
       body: SafeArea(
         child: FutureBuilder<AppUser?>(
-          future: sl<AuthRepository>().loadProfile(),
+          future: _profile,
           builder: (context, snap) {
             final user = snap.data;
             if (snap.hasError ||
@@ -84,6 +101,13 @@ class MyAccountScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
+                AppButton(
+                  label: l10n.editContactAction,
+                  variant: AppButtonVariant.secondary,
+                  icon: Icons.edit_outlined,
+                  onPressed: () => _edit(user),
+                ),
+                const SizedBox(height: AppSpacing.sm),
                 AppButton(
                   label: l10n.authSignOut,
                   variant: AppButtonVariant.secondary,

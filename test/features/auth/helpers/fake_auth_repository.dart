@@ -72,6 +72,15 @@ class FakeAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<void> updateContact({
+    required String name,
+    required String phone,
+  }) async {
+    calls.add('updateContact:$name:$phone');
+    _maybeFail();
+  }
+
+  @override
   Future<void> signOut() async {
     calls.add('signOut');
   }

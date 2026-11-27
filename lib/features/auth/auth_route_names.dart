@@ -12,4 +12,7 @@ abstract final class AuthRoutes {
 
   /// شاشة "حسابي" — لكل مستخدم مسجّل (مش محتاجة صلاحية دور).
   static const String myAccount = '/my-account';
+
+  /// تعديل الاسم والموبايل (بياخد `extra: AppUser`).
+  static const String editContact = '/my-account/edit';
 }

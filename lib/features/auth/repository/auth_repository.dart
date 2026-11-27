@@ -114,6 +114,19 @@ class AuthRepository {
     });
   }
 
+  /// تعديل الاسم والموبايل بس (الإيميل خارج النطاق). الـ Rules بتسمح للمستخدم بتعديل نفسه.
+  Future<void> updateContact({required String name, required String phone}) {
+    return ErrorMapper.guard(() async {
+      final user = _auth.currentUser;
+      if (user == null) throw const Failure.permission();
+      await _db.doc(FirestorePaths.user(user.uid)).update(<String, dynamic>{
+        'name': name.trim(),
+        'phone': phone,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+    });
+  }
+
   Future<void> signOut() => ErrorMapper.guard(() => _auth.signOut());
 
   /// حذف الحساب الحالي نهائيًا (بيانات + حساب Auth).

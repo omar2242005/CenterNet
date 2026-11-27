@@ -4,9 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import 'auth_route_names.dart';
+import 'models/app_user.dart';
 import 'models/register_draft.dart';
 import 'repository/auth_repository.dart';
 import 'screens/account_type_screen.dart';
+import 'screens/edit_contact_screen.dart';
 import 'screens/forgot_password_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/my_account_screen.dart';
@@ -49,5 +51,13 @@ final List<RouteBase> authRoutes = <RouteBase>[
   GoRoute(
     path: AuthRoutes.myAccount,
     builder: (context, state) => const MyAccountScreen(),
+  ),
+  GoRoute(
+    path: AuthRoutes.editContact,
+    // من غير بيانات (مثلًا بعد استرجاع التطبيق) نرجع لـ "حسابي".
+    redirect: (context, state) =>
+        state.extra is AppUser ? null : AuthRoutes.myAccount,
+    builder: (context, state) =>
+        EditContactScreen(user: state.extra! as AppUser),
   ),
 ];
