@@ -1495,4 +1495,172 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get teacherScoresNoMatch => 'مفيش طالب بالاسم أو الرقم ده';
+
+  @override
+  String get linkRequestOpen => 'طلب الربط من السنتر';
+
+  @override
+  String get linkRequestTitle => 'طلب ربط';
+
+  @override
+  String get linkRequestIntro => 'أرسل طلبًا للسنتر برقم الطالب. بعد موافقة الأدمن تكمل الربط من هنا.';
+
+  @override
+  String get linkRequestCenterCode => 'كود السنتر (من الأدمن)';
+
+  @override
+  String get linkRequestStudentNo => 'رقم الطالب';
+
+  @override
+  String get linkRequestSend => 'إرسال الطلب';
+
+  @override
+  String get linkRequestPending => 'تم إرسال طلبك وبانتظار موافقة الأدمن.';
+
+  @override
+  String get linkRequestApproved => 'تمت الموافقة على طلبك. أكمل الربط الآن.';
+
+  @override
+  String get linkRequestRejected => 'تم رفض الطلب. تأكد من البيانات وحاول مرة أخرى.';
+
+  @override
+  String get linkRequestRefresh => 'تحديث الحالة';
+
+  @override
+  String get linkRequestComplete => 'إكمال الربط';
+
+  @override
+  String get linkRequestRetry => 'طلب جديد';
+
+  @override
+  String get linkRequestsTitle => 'طلبات الربط';
+
+  @override
+  String get linkRequestsEmpty => 'لا توجد طلبات معلقة';
+
+  @override
+  String get linkRequestApprove => 'موافقة';
+
+  @override
+  String get linkRequestReject => 'رفض';
+
+  @override
+  String linkRequestRelation(String relation) {
+    return 'الصلة: $relation';
+  }
+
+  @override
+  String adminCenterCode(String code) {
+    return 'كود السنتر: $code';
+  }
+
+  @override
+  String get childNavHome => 'الرئيسية';
+
+  @override
+  String get childNavSchedule => 'الجدول';
+
+  @override
+  String get studentNavGrades => 'درجاتي';
+
+  @override
+  String get guardianNavGrades => 'الدرجات';
+
+  @override
+  String get guardianNavProfile => 'ملف الابن';
+
+  @override
+  String get childNextSession => 'الحصة القادمة';
+
+  @override
+  String get childNoNextSession => 'لا توجد حصص قادمة';
+
+  @override
+  String get childLatestResult => 'آخر نتيجة';
+
+  @override
+  String get childOverviewTitle => 'متابعة الشهر';
+
+  @override
+  String get childMonthAttendance => 'الحضور هذا الشهر';
+
+  @override
+  String get childMonthResults => 'نتائج هذا الشهر';
+
+  @override
+  String get childProfileGroups => 'المجموعات';
+
+  @override
+  String get childProfileNoGroups => 'غير مسجل في أي مجموعة';
+
+  @override
+  String get updatesBell => 'آخر التحديثات';
+
+  @override
+  String get updatesBellGuardian => 'تحديثات الأبناء';
+
+  @override
+  String get updatesStudentTitle => 'آخر التحديثات';
+
+  @override
+  String get updatesGuardianTitle => 'تحديثات الأبناء';
+
+  @override
+  String get updatesEmpty => 'لا توجد تحديثات';
+
+  @override
+  String get updatesGrades => 'أحدث الدرجات';
+
+  @override
+  String get updatesSessions => 'حصص اليوم والقادمة';
+
+  @override
+  String get updatesAttendance => 'آخر حضور';
+
+  @override
+  String get updatesAbsence => 'آخر غياب';
+
+  @override
+  String get updatesToday => 'اليوم';
+
+  @override
+  String get filterAll => 'الكل';
+
+  @override
+  String get filterThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get filterNextWeek => 'الأسبوع القادم';
+
+  @override
+  String get filterPresent => 'حضور';
+
+  @override
+  String get filterAbsent => 'غياب';
+
+  @override
+  String get attendanceStatusAbsent => 'غائب';
+
+  @override
+  String get examDetailsTitle => 'تفاصيل الامتحان';
+
+  @override
+  String get examYourScore => 'الدرجة';
+
+  @override
+  String examMaxScore(String max) {
+    return 'الدرجة النهائية: $max';
+  }
+
+  @override
+  String get examTeacherComment => 'تعليق المعلم';
+
+  @override
+  String get examNoComment => 'لا يوجد تعليق';
+
+  @override
+  String get editContactTitle => 'تعديل بيانات التواصل';
+
+  @override
+  String get editContactAction => 'تعديل بيانات التواصل';
 }

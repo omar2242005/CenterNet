@@ -6,6 +6,7 @@ import '../../assistant/models/attendance.dart';
 import '../../grades/models/exam.dart';
 import '../../grades/models/score.dart';
 import '../../groups/models/group.dart';
+import '../../sessions/models/session.dart';
 import '../../students/models/student.dart';
 import '../models/child_data.dart';
 
@@ -41,31 +42,102 @@ class StudentDataRepository {
     return out;
   }
 
-  /// الجدول الأسبوعي من مواعيد مجموعات الطالب.
-  Future<List<ScheduleEntry>> loadSchedule(Student s) {
-    return ErrorMapper.guard(() async => buildSchedule(await _loadGroups(s)));
+  /// مجموعات الطالب (للبروفايل).
+  Future<List<Group>> loadGroups(Student s) {
+    return ErrorMapper.guard(() => _loadGroups(s));
   }
 
-  /// سجل حضور الطالب (من غير الملغي).
-  Future<AttendanceHistory> loadAttendance(Student s) {
-    return ErrorMapper.guard(() async {
-      final snap = await _db
-          .collection(FirestorePaths.attendance(s.centerId))
-          .where('studentId', isEqualTo: s.id)
-          .get()
-          .timeout(timeout);
-      final records = <Attendance>[];
+  /// حصص مجموعات الطالب من 45 يوم فاتوا وطالع (للجدول والغياب).
+  Future<List<Session>> _loadSessions(Student s, DateTime now) async {
+    final from = Timestamp.fromDate(now.subtract(const Duration(days: 45)));
+    final snaps = await Future.wait(
+      s.groupIds.map(
+        (gid) => _db
+            .collection(FirestorePaths.sessions(s.centerId))
+            .where('groupId', isEqualTo: gid)
+            .where('startAt', isGreaterThanOrEqualTo: from)
+            .get()
+            .timeout(timeout),
+      ),
+    );
+    final out = <Session>[];
+    for (final snap in snaps) {
       for (final doc in snap.docs) {
         try {
-          records.add(Attendance.fromMap(doc.id, doc.data()));
+          out.add(Session.fromMap(doc.id, doc.data()));
         } on FormatException {
           continue;
         }
       }
+    }
+    return out;
+  }
+
+  Future<List<SessionEntry>> _entries(
+    Student s,
+    List<Group> groups,
+    DateTime now,
+  ) async {
+    final sessions = await _loadSessions(s, now);
+    return buildSessionEntries(sessions, {for (final g in groups) g.id: g});
+  }
+
+  /// الجدول: حصص الطالب بتواريخها (الفلتر في الشاشة).
+  Future<List<SessionEntry>> loadSchedule(Student s) {
+    return ErrorMapper.guard(() async {
       final groups = await _loadGroups(s);
-      return buildAttendanceHistory(records, {
-        for (final g in groups) g.id: g.name,
-      });
+      return _entries(s, groups, DateTime.now());
+    });
+  }
+
+  Future<AttendanceHistory> _attendance(
+    Student s,
+    List<Group> groups,
+    List<SessionEntry> entries,
+    DateTime now,
+  ) async {
+    final snap = await _db
+        .collection(FirestorePaths.attendance(s.centerId))
+        .where('studentId', isEqualTo: s.id)
+        .get()
+        .timeout(timeout);
+    final records = <Attendance>[];
+    for (final doc in snap.docs) {
+      try {
+        records.add(Attendance.fromMap(doc.id, doc.data()));
+      } on FormatException {
+        continue;
+      }
+    }
+    return buildAttendanceHistory(
+      records,
+      {for (final g in groups) g.id: g.name},
+      sessions: entries,
+      now: now,
+      since: s.createdAt,
+    );
+  }
+
+  /// سجل حضور الطالب (من غير الملغي) + الغيابات.
+  Future<AttendanceHistory> loadAttendance(Student s) {
+    return ErrorMapper.guard(() async {
+      final groups = await _loadGroups(s);
+      final now = DateTime.now();
+      return _attendance(s, groups, await _entries(s, groups, now), now);
+    });
+  }
+
+  /// ملخص الطالب (حضور + نتايج + حصص) للرئيسية والتحديثات.
+  Future<ChildSummary> loadSummary(Student s) {
+    return ErrorMapper.guard(() async {
+      final groups = await _loadGroups(s);
+      final now = DateTime.now();
+      final entries = await _entries(s, groups, now);
+      return ChildSummary(
+        attendance: await _attendance(s, groups, entries, now),
+        results: await _results(s, groups),
+        sessions: entries,
+      );
     });
   }
 
@@ -75,26 +147,32 @@ class StudentDataRepository {
   /// بتشترط الامتحان منشور وده مينفعش يتثبت في query. غياب الدرجة (أو رفض
   /// الـ Rules لمستند مش موجود) = لسه متسجلتش.
   Future<ResultsData> loadResults(Student s) {
-    return ErrorMapper.guard(() async {
-      final exams = <Exam>[];
-      for (final gid in s.groupIds) {
-        final snap = await _db
-            .collection(FirestorePaths.exams(s.centerId))
-            .where('groupId', isEqualTo: gid)
-            .where('published', isEqualTo: true)
-            .get()
-            .timeout(timeout);
-        for (final doc in snap.docs) {
-          try {
-            exams.add(Exam.fromMap(doc.id, doc.data()));
-          } on FormatException {
-            continue;
-          }
+    return ErrorMapper.guard(() async => _results(s, await _loadGroups(s)));
+  }
+
+  Future<ResultsData> _results(Student s, List<Group> groups) async {
+    final exams = <Exam>[];
+    for (final gid in s.groupIds) {
+      final snap = await _db
+          .collection(FirestorePaths.exams(s.centerId))
+          .where('groupId', isEqualTo: gid)
+          .where('published', isEqualTo: true)
+          .get()
+          .timeout(timeout);
+      for (final doc in snap.docs) {
+        try {
+          exams.add(Exam.fromMap(doc.id, doc.data()));
+        } on FormatException {
+          continue;
         }
       }
-      final scores = await Future.wait(exams.map((e) => _score(s, e)));
-      return buildResults(exams, scores.whereType<Score>());
-    });
+    }
+    final scores = await Future.wait(exams.map((e) => _score(s, e)));
+    return buildResults(
+      exams,
+      scores.whereType<Score>(),
+      groups: {for (final g in groups) g.id: g},
+    );
   }
 
   Future<Score?> _score(Student s, Exam e) async {

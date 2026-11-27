@@ -61,6 +61,12 @@ abstract final class FirestorePaths {
   static String studentLink(String centerId, String uid, String studentId) =>
       '${studentLinks(centerId)}/${FirestoreIds.studentLink(uid, studentId)}';
 
+  /// طلبات الربط (الطالب/ولي الأمر يطلب من الأدمن): `uid_studentNo`.
+  static String linkRequests(String centerId) =>
+      '${center(centerId)}/linkRequests';
+  static String linkRequest(String centerId, String uid, int studentNo) =>
+      '${linkRequests(centerId)}/${FirestoreIds.linkRequest(uid, studentNo)}';
+
   /// عدّاد أولياء الأمور النشطين للطالب (حد أقصى 4): `{count: int}`.
   static String guardianCount(String centerId, String studentId) =>
       '${center(centerId)}/guardianCounts/${_part(studentId, 'studentId')}';
@@ -142,6 +148,11 @@ abstract final class FirestoreIds {
   /// مثال: `u9_s7`
   static String studentLink(String uid, String studentId) =>
       '${_part(uid, 'uid')}_${_part(studentId, 'studentId')}';
+
+  /// طلب ربط: `uid_studentNo`
+  /// مثال: `u9_7`
+  static String linkRequest(String uid, int studentNo) =>
+      '${_part(uid, 'uid')}_$studentNo';
 
   /// دفع (P1): `sid_gid_yyyyMM`
   /// مثال: `s7_g1_202611`

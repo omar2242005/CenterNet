@@ -940,5 +940,74 @@
       "count": { "type": "int" }
     }
   },
-  "teacherScoresNoMatch": "مفيش طالب بالاسم أو الرقم ده"
+  "teacherScoresNoMatch": "مفيش طالب بالاسم أو الرقم ده",
+  "linkRequestOpen": "طلب الربط من السنتر",
+  "linkRequestTitle": "طلب ربط",
+  "linkRequestIntro": "أرسل طلبًا للسنتر برقم الطالب. بعد موافقة الأدمن تكمل الربط من هنا.",
+  "linkRequestCenterCode": "كود السنتر (من الأدمن)",
+  "linkRequestStudentNo": "رقم الطالب",
+  "linkRequestSend": "إرسال الطلب",
+  "linkRequestPending": "تم إرسال طلبك وبانتظار موافقة الأدمن.",
+  "linkRequestApproved": "تمت الموافقة على طلبك. أكمل الربط الآن.",
+  "linkRequestRejected": "تم رفض الطلب. تأكد من البيانات وحاول مرة أخرى.",
+  "linkRequestRefresh": "تحديث الحالة",
+  "linkRequestComplete": "إكمال الربط",
+  "linkRequestRetry": "طلب جديد",
+  "linkRequestsTitle": "طلبات الربط",
+  "linkRequestsEmpty": "لا توجد طلبات معلقة",
+  "linkRequestApprove": "موافقة",
+  "linkRequestReject": "رفض",
+  "linkRequestRelation": "الصلة: {relation}",
+  "@linkRequestRelation": {
+    "placeholders": {
+      "relation": { "type": "String" }
+    }
+  },
+  "adminCenterCode": "كود السنتر: {code}",
+  "@adminCenterCode": {
+    "placeholders": {
+      "code": { "type": "String" }
+    }
+  },
+  "childNavHome": "الرئيسية",
+  "childNavSchedule": "الجدول",
+  "studentNavGrades": "درجاتي",
+  "guardianNavGrades": "الدرجات",
+  "guardianNavProfile": "ملف الابن",
+  "childNextSession": "الحصة القادمة",
+  "childNoNextSession": "لا توجد حصص قادمة",
+  "childLatestResult": "آخر نتيجة",
+  "childOverviewTitle": "متابعة الشهر",
+  "childMonthAttendance": "الحضور هذا الشهر",
+  "childMonthResults": "نتائج هذا الشهر",
+  "childProfileGroups": "المجموعات",
+  "childProfileNoGroups": "غير مسجل في أي مجموعة",
+  "updatesBell": "آخر التحديثات",
+  "updatesBellGuardian": "تحديثات الأبناء",
+  "updatesStudentTitle": "آخر التحديثات",
+  "updatesGuardianTitle": "تحديثات الأبناء",
+  "updatesEmpty": "لا توجد تحديثات",
+  "updatesGrades": "أحدث الدرجات",
+  "updatesSessions": "حصص اليوم والقادمة",
+  "updatesAttendance": "آخر حضور",
+  "updatesAbsence": "آخر غياب",
+  "updatesToday": "اليوم",
+  "filterAll": "الكل",
+  "filterThisWeek": "هذا الأسبوع",
+  "filterNextWeek": "الأسبوع القادم",
+  "filterPresent": "حضور",
+  "filterAbsent": "غياب",
+  "attendanceStatusAbsent": "غائب",
+  "examDetailsTitle": "تفاصيل الامتحان",
+  "examYourScore": "الدرجة",
+  "examMaxScore": "الدرجة النهائية: {max}",
+  "@examMaxScore": {
+    "placeholders": {
+      "max": { "type": "String" }
+    }
+  },
+  "examTeacherComment": "تعليق المعلم",
+  "examNoComment": "لا يوجد تعليق",
+  "editContactTitle": "تعديل بيانات التواصل",
+  "editContactAction": "تعديل بيانات التواصل"
 }

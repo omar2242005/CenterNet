@@ -537,6 +537,26 @@ service cloud.firestore {
             || get(linkPath(old.centerId, request.auth.uid, s)).data.status == 'unlinked');
     }
 
+    // [v9] طلب ربط جديد: pending بس، من صاحب الحساب، بصلة قرابة لو ولي أمر.
+    function validNewLinkRequest(d, c, rid) {
+      return d.keys().hasOnly(['centerId', 'uid', 'name', 'studentNo', 'kind', 'relation',
+                               'status', 'createdAt'])
+        && d.keys().hasAll(['centerId', 'uid', 'name', 'studentNo', 'kind', 'status', 'createdAt'])
+        && d.centerId == c
+        && exists(centerPath(c))
+        && d.uid == request.auth.uid
+        && d.name is string && d.name.size() > 0 && d.name.size() <= 100
+        && d.studentNo is int && d.studentNo > 0
+        && rid.matches(d.uid + '_[0-9]+')
+        && d.status == 'pending'
+        && d.createdAt == request.time
+        && d.kind in ['student', 'guardian']
+        && (d.kind == 'guardian'
+              ? (d.get('relation', null) is string
+                 && d.relation.size() > 0 && d.relation.size() <= 40)
+              : !d.keys().hasAny(['relation']));
+    }
+
     // عدّاد ربط المستخدم: يزيد/ينقص 1، ومربوط بتغيّر حقيقي في الربط.
     function validLinkedUserWrite(c, u) {
       let d = request.resource.data;
@@ -875,6 +895,28 @@ service cloud.firestore {
       allow update: if unlinksLink(c) || reactivatesLink(c);
 
       allow delete: if false;
+    }
+
+    // [v9] طلبات الربط: الطالب/ولي الأمر يبعت طلب للأدمن، والأدمن يوافق فيكتب كود ربط
+    // في الطلب (status = approved + code) والطالب يكمّل الربط بالكود ده بالطريقة العادية.
+    // id الطلب = uid_studentNo. صاحب الطلب يقراه ويمسحه، والأدمن يقرا ويرد (approved/rejected).
+    match /centers/{c}/linkRequests/{rid} {
+      allow get: if signedIn()
+        && (rid.matches(request.auth.uid + '_[0-9]+') || isAdmin(c));
+      allow list: if signedIn()
+        && (resource.data.uid == request.auth.uid || isAdmin(c));
+
+      allow create: if validNewLinkRequest(request.resource.data, c, rid);
+
+      allow update: if isAdmin(c)
+        && resource.data.status == 'pending'
+        && request.resource.data.status in ['approved', 'rejected']
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'code'])
+        && (request.resource.data.status == 'rejected'
+            || (request.resource.data.get('code', null) is string
+                && request.resource.data.code.size() > 0));
+
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
     }
 
     // [Person 3] عدّاد أولياء الأمور النشطين للطالب (حد أقصى 4). بيتكتب مع الربط/الفك بس.

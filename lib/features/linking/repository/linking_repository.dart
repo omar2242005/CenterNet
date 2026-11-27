@@ -7,6 +7,7 @@ import '../../../core/firestore_paths.dart';
 import '../../../core/utils/link_code_generator.dart';
 import '../../students/models/student.dart';
 import '../models/invite_code.dart';
+import '../models/link_request.dart';
 import '../models/linked_student.dart';
 import '../models/student_link.dart';
 
@@ -281,6 +282,150 @@ class LinkingRepository {
         return invite;
       }
       throw const Failure.unknown();
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // طلبات الربط: الطالب/ولي الأمر يطلب، والأدمن يوافق (بيطلّع كود ربط عادي).
+  // ------------------------------------------------------------------
+
+  /// بيبعت طلب ربط للأدمن. لو الطلب موجود قبل كده بيرجّعه من غير تكرار.
+  Future<LinkRequest> sendRequest({
+    required String centerId,
+    required int studentNo,
+    required LinkKind kind,
+    String? relation,
+  }) {
+    return ErrorMapper.guard(() async {
+      final uid = _requireUid();
+      final ref = _db.doc(FirestorePaths.linkRequest(centerId, uid, studentNo));
+      final old = await ref.get().timeout(timeout);
+      final oldData = old.data();
+      if (oldData != null) return LinkRequest.fromMap(old.id, oldData);
+
+      final userSnap =
+          await _db.doc(FirestorePaths.user(uid)).get().timeout(timeout);
+      final name = (userSnap.data()?['name'] as String?) ?? '';
+      try {
+        await ref
+            .set(
+              LinkRequest.toCreateMap(
+                centerId: centerId,
+                uid: uid,
+                name: name,
+                studentNo: studentNo,
+                kind: kind,
+                relation: relation,
+              ),
+            )
+            .timeout(timeout);
+      } on FirebaseException catch (e) {
+        if (e.code == 'permission-denied') {
+          throw const Failure.validation('تعذّر إرسال الطلب. تأكد من كود السنتر.');
+        }
+        rethrow;
+      }
+      final fresh = await ref.get().timeout(timeout);
+      return LinkRequest.fromMap(fresh.id, fresh.data()!);
+    });
+  }
+
+  /// آخر حالة للطلب (للتحديث).
+  Future<LinkRequest> loadRequest(LinkRequest r) {
+    return ErrorMapper.guard(() async {
+      final snap = await _db
+          .doc(FirestorePaths.linkRequest(r.centerId, r.uid, r.studentNo))
+          .get(const GetOptions(source: Source.server))
+          .timeout(timeout);
+      final data = snap.data();
+      if (data == null) throw const Failure.notFound(message: 'الطلب غير موجود.');
+      return LinkRequest.fromMap(snap.id, data);
+    });
+  }
+
+  /// مسح الطلب (إعادة المحاولة بعد الرفض أو إلغاء الطلب).
+  Future<void> cancelRequest(LinkRequest r) {
+    return ErrorMapper.guard(() async {
+      await _db
+          .doc(FirestorePaths.linkRequest(r.centerId, r.uid, r.studentNo))
+          .delete()
+          .timeout(timeout);
+    });
+  }
+
+  /// بعد موافقة الأدمن: الربط بالكود اللي في الطلب، وبعدها مسح الطلب.
+  Future<void> completeRequest(LinkRequest r) async {
+    final code = r.code;
+    if (r.status != LinkRequestStatus.approved || code == null) {
+      throw const Failure.validation('الطلب لسه متوافقش عليه.');
+    }
+    await redeem(code, expected: r.kind);
+    try {
+      await cancelRequest(r);
+    } on Failure {
+      // الربط تم فعلًا، ومسح الطلب مش مهم.
+    }
+  }
+
+  /// (أدمن) الطلبات اللي لسه مستنية رد.
+  Future<List<LinkRequest>> loadPendingRequests() {
+    return ErrorMapper.guard(() async {
+      final uid = _requireUid();
+      final userSnap =
+          await _db.doc(FirestorePaths.user(uid)).get().timeout(timeout);
+      final centerId = userSnap.data()?['centerId'];
+      if (centerId is! String) return const <LinkRequest>[];
+      final snap = await _db
+          .collection(FirestorePaths.linkRequests(centerId))
+          .where('status', isEqualTo: LinkRequestStatus.pending.wire)
+          .get()
+          .timeout(timeout);
+      final out = <LinkRequest>[];
+      for (final doc in snap.docs) {
+        try {
+          out.add(LinkRequest.fromMap(doc.id, doc.data()));
+        } on FormatException {
+          continue;
+        }
+      }
+      out.sort((a, b) => a.studentNo.compareTo(b.studentNo));
+      return out;
+    });
+  }
+
+  /// (أدمن) موافقة: بيطلّع كود ربط للطالب صاحب الرقم ويكتبه في الطلب.
+  Future<void> approveRequest(LinkRequest r) {
+    return ErrorMapper.guard(() async {
+      final snap = await _db
+          .collection(FirestorePaths.students(r.centerId))
+          .where('studentNo', isEqualTo: r.studentNo)
+          .limit(1)
+          .get()
+          .timeout(timeout);
+      if (snap.docs.isEmpty) {
+        throw const Failure.notFound(message: 'مفيش طالب بالرقم ده. ارفض الطلب.');
+      }
+      final student = Student.fromMap(snap.docs.first.id, snap.docs.first.data());
+      final invite = await issueCode(
+        student,
+        relation: r.kind == LinkKind.guardian ? r.relation : null,
+      );
+      await _db
+          .doc(FirestorePaths.linkRequest(r.centerId, r.uid, r.studentNo))
+          .update(<String, dynamic>{
+        'status': LinkRequestStatus.approved.wire,
+        'code': invite.id,
+      }).timeout(timeout);
+    });
+  }
+
+  /// (أدمن) رفض الطلب.
+  Future<void> rejectRequest(LinkRequest r) {
+    return ErrorMapper.guard(() async {
+      await _db
+          .doc(FirestorePaths.linkRequest(r.centerId, r.uid, r.studentNo))
+          .update(<String, dynamic>{'status': LinkRequestStatus.rejected.wire})
+          .timeout(timeout);
     });
   }
 

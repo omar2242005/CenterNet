@@ -93,6 +93,12 @@ void main() {
     expect(find.text(arL10n.adminGreeting('أحمد مدير')), findsOneWidget);
     expect(find.text('مركز النور'), findsOneWidget);
     expect(find.text(arL10n.studentsListTitle), findsWidgets);
+    // سطر الكود دفع كارت الإعدادات تحت الشاشة، فنسحب لحد ما يظهر.
+    await tester.scrollUntilVisible(
+      find.text(arL10n.centerSettingsTitle),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.text(arL10n.centerSettingsTitle), findsOneWidget);
   });
 

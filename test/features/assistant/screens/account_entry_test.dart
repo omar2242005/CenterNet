@@ -1,4 +1,6 @@
 import 'package:center_net/app/di.dart';
+import 'package:center_net/app/session_role.dart';
+import 'package:center_net/features/home/models/home_destination.dart';
 import 'package:center_net/core/theme/app_theme.dart';
 import 'package:center_net/features/assistant/widgets/assistant_shell.dart';
 import 'package:center_net/features/auth/auth_route_names.dart';
@@ -40,6 +42,7 @@ Future<void> _pump(WidgetTester tester, Widget home) async {
 void main() {
   setUp(() {
     sl.registerSingleton<LinkingRepository>(FakeLinkingRepository());
+    sl.registerSingleton<SessionRole>(SessionRole());
   });
 
   tearDown(() async {
@@ -72,8 +75,14 @@ void main() {
   });
 
   testWidgets('شاشة ولي الأمر فيها حسابي', (tester) async {
+    // ولي الأمر: حسابي في القائمة الجانبية (التبويب الرابع "ملف الابن").
+    sl<SessionRole>().set(HomeDestination.guardian);
     await _pump(tester, const GuardianHomeScreen());
-    await tester.tap(find.byTooltip(arL10n.myAccountTitle));
+    await tester.tap(find.byTooltip(MaterialLocalizations.of(
+      tester.element(find.byType(Scaffold).first),
+    ).openAppDrawerTooltip));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(arL10n.myAccountTitle));
     await tester.pumpAndSettle();
     expect(find.text('ACCOUNT'), findsOneWidget);
   });

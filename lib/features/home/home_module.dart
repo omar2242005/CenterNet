@@ -50,7 +50,9 @@ final List<RouteBase> homeRoutes = <RouteBase>[
   ),
   GoRoute(
     path: HomeRoutes.guardian,
-    builder: (context, state) => const GuardianHomeScreen(),
+    builder: (context, state) => GuardianHomeScreen(
+      initialStudentId: state.extra is String ? state.extra as String : null,
+    ),
   ),
   GoRoute(
     path: HomeRoutes.inactive,
