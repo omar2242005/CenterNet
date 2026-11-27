@@ -1553,4 +1553,114 @@ class AppLocalizationsAr extends AppLocalizations {
   String adminCenterCode(String code) {
     return 'كود السنتر: $code';
   }
+
+  @override
+  String get childNavHome => 'الرئيسية';
+
+  @override
+  String get childNavSchedule => 'الجدول';
+
+  @override
+  String get studentNavGrades => 'درجاتي';
+
+  @override
+  String get guardianNavGrades => 'الدرجات';
+
+  @override
+  String get guardianNavProfile => 'ملف الابن';
+
+  @override
+  String get childNextSession => 'الحصة القادمة';
+
+  @override
+  String get childNoNextSession => 'لا توجد حصص قادمة';
+
+  @override
+  String get childLatestResult => 'آخر نتيجة';
+
+  @override
+  String get childOverviewTitle => 'متابعة الشهر';
+
+  @override
+  String get childMonthAttendance => 'الحضور هذا الشهر';
+
+  @override
+  String get childMonthResults => 'نتائج هذا الشهر';
+
+  @override
+  String get childProfileGroups => 'المجموعات';
+
+  @override
+  String get childProfileNoGroups => 'غير مسجل في أي مجموعة';
+
+  @override
+  String get updatesBell => 'آخر التحديثات';
+
+  @override
+  String get updatesBellGuardian => 'تحديثات الأبناء';
+
+  @override
+  String get updatesStudentTitle => 'آخر التحديثات';
+
+  @override
+  String get updatesGuardianTitle => 'تحديثات الأبناء';
+
+  @override
+  String get updatesEmpty => 'لا توجد تحديثات';
+
+  @override
+  String get updatesGrades => 'أحدث الدرجات';
+
+  @override
+  String get updatesSessions => 'حصص اليوم والقادمة';
+
+  @override
+  String get updatesAttendance => 'آخر حضور';
+
+  @override
+  String get updatesAbsence => 'آخر غياب';
+
+  @override
+  String get updatesToday => 'اليوم';
+
+  @override
+  String get filterAll => 'الكل';
+
+  @override
+  String get filterThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get filterNextWeek => 'الأسبوع القادم';
+
+  @override
+  String get filterPresent => 'حضور';
+
+  @override
+  String get filterAbsent => 'غياب';
+
+  @override
+  String get attendanceStatusAbsent => 'غائب';
+
+  @override
+  String get examDetailsTitle => 'تفاصيل الامتحان';
+
+  @override
+  String get examYourScore => 'الدرجة';
+
+  @override
+  String examMaxScore(String max) {
+    return 'الدرجة النهائية: $max';
+  }
+
+  @override
+  String get examTeacherComment => 'تعليق المعلم';
+
+  @override
+  String get examNoComment => 'لا يوجد تعليق';
+
+  @override
+  String get editContactTitle => 'تعديل بيانات التواصل';
+
+  @override
+  String get editContactAction => 'تعديل بيانات التواصل';
 }

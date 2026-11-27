@@ -15,8 +15,9 @@ import '../../students/models/student.dart';
 import '../cubit/child_data_cubit.dart';
 import '../models/child_data.dart';
 import '../repository/student_data_repository.dart';
+import '../widgets/filter_chips.dart';
 
-/// سجل حضور الطالب (الأحدث أولًا) مع ملخص "حضر X من Y".
+/// سجل حضور الطالب (الأحدث أولًا) مع ملخص "حضر X من Y" وفلتر (الكل / حضر / غاب).
 class AttendanceHistoryScreen extends StatelessWidget {
   const AttendanceHistoryScreen({super.key, required this.student});
 
@@ -28,7 +29,7 @@ class AttendanceHistoryScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => ChildDataCubit<AttendanceHistory>(
         () => sl<StudentDataRepository>().loadAttendance(student),
-        isEmpty: (d) => d.rows.isEmpty,
+        isEmpty: (d) => d.total == 0,
       )..load(),
       child: Scaffold(
         appBar: AppBar(title: Text(l10n.areaAttendanceTitle)),
@@ -55,31 +56,78 @@ class AttendanceHistoryScreen extends StatelessWidget {
   }
 }
 
-class _AttendanceList extends StatelessWidget {
+enum _AttendanceFilter { all, present, absent }
+
+/// سطر معروض: حضور مسجل، أو غياب لو [attendance] = null.
+class _Line {
+  const _Line(this.groupName, this.when, this.attendance);
+
+  final String groupName;
+  final DateTime? when;
+  final Attendance? attendance;
+}
+
+class _AttendanceList extends StatefulWidget {
   const _AttendanceList({required this.history});
 
   final AttendanceHistory history;
 
-  (String, StatusTone) _status(AppLocalizations l10n, AttendanceStatus s) =>
-      switch (s) {
-        AttendanceStatus.present => (
-            l10n.attendanceStatusPresent,
-            StatusTone.success,
-          ),
-        AttendanceStatus.lateArrival => (
-            l10n.attendanceStatusLate,
-            StatusTone.warning,
-          ),
-        AttendanceStatus.excused => (
-            l10n.attendanceStatusExcused,
-            StatusTone.info,
-          ),
-      };
+  @override
+  State<_AttendanceList> createState() => _AttendanceListState();
+}
+
+class _AttendanceListState extends State<_AttendanceList> {
+  _AttendanceFilter _filter = _AttendanceFilter.all;
+
+  List<_Line> _lines() {
+    final h = widget.history;
+    final present = [
+      for (final r in h.rows)
+        if (_filter == _AttendanceFilter.all || r.attendance.countsAsAttended)
+          _Line(r.groupName, r.when, r.attendance),
+    ];
+    final absent = [
+      for (final a in h.absences) _Line(a.groupName, a.when, null),
+    ];
+    final lines = switch (_filter) {
+      _AttendanceFilter.present => present,
+      _AttendanceFilter.absent => absent,
+      _AttendanceFilter.all => [...present, ...absent],
+    };
+    lines.sort((a, b) {
+      final x = a.when;
+      final y = b.when;
+      if (x == null && y == null) return 0;
+      if (x == null) return 1;
+      if (y == null) return -1;
+      return y.compareTo(x);
+    });
+    return lines;
+  }
+
+  (String, StatusTone) _status(AppLocalizations l10n, Attendance? a) {
+    if (a == null) return (l10n.attendanceStatusAbsent, StatusTone.error);
+    return switch (a.status) {
+      AttendanceStatus.present => (
+          l10n.attendanceStatusPresent,
+          StatusTone.success,
+        ),
+      AttendanceStatus.lateArrival => (
+          l10n.attendanceStatusLate,
+          StatusTone.warning,
+        ),
+      AttendanceStatus.excused => (
+          l10n.attendanceStatusExcused,
+          StatusTone.info,
+        ),
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final history = widget.history;
     return ListView(
       padding: AppSpacing.screenPadding,
       children: [
@@ -90,7 +138,17 @@ class _AttendanceList extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
-        for (final row in history.rows)
+        FilterChips<_AttendanceFilter>(
+          options: {
+            _AttendanceFilter.all: l10n.filterAll,
+            _AttendanceFilter.present: l10n.filterPresent,
+            _AttendanceFilter.absent: l10n.filterAbsent,
+          },
+          selected: _filter,
+          onSelected: (f) => setState(() => _filter = f),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        for (final line in _lines())
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: AppCard(
@@ -100,16 +158,16 @@ class _AttendanceList extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (row.groupName.isNotEmpty)
+                        if (line.groupName.isNotEmpty)
                           Text(
-                            row.groupName,
+                            line.groupName,
                             style: theme.textTheme.titleMedium,
                           ),
-                        if (row.when != null)
+                        if (line.when != null)
                           Text(
                             l10n.attendanceDateTime(
-                              formatDate(l10n, row.when!),
-                              formatTime(l10n, row.when!),
+                              formatDate(l10n, line.when!),
+                              formatTime(l10n, line.when!),
                             ),
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: AppColors.textSecondary,
@@ -120,7 +178,7 @@ class _AttendanceList extends StatelessWidget {
                   ),
                   Builder(
                     builder: (context) {
-                      final (label, tone) = _status(l10n, row.attendance.status);
+                      final (label, tone) = _status(l10n, line.attendance);
                       return StatusBadge(label: label, tone: tone);
                     },
                   ),

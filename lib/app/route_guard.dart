@@ -48,6 +48,10 @@ final Map<String, Set<HomeDestination>> _exactAccess = {
   ChildRoutes.schedule: {HomeDestination.student, HomeDestination.guardian},
   ChildRoutes.attendance: {HomeDestination.student, HomeDestination.guardian},
   ChildRoutes.results: {HomeDestination.student, HomeDestination.guardian},
+  ChildRoutes.profile: {HomeDestination.student, HomeDestination.guardian},
+  ChildRoutes.overview: {HomeDestination.student, HomeDestination.guardian},
+  ChildRoutes.exam: {HomeDestination.student, HomeDestination.guardian},
+  ChildRoutes.updates: {HomeDestination.student, HomeDestination.guardian},
 };
 
 /// المسار نفسه وكل اللي تحته (`/students` و`/students/new` ...).

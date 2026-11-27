@@ -13,8 +13,10 @@ import '../../students/models/student.dart';
 import '../cubit/child_data_cubit.dart';
 import '../models/child_data.dart';
 import '../repository/student_data_repository.dart';
+import '../widgets/child_shell.dart';
+import '../widgets/filter_chips.dart';
 
-/// الجدول الأسبوعي للطالب (من مواعيد مجموعاته).
+/// جدول الطالب: حصصه بتواريخها، مع فلتر (الأسبوع الحالي / الجاي / الكل).
 class ScheduleScreen extends StatelessWidget {
   const ScheduleScreen({super.key, required this.student});
 
@@ -24,48 +26,75 @@ class ScheduleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return BlocProvider(
-      create: (_) => ChildDataCubit<List<ScheduleEntry>>(
+      create: (_) => ChildDataCubit<List<SessionEntry>>(
         () => sl<StudentDataRepository>().loadSchedule(student),
-        isEmpty: (d) => d.isEmpty,
       )..load(),
-      child: Scaffold(
-        appBar: AppBar(title: Text(l10n.areaScheduleTitle)),
-        body: SafeArea(
-          child: Builder(
-            builder: (context) {
-              final cubit = context.read<ChildDataCubit<List<ScheduleEntry>>>();
-              return BlocBuilder<ChildDataCubit<List<ScheduleEntry>>,
-                  ViewState<List<ScheduleEntry>>>(
-                builder: (context, state) => AsyncView<List<ScheduleEntry>>(
-                  state: state,
-                  onRetry: cubit.load,
-                  emptyMessage: l10n.areaScheduleEmpty,
-                  emptyIcon: Icons.calendar_month_outlined,
-                  builder: (context, entries) => _ScheduleList(entries: entries),
-                ),
-              );
-            },
-          ),
+      child: ChildShell(
+        current: ChildTab.schedule,
+        title: l10n.areaScheduleTitle,
+        student: student,
+        body: Builder(
+          builder: (context) {
+            final cubit = context.read<ChildDataCubit<List<SessionEntry>>>();
+            return BlocBuilder<ChildDataCubit<List<SessionEntry>>,
+                ViewState<List<SessionEntry>>>(
+              builder: (context, state) => AsyncView<List<SessionEntry>>(
+                state: state,
+                onRetry: cubit.load,
+                builder: (context, entries) =>
+                    _ScheduleList(entries: entries),
+              ),
+            );
+          },
         ),
       ),
     );
   }
 }
 
-class _ScheduleList extends StatelessWidget {
+class _ScheduleList extends StatefulWidget {
   const _ScheduleList({required this.entries});
 
-  final List<ScheduleEntry> entries;
+  final List<SessionEntry> entries;
+
+  @override
+  State<_ScheduleList> createState() => _ScheduleListState();
+}
+
+class _ScheduleListState extends State<_ScheduleList> {
+  WeekFilter _filter = WeekFilter.thisWeek;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final children = <Widget>[];
-    int? currentDay;
-    for (final e in entries) {
-      if (e.slot.weekday != currentDay) {
-        currentDay = e.slot.weekday;
+    final shown = filterByWeek(widget.entries, _filter, DateTime.now());
+
+    final children = <Widget>[
+      FilterChips<WeekFilter>(
+        options: {
+          WeekFilter.thisWeek: l10n.filterThisWeek,
+          WeekFilter.nextWeek: l10n.filterNextWeek,
+          WeekFilter.all: l10n.filterAll,
+        },
+        selected: _filter,
+        onSelected: (f) => setState(() => _filter = f),
+      ),
+    ];
+    if (shown.isEmpty) {
+      children.add(
+        Padding(
+          padding: const EdgeInsets.only(top: AppSpacing.lg),
+          child: Text(l10n.areaScheduleEmpty, textAlign: TextAlign.center),
+        ),
+      );
+    }
+
+    DateTime? currentDay;
+    for (final e in shown) {
+      final day = DateTime(e.when.year, e.when.month, e.when.day);
+      if (day != currentDay) {
+        currentDay = day;
         children.add(
           Padding(
             padding: const EdgeInsets.only(
@@ -73,7 +102,7 @@ class _ScheduleList extends StatelessWidget {
               bottom: AppSpacing.xs,
             ),
             child: Text(
-              l10n.weekdayName('d${e.slot.weekday}'),
+              '${l10n.weekdayName('d${day.weekday}')} - ${formatDate(l10n, day)}',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w700,
               ),
@@ -81,8 +110,6 @@ class _ScheduleList extends StatelessWidget {
           ),
         );
       }
-      final start = DateTime(2000, 1, 1, e.slot.startHour, e.slot.startMinute);
-      final end = start.add(Duration(minutes: e.slot.durationMinutes));
       children.add(
         Padding(
           padding: const EdgeInsets.only(bottom: AppSpacing.sm),
@@ -94,8 +121,8 @@ class _ScheduleList extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   l10n.scheduleTimeRange(
-                    formatTime(l10n, start),
-                    formatTime(l10n, end),
+                    formatTime(l10n, e.when),
+                    formatTime(l10n, e.end),
                   ),
                   style: theme.textTheme.bodyLarge,
                 ),

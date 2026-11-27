@@ -2803,6 +2803,221 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'كود السنتر: {code}'**
   String adminCenterCode(String code);
+  /// No description provided for @childNavHome.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرئيسية'**
+  String get childNavHome;
+
+  /// No description provided for @childNavSchedule.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجدول'**
+  String get childNavSchedule;
+
+  /// No description provided for @studentNavGrades.
+  ///
+  /// In ar, this message translates to:
+  /// **'درجاتي'**
+  String get studentNavGrades;
+
+  /// No description provided for @guardianNavGrades.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدرجات'**
+  String get guardianNavGrades;
+
+  /// No description provided for @guardianNavProfile.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملف الابن'**
+  String get guardianNavProfile;
+
+  /// No description provided for @childNextSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحصة القادمة'**
+  String get childNextSession;
+
+  /// No description provided for @childNoNextSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد حصص قادمة'**
+  String get childNoNextSession;
+
+  /// No description provided for @childLatestResult.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر نتيجة'**
+  String get childLatestResult;
+
+  /// No description provided for @childOverviewTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة الشهر'**
+  String get childOverviewTitle;
+
+  /// No description provided for @childMonthAttendance.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحضور هذا الشهر'**
+  String get childMonthAttendance;
+
+  /// No description provided for @childMonthResults.
+  ///
+  /// In ar, this message translates to:
+  /// **'نتائج هذا الشهر'**
+  String get childMonthResults;
+
+  /// No description provided for @childProfileGroups.
+  ///
+  /// In ar, this message translates to:
+  /// **'المجموعات'**
+  String get childProfileGroups;
+
+  /// No description provided for @childProfileNoGroups.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير مسجل في أي مجموعة'**
+  String get childProfileNoGroups;
+
+  /// No description provided for @updatesBell.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر التحديثات'**
+  String get updatesBell;
+
+  /// No description provided for @updatesBellGuardian.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحديثات الأبناء'**
+  String get updatesBellGuardian;
+
+  /// No description provided for @updatesStudentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر التحديثات'**
+  String get updatesStudentTitle;
+
+  /// No description provided for @updatesGuardianTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحديثات الأبناء'**
+  String get updatesGuardianTitle;
+
+  /// No description provided for @updatesEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد تحديثات'**
+  String get updatesEmpty;
+
+  /// No description provided for @updatesGrades.
+  ///
+  /// In ar, this message translates to:
+  /// **'أحدث الدرجات'**
+  String get updatesGrades;
+
+  /// No description provided for @updatesSessions.
+  ///
+  /// In ar, this message translates to:
+  /// **'حصص اليوم والقادمة'**
+  String get updatesSessions;
+
+  /// No description provided for @updatesAttendance.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر حضور'**
+  String get updatesAttendance;
+
+  /// No description provided for @updatesAbsence.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر غياب'**
+  String get updatesAbsence;
+
+  /// No description provided for @updatesToday.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get updatesToday;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكل'**
+  String get filterAll;
+
+  /// No description provided for @filterThisWeek.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الأسبوع'**
+  String get filterThisWeek;
+
+  /// No description provided for @filterNextWeek.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأسبوع القادم'**
+  String get filterNextWeek;
+
+  /// No description provided for @filterPresent.
+  ///
+  /// In ar, this message translates to:
+  /// **'حضور'**
+  String get filterPresent;
+
+  /// No description provided for @filterAbsent.
+  ///
+  /// In ar, this message translates to:
+  /// **'غياب'**
+  String get filterAbsent;
+
+  /// No description provided for @attendanceStatusAbsent.
+  ///
+  /// In ar, this message translates to:
+  /// **'غائب'**
+  String get attendanceStatusAbsent;
+
+  /// No description provided for @examDetailsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل الامتحان'**
+  String get examDetailsTitle;
+
+  /// No description provided for @examYourScore.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدرجة'**
+  String get examYourScore;
+
+  /// No description provided for @examMaxScore.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدرجة النهائية: {max}'**
+  String examMaxScore(String max);
+
+  /// No description provided for @examTeacherComment.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعليق المعلم'**
+  String get examTeacherComment;
+
+  /// No description provided for @examNoComment.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد تعليق'**
+  String get examNoComment;
+
+  /// No description provided for @editContactTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل بيانات التواصل'**
+  String get editContactTitle;
+
+  /// No description provided for @editContactAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل بيانات التواصل'**
+  String get editContactAction;
 }
 
 class _AppLocalizationsDelegate

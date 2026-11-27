@@ -968,5 +968,46 @@
     "placeholders": {
       "code": { "type": "String" }
     }
-  }
+  },
+  "childNavHome": "الرئيسية",
+  "childNavSchedule": "الجدول",
+  "studentNavGrades": "درجاتي",
+  "guardianNavGrades": "الدرجات",
+  "guardianNavProfile": "ملف الابن",
+  "childNextSession": "الحصة القادمة",
+  "childNoNextSession": "لا توجد حصص قادمة",
+  "childLatestResult": "آخر نتيجة",
+  "childOverviewTitle": "متابعة الشهر",
+  "childMonthAttendance": "الحضور هذا الشهر",
+  "childMonthResults": "نتائج هذا الشهر",
+  "childProfileGroups": "المجموعات",
+  "childProfileNoGroups": "غير مسجل في أي مجموعة",
+  "updatesBell": "آخر التحديثات",
+  "updatesBellGuardian": "تحديثات الأبناء",
+  "updatesStudentTitle": "آخر التحديثات",
+  "updatesGuardianTitle": "تحديثات الأبناء",
+  "updatesEmpty": "لا توجد تحديثات",
+  "updatesGrades": "أحدث الدرجات",
+  "updatesSessions": "حصص اليوم والقادمة",
+  "updatesAttendance": "آخر حضور",
+  "updatesAbsence": "آخر غياب",
+  "updatesToday": "اليوم",
+  "filterAll": "الكل",
+  "filterThisWeek": "هذا الأسبوع",
+  "filterNextWeek": "الأسبوع القادم",
+  "filterPresent": "حضور",
+  "filterAbsent": "غياب",
+  "attendanceStatusAbsent": "غائب",
+  "examDetailsTitle": "تفاصيل الامتحان",
+  "examYourScore": "الدرجة",
+  "examMaxScore": "الدرجة النهائية: {max}",
+  "@examMaxScore": {
+    "placeholders": {
+      "max": { "type": "String" }
+    }
+  },
+  "examTeacherComment": "تعليق المعلم",
+  "examNoComment": "لا يوجد تعليق",
+  "editContactTitle": "تعديل بيانات التواصل",
+  "editContactAction": "تعديل بيانات التواصل"
 }

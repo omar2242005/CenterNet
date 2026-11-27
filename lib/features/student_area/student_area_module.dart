@@ -5,10 +5,16 @@ import 'package:go_router/go_router.dart';
 
 import '../students/models/student.dart';
 import 'child_route_names.dart';
+import 'models/child_data.dart';
+import 'models/updates_args.dart';
 import 'repository/student_data_repository.dart';
 import 'screens/attendance_history_screen.dart';
+import 'screens/child_overview_screen.dart';
+import 'screens/child_profile_screen.dart';
+import 'screens/exam_details_screen.dart';
 import 'screens/results_screen.dart';
 import 'screens/schedule_screen.dart';
+import 'screens/updates_screen.dart';
 
 /// سطر الـ DI بتاع الـ feature.
 void registerStudentArea(GetIt g) {
@@ -17,7 +23,7 @@ void registerStudentArea(GetIt g) {
   );
 }
 
-/// سطر الـ router بتاع الـ feature. الشاشات بتاخد `extra: Student`.
+/// سطر الـ router بتاع الـ feature. معظم الشاشات بتاخد `extra: Student`.
 final List<RouteBase> studentAreaRoutes = <RouteBase>[
   GoRoute(
     path: ChildRoutes.schedule,
@@ -41,6 +47,38 @@ final List<RouteBase> studentAreaRoutes = <RouteBase>[
       final s = state.extra;
       if (s is! Student) return const _MissingArgs();
       return ResultsScreen(student: s);
+    },
+  ),
+  GoRoute(
+    path: ChildRoutes.profile,
+    builder: (context, state) {
+      final s = state.extra;
+      if (s is! Student) return const _MissingArgs();
+      return ChildProfileScreen(student: s);
+    },
+  ),
+  GoRoute(
+    path: ChildRoutes.overview,
+    builder: (context, state) {
+      final s = state.extra;
+      if (s is! Student) return const _MissingArgs();
+      return ChildOverviewScreen(student: s);
+    },
+  ),
+  GoRoute(
+    path: ChildRoutes.exam,
+    builder: (context, state) {
+      final r = state.extra;
+      if (r is! ExamResult) return const _MissingArgs();
+      return ExamDetailsScreen(result: r);
+    },
+  ),
+  GoRoute(
+    path: ChildRoutes.updates,
+    builder: (context, state) {
+      final a = state.extra;
+      if (a is! UpdatesArgs) return const _MissingArgs();
+      return UpdatesScreen(args: a);
     },
   ),
 ];
