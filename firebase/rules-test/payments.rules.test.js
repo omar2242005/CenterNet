@@ -147,13 +147,13 @@ describe('payments — الإنشاء', () => {
 describe('payments — القراءة', () => {
   const id = payId('st1', 'g1', '202611');
 
-  it('الأدمن get و list، والمساعد get (علامة المسح)', async () => {
+  it('الأدمن get و list', async () => {
     await assertSucceeds(getDoc(payRef(as('adminA'), id)));
     await assertSucceeds(getDocs(collection(as('adminA'), `centers/${A}/payments`)));
-    await assertSucceeds(getDoc(payRef(as('assistantA'), id)));
   });
 
-  it('معلم، معطّل، أدمن سنتر تاني، ومجهول مرفوضين', async () => {
+  it('مساعد، معلم، معطّل، أدمن سنتر تاني، ومجهول مرفوضين', async () => {
+    await assertFails(getDoc(payRef(as('assistantA'), id)));
     await assertFails(getDoc(payRef(as('teacherA'), id)));
     await assertFails(getDoc(payRef(as('offAssistant'), id)));
     await assertFails(getDoc(payRef(as('adminB'), id)));
