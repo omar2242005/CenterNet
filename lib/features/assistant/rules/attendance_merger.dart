@@ -78,6 +78,7 @@ class AttendanceMerger {
         syncState: scan.status == PendingScanStatus.failed
             ? AttendanceSyncState.failed
             : AttendanceSyncState.waiting,
+        paymentStatus: scan.paymentStatus,
       );
     }
 
@@ -92,6 +93,7 @@ class AttendanceMerger {
         status: record.status,
         scannedAt: record.scannedAt,
         syncState: AttendanceSyncState.synced,
+        paymentStatus: record.paymentStatus,
       );
     }
 

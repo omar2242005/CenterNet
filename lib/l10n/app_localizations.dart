@@ -3171,6 +3171,12 @@ abstract class AppLocalizations {
   /// **'كل المجموعات'**
   String get paymentsAllGroups;
 
+  /// No description provided for @paymentsStatusUnknown.
+  ///
+  /// In ar, this message translates to:
+  /// **'السداد غير معروف'**
+  String get paymentsStatusUnknown;
+
   /// No description provided for @paymentsEmptyMonth.
   ///
   /// In ar, this message translates to:

@@ -53,4 +53,14 @@ abstract class AssistantRepository {
   /// مدة التأخير). القراءات بتملي كاش Firestore فالمسح يشتغل من غير شبكة.
   /// يرمي [Failure] لو الجلسة ملغاة أو المجموعة فاضية أو البيانات مش متاحة.
   Future<ScanSetup> prepareScanSetup(String sessionId);
+
+  /// [P1-خطوة4] علامات الدفع لطلاب مجموعة في شهر: من `paymentStatus`
+  /// (حالة فقط، من غير مبالغ). المفتاح = studentId والقيمة = مدفوع أو لأ.
+  /// طالب مفيهوش مستند = غير مدفوع للشهر ده (مش موجود في الـ Map).
+  Future<Map<String, bool>> groupMonthPaymentStatus(
+    String centerId,
+    String groupId, {
+    required int year,
+    required int month,
+  });
 }

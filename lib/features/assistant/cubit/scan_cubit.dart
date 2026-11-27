@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/firestore_paths.dart';
+import '../../payments/models/payment.dart';
+import '../models/attendance.dart';
 import '../models/pending_scan.dart';
 import '../models/scan_setup.dart';
 import '../rules/scan_validator.dart';
@@ -20,11 +22,19 @@ enum ScanFeedbackKind {
 
 /// آخر مسحة. [seq] بيزيد مع كل رد (حتى لو نفس النوع) عشان الشاشة تحس بالتغيير.
 class ScanFeedback {
-  const ScanFeedback({required this.seq, required this.kind, this.studentId});
+  const ScanFeedback({
+    required this.seq,
+    required this.kind,
+    this.studentId,
+    this.paymentStatus = ScanPaymentStatus.unknown,
+  });
 
   final int seq;
   final ScanFeedbackKind kind;
   final String? studentId;
+
+  /// [P1-خطوة4] حالة السداد لحظة المسح (بتظهر جنب نتيجة المسحة).
+  final ScanPaymentStatus paymentStatus;
 }
 
 class ScanState {
@@ -145,6 +155,7 @@ class ScanCubit extends Cubit<ScanState> {
       }
 
       final sid = result.studentId!;
+      final paymentStatus = _paymentStatusFor(sid, now);
       final added = await _recorder.record(
         PendingScan(
           id: FirestoreIds.attendance(setup.sessionId, sid),
@@ -155,13 +166,18 @@ class ScanCubit extends Cubit<ScanState> {
           attendanceStatus: result.timing == ScanTiming.late
               ? PendingAttendanceStatus.late
               : PendingAttendanceStatus.present,
+          paymentStatus: paymentStatus,
         ),
       );
       if (isClosed) return;
       _scanned.add(sid);
 
       if (!added) {
-        _push(ScanFeedbackKind.alreadyRegistered, sid);
+        _push(
+          ScanFeedbackKind.alreadyRegistered,
+          sid,
+          paymentStatus: paymentStatus,
+        );
         return;
       }
       final isLate = result.timing == ScanTiming.late;
@@ -170,6 +186,7 @@ class ScanCubit extends Cubit<ScanState> {
             ? ScanFeedbackKind.recordedLate
             : ScanFeedbackKind.recordedPresent,
         sid,
+        paymentStatus: paymentStatus,
         presentCount: state.presentCount + (isLate ? 0 : 1),
         lateCount: state.lateCount + (isLate ? 1 : 0),
       );
@@ -201,9 +218,25 @@ class ScanCubit extends Cubit<ScanState> {
     }
   }
 
+  /// [P1-خطوة4] حالة السداد لحظة المسح: من علامات الشهر المحمّلة في
+  /// [ScanSetup]. غير معروفة لو العلامات ما اتحمّلتش (تحضير أوفلاين) أو
+  /// المسح حصل في شهر تاني عن شهر العلامات.
+  ScanPaymentStatus _paymentStatusFor(String studentId, DateTime now) {
+    final paid = setup.paidByStudentId;
+    final month = setup.paymentStatusMonth;
+    if (paid == null || month == null) return ScanPaymentStatus.unknown;
+    if (month != Payment.monthKey(now.year, now.month)) {
+      return ScanPaymentStatus.unknown;
+    }
+    return paid[studentId] == true
+        ? ScanPaymentStatus.paid
+        : ScanPaymentStatus.unpaid;
+  }
+
   void _push(
     ScanFeedbackKind kind,
     String? studentId, {
+    ScanPaymentStatus paymentStatus = ScanPaymentStatus.unknown,
     int? presentCount,
     int? lateCount,
     bool rejected = false,
@@ -216,7 +249,12 @@ class ScanCubit extends Cubit<ScanState> {
     }
     emit(
       state.copyWith(
-        feedback: ScanFeedback(seq: ++_seq, kind: kind, studentId: studentId),
+        feedback: ScanFeedback(
+          seq: ++_seq,
+          kind: kind,
+          studentId: studentId,
+          paymentStatus: paymentStatus,
+        ),
         presentCount: presentCount,
         lateCount: lateCount,
         rejectedCount: state.rejectedCount + (rejected ? 1 : 0),

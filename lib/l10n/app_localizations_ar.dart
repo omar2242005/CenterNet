@@ -1744,6 +1744,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get paymentsAllGroups => 'كل المجموعات';
 
   @override
+  String get paymentsStatusUnknown => 'السداد غير معروف';
+
+  @override
   String get paymentsEmptyMonth => 'مفيش طلاب مسجلين في مجموعات نشطة.';
 
   @override

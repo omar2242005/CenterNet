@@ -20,6 +20,7 @@ class MockAssistantRepository implements AssistantRepository {
     this.onSessionAttendance,
     this.onLateAfterMinutes,
     this.onPrepareScanSetup,
+    this.onGroupMonthPaymentStatus,
   });
 
   final Future<void> Function(PendingScan scan)? onWriteAttendance;
@@ -36,6 +37,13 @@ class MockAssistantRepository implements AssistantRepository {
       onSessionAttendance;
   final Future<int> Function(String centerId)? onLateAfterMinutes;
   final Future<ScanSetup> Function(String sessionId)? onPrepareScanSetup;
+  final Future<Map<String, bool>> Function(
+    String centerId,
+    String groupId, {
+    required int year,
+    required int month,
+  })?
+  onGroupMonthPaymentStatus;
 
   final List<PendingScan> writes = <PendingScan>[];
 
@@ -94,4 +102,19 @@ class MockAssistantRepository implements AssistantRepository {
   Future<ScanSetup> prepareScanSetup(String sessionId) =>
       onPrepareScanSetup?.call(sessionId) ??
       (throw UnimplementedError('MockAssistantRepository.prepareScanSetup'));
+
+  @override
+  Future<Map<String, bool>> groupMonthPaymentStatus(
+    String centerId,
+    String groupId, {
+    required int year,
+    required int month,
+  }) =>
+      onGroupMonthPaymentStatus?.call(
+        centerId,
+        groupId,
+        year: year,
+        month: month,
+      ) ??
+      Future.value(const <String, bool>{});
 }

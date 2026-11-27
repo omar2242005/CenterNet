@@ -23,6 +23,7 @@ class AttendanceEntry {
     required this.status,
     required this.scannedAt,
     required this.syncState,
+    this.paymentStatus = ScanPaymentStatus.unknown,
   });
 
   final String studentId;
@@ -38,4 +39,7 @@ class AttendanceEntry {
   final DateTime? scannedAt;
 
   final AttendanceSyncState syncState;
+
+  /// [P1-خطوة4] حالة السداد لحظة التسجيل (من السجل أو المسحة المحلية).
+  final ScanPaymentStatus paymentStatus;
 }
