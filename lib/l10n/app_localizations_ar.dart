@@ -1503,7 +1503,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get linkRequestTitle => 'طلب ربط';
 
   @override
-  String get linkRequestIntro => 'أرسل طلبًا للسنتر برقم الطالب. بعد موافقة الأدمن تكمل الربط من هنا.';
+  String get linkRequestIntro =>
+      'أرسل طلبًا للسنتر برقم الطالب. بعد موافقة الأدمن تكمل الربط من هنا.';
 
   @override
   String get linkRequestCenterCode => 'كود السنتر (من الأدمن)';
@@ -1521,7 +1522,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get linkRequestApproved => 'تمت الموافقة على طلبك. أكمل الربط الآن.';
 
   @override
-  String get linkRequestRejected => 'تم رفض الطلب. تأكد من البيانات وحاول مرة أخرى.';
+  String get linkRequestRejected =>
+      'تم رفض الطلب. تأكد من البيانات وحاول مرة أخرى.';
 
   @override
   String get linkRequestRefresh => 'تحديث الحالة';
@@ -1663,4 +1665,63 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get editContactAction => 'تعديل بيانات التواصل';
+
+  @override
+  String get paymentsSectionTitle => 'حساب الرسوم';
+
+  @override
+  String get paymentsEmpty => 'مفيش دفعات مسجلة لسه.';
+
+  @override
+  String get paymentsRecord => 'تسجيل دفعة';
+
+  @override
+  String get paymentsGroupLabel => 'المجموعة';
+
+  @override
+  String get paymentsMonthLabel => 'الشهر';
+
+  @override
+  String get paymentsAmountLabel => 'المبلغ';
+
+  @override
+  String get paymentsNoteLabel => 'ملاحظة (اختياري)';
+
+  @override
+  String get paymentsSave => 'حفظ الدفعة';
+
+  @override
+  String get paymentsInvalidAmount => 'اختار المجموعة واكتب مبلغ أكبر من صفر.';
+
+  @override
+  String get paymentsStatusPaid => 'مدفوعة';
+
+  @override
+  String get paymentsStatusCancelled => 'ملغاة';
+
+  @override
+  String get paymentsCancelAction => 'إلغاء';
+
+  @override
+  String get paymentsCancelTitle => 'إلغاء الدفعة';
+
+  @override
+  String get paymentsCancelReasonLabel => 'سبب الإلغاء';
+
+  @override
+  String get paymentsCancelReasonRequired => 'سبب الإلغاء مطلوب.';
+
+  @override
+  String get paymentsCancelConfirm => 'تأكيد الإلغاء';
+
+  @override
+  String get paymentsBack => 'رجوع';
+
+  @override
+  String get paymentsNoGroups => 'الطالب مش مسجل في أي مجموعة.';
+
+  @override
+  String paymentsCancelledReason(String reason) {
+    return 'السبب: $reason';
+  }
 }

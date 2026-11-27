@@ -12,6 +12,7 @@ import '../features/grades/grades_module.dart';
 import '../features/groups/groups_module.dart';
 import '../features/home/home_module.dart';
 import '../features/linking/linking_module.dart';
+import '../features/payments/payments_module.dart';
 import '../features/sessions/sessions_module.dart';
 import '../features/staff/staff_module.dart';
 import '../features/student_area/student_area_module.dart';
@@ -48,6 +49,7 @@ void registerFeatures(GetIt g) {
   registerGroups(g);
   registerSessions(g);
   registerGrades(g);
+  registerPayments(g);
   registerAssistant(g);
   registerTeacher(g);
   registerLinking(g);

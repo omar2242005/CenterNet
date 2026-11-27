@@ -1009,5 +1009,29 @@
   "examTeacherComment": "تعليق المعلم",
   "examNoComment": "لا يوجد تعليق",
   "editContactTitle": "تعديل بيانات التواصل",
-  "editContactAction": "تعديل بيانات التواصل"
+  "editContactAction": "تعديل بيانات التواصل",
+  "paymentsSectionTitle": "حساب الرسوم",
+  "paymentsEmpty": "مفيش دفعات مسجلة لسه.",
+  "paymentsRecord": "تسجيل دفعة",
+  "paymentsGroupLabel": "المجموعة",
+  "paymentsMonthLabel": "الشهر",
+  "paymentsAmountLabel": "المبلغ",
+  "paymentsNoteLabel": "ملاحظة (اختياري)",
+  "paymentsSave": "حفظ الدفعة",
+  "paymentsInvalidAmount": "اختار المجموعة واكتب مبلغ أكبر من صفر.",
+  "paymentsStatusPaid": "مدفوعة",
+  "paymentsStatusCancelled": "ملغاة",
+  "paymentsCancelAction": "إلغاء",
+  "paymentsCancelTitle": "إلغاء الدفعة",
+  "paymentsCancelReasonLabel": "سبب الإلغاء",
+  "paymentsCancelReasonRequired": "سبب الإلغاء مطلوب.",
+  "paymentsCancelConfirm": "تأكيد الإلغاء",
+  "paymentsBack": "رجوع",
+  "paymentsNoGroups": "الطالب مش مسجل في أي مجموعة.",
+  "paymentsCancelledReason": "السبب: {reason}",
+  "@paymentsCancelledReason": {
+    "placeholders": {
+      "reason": { "type": "String" }
+    }
+  }
 }
