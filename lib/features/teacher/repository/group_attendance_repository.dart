@@ -1,4 +1,4 @@
-import 'package:center_net/features/assistant/models/attendance.dart';
+import 'package:center_net/features/attendance/models/attendance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

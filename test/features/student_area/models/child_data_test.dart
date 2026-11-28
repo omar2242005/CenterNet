@@ -1,4 +1,4 @@
-import 'package:center_net/features/assistant/models/attendance.dart';
+import 'package:center_net/features/attendance/models/attendance.dart';
 import 'package:center_net/features/grades/models/exam.dart';
 import 'package:center_net/features/grades/models/score.dart';
 import 'package:center_net/features/groups/models/group.dart';

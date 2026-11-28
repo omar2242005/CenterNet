@@ -9,7 +9,7 @@ import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../assistant/services/cairo_time.dart';
+import '../../../core/utils/cairo_time.dart';
 import '../../grades/grade_format.dart';
 import '../../grades/repositories/exams_repository.dart';
 import '../../groups/models/group.dart';

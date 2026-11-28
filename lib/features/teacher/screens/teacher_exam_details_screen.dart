@@ -10,7 +10,7 @@ import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../assistant/services/cairo_time.dart';
+import '../../../core/utils/cairo_time.dart';
 import '../../grades/grade_format.dart';
 import '../../grades/models/score.dart';
 import '../../grades/repositories/exams_repository.dart';
