@@ -14,7 +14,7 @@ import 'home_route_names.dart';
 import 'repository/role_repository.dart';
 import 'screens/blocked_account_screen.dart';
 import 'screens/home_gate_screen.dart';
-import 'screens/admin_home_screen.dart';
+import '../admin/screens/admin_home_screen.dart';
 
 /// سطر الـ DI بتاع الـ feature.
 void registerHome(GetIt g) {

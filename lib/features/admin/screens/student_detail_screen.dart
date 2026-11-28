@@ -14,10 +14,10 @@ import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../linking/widgets/issue_link_code_section.dart';
 import '../../payments/widgets/student_payments_section.dart';
-import '../cubit/student_detail_cubit.dart';
-import '../models/student.dart';
-import '../repository/students_repository.dart';
-import '../student_route_names.dart';
+import '../../students/cubit/student_detail_cubit.dart';
+import '../../students/models/student.dart';
+import '../../students/repository/students_repository.dart';
+import '../../students/student_route_names.dart';
 
 /// ملف الطالب: كارت الـ QR (من غير نت) + البيانات + تعديل + أرشفة/استرجاع.
 class StudentDetailScreen extends StatelessWidget {

@@ -16,10 +16,10 @@ import '../../../core/widgets/app_text_field.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/screens/auth_page.dart';
 import '../../linking/models/invite_code.dart';
-import '../cubit/staff_invite_cubit.dart';
-import '../models/staff_invite_issued.dart';
-import '../models/staff_role_text.dart';
-import '../repository/staff_repository.dart';
+import '../../staff/cubit/staff_invite_cubit.dart';
+import '../../staff/models/staff_invite_issued.dart';
+import '../../staff/models/staff_role_text.dart';
+import '../../staff/repository/staff_repository.dart';
 
 /// شاشة "إضافة معلم" أو "إضافة مساعد" (للأدمن): الاسم ← كود دعوة يتبعت واتساب
 /// أو يتنسخ. الدور ثابت من المسار ومفيش اختيار دور: كل دور له شاشة دعوة

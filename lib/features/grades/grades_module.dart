@@ -1,6 +1,4 @@
 import 'package:center_net/features/grades/screens/exam_form_screen.dart';
-import 'package:center_net/features/grades/screens/exams_list_screen.dart';
-import 'package:center_net/features/grades/screens/scores_entry_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,30 +20,16 @@ void registerGrades(GetIt g) {
   );
 }
 
-/// سطر الـ router بتاع الـ feature. الشاشات بتستقبل البيانات عن طريق extra.
+/// سطر الـ router بتاع الـ feature.
+/// قايمة الامتحانات وإدخال الدرجات شاشات أدمن، مساراتها في admin_module.
+/// فورم الامتحان هنا لأنه مشترك مع المعلم.
 final List<RouteBase> gradeRoutes = <RouteBase>[
-  GoRoute(
-    path: GradeRoutes.exams,
-    builder: (context, state) {
-      final group = state.extra;
-      if (group is! Group) return const _MissingArgs();
-      return ExamsListScreen(group: group);
-    },
-  ),
   GoRoute(
     path: GradeRoutes.examCreate,
     builder: (context, state) {
       final group = state.extra;
       if (group is! Group) return const _MissingArgs();
       return ExamFormScreen(group: group);
-    },
-  ),
-  GoRoute(
-    path: GradeRoutes.scores,
-    builder: (context, state) {
-      final args = state.extra;
-      if (args is! ExamScoresArgs) return const _MissingArgs();
-      return ScoresEntryScreen(group: args.group, exam: args.exam);
     },
   ),
 ];

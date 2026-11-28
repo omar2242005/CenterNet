@@ -15,11 +15,11 @@ import '../../../l10n/app_localizations.dart';
 import '../../groups/models/group.dart';
 import '../../students/models/student.dart';
 import '../../students/repository/students_repository.dart';
-import '../cubit/scores_entry_cubit.dart';
-import '../grade_format.dart';
-import '../models/exam.dart';
-import '../models/score.dart';
-import '../repositories/scores_repository.dart';
+import '../../grades/cubit/scores_entry_cubit.dart';
+import '../../grades/grade_format.dart';
+import '../../grades/models/exam.dart';
+import '../../grades/models/score.dart';
+import '../../grades/repositories/scores_repository.dart';
 /// إدخال درجات امتحان لطلاب المجموعة.
 class ScoresEntryScreen extends StatelessWidget {
   const ScoresEntryScreen({super.key, required this.group, required this.exam});

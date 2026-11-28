@@ -12,9 +12,9 @@ import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../core/utils/cairo_time.dart';
 import '../../groups/models/group.dart';
-import '../cubit/group_sessions_cubit.dart';
-import '../models/session.dart';
-import '../repository/sessions_repository.dart';
+import '../../sessions/cubit/group_sessions_cubit.dart';
+import '../../sessions/models/session.dart';
+import '../../sessions/repository/sessions_repository.dart';
 
 /// حصص مجموعة من النهارده: عرض بالترتيب، توليد الأسابيع الجاية، وإلغاء.
 class GroupSessionsScreen extends StatelessWidget {

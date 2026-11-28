@@ -3,7 +3,7 @@ import 'package:center_net/core/errors/failure.dart';
 import 'package:center_net/core/services/whatsapp_launcher.dart';
 import 'package:center_net/features/linking/models/invite_code.dart';
 import 'package:center_net/features/staff/repository/staff_repository.dart';
-import 'package:center_net/features/staff/screens/staff_invite_screen.dart';
+import 'package:center_net/features/admin/screens/staff_invite_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

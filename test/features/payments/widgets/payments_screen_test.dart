@@ -1,7 +1,7 @@
 import 'package:center_net/app/di.dart';
 import 'package:center_net/features/groups/repository/groups_repository.dart';
 import 'package:center_net/features/payments/repositories/payments_repository.dart';
-import 'package:center_net/features/payments/screens/payments_screen.dart';
+import 'package:center_net/features/admin/screens/payments_screen.dart';
 import 'package:center_net/features/students/repository/students_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

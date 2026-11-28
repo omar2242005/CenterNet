@@ -7,14 +7,14 @@ import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/search_field.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../groups/repository/groups_repository.dart';
-import '../../home/widgets/admin_shell.dart';
+import '../widgets/admin_shell.dart';
 import '../../students/repository/students_repository.dart';
-import '../cubit/payments_cubit.dart';
-import '../repositories/payments_repository.dart';
-import '../widgets/cancel_payment_dialog.dart';
-import '../widgets/month_picker.dart';
-import '../widgets/payment_status_card.dart';
-import '../widgets/record_payment_sheet.dart';
+import '../../payments/cubit/payments_cubit.dart';
+import '../../payments/repositories/payments_repository.dart';
+import '../../payments/widgets/cancel_payment_dialog.dart';
+import '../../payments/widgets/month_picker.dart';
+import '../../payments/widgets/payment_status_card.dart';
+import '../../payments/widgets/record_payment_sheet.dart';
 
 /// شاشة "المدفوعات" (أدمن): لكل (طالب × مجموعة) في الشهر المختار مدفوع
 /// ولا غير مدفوع، مع بحث وفلاتر، وتسجيل/إلغاء بلمسة من نفس الكارت.

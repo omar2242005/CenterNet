@@ -10,12 +10,12 @@ import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../home/widgets/admin_shell.dart';
-import '../cubit/staff_list_cubit.dart';
-import '../models/staff_member.dart';
-import '../models/staff_role_text.dart';
-import '../repository/staff_repository.dart';
-import '../staff_route_names.dart';
+import '../widgets/admin_shell.dart';
+import '../../staff/cubit/staff_list_cubit.dart';
+import '../../staff/models/staff_member.dart';
+import '../../staff/models/staff_role_text.dart';
+import '../../staff/repository/staff_repository.dart';
+import '../../staff/staff_route_names.dart';
 
 /// شاشة "الموظفون" (للأدمن): قائمة الأعضاء، وتغيير الدور، وتعطيل/تفعيل العضو.
 class StaffListScreen extends StatelessWidget {

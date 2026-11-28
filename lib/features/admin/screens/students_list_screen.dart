@@ -10,11 +10,11 @@ import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/search_field.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../home/widgets/admin_shell.dart';
-import '../cubit/students_list_cubit.dart';
-import '../models/student.dart';
-import '../repository/students_repository.dart';
-import '../student_route_names.dart';
+import '../widgets/admin_shell.dart';
+import '../../students/cubit/students_list_cubit.dart';
+import '../../students/models/student.dart';
+import '../../students/repository/students_repository.dart';
+import '../../students/student_route_names.dart';
 
 /// شاشة "الطلاب" (للأدمن): قائمة + بحث بالتطبيع العربي + إضافة + أرشيف.
 class StudentsListScreen extends StatelessWidget {

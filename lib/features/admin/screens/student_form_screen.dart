@@ -10,9 +10,9 @@ import '../../../core/utils/validators.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../l10n/app_localizations.dart';
-import '../cubit/student_form_cubit.dart';
-import '../models/student.dart';
-import '../repository/students_repository.dart';
+import '../../students/cubit/student_form_cubit.dart';
+import '../../students/models/student.dart';
+import '../../students/repository/students_repository.dart';
 
 /// إضافة طالب جديد، أو تعديل بيانات [editing]. بيرجّع الطالب المحفوظ بـ pop.
 class StudentFormScreen extends StatelessWidget {

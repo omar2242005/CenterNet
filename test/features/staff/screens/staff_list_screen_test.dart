@@ -2,7 +2,7 @@ import 'package:center_net/app/di.dart';
 import 'package:center_net/core/errors/failure.dart';
 import 'package:center_net/features/staff/models/staff_member.dart';
 import 'package:center_net/features/staff/repository/staff_repository.dart';
-import 'package:center_net/features/staff/screens/staff_list_screen.dart';
+import 'package:center_net/features/admin/screens/staff_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

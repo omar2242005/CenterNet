@@ -1,8 +1,8 @@
 import 'package:center_net/app/di.dart';
 import 'package:center_net/core/errors/failure.dart';
 import 'package:center_net/features/students/repository/students_repository.dart';
-import 'package:center_net/features/students/screens/student_form_screen.dart';
-import 'package:center_net/features/students/screens/students_list_screen.dart';
+import 'package:center_net/features/admin/screens/student_form_screen.dart';
+import 'package:center_net/features/admin/screens/students_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

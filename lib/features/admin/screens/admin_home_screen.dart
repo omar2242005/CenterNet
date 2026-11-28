@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/di.dart';
+import '../../../core/errors/error_mapper.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/app_card.dart';
@@ -9,7 +10,10 @@ import '../../../l10n/app_localizations.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../../centers/center_route_names.dart';
 import '../../centers/repository/centers_repository.dart';
+import '../../grades/grade_route_names.dart';
 import '../../groups/group_route_names.dart';
+import '../../groups/models/group.dart';
+import '../../groups/repository/groups_repository.dart';
 import '../../linking/link_route_names.dart';
 import '../../payments/payment_route_names.dart';
 import '../../staff/staff_route_names.dart';
@@ -82,6 +86,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         PaymentRoutes.list,
         push: true,
       ),
+      // الامتحانات بتحتاج مجموعة الأول، فالكارت بيسأل عن المجموعة وبعدها
+      // بيفتح شاشة امتحاناتها.
+      _Shortcut(
+        Icons.quiz_outlined,
+        l10n.examsTitle,
+        GradeRoutes.exams,
+        push: true,
+        needsGroup: true,
+      ),
     ];
 
     return AdminShell(
@@ -132,7 +145,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               Text(l10n.adminShortcuts, style: theme.textTheme.titleMedium),
               const SizedBox(height: AppSpacing.sm),
               for (final s in shortcuts) ...[
-                _ShortcutCard(shortcut: s),
+                _ShortcutCard(
+                  shortcut: s,
+                  onTap: () => _openShortcut(context, s),
+                ),
                 const SizedBox(height: AppSpacing.sm),
               ],
             ],
@@ -141,10 +157,35 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       ),
     );
   }
+
+  /// بيفتح وجهة الكارت. الامتحانات بتحتاج مجموعة، فبنسأل عنها في شيت الأول.
+  Future<void> _openShortcut(BuildContext context, _Shortcut shortcut) async {
+    if (shortcut.needsGroup) {
+      final group = await showModalBottomSheet<Group>(
+        context: context,
+        isScrollControlled: true,
+        builder: (_) => const _GroupPickerSheet(),
+      );
+      if (group == null || !context.mounted) return;
+      await context.push<Object?>(shortcut.route, extra: group);
+      return;
+    }
+    if (shortcut.push) {
+      await context.push<Object?>(shortcut.route);
+    } else {
+      context.go(shortcut.route);
+    }
+  }
 }
 
 class _Shortcut {
-  const _Shortcut(this.icon, this.label, this.route, {this.push = false});
+  const _Shortcut(
+    this.icon,
+    this.label,
+    this.route, {
+    this.push = false,
+    this.needsGroup = false,
+  });
 
   final IconData icon;
   final String label;
@@ -152,20 +193,22 @@ class _Shortcut {
 
   /// صفحات الفورم بتتفتح فوق (push)، والأقسام الرئيسية بتتبدّل (go).
   final bool push;
+
+  /// الشاشة محتاجة مجموعة (extra)، فبنسأل عنها الأول.
+  final bool needsGroup;
 }
 
 class _ShortcutCard extends StatelessWidget {
-  const _ShortcutCard({required this.shortcut});
+  const _ShortcutCard({required this.shortcut, required this.onTap});
 
   final _Shortcut shortcut;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-      onTap: () => shortcut.push
-          ? context.push(shortcut.route)
-          : context.go(shortcut.route),
+      onTap: onTap,
       child: AppCard(
         child: Row(
           children: [
@@ -179,6 +222,90 @@ class _ShortcutCard extends StatelessWidget {
             ),
             const Icon(Icons.chevron_left, color: AppColors.textSecondary),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// شيت اختيار المجموعة قبل فتح الامتحانات: بيعرض المجموعات النشطة بس.
+/// التحميل هنا مباشر من الـ repository لأن الشيت مش شاشة كاملة، ولو فشل
+/// بيعرض رسالة الخطأ بدل القايمة.
+class _GroupPickerSheet extends StatefulWidget {
+  const _GroupPickerSheet();
+
+  @override
+  State<_GroupPickerSheet> createState() => _GroupPickerSheetState();
+}
+
+class _GroupPickerSheetState extends State<_GroupPickerSheet> {
+  late final Future<List<Group>> _future = _load();
+
+  Future<List<Group>> _load() async {
+    final roster = await sl<GroupsRepository>().loadGroups();
+    return roster.groups.where((g) => g.status == GroupStatus.active).toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return SafeArea(
+      child: Padding(
+        padding: AppSpacing.screenPadding,
+        child: FutureBuilder<List<Group>>(
+          future: _future,
+          builder: (context, snap) {
+            final groups = snap.data;
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  l10n.teacherExamGroupRequired,
+                  style: theme.textTheme.titleMedium,
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                if (snap.connectionState != ConnectionState.done)
+                  const Padding(
+                    padding: EdgeInsets.all(AppSpacing.lg),
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                else if (snap.hasError)
+                  Padding(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    child: Text(ErrorMapper.map(snap.error!).message),
+                  )
+                else if (groups == null || groups.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    child: Text(
+                      l10n.groupsEmpty,
+                      style: const TextStyle(color: AppColors.textSecondary),
+                    ),
+                  )
+                else
+                  Flexible(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: groups.length,
+                      itemBuilder: (context, index) {
+                        final group = groups[index];
+                        final details = [group.subject, group.grade]
+                            .where((s) => s.trim().isNotEmpty)
+                            .join(' · ');
+                        return ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(group.name),
+                          subtitle: details.isEmpty ? null : Text(details),
+                          onTap: () => Navigator.of(context).pop(group),
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );
