@@ -11,11 +11,11 @@ import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../groups/models/group.dart';
-import '../cubit/exams_list_cubit.dart';
-import '../grade_format.dart';
-import '../grade_route_names.dart';
-import '../models/exam.dart';
-import '../repositories/exams_repository.dart';
+import '../../grades/cubit/exams_list_cubit.dart';
+import '../../grades/grade_format.dart';
+import '../../grades/grade_route_names.dart';
+import '../../grades/models/exam.dart';
+import '../../grades/repositories/exams_repository.dart';
 
 /// امتحانات مجموعة: قايمة + إنشاء + نشر وإلغاء نشر.
 class ExamsListScreen extends StatelessWidget {

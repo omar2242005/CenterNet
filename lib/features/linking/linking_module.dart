@@ -7,7 +7,6 @@ import 'link_route_names.dart';
 import 'repository/linking_repository.dart';
 import 'screens/link_code_screen.dart';
 import 'screens/link_request_screen.dart';
-import 'screens/link_requests_screen.dart';
 
 /// سطر الـ DI بتاع الـ feature.
 void registerLinking(GetIt g) {
@@ -17,6 +16,7 @@ void registerLinking(GetIt g) {
 }
 
 /// سطر الـ router بتاع الـ feature.
+/// طلبات الربط (شاشة الأدمن) مسارها في admin_module.
 final List<RouteBase> linkingRoutes = <RouteBase>[
   GoRoute(
     path: LinkRoutes.enter,
@@ -27,9 +27,5 @@ final List<RouteBase> linkingRoutes = <RouteBase>[
     path: LinkRoutes.request,
     builder: (context, state) =>
         LinkRequestScreen(kind: linkKindFromExtra(state.extra)),
-  ),
-  GoRoute(
-    path: LinkRoutes.requests,
-    builder: (context, state) => const LinkRequestsScreen(),
   ),
 ];

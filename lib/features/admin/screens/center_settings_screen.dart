@@ -9,10 +9,10 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/widgets/async_view.dart';
 import '../../../l10n/app_localizations.dart';
-import '../cubit/center_settings_cubit.dart';
-import '../models/center_form_error.dart';
-import '../models/center_info.dart';
-import '../repository/centers_repository.dart';
+import '../../centers/cubit/center_settings_cubit.dart';
+import '../../centers/models/center_form_error.dart';
+import '../../centers/models/center_info.dart';
+import '../../centers/repository/centers_repository.dart';
 
 class CenterSettingsScreen extends StatelessWidget {
   const CenterSettingsScreen({super.key});

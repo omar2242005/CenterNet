@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import 'center_route_names.dart';
 import 'repository/centers_repository.dart';
-import 'screens/center_settings_screen.dart';
 import 'screens/create_center_screen.dart';
 
 /// سطر الـ DI بتاع الـ feature.
@@ -16,13 +15,11 @@ void registerCenters(GetIt g) {
 }
 
 /// سطر الـ router بتاع الـ feature.
+/// إعدادات السنتر شاشة أدمن، مسارها في admin_module.
+/// إنشاء السنتر هنا لأنه جزء من أول تسجيل دخول.
 final List<RouteBase> centerRoutes = <RouteBase>[
   GoRoute(
     path: CenterRoutes.create,
     builder: (context, state) => const CreateCenterScreen(),
-  ),
-  GoRoute(
-    path: CenterRoutes.settings,
-    builder: (context, state) => const CenterSettingsScreen(),
   ),
 ];

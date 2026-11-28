@@ -11,9 +11,9 @@ import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../students/models/student.dart';
 import '../../students/repository/students_repository.dart';
-import '../cubit/group_enrollment_cubit.dart';
-import '../models/group.dart';
-import '../repository/groups_repository.dart';
+import '../../groups/cubit/group_enrollment_cubit.dart';
+import '../../groups/models/group.dart';
+import '../../groups/repository/groups_repository.dart';
 
 /// تسجيل طلاب السنتر في مجموعة (وإلغاء تسجيلهم) بعلامة اختيار لكل طالب.
 /// الطالب المؤرشف بيظهر بس لو لسه مسجّل، عشان يتشال من المجموعة.

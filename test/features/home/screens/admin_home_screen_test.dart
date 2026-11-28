@@ -7,9 +7,12 @@ import 'package:center_net/features/auth/repository/auth_repository.dart';
 import 'package:center_net/features/centers/center_route_names.dart';
 import 'package:center_net/features/centers/models/center_info.dart';
 import 'package:center_net/features/centers/repository/centers_repository.dart';
+import 'package:center_net/features/grades/grade_route_names.dart';
 import 'package:center_net/features/groups/group_route_names.dart';
+import 'package:center_net/features/groups/models/group.dart';
+import 'package:center_net/features/groups/repository/groups_repository.dart';
 import 'package:center_net/features/home/home_route_names.dart';
-import 'package:center_net/features/home/screens/admin_home_screen.dart';
+import 'package:center_net/features/admin/screens/admin_home_screen.dart';
 import 'package:center_net/features/staff/staff_route_names.dart';
 import 'package:center_net/features/students/student_route_names.dart';
 import 'package:center_net/l10n/app_localizations.dart';
@@ -20,6 +23,7 @@ import 'package:go_router/go_router.dart';
 import '../../../helpers/pump_app.dart';
 import '../../auth/helpers/fake_auth_repository.dart';
 import '../../centers/helpers/fake_centers_repository.dart';
+import '../../groups/helpers/fake_groups_repository.dart';
 
 Future<void> _pump(WidgetTester tester) async {
   Widget stub(String t) => Scaffold(body: Text(t));
@@ -42,6 +46,10 @@ Future<void> _pump(WidgetTester tester) async {
         builder: (_, _) => stub('INVITE_A'),
       ),
       GoRoute(path: CenterRoutes.settings, builder: (_, _) => stub('SETTINGS')),
+      GoRoute(
+        path: GradeRoutes.exams,
+        builder: (_, state) => stub('EXAMS:${(state.extra! as Group).name}'),
+      ),
     ],
   );
   addTearDown(router.dispose);
@@ -60,6 +68,7 @@ Future<void> _pump(WidgetTester tester) async {
 void main() {
   late FakeAuthRepository auth;
   late FakeCentersRepository centers;
+  late FakeGroupsRepository groups;
 
   setUp(() {
     auth = FakeAuthRepository()
@@ -82,6 +91,10 @@ void main() {
     );
     sl.registerSingleton<AuthRepository>(auth);
     sl.registerSingleton<CentersRepository>(centers);
+    groups = FakeGroupsRepository(
+      groups: [makeGroup('g1', 'مجموعة السبت')],
+    );
+    sl.registerSingleton<GroupsRepository>(groups);
   });
 
   tearDown(() async {
@@ -172,6 +185,36 @@ void main() {
     await tester.tap(find.text(arL10n.centerSettingsTitle));
     await tester.pumpAndSettle();
     expect(find.text('SETTINGS'), findsOneWidget);
+  });
+
+  testWidgets('كارت الامتحانات بيسأل عن المجموعة وبيفتح امتحاناتها',
+      (tester) async {
+    await _pump(tester);
+    await tester.scrollUntilVisible(
+      find.text(arL10n.examsTitle),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text(arL10n.examsTitle));
+    await tester.pumpAndSettle();
+    // شيت اختيار المجموعة بيظهر الأول.
+    expect(find.text(arL10n.teacherExamGroupRequired), findsOneWidget);
+    await tester.tap(find.text('مجموعة السبت'));
+    await tester.pumpAndSettle();
+    expect(find.text('EXAMS:مجموعة السبت'), findsOneWidget);
+  });
+
+  testWidgets('كارت الامتحانات بيعرض رسالة لو مفيش مجموعات', (tester) async {
+    groups.groups.clear();
+    await _pump(tester);
+    await tester.scrollUntilVisible(
+      find.text(arL10n.examsTitle),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text(arL10n.examsTitle));
+    await tester.pumpAndSettle();
+    expect(find.text(arL10n.groupsEmpty), findsOneWidget);
   });
 
   testWidgets('القائمة الجانبية فيها الإعدادات وحسابي وتسجيل الخروج',

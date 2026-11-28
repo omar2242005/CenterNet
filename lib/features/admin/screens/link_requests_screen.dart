@@ -8,10 +8,10 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/async_view.dart';
 import '../../../l10n/app_localizations.dart';
-import '../cubit/link_requests_admin_cubit.dart';
-import '../models/link_request.dart';
-import '../models/student_link.dart';
-import '../repository/linking_repository.dart';
+import '../../linking/cubit/link_requests_admin_cubit.dart';
+import '../../linking/models/link_request.dart';
+import '../../linking/models/student_link.dart';
+import '../../linking/repository/linking_repository.dart';
 
 /// (أدمن) طلبات الربط المعلّقة: موافقة (بيتولّد كود ربط) أو رفض.
 class LinkRequestsScreen extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:center_net/core/errors/failure.dart';
 import 'package:center_net/app/di.dart';
 import 'package:center_net/features/groups/models/group.dart';
 import 'package:center_net/features/groups/repository/groups_repository.dart';
-import 'package:center_net/features/groups/screens/groups_list_screen.dart';
+import 'package:center_net/features/admin/screens/groups_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

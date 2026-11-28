@@ -3,12 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../linking/models/invite_code.dart';
 import 'repository/staff_join_repository.dart';
 import 'repository/staff_repository.dart';
-import 'screens/staff_invite_screen.dart';
 import 'screens/staff_join_screen.dart';
-import 'screens/staff_list_screen.dart';
 import 'staff_route_names.dart';
 
 /// سطر الـ DI بتاع الـ feature.
@@ -22,21 +19,9 @@ void registerStaff(GetIt g) {
 }
 
 /// سطر الـ router بتاع الـ feature.
+/// قايمة الفريق والدعوات شاشات أدمن، مساراتها في admin_module.
+/// شاشة الانضمام هنا لأن أي حد جاي بكود دعوة بيعدي عليها.
 final List<RouteBase> staffRoutes = <RouteBase>[
-  GoRoute(
-    path: StaffRoutes.list,
-    builder: (context, state) => const StaffListScreen(),
-  ),
-  GoRoute(
-    path: StaffRoutes.inviteTeacher,
-    builder: (context, state) =>
-        const StaffInviteScreen(role: StaffInviteRole.teacher),
-  ),
-  GoRoute(
-    path: StaffRoutes.inviteAssistant,
-    builder: (context, state) =>
-        const StaffInviteScreen(role: StaffInviteRole.assistant),
-  ),
   GoRoute(
     path: StaffRoutes.join,
     builder: (context, state) => const StaffJoinScreen(),

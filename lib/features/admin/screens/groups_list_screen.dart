@@ -13,11 +13,11 @@ import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/search_field.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../home/widgets/admin_shell.dart';
-import '../cubit/groups_list_cubit.dart';
-import '../group_route_names.dart';
-import '../models/group.dart';
-import '../repository/groups_repository.dart';
+import '../widgets/admin_shell.dart';
+import '../../groups/cubit/groups_list_cubit.dart';
+import '../../groups/group_route_names.dart';
+import '../../groups/models/group.dart';
+import '../../groups/repository/groups_repository.dart';
 
 /// شاشة "المجموعات" (للأدمن): قائمة كل مجموعات السنتر + بحث + أرشيف.
 /// الإضافة والتعديل وتسجيل الطلاب وحصص المجموعة شاشات منفصلة بتتبني فوقها.

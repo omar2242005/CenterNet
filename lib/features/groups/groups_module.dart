@@ -6,10 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'group_route_names.dart';
 import 'models/group.dart';
 import 'repository/groups_repository.dart';
-import '../sessions/screens/group_sessions_screen.dart';
-import 'screens/group_enrollment_screen.dart';
 import 'screens/group_form_screen.dart';
-import 'screens/groups_list_screen.dart';
 
 /// سطر الـ DI بتاع الـ feature.
 void registerGroups(GetIt g) {
@@ -18,12 +15,10 @@ void registerGroups(GetIt g) {
   );
 }
 
-/// سطر الـ router بتاع الـ feature. تسجيل الطلاب والحصص بتتضاف مع شاشاتها.
+/// سطر الـ router بتاع الـ feature.
+/// القايمة وتسجيل الطلاب والحصص شاشات أدمن، مساراتها في admin_module.
+/// فورم المجموعة هنا لأنه مشترك مع المعلم (إنشاء مجموعة بمعلم ثابت).
 final List<RouteBase> groupRoutes = <RouteBase>[
-  GoRoute(
-    path: GroupRoutes.list,
-    builder: (context, state) => const GroupsListScreen(),
-  ),
   GoRoute(
     path: GroupRoutes.create,
     builder: (context, state) => const GroupFormScreen(),
@@ -34,19 +29,5 @@ final List<RouteBase> groupRoutes = <RouteBase>[
         state.extra is Group ? null : GroupRoutes.list,
     builder: (context, state) =>
         GroupFormScreen(editing: state.extra! as Group),
-  ),
-  GoRoute(
-    path: GroupRoutes.students,
-    redirect: (context, state) =>
-        state.extra is Group ? null : GroupRoutes.list,
-    builder: (context, state) =>
-        GroupEnrollmentScreen(group: state.extra! as Group),
-  ),
-  GoRoute(
-    path: GroupRoutes.sessions,
-    redirect: (context, state) =>
-        state.extra is Group ? null : GroupRoutes.list,
-    builder: (context, state) =>
-        GroupSessionsScreen(group: state.extra! as Group),
   ),
 ];

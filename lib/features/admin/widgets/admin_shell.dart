@@ -9,7 +9,7 @@ import '../../centers/center_route_names.dart';
 import '../../groups/group_route_names.dart';
 import '../../staff/staff_route_names.dart';
 import '../../students/student_route_names.dart';
-import '../home_route_names.dart';
+import '../../home/home_route_names.dart';
 
 /// تبويبات الأدمن في شريط التنقل السفلي.
 enum AdminTab { home, students, groups, staff }
