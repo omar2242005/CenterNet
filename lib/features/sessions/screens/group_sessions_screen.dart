@@ -10,7 +10,7 @@ import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../../core/utils/cairo_time.dart';
+import '../../assistant/services/cairo_time.dart';
 import '../../groups/models/group.dart';
 import '../cubit/group_sessions_cubit.dart';
 import '../models/session.dart';

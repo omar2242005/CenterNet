@@ -17,7 +17,7 @@ import '../assistant_route_names.dart';
 import '../cubit/sessions_cubit.dart';
 import '../cubit/sessions_state.dart';
 import '../models/session_time_status.dart';
-import '../../../core/utils/cairo_time.dart';
+import '../services/cairo_time.dart';
 import '../widgets/assistant_shell.dart';
 
 /// حصص النهارده، متعلّم عليها: جارية / قادمة / انتهت / ملغاة.

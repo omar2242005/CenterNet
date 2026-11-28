@@ -6,7 +6,6 @@ import '../core/services/local_store.dart';
 import '../core/services/pending_ops_guard.dart';
 import '../core/services/whatsapp_launcher.dart';
 import '../features/assistant/assistant_module.dart';
-import '../features/attendance/attendance_module.dart';
 import '../features/auth/auth_module.dart';
 import '../features/centers/centers_module.dart';
 import '../features/grades/grades_module.dart';
@@ -14,7 +13,6 @@ import '../features/groups/groups_module.dart';
 import '../features/home/home_module.dart';
 import '../features/linking/linking_module.dart';
 import '../features/payments/payments_module.dart';
-import '../features/scan/scan_module.dart';
 import '../features/sessions/sessions_module.dart';
 import '../features/staff/staff_module.dart';
 import '../features/student_area/student_area_module.dart';
@@ -52,9 +50,6 @@ void registerFeatures(GetIt g) {
   registerSessions(g);
   registerGrades(g);
   registerPayments(g);
-  // الحضور والمسح مشتركين: بيتسجلوا قبل المساعد لأنه بيستخدمهم.
-  registerAttendance(g);
-  registerScan(g);
   registerAssistant(g);
   registerTeacher(g);
   registerLinking(g);

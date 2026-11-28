@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../core/errors/error_mapper.dart';
 import '../../../core/firestore_paths.dart';
-import '../../attendance/models/attendance.dart';
+import '../../assistant/models/attendance.dart';
 import '../../grades/models/exam.dart';
 import '../../grades/models/score.dart';
 import '../../groups/models/group.dart';

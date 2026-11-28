@@ -3,11 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/services/pending_ops_guard.dart';
 import '../../../core/state/view_state.dart';
-import '../../attendance/repository/attendance_repository.dart';
-import '../../scan/repository/scan_repository.dart';
 import '../repository/assistant_repository.dart';
-import '../../attendance/rules/attendance_merger.dart';
-import '../../scan/services/pending_scan_store.dart';
+import '../rules/attendance_merger.dart';
+import '../services/pending_scan_store.dart';
 import 'session_details_state.dart';
 
 /// تفاصيل حصة واحدة + ملخص الحضور المدموج + زر "مسح كود الطالب"
@@ -18,9 +16,7 @@ import 'session_details_state.dart';
 /// يرجع من الماسح.
 class SessionDetailsCubit extends Cubit<SessionDetailsState> {
   SessionDetailsCubit(
-    this._assistant,
-    this._attendance,
-    this._scan,
+    this._repository,
     this._store,
     this._guard, {
     required this.sessionId,
@@ -28,9 +24,7 @@ class SessionDetailsCubit extends Cubit<SessionDetailsState> {
     _guard.pending.addListener(_onPendingChanged);
   }
 
-  final AssistantRepository _assistant;
-  final AttendanceRepository _attendance;
-  final ScanRepository _scan;
+  final AssistantRepository _repository;
   final PendingScanStore _store;
   final PendingOpsGuard _guard;
   final String sessionId;
@@ -47,8 +41,8 @@ class SessionDetailsCubit extends Cubit<SessionDetailsState> {
       ),
     );
     try {
-      final session = await _attendance.sessionById(sessionId);
-      final group = await _assistant.groupById(session.groupId);
+      final session = await _repository.sessionById(sessionId);
+      final group = await _repository.groupById(session.groupId);
       if (isClosed) return;
       emit(
         state.copyWith(
@@ -87,7 +81,7 @@ class SessionDetailsCubit extends Cubit<SessionDetailsState> {
       state.copyWith(preparing: true, preparedSetup: null, prepareFailure: null),
     );
     try {
-      final setup = await _scan.prepareScanSetup(sessionId);
+      final setup = await _repository.prepareScanSetup(sessionId);
       if (isClosed) return;
       emit(state.copyWith(preparing: false, preparedSetup: setup));
     } on Failure catch (failure) {
@@ -114,17 +108,17 @@ class SessionDetailsCubit extends Cubit<SessionDetailsState> {
     if (current is! ViewSuccess<SessionDetailsData>) return;
     _loadingSummary = true;
     try {
-      final profile = await _assistant.myProfile();
+      final profile = await _repository.myProfile();
       final centerId = profile.centerId;
       if (centerId == null) {
         throw const Failure.permission(message: 'حسابك غير مرتبط بأي سنتر بعد.');
       }
       final session = current.data.session;
-      final students = await _attendance.groupStudents(
+      final students = await _repository.groupStudents(
         centerId,
         session.groupId,
       );
-      final records = await _attendance.sessionAttendance(centerId, sessionId);
+      final records = await _repository.sessionAttendance(centerId, sessionId);
       final scans = _store.all();
 
       final studentsById = {for (final s in students) s.id: s};

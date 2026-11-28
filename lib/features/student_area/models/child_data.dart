@@ -1,4 +1,4 @@
-import '../../attendance/models/attendance.dart';
+import '../../assistant/models/attendance.dart';
 import '../../grades/models/exam.dart';
 import '../../grades/models/score.dart';
 import '../../grades/rules/average_calculator.dart';

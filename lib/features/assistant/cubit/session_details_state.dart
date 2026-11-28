@@ -2,9 +2,9 @@ import '../../../core/errors/failure.dart';
 import '../../../core/state/view_state.dart';
 import '../../groups/models/group.dart';
 import '../../sessions/models/session.dart';
-import '../../attendance/models/attendance_entry.dart';
-import '../../scan/models/scan_setup.dart';
-import '../../attendance/rules/attendance_merger.dart';
+import '../models/attendance_entry.dart';
+import '../models/scan_setup.dart';
+import '../rules/attendance_merger.dart';
 
 /// بيانات شاشة تفاصيل الحصة.
 class SessionDetailsData {

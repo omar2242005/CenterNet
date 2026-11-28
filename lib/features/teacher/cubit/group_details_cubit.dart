@@ -1,4 +1,4 @@
-import 'package:center_net/features/attendance/rules/absence_calculator.dart';
+import 'package:center_net/features/assistant/rules/absence_calculator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/errors/failure.dart';

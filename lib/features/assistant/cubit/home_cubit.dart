@@ -7,9 +7,8 @@ import '../../../core/state/view_state.dart';
 import '../../groups/models/group.dart';
 import '../../sessions/models/session.dart';
 import '../models/session_time_status.dart';
-import '../../scan/repository/scan_repository.dart';
 import '../repository/assistant_repository.dart';
-import '../../../core/services/connectivity_monitor.dart';
+import '../services/connectivity_monitor.dart';
 import 'home_state.dart';
 
 /// منطق رئيسية المساعد: تحية + حالة الاتصال + حصص النهارده + الحصة الجارية
@@ -17,14 +16,12 @@ import 'home_state.dart';
 class AssistantHomeCubit extends Cubit<AssistantHomeState> {
   AssistantHomeCubit(
     this._repository,
-    this._scan,
     this._connectivity, {
     DateTime Function()? clock,
   }) : _clock = clock ?? DateTime.now,
        super(const AssistantHomeState());
 
   final AssistantRepository _repository;
-  final ScanRepository _scan;
   final ConnectivityMonitor _connectivity;
   final DateTime Function() _clock;
 
@@ -138,7 +135,7 @@ class AssistantHomeCubit extends Cubit<AssistantHomeState> {
       state.copyWith(preparing: true, preparedSetup: null, prepareFailure: null),
     );
     try {
-      final setup = await _scan.prepareScanSetup(current.id);
+      final setup = await _repository.prepareScanSetup(current.id);
       if (isClosed) return;
       emit(
         state.copyWith(preparing: false, preparedSetup: setup),

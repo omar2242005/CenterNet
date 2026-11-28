@@ -11,7 +11,7 @@ import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../../core/utils/cairo_time.dart';
+import '../../assistant/services/cairo_time.dart';
 import '../cubit/teacher_home_cubit.dart';
 import '../models/teacher_home_data.dart';
 import '../teacher_route_names.dart';

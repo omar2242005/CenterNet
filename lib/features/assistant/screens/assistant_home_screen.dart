@@ -14,7 +14,7 @@ import '../../../l10n/app_localizations.dart';
 import '../assistant_route_names.dart';
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
-import '../../../core/utils/cairo_time.dart';
+import '../services/cairo_time.dart';
 import '../widgets/assistant_shell.dart';
 
 /// رئيسية المساعد: تحية + حالة الاتصال + عدد حصص النهارده + كارت الحصة
