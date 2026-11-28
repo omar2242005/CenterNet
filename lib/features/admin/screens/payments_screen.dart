@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../app/di.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/async_view.dart';
+import '../../../core/widgets/filter_chips.dart';
 import '../../../core/widgets/search_field.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../groups/repository/groups_repository.dart';
@@ -155,22 +156,14 @@ class _PaymentsView extends StatelessWidget {
                   const SizedBox(height: AppSpacing.sm),
                   BlocBuilder<PaymentsCubit, PaymentsState>(
                     buildWhen: (a, b) => a.filter != b.filter,
-                    builder: (context, state) => Row(
-                      children: [
-                        for (final (f, label) in [
-                          (PaymentsFilter.all, l10n.paymentsFilterAll),
-                          (PaymentsFilter.paid, l10n.paymentsFilterPaid),
-                          (PaymentsFilter.unpaid, l10n.paymentsFilterUnpaid),
-                        ]) ...[
-                          ChoiceChip(
-                            label: Text(label),
-                            selected: state.filter == f,
-                            onSelected: (_) =>
-                                context.read<PaymentsCubit>().setFilter(f),
-                          ),
-                          const SizedBox(width: AppSpacing.sm),
-                        ],
-                      ],
+                    builder: (context, state) => FilterChips<PaymentsFilter>(
+                      options: {
+                        PaymentsFilter.all: l10n.paymentsFilterAll,
+                        PaymentsFilter.paid: l10n.paymentsFilterPaid,
+                        PaymentsFilter.unpaid: l10n.paymentsFilterUnpaid,
+                      },
+                      selected: state.filter,
+                      onSelected: context.read<PaymentsCubit>().setFilter,
                     ),
                   ),
                 ],

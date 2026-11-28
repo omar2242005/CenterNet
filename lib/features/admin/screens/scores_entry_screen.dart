@@ -10,6 +10,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/widgets/async_view.dart';
+import '../../../core/widgets/filter_chips.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../groups/models/group.dart';
@@ -290,24 +291,15 @@ class _ScoreSheetState extends State<_ScoreSheet> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: AppSpacing.md),
-          SegmentedButton<ScoreState>(
-            segments: [
-              ButtonSegment(
-                value: ScoreState.scored,
-                label: Text(l10n.scoreStateScored),
-              ),
-              ButtonSegment(
-                value: ScoreState.absent,
-                label: Text(l10n.scoreStateAbsent),
-              ),
-              ButtonSegment(
-                value: ScoreState.excused,
-                label: Text(l10n.scoreStateExcused),
-              ),
-            ],
-            selected: {_state},
-            onSelectionChanged: (s) => setState(() {
-              _state = s.first;
+          FilterChips<ScoreState>(
+            options: {
+              ScoreState.scored: l10n.scoreStateScored,
+              ScoreState.absent: l10n.scoreStateAbsent,
+              ScoreState.excused: l10n.scoreStateExcused,
+            },
+            selected: _state,
+            onSelected: (s) => setState(() {
+              _state = s;
               _error = null;
             }),
           ),

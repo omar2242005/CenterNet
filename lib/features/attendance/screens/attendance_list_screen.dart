@@ -9,6 +9,7 @@ import '../../../core/utils/cairo_time.dart';
 import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/async_view.dart';
+import '../../../core/widgets/filter_chips.dart';
 import '../../../core/widgets/search_field.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
@@ -92,7 +93,16 @@ class _DataBody extends StatelessWidget {
             hint: l10n.attendanceSearchHint,
           ),
         ),
-        _FilterChips(
+        FilterChips<AttendanceFilter>(
+          scrollable: true,
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          options: {
+            AttendanceFilter.all: l10n.attendanceFilterAll,
+            AttendanceFilter.present: l10n.attendanceStatusPresent,
+            AttendanceFilter.late: l10n.attendanceStatusLate,
+            AttendanceFilter.waiting: l10n.attendanceFilterWaiting,
+            AttendanceFilter.failed: l10n.attendanceFilterFailed,
+          },
           selected: state.filter,
           onSelected: cubit.setFilter,
         ),
@@ -115,41 +125,6 @@ class _DataBody extends StatelessWidget {
                 ),
         ),
       ],
-    );
-  }
-}
-
-class _FilterChips extends StatelessWidget {
-  const _FilterChips({required this.selected, required this.onSelected});
-
-  final AttendanceFilter selected;
-  final ValueChanged<AttendanceFilter> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final items = <(AttendanceFilter, String)>[
-      (AttendanceFilter.all, l10n.attendanceFilterAll),
-      (AttendanceFilter.present, l10n.attendanceStatusPresent),
-      (AttendanceFilter.late, l10n.attendanceStatusLate),
-      (AttendanceFilter.waiting, l10n.attendanceFilterWaiting),
-      (AttendanceFilter.failed, l10n.attendanceFilterFailed),
-    ];
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-      child: Row(
-        children: [
-          for (final (filter, label) in items) ...[
-            ChoiceChip(
-              label: Text(label),
-              selected: selected == filter,
-              onSelected: (_) => onSelected(filter),
-            ),
-            if (filter != items.last.$1) const SizedBox(width: AppSpacing.sm),
-          ],
-        ],
-      ),
     );
   }
 }

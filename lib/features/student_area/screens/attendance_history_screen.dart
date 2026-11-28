@@ -15,7 +15,7 @@ import '../../students/models/student.dart';
 import '../cubit/child_data_cubit.dart';
 import '../models/child_data.dart';
 import '../repository/student_data_repository.dart';
-import '../widgets/filter_chips.dart';
+import '../../../core/widgets/filter_chips.dart';
 
 /// سجل حضور الطالب (الأحدث أولًا) مع ملخص "حضر X من Y" وفلتر (الكل / حضر / غاب).
 class AttendanceHistoryScreen extends StatelessWidget {

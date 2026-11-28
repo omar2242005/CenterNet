@@ -16,7 +16,7 @@ import '../cubit/child_data_cubit.dart';
 import '../models/child_data.dart';
 import '../repository/student_data_repository.dart';
 import '../widgets/child_shell.dart';
-import '../widgets/filter_chips.dart';
+import '../../../core/widgets/filter_chips.dart';
 import '../widgets/result_text.dart';
 
 /// نتايج الطالب في الامتحانات المنشورة + المتوسط العام + فلتر المادة.
