@@ -10,6 +10,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/confirm_dialog.dart';
+import '../../../core/widgets/filter_chips.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../linking/cubit/my_students_cubit.dart';
 import '../../linking/link_route_names.dart';
@@ -145,18 +146,12 @@ class _GuardianHomeViewState extends State<_GuardianHomeView> {
                       style: theme.textTheme.titleMedium,
                     ),
                     const SizedBox(height: AppSpacing.sm),
-                    Wrap(
-                      spacing: AppSpacing.sm,
-                      runSpacing: AppSpacing.sm,
-                      children: [
-                        for (final i in items)
-                          ChoiceChip(
-                            label: Text(i.student.fullName),
-                            selected: i.student.id == s.id,
-                            onSelected: (_) =>
-                                setState(() => _selectedId = i.student.id),
-                          ),
-                      ],
+                    FilterChips<String>(
+                      options: {
+                        for (final i in items) i.student.id: i.student.fullName,
+                      },
+                      selected: s.id,
+                      onSelected: (id) => setState(() => _selectedId = id),
                     ),
                     const SizedBox(height: AppSpacing.md),
                   ],
