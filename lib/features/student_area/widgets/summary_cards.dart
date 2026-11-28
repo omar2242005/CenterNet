@@ -33,8 +33,10 @@ class SummaryCards extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final cubit = context.read<ChildDataCubit<ChildSummary>>();
-          return BlocBuilder<ChildDataCubit<ChildSummary>,
-              ViewState<ChildSummary>>(
+          return BlocBuilder<
+            ChildDataCubit<ChildSummary>,
+            ViewState<ChildSummary>
+          >(
             builder: (context, state) => AsyncView<ChildSummary>(
               state: state,
               onRetry: cubit.load,
@@ -94,7 +96,10 @@ class _Cards extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.areaAttendanceTitle, style: theme.textTheme.titleMedium),
+              Text(
+                l10n.areaAttendanceTitle,
+                style: theme.textTheme.titleMedium,
+              ),
               const SizedBox(height: AppSpacing.xs),
               Text(
                 summary.attendance.total == 0
@@ -112,7 +117,10 @@ class _Cards extends StatelessWidget {
         AppCard(
           onTap: latest == null
               ? null
-              : () => context.push(ChildRoutes.exam, extra: latest),
+              : () => context.push(
+                  ChildRoutes.exam,
+                  extra: ExamDetailsArgs(student, latest),
+                ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

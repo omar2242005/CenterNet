@@ -15,7 +15,7 @@ import '../models/child_data.dart';
 import '../models/updates_args.dart';
 import '../repository/student_data_repository.dart';
 import '../widgets/result_text.dart';
-import '../../../core/widgets/app_page.dart';
+import '../widgets/child_shell.dart';
 
 typedef _ChildUpdates = ({Student student, List<UpdateItem> items});
 
@@ -45,10 +45,13 @@ class UpdatesScreen extends StatelessWidget {
         _load,
         isEmpty: (d) => d.every((c) => c.items.isEmpty),
       )..load(),
-      child: AppPage(
+      child: ChildShell(
+        current: ChildTab.home,
+        isDetail: true,
         title: args.guardian
             ? l10n.updatesGuardianTitle
             : l10n.updatesStudentTitle,
+        student: args.students.isEmpty ? null : args.students.first,
         body: Builder(
           builder: (context) {
             final cubit = context.read<ChildDataCubit<List<_ChildUpdates>>>();

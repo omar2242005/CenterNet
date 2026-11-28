@@ -26,6 +26,7 @@ class ChildShell extends StatelessWidget {
     required this.body,
     this.student,
     this.actions,
+    this.isDetail = false,
   });
 
   final ChildTab current;
@@ -34,17 +35,23 @@ class ChildShell extends StatelessWidget {
   final Student? student;
   final List<Widget>? actions;
 
-  bool get _isGuardian =>
-      sl<SessionRole>().value == HomeDestination.guardian;
+  /// شاشة تفاصيل مفتوحة فوق (مش تبويب): التبويب المضلَّل بيفضل شغال،
+  /// وضغطه بيرجّع لشاشته بدل ما يتجاهل الضغطة.
+  final bool isDetail;
+
+  bool get _isGuardian => sl<SessionRole>().value == HomeDestination.guardian;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final guardian = _isGuardian;
-    final gradesLabel = guardian ? l10n.guardianNavGrades : l10n.studentNavGrades;
-    final fourthLabel = guardian ? l10n.guardianNavProfile : l10n.myAccountTitle;
-    final fourthIcon =
-        guardian ? Icons.badge_outlined : Icons.person_outline;
+    final gradesLabel = guardian
+        ? l10n.guardianNavGrades
+        : l10n.studentNavGrades;
+    final fourthLabel = guardian
+        ? l10n.guardianNavProfile
+        : l10n.myAccountTitle;
+    final fourthIcon = guardian ? Icons.badge_outlined : Icons.person_outline;
     final fourthSelected = guardian ? Icons.badge : Icons.person;
 
     return AppShell(
@@ -123,7 +130,7 @@ class ChildShell extends StatelessWidget {
   }
 
   void _go(BuildContext context, ChildTab tab) {
-    if (current == tab) return;
+    if (!isDetail && current == tab) return;
     final s = student;
     if (tab == ChildTab.home) {
       context.go(
@@ -133,13 +140,10 @@ class ChildShell extends StatelessWidget {
       return;
     }
     if (s == null) return; // لسه بيحمّل الطالب
-    context.go(
-      switch (tab) {
-        ChildTab.schedule => ChildRoutes.schedule,
-        ChildTab.grades => ChildRoutes.results,
-        _ => ChildRoutes.profile,
-      },
-      extra: s,
-    );
+    context.go(switch (tab) {
+      ChildTab.schedule => ChildRoutes.schedule,
+      ChildTab.grades => ChildRoutes.results,
+      _ => ChildRoutes.profile,
+    }, extra: s);
   }
 }

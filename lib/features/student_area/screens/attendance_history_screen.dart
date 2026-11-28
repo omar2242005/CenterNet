@@ -16,7 +16,7 @@ import '../cubit/child_data_cubit.dart';
 import '../models/child_data.dart';
 import '../repository/student_data_repository.dart';
 import '../../../core/widgets/filter_chips.dart';
-import '../../../core/widgets/app_page.dart';
+import '../widgets/child_shell.dart';
 
 /// سجل حضور الطالب (الأحدث أولًا) مع ملخص "حضر X من Y" وفلتر (الكل / حضر / غاب).
 class AttendanceHistoryScreen extends StatelessWidget {
@@ -32,8 +32,11 @@ class AttendanceHistoryScreen extends StatelessWidget {
         () => sl<StudentDataRepository>().loadAttendance(student),
         isEmpty: (d) => d.total == 0,
       )..load(),
-      child: AppPage(
+      child: ChildShell(
+        current: ChildTab.home,
+        isDetail: true,
         title: l10n.areaAttendanceTitle,
+        student: student,
         body: Builder(
           builder: (context) {
             final cubit = context.read<ChildDataCubit<AttendanceHistory>>();

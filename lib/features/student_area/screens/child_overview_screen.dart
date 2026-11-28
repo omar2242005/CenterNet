@@ -13,7 +13,7 @@ import '../../students/models/student.dart';
 import '../cubit/child_data_cubit.dart';
 import '../models/child_data.dart';
 import '../repository/student_data_repository.dart';
-import '../../../core/widgets/app_page.dart';
+import '../widgets/child_shell.dart';
 
 /// متابعة الابن (ولي الأمر): حضور الشهر الحالي ونتايجه + الحصة الجاية.
 class ChildOverviewScreen extends StatelessWidget {
@@ -28,8 +28,11 @@ class ChildOverviewScreen extends StatelessWidget {
       create: (_) => ChildDataCubit<ChildSummary>(
         () => sl<StudentDataRepository>().loadSummary(student),
       )..load(),
-      child: AppPage(
+      child: ChildShell(
+        current: ChildTab.home,
+        isDetail: true,
         title: l10n.childOverviewTitle,
+        student: student,
         body: Builder(
           builder: (context) {
             final cubit = context.read<ChildDataCubit<ChildSummary>>();
