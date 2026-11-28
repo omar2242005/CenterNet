@@ -10,7 +10,7 @@ import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../assistant/models/attendance.dart';
+import '../../attendance/models/attendance.dart';
 import '../../students/models/student.dart';
 import '../cubit/child_data_cubit.dart';
 import '../models/child_data.dart';

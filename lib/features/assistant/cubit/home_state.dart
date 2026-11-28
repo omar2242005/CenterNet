@@ -2,7 +2,7 @@ import '../../../core/errors/failure.dart';
 import '../../../core/state/view_state.dart';
 import '../../groups/models/group.dart';
 import '../../sessions/models/session.dart';
-import '../models/scan_setup.dart';
+import '../../scan/models/scan_setup.dart';
 
 /// بيانات الرئيسية بعد التحميل: اسم المساعد وحصص النهارده والحصة الجارية.
 class AssistantHomeData {

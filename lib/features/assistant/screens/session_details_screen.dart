@@ -15,14 +15,16 @@ import '../../../l10n/app_localizations.dart';
 import '../assistant_route_names.dart';
 import '../cubit/session_details_cubit.dart';
 import '../cubit/session_details_state.dart';
-import '../models/attendance.dart';
-import '../models/attendance_entry.dart';
+import '../../attendance/models/attendance.dart';
+import '../../attendance/models/attendance_entry.dart';
 import '../models/session_time_status.dart';
+import '../../attendance/repository/attendance_repository.dart';
+import '../../scan/repository/scan_repository.dart';
 import '../repository/assistant_repository.dart';
-import '../services/cairo_time.dart';
-import '../services/pending_scan_store.dart';
+import '../../../core/utils/cairo_time.dart';
+import '../../scan/services/pending_scan_store.dart';
 import '../widgets/assistant_shell.dart';
-import '../widgets/payment_status_badge.dart';
+import '../../attendance/widgets/payment_status_badge.dart';
 
 /// تفاصيل الحصة: المجموعة والوقت والقاعة + ملخص الحضور المدموج + آخر
 /// عمليات المسح + زرا "مسح كود الطالب" (تحضير للأوفلاين) و"قائمة الحضور".
@@ -37,6 +39,8 @@ class SessionDetailsScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => SessionDetailsCubit(
         sl<AssistantRepository>(),
+        sl<AttendanceRepository>(),
+        sl<ScanRepository>(),
         sl<PendingScanStore>(),
         sl<PendingOpsGuard>(),
         sessionId: sessionId,

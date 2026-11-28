@@ -1,4 +1,4 @@
-import '../../assistant/services/cairo_time.dart';
+import '../../../core/utils/cairo_time.dart';
 import '../../groups/models/group.dart';
 import '../../sessions/models/session.dart';
 import '../../students/models/student.dart';
