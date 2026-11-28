@@ -15,6 +15,7 @@ import '../services/pending_scan_store.dart';
 import '../services/scan_recorder.dart';
 import '../../attendance/widgets/payment_status_badge.dart';
 import '../widgets/scan_camera.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// شاشة المسح بالكاميرا (نموذج أولي).
 ///
@@ -71,10 +72,7 @@ class _ScanView extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final cubit = context.read<ScanCubit>();
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.scanTitle)),
-      body: SafeArea(
-        child: BlocListener<ScanCubit, ScanState>(
+    return AppPage(title: l10n.scanTitle, body: BlocListener<ScanCubit, ScanState>(
           listenWhen: (previous, current) =>
               current.feedback != null &&
               current.feedback?.seq != previous.feedback?.seq,
@@ -120,9 +118,7 @@ class _ScanView extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 

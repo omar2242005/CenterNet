@@ -13,6 +13,7 @@ import '../../students/models/student.dart';
 import '../cubit/child_data_cubit.dart';
 import '../models/child_data.dart';
 import '../repository/student_data_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// متابعة الابن (ولي الأمر): حضور الشهر الحالي ونتايجه + الحصة الجاية.
 class ChildOverviewScreen extends StatelessWidget {
@@ -27,25 +28,23 @@ class ChildOverviewScreen extends StatelessWidget {
       create: (_) => ChildDataCubit<ChildSummary>(
         () => sl<StudentDataRepository>().loadSummary(student),
       )..load(),
-      child: Scaffold(
-        appBar: AppBar(title: Text(l10n.childOverviewTitle)),
-        body: SafeArea(
-          child: Builder(
-            builder: (context) {
-              final cubit = context.read<ChildDataCubit<ChildSummary>>();
-              return BlocBuilder<ChildDataCubit<ChildSummary>,
-                  ViewState<ChildSummary>>(
-                builder: (context, state) => AsyncView<ChildSummary>(
-                  state: state,
-                  onRetry: cubit.load,
-                  builder: (context, summary) => _Overview(
-                    student: student,
-                    summary: summary,
-                  ),
-                ),
-              );
-            },
-          ),
+      child: AppPage(
+        title: l10n.childOverviewTitle,
+        body: Builder(
+          builder: (context) {
+            final cubit = context.read<ChildDataCubit<ChildSummary>>();
+            return BlocBuilder<
+              ChildDataCubit<ChildSummary>,
+              ViewState<ChildSummary>
+            >(
+              builder: (context, state) => AsyncView<ChildSummary>(
+                state: state,
+                onRetry: cubit.load,
+                builder: (context, summary) =>
+                    _Overview(student: student, summary: summary),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -99,10 +98,7 @@ class _Overview extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                l10n.childMonthResults,
-                style: theme.textTheme.titleMedium,
-              ),
+              Text(l10n.childMonthResults, style: theme.textTheme.titleMedium),
               const SizedBox(height: AppSpacing.xs),
               Text(
                 average == null

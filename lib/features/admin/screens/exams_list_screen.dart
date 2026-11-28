@@ -16,6 +16,7 @@ import '../../grades/grade_format.dart';
 import '../../grades/grade_route_names.dart';
 import '../../grades/models/exam.dart';
 import '../../grades/repositories/exams_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// امتحانات مجموعة: قايمة + إنشاء + نشر وإلغاء نشر.
 class ExamsListScreen extends StatelessWidget {
@@ -45,9 +46,10 @@ class _ExamsListView extends StatelessWidget {
   }
 
   Future<void> _togglePublish(BuildContext context, Exam exam) async {
-    final failure = await context
-        .read<ExamsListCubit>()
-        .setPublished(exam, published: !exam.published);
+    final failure = await context.read<ExamsListCubit>().setPublished(
+      exam,
+      published: !exam.published,
+    );
     if (failure != null && context.mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(failureText(failure))));
@@ -58,62 +60,56 @@ class _ExamsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.examsTitle),
-            Text(
-              group.name,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-            ),
-          ],
-        ),
+    return AppPage(
+      titleWidget: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.examsTitle),
+          Text(
+            group.name,
+            style: Theme.of(context).textTheme.bodySmall
+                ?.copyWith(color: AppColors.textSecondary),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _open(context, GradeRoutes.examCreate, group),
         icon: const Icon(Icons.add),
         label: Text(l10n.examAddTitle),
       ),
-      body: SafeArea(
-        child: BlocBuilder<ExamsListCubit, ExamsListState>(
-          builder: (context, state) {
-            return AsyncView<List<Exam>>(
-              state: state.view,
-              onRetry: context.read<ExamsListCubit>().load,
-              emptyMessage: l10n.examsEmpty,
-              emptyIcon: Icons.quiz_outlined,
-              builder: (context, exams) => ListView.separated(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.md,
-                  AppSpacing.md,
-                  AppSpacing.md,
-                  // مسافة تحت عشان الزر العايم مايغطيش آخر امتحان.
-                  AppSpacing.xl * 3,
-                ),
-                itemCount: exams.length,
-                separatorBuilder: (_, _) =>
-                    const SizedBox(height: AppSpacing.sm),
-                itemBuilder: (context, index) {
-                  final exam = exams[index];
-                  return _ExamTile(
-                    exam: exam,
-                    busy: state.busyExamId == exam.id,
-                    onTap: () => _open(
-                      context,
-                      GradeRoutes.scores,
-                      ExamScoresArgs(group, exam),
-                    ),
-                    onTogglePublish: () => _togglePublish(context, exam),
-                  );
-                },
+      body: BlocBuilder<ExamsListCubit, ExamsListState>(
+        builder: (context, state) {
+          return AsyncView<List<Exam>>(
+            state: state.view,
+            onRetry: context.read<ExamsListCubit>().load,
+            emptyMessage: l10n.examsEmpty,
+            emptyIcon: Icons.quiz_outlined,
+            builder: (context, exams) => ListView.separated(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md,
+                AppSpacing.md,
+                AppSpacing.md,
+                // مسافة تحت عشان الزر العايم مايغطيش آخر امتحان.
+                AppSpacing.xl * 3,
               ),
-            );
-          },
-        ),
+              itemCount: exams.length,
+              separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
+              itemBuilder: (context, index) {
+                final exam = exams[index];
+                return _ExamTile(
+                  exam: exam,
+                  busy: state.busyExamId == exam.id,
+                  onTap: () => _open(
+                    context,
+                    GradeRoutes.scores,
+                    ExamScoresArgs(group, exam),
+                  ),
+                  onTogglePublish: () => _togglePublish(context, exam),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

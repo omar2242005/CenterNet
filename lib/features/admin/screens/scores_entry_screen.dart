@@ -21,6 +21,8 @@ import '../../grades/grade_format.dart';
 import '../../grades/models/exam.dart';
 import '../../grades/models/score.dart';
 import '../../grades/repositories/scores_repository.dart';
+import '../../../core/widgets/app_page.dart';
+
 /// إدخال درجات امتحان لطلاب المجموعة.
 class ScoresEntryScreen extends StatelessWidget {
   const ScoresEntryScreen({super.key, required this.group, required this.exam});
@@ -72,66 +74,64 @@ class _ScoresEntryView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.scoresTitle)),
-      body: SafeArea(
-        child: BlocBuilder<ScoresEntryCubit, ScoresEntryState>(
-          builder: (context, state) {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '${state.exam.title} · '
-                          '${l10n.examMaxLabel(fmtScore(state.exam.maxScore))}',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+    return AppPage(
+      title: l10n.scoresTitle,
+      body: BlocBuilder<ScoresEntryCubit, ScoresEntryState>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${state.exam.title} · '
+                        '${l10n.examMaxLabel(fmtScore(state.exam.maxScore))}',
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      if (!state.loading)
-                        Text(
-                          l10n.scoresRecorded(
-                            state.recordedCount,
-                            state.students.length,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: AsyncView<List<Student>>(
-                    state: state.view,
-                    onRetry: context.read<ScoresEntryCubit>().load,
-                    emptyMessage: l10n.scoresEmpty,
-                    emptyIcon: Icons.groups_outlined,
-                    builder: (context, students) => ListView.separated(
-                      padding: const EdgeInsets.fromLTRB(
-                        AppSpacing.md,
-                        0,
-                        AppSpacing.md,
-                        AppSpacing.md,
-                      ),
-                      itemCount: students.length,
-                      separatorBuilder: (_, _) =>
-                          const SizedBox(height: AppSpacing.sm),
-                      itemBuilder: (context, index) {
-                        final student = students[index];
-                        return _StudentScoreTile(
-                          student: student,
-                          score: state.scoreOf(student.id),
-                          maxScore: state.exam.maxScore,
-                          onTap: () => _edit(context, student, state),
-                        );
-                      },
                     ),
+                    if (!state.loading)
+                      Text(
+                        l10n.scoresRecorded(
+                          state.recordedCount,
+                          state.students.length,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: AsyncView<List<Student>>(
+                  state: state.view,
+                  onRetry: context.read<ScoresEntryCubit>().load,
+                  emptyMessage: l10n.scoresEmpty,
+                  emptyIcon: Icons.groups_outlined,
+                  builder: (context, students) => ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.md,
+                      0,
+                      AppSpacing.md,
+                      AppSpacing.md,
+                    ),
+                    itemCount: students.length,
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(height: AppSpacing.sm),
+                    itemBuilder: (context, index) {
+                      final student = students[index];
+                      return _StudentScoreTile(
+                        student: student,
+                        score: state.scoreOf(student.id),
+                        maxScore: state.exam.maxScore,
+                        onTap: () => _edit(context, student, state),
+                      );
+                    },
                   ),
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -307,7 +307,8 @@ class _ScoreSheetState extends State<_ScoreSheet> {
             const SizedBox(height: AppSpacing.md),
             AppTextField(
               controller: _score,
-              label: '${l10n.scoreFieldScore} (0 - ${fmtScore(widget.maxScore)})',
+              label:
+                  '${l10n.scoreFieldScore} (0 - ${fmtScore(widget.maxScore)})',
               isLtr: true,
               latinDigits: true,
               autofocus: true,

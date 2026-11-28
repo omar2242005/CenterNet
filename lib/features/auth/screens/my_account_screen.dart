@@ -13,6 +13,7 @@ import '../models/app_user.dart';
 import '../repository/auth_repository.dart';
 import '../delete_account_action.dart';
 import '../sign_out_action.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// شاشة "حسابي": بيانات الحساب الأساسية + تسجيل الخروج.
 /// متاحة لكل الأدوار (مش محتاجة سطر في حارس الصلاحيات).
@@ -49,84 +50,79 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.myAccountTitle)),
-      body: SafeArea(
-        child: FutureBuilder<AppUser?>(
-          future: _profile,
-          builder: (context, snap) {
-            final user = snap.data;
-            if (snap.hasError ||
-                (user == null &&
-                    snap.connectionState == ConnectionState.done)) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  child: Text(l10n.myAccountLoadError),
-                ),
-              );
-            }
-            if (user == null) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return ListView(
-              padding: AppSpacing.screenPadding,
-              children: [
-                AppCard(
-                  child: Column(
-                    children: [
-                      _InfoRow(
-                        icon: Icons.person_outline,
-                        label: l10n.myAccountName,
-                        value: user.name,
-                      ),
-                      if (user.email.isNotEmpty)
-                        _InfoRow(
-                          icon: Icons.mail_outline,
-                          label: l10n.myAccountEmail,
-                          value: user.email,
-                        ),
-                      if (user.phone.isNotEmpty)
-                        _InfoRow(
-                          icon: Icons.phone_outlined,
-                          label: l10n.myAccountPhone,
-                          value: user.phone,
-                        ),
-                      _InfoRow(
-                        icon: Icons.badge_outlined,
-                        label: l10n.myAccountType,
-                        value: _typeLabel(l10n, user.accountType),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                AppButton(
-                  label: l10n.editContactAction,
-                  variant: AppButtonVariant.secondary,
-                  icon: Icons.edit_outlined,
-                  onPressed: () => _edit(user),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                AppButton(
-                  label: l10n.authSignOut,
-                  variant: AppButtonVariant.secondary,
-                  icon: Icons.logout,
-                  onPressed: () => confirmAndSignOut(context),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                TextButton.icon(
-                  onPressed: () => confirmAndDeleteAccount(context),
-                  icon: const Icon(Icons.delete_forever_outlined),
-                  label: Text(l10n.accountDeleteAction),
-                  style: TextButton.styleFrom(
-                    foregroundColor: AppColors.error,
-                  ),
-                ),
-              ],
+    return AppPage(
+      title: l10n.myAccountTitle,
+      body: FutureBuilder<AppUser?>(
+        future: _profile,
+        builder: (context, snap) {
+          final user = snap.data;
+          if (snap.hasError ||
+              (user == null && snap.connectionState == ConnectionState.done)) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: Text(l10n.myAccountLoadError),
+              ),
             );
-          },
-        ),
+          }
+          if (user == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return ListView(
+            padding: AppSpacing.screenPadding,
+            children: [
+              AppCard(
+                child: Column(
+                  children: [
+                    _InfoRow(
+                      icon: Icons.person_outline,
+                      label: l10n.myAccountName,
+                      value: user.name,
+                    ),
+                    if (user.email.isNotEmpty)
+                      _InfoRow(
+                        icon: Icons.mail_outline,
+                        label: l10n.myAccountEmail,
+                        value: user.email,
+                      ),
+                    if (user.phone.isNotEmpty)
+                      _InfoRow(
+                        icon: Icons.phone_outlined,
+                        label: l10n.myAccountPhone,
+                        value: user.phone,
+                      ),
+                    _InfoRow(
+                      icon: Icons.badge_outlined,
+                      label: l10n.myAccountType,
+                      value: _typeLabel(l10n, user.accountType),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              AppButton(
+                label: l10n.editContactAction,
+                variant: AppButtonVariant.secondary,
+                icon: Icons.edit_outlined,
+                onPressed: () => _edit(user),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              AppButton(
+                label: l10n.authSignOut,
+                variant: AppButtonVariant.secondary,
+                icon: Icons.logout,
+                onPressed: () => confirmAndSignOut(context),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              TextButton.icon(
+                onPressed: () => confirmAndDeleteAccount(context),
+                icon: const Icon(Icons.delete_forever_outlined),
+                label: Text(l10n.accountDeleteAction),
+                style: TextButton.styleFrom(foregroundColor: AppColors.error),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -158,8 +154,9 @@ class _InfoRow extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: AppColors.textSecondary),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
                 Text(value, style: theme.textTheme.titleMedium),
               ],

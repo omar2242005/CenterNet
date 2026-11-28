@@ -13,6 +13,7 @@ import '../cubit/link_request_cubit.dart';
 import '../models/link_request.dart';
 import '../models/student_link.dart';
 import '../repository/linking_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// طلب ربط للأدمن: كود السنتر + رقم الطالب (+ صلة القرابة لولي الأمر).
 /// بعد موافقة الأدمن بيكمّل الربط من نفس الشاشة. بترجّع `true` لو الربط تم.
@@ -70,10 +71,7 @@ class _LinkRequestViewState extends State<_LinkRequestView> {
       l10n.relationOther,
     ];
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.linkRequestTitle)),
-      body: SafeArea(
-        child: BlocConsumer<LinkRequestCubit, LinkRequestState>(
+    return AppPage(title: l10n.linkRequestTitle, body: BlocConsumer<LinkRequestCubit, LinkRequestState>(
           listener: (context, state) {
             if (state.done) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -158,9 +156,7 @@ class _LinkRequestViewState extends State<_LinkRequestView> {
               ],
             );
           },
-        ),
-      ),
-    );
+        ));
   }
 }
 

@@ -15,6 +15,7 @@ import '../../grades/repositories/exams_repository.dart';
 import '../../groups/models/group.dart';
 import '../../groups/repository/groups_repository.dart';
 import '../cubit/teacher_exam_form_cubit.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// إنشاء اختبار: الاسم، المجموعة، التاريخ، وقت البداية، الدرجة النهائية.
 /// (بيتعمل مسودة؛ التاريخ ووقت البداية بيتخزنوا في حقل `date` بتوقيت القاهرة.)
@@ -93,136 +94,134 @@ class _FormViewState extends State<_FormView> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.teacherExamFormTitle)),
-      body: SafeArea(
-        child: BlocConsumer<TeacherExamFormCubit, TeacherExamFormState>(
-          listener: (context, state) {
-            if (state.status == TeacherExamFormStatus.success) {
-              context.pop(state.saved);
-            } else if (state.status == TeacherExamFormStatus.failure &&
-                state.groups.isNotEmpty) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(failureText(state.failure))),
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state.status == TeacherExamFormStatus.loading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state.status == TeacherExamFormStatus.failure &&
-                state.groups.isEmpty) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(failureText(state.failure)),
-                      const SizedBox(height: AppSpacing.md),
-                      AppButton(
-                        label: l10n.retry,
-                        expand: false,
-                        onPressed: () =>
-                            context.read<TeacherExamFormCubit>().load(),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }
-            if (state.groups.isEmpty) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  child: Text(l10n.teacherExamNoGroups),
-                ),
-              );
-            }
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Form(
-                key: _formKey,
+    return AppPage(
+      title: l10n.teacherExamFormTitle,
+      body: BlocConsumer<TeacherExamFormCubit, TeacherExamFormState>(
+        listener: (context, state) {
+          if (state.status == TeacherExamFormStatus.success) {
+            context.pop(state.saved);
+          } else if (state.status == TeacherExamFormStatus.failure &&
+              state.groups.isNotEmpty) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(failureText(state.failure))));
+          }
+        },
+        builder: (context, state) {
+          if (state.status == TeacherExamFormStatus.loading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state.status == TeacherExamFormStatus.failure &&
+              state.groups.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    AppTextField(
-                      controller: _title,
-                      label: l10n.teacherExamFieldName,
-                      maxLength: 120,
-                      textInputAction: TextInputAction.next,
-                      validator: (v) => (v ?? '').trim().isEmpty
-                          ? l10n.validationRequired
-                          : null,
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    DropdownButtonFormField<Group>(
-                      initialValue: _group,
-                      isExpanded: true,
-                      decoration: InputDecoration(
-                        labelText: l10n.teacherExamFieldGroup,
-                      ),
-                      items: [
-                        for (final g in state.groups)
-                          DropdownMenuItem(
-                            value: g,
-                            child: Text(
-                              g.subject.isEmpty
-                                  ? g.name
-                                  : '${g.subject} · ${g.name}',
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                      ],
-                      onChanged: (g) => setState(() => _group = g),
-                      validator: (g) =>
-                          g == null ? l10n.teacherExamGroupRequired : null,
-                    ),
+                    Text(failureText(state.failure)),
                     const SizedBox(height: AppSpacing.md),
                     AppButton(
-                      label:
-                          '${l10n.teacherExamFieldDate}: ${fmtDate(l10n, _date)}',
-                      icon: Icons.event,
-                      variant: AppButtonVariant.secondary,
-                      onPressed: _pickDate,
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    AppButton(
-                      label:
-                          '${l10n.teacherExamFieldStart}: ${formatMinutesOfDay(l10n, _time.hour * 60 + _time.minute)}',
-                      icon: Icons.schedule,
-                      variant: AppButtonVariant.secondary,
-                      onPressed: _pickTime,
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    AppTextField(
-                      controller: _max,
-                      label: l10n.examFieldMax,
-                      isLtr: true,
-                      latinDigits: true,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      validator: (v) {
-                        final n = double.tryParse((v ?? '').trim());
-                        return (n == null || !n.isFinite || n <= 0)
-                            ? l10n.examMaxInvalid
-                            : null;
-                      },
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    AppButton(
-                      label: l10n.examSave,
-                      isLoading: state.isSubmitting,
-                      onPressed: _submit,
+                      label: l10n.retry,
+                      expand: false,
+                      onPressed: () =>
+                          context.read<TeacherExamFormCubit>().load(),
                     ),
                   ],
                 ),
               ),
             );
-          },
-        ),
+          }
+          if (state.groups.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: Text(l10n.teacherExamNoGroups),
+              ),
+            );
+          }
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  AppTextField(
+                    controller: _title,
+                    label: l10n.teacherExamFieldName,
+                    maxLength: 120,
+                    textInputAction: TextInputAction.next,
+                    validator: (v) => (v ?? '').trim().isEmpty
+                        ? l10n.validationRequired
+                        : null,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  DropdownButtonFormField<Group>(
+                    initialValue: _group,
+                    isExpanded: true,
+                    decoration: InputDecoration(
+                      labelText: l10n.teacherExamFieldGroup,
+                    ),
+                    items: [
+                      for (final g in state.groups)
+                        DropdownMenuItem(
+                          value: g,
+                          child: Text(
+                            g.subject.isEmpty
+                                ? g.name
+                                : '${g.subject} · ${g.name}',
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                    ],
+                    onChanged: (g) => setState(() => _group = g),
+                    validator: (g) =>
+                        g == null ? l10n.teacherExamGroupRequired : null,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  AppButton(
+                    label:
+                        '${l10n.teacherExamFieldDate}: ${fmtDate(l10n, _date)}',
+                    icon: Icons.event,
+                    variant: AppButtonVariant.secondary,
+                    onPressed: _pickDate,
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  AppButton(
+                    label:
+                        '${l10n.teacherExamFieldStart}: ${formatMinutesOfDay(l10n, _time.hour * 60 + _time.minute)}',
+                    icon: Icons.schedule,
+                    variant: AppButtonVariant.secondary,
+                    onPressed: _pickTime,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  AppTextField(
+                    controller: _max,
+                    label: l10n.examFieldMax,
+                    isLtr: true,
+                    latinDigits: true,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    validator: (v) {
+                      final n = double.tryParse((v ?? '').trim());
+                      return (n == null || !n.isFinite || n <= 0)
+                          ? l10n.examMaxInvalid
+                          : null;
+                    },
+                  ),
+                  const SizedBox(height: AppSpacing.lg),
+                  AppButton(
+                    label: l10n.examSave,
+                    isLoading: state.isSubmitting,
+                    onPressed: _submit,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

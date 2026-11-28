@@ -8,6 +8,7 @@ import '../../../l10n/app_localizations.dart';
 import '../cubit/sync_cubit.dart';
 import '../cubit/sync_state.dart';
 import '../models/pending_scan.dart';
+import '../../../core/widgets/app_page.dart';
 
 class SyncScreen extends StatefulWidget {
   const SyncScreen({super.key});
@@ -50,8 +51,9 @@ class _SyncView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.syncTitle)),
+    return AppPage(
+      title: l10n.syncTitle,
+      safeArea: false,
       body: BlocBuilder<SyncCubit, SyncState>(
         builder: (context, state) => Padding(
           padding: AppSpacing.screenPadding,

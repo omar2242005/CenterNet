@@ -13,6 +13,7 @@ import '../../centers/cubit/center_settings_cubit.dart';
 import '../../centers/models/center_form_error.dart';
 import '../../centers/models/center_info.dart';
 import '../../centers/repository/centers_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 class CenterSettingsScreen extends StatelessWidget {
   const CenterSettingsScreen({super.key});
@@ -33,25 +34,24 @@ class _CenterSettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.centerSettingsTitle)),
-      body: SafeArea(
-        child: BlocBuilder<CenterSettingsCubit, CenterSettingsState>(
-          builder: (context, state) {
-            return AsyncView<CenterInfo>(
-              state: state.view,
-              onRetry: context.read<CenterSettingsCubit>().load,
-              emptyMessage: l10n.centerNone,
-              builder: (context, center) => _SettingsForm(
-                // مفتاح بالقيم عشان الفورم يتبني من جديد بعد الحفظ.
-                key: ValueKey(
-                    '${center.id}-${center.name}-${center.year}-${center.lateAfterMinutes}'),
-                center: center,
-                state: state,
+    return AppPage(
+      title: l10n.centerSettingsTitle,
+      body: BlocBuilder<CenterSettingsCubit, CenterSettingsState>(
+        builder: (context, state) {
+          return AsyncView<CenterInfo>(
+            state: state.view,
+            onRetry: context.read<CenterSettingsCubit>().load,
+            emptyMessage: l10n.centerNone,
+            builder: (context, center) => _SettingsForm(
+              // مفتاح بالقيم عشان الفورم يتبني من جديد بعد الحفظ.
+              key: ValueKey(
+                '${center.id}-${center.name}-${center.year}-${center.lateAfterMinutes}',
               ),
-            );
-          },
-        ),
+              center: center,
+              state: state,
+            ),
+          );
+        },
       ),
     );
   }
@@ -70,10 +70,10 @@ class _SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<_SettingsForm> {
   final _formKey = GlobalKey<FormState>();
   late final _name = TextEditingController(text: widget.center.name);
-  late final _year =
-      TextEditingController(text: widget.center.year.toString());
-  late final _late =
-      TextEditingController(text: widget.center.lateAfterMinutes.toString());
+  late final _year = TextEditingController(text: widget.center.year.toString());
+  late final _late = TextEditingController(
+    text: widget.center.lateAfterMinutes.toString(),
+  );
 
   @override
   void dispose() {
@@ -86,10 +86,10 @@ class _SettingsFormState extends State<_SettingsForm> {
   void _save() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     context.read<CenterSettingsCubit>().save(
-          name: _name.text,
-          year: int.parse(toLatinDigits(_year.text).trim()),
-          lateAfterMinutes: int.parse(toLatinDigits(_late.text).trim()),
-        );
+      name: _name.text,
+      year: int.parse(toLatinDigits(_year.text).trim()),
+      lateAfterMinutes: int.parse(toLatinDigits(_late.text).trim()),
+    );
   }
 
   @override
@@ -120,8 +120,8 @@ class _SettingsFormState extends State<_SettingsForm> {
               isLtr: true,
               latinDigits: true,
               enabled: !state.saving,
-              validator: (v) => CenterValidators.year(toLatinDigits(v ?? ''))
-                  ?.message(l10n),
+              validator: (v) =>
+                  CenterValidators.year(toLatinDigits(v ?? ''))?.message(l10n),
             ),
             const SizedBox(height: AppSpacing.md),
             AppTextField(

@@ -15,6 +15,7 @@ import '../cubit/link_code_cubit.dart';
 import '../models/invite_code.dart';
 import '../models/student_link.dart';
 import '../repository/linking_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// شاشة إدخال كود الربط: واحدة للطالب ولولي الأمر (حسب [kind]).
 /// فيها نص الموافقة، ولازم المستخدم يوافق قبل الربط. بترجّع `true` لو الربط نجح.
@@ -64,96 +65,90 @@ class _LinkCodeViewState extends State<_LinkCodeView> {
     final theme = Theme.of(context);
     final isGuardian = widget.kind == LinkKind.guardian;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.linkEnterTitle),
-        // مخرج للمستخدم اللي دخل بالغلط أو ندمان: تسجيل خروج بتأكيد
-        // (نفس مسار باقي الشاشات، وفيه حارس العمليات المعلّقة).
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            tooltip: l10n.authSignOut,
-            onPressed: () => confirmAndSignOut(context),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: BlocConsumer<LinkCodeCubit, LinkCodeState>(
-          listener: (context, state) {
-            if (state.done) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.linkSuccess)),
-              );
-              context.pop(true);
-            } else if (state.failure != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.failure!.message)),
-              );
-            }
-          },
-          builder: (context, state) {
-            return ListView(
-              padding: AppSpacing.screenPadding,
-              children: [
-                Text(
-                  isGuardian ? l10n.linkGuardianIntro : l10n.linkStudentIntro,
-                  style: theme.textTheme.bodyLarge,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                AppTextField(
-                  controller: _controller,
-                  label: l10n.linkCodeLabel,
-                  hint: l10n.linkCodeHint,
-                  isLtr: true,
-                  maxLength: 12,
-                  enabled: !state.busy,
-                  textInputAction: TextInputAction.done,
-                  onChanged: (_) => setState(() {}),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                AppCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.linkConsentTitle,
-                        style: theme.textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: AppSpacing.xs),
-                      Text(
-                        isGuardian
-                            ? l10n.linkConsentGuardian(
-                                InviteCode.maxGuardiansPerStudent,
-                              )
-                            : l10n.linkConsentStudent,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      CheckboxListTile(
-                        value: _agreed,
-                        contentPadding: EdgeInsets.zero,
-                        controlAffinity: ListTileControlAffinity.leading,
-                        title: Text(l10n.linkConsentAgree),
-                        onChanged: state.busy
-                            ? null
-                            : (v) => setState(() => _agreed = v ?? false),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                AppButton(
-                  label: l10n.linkSubmit,
-                  icon: Icons.link,
-                  isLoading: state.busy,
-                  onPressed:
-                      (_formatOk && _agreed) ? () => _submit(context) : null,
-                ),
-              ],
-            );
-          },
+    return AppPage(
+      title: l10n.linkEnterTitle, // مخرج للمستخدم اللي دخل بالغلط أو ندمان: تسجيل خروج بتأكيد
+      // (نفس مسار باقي الشاشات، وفيه حارس العمليات المعلّقة).
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.logout),
+          tooltip: l10n.authSignOut,
+          onPressed: () => confirmAndSignOut(context),
         ),
+      ],
+      body: BlocConsumer<LinkCodeCubit, LinkCodeState>(
+        listener: (context, state) {
+          if (state.done) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(l10n.linkSuccess)));
+            context.pop(true);
+          } else if (state.failure != null) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.failure!.message)));
+          }
+        },
+        builder: (context, state) {
+          return ListView(
+            padding: AppSpacing.screenPadding,
+            children: [
+              Text(
+                isGuardian ? l10n.linkGuardianIntro : l10n.linkStudentIntro,
+                style: theme.textTheme.bodyLarge,
+              ),
+              const SizedBox(height: AppSpacing.md),
+              AppTextField(
+                controller: _controller,
+                label: l10n.linkCodeLabel,
+                hint: l10n.linkCodeHint,
+                isLtr: true,
+                maxLength: 12,
+                enabled: !state.busy,
+                textInputAction: TextInputAction.done,
+                onChanged: (_) => setState(() {}),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              AppCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.linkConsentTitle,
+                      style: theme.textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      isGuardian
+                          ? l10n.linkConsentGuardian(
+                              InviteCode.maxGuardiansPerStudent,
+                            )
+                          : l10n.linkConsentStudent,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                    CheckboxListTile(
+                      value: _agreed,
+                      contentPadding: EdgeInsets.zero,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: Text(l10n.linkConsentAgree),
+                      onChanged: state.busy
+                          ? null
+                          : (v) => setState(() => _agreed = v ?? false),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              AppButton(
+                label: l10n.linkSubmit,
+                icon: Icons.link,
+                isLoading: state.busy,
+                onPressed: (_formatOk && _agreed)
+                    ? () => _submit(context)
+                    : null,
+              ),
+            ],
+          );
+        },
       ),
     );
   }

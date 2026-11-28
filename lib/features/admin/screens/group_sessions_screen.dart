@@ -15,6 +15,7 @@ import '../../groups/models/group.dart';
 import '../../sessions/cubit/group_sessions_cubit.dart';
 import '../../sessions/models/session.dart';
 import '../../sessions/repository/sessions_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// حصص مجموعة من النهارده: عرض بالترتيب، توليد الأسابيع الجاية، وإلغاء.
 class GroupSessionsScreen extends StatelessWidget {
@@ -25,7 +26,8 @@ class GroupSessionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => GroupSessionsCubit(sl<SessionsRepository>(), group)..load(),
+      create: (_) =>
+          GroupSessionsCubit(sl<SessionsRepository>(), group)..load(),
       child: _GroupSessionsView(group: group),
     );
   }
@@ -100,65 +102,64 @@ class _GroupSessionsView extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final cubit = context.read<GroupSessionsCubit>();
 
-    return Scaffold(
-      appBar: AppBar(title: Text(group.name)),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: BlocBuilder<GroupSessionsCubit, GroupSessionsState>(
-                buildWhen: (a, b) => a.generating != b.generating,
-                builder: (context, state) => SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.tonalIcon(
-                    onPressed: state.generating ? null : () => _generate(context),
-                    icon: state.generating
-                        ? const SizedBox(
-                            width: AppSpacing.md,
-                            height: AppSpacing.md,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Icon(Icons.auto_awesome),
-                    label: Text(l10n.sessionsGenerateButton),
-                  ),
+    return AppPage(
+      title: group.name,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: BlocBuilder<GroupSessionsCubit, GroupSessionsState>(
+              buildWhen: (a, b) => a.generating != b.generating,
+              builder: (context, state) => SizedBox(
+                width: double.infinity,
+                child: FilledButton.tonalIcon(
+                  onPressed: state.generating ? null : () => _generate(context),
+                  icon: state.generating
+                      ? const SizedBox(
+                          width: AppSpacing.md,
+                          height: AppSpacing.md,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.auto_awesome),
+                  label: Text(l10n.sessionsGenerateButton),
                 ),
               ),
             ),
-            Expanded(
-              child: BlocBuilder<GroupSessionsCubit, GroupSessionsState>(
-                builder: (context, state) {
-                  return AsyncView<List<Session>>(
-                    state: state.view,
-                    onRetry: cubit.load,
-                    emptyMessage: l10n.sessionsEmpty,
-                    emptyIcon: Icons.event_busy_outlined,
-                    builder: (context, sessions) => ListView.separated(
-                      padding: const EdgeInsets.fromLTRB(
-                        AppSpacing.md,
-                        0,
-                        AppSpacing.md,
-                        AppSpacing.md,
-                      ),
-                      itemCount: sessions.length,
-                      separatorBuilder: (_, _) =>
-                          const SizedBox(height: AppSpacing.sm),
-                      itemBuilder: (context, index) => _SessionTile(
-                        session: sessions[index],
-                        busy: state.cancellingId != null ||
-                            state.deletingId != null,
-                        deleting: state.deletingId == sessions[index].id,
-                        onDelete: () => _delete(context, sessions[index]),
-                        cancelling: state.cancellingId == sessions[index].id,
-                        onCancel: () => _cancel(context, sessions[index]),
-                      ),
+          ),
+          Expanded(
+            child: BlocBuilder<GroupSessionsCubit, GroupSessionsState>(
+              builder: (context, state) {
+                return AsyncView<List<Session>>(
+                  state: state.view,
+                  onRetry: cubit.load,
+                  emptyMessage: l10n.sessionsEmpty,
+                  emptyIcon: Icons.event_busy_outlined,
+                  builder: (context, sessions) => ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.md,
+                      0,
+                      AppSpacing.md,
+                      AppSpacing.md,
                     ),
-                  );
-                },
-              ),
+                    itemCount: sessions.length,
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(height: AppSpacing.sm),
+                    itemBuilder: (context, index) => _SessionTile(
+                      session: sessions[index],
+                      busy:
+                          state.cancellingId != null ||
+                          state.deletingId != null,
+                      deleting: state.deletingId == sessions[index].id,
+                      onDelete: () => _delete(context, sessions[index]),
+                      cancelling: state.cancellingId == sessions[index].id,
+                      onCancel: () => _cancel(context, sessions[index]),
+                    ),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -14,6 +14,7 @@ import '../../students/repository/students_repository.dart';
 import '../../groups/cubit/group_enrollment_cubit.dart';
 import '../../groups/models/group.dart';
 import '../../groups/repository/groups_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// تسجيل طلاب السنتر في مجموعة (وإلغاء تسجيلهم) بعلامة اختيار لكل طالب.
 /// الطالب المؤرشف بيظهر بس لو لسه مسجّل، عشان يتشال من المجموعة.
@@ -25,9 +26,11 @@ class GroupEnrollmentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          GroupEnrollmentCubit(sl<StudentsRepository>(), sl<GroupsRepository>(), group)
-            ..load(),
+      create: (_) => GroupEnrollmentCubit(
+        sl<StudentsRepository>(),
+        sl<GroupsRepository>(),
+        group,
+      )..load(),
       child: const _GroupEnrollmentView(),
     );
   }
@@ -38,8 +41,7 @@ class _GroupEnrollmentView extends StatelessWidget {
 
   Future<void> _toggle(BuildContext context, Student student) async {
     final messenger = ScaffoldMessenger.of(context);
-    final failure =
-        await context.read<GroupEnrollmentCubit>().toggle(student);
+    final failure = await context.read<GroupEnrollmentCubit>().toggle(student);
     if (failure != null) {
       messenger.showSnackBar(SnackBar(content: Text(failure.message)));
     }
@@ -51,78 +53,74 @@ class _GroupEnrollmentView extends StatelessWidget {
     final cubit = context.read<GroupEnrollmentCubit>();
     final group = cubit.state.group;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(group.name)),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.md,
-                AppSpacing.md,
-                AppSpacing.md,
-                0,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BlocBuilder<GroupEnrollmentCubit, GroupEnrollmentState>(
-                    buildWhen: (a, b) =>
-                        a.enrolled.length != b.enrolled.length ||
-                        a.isFull != b.isFull,
-                    builder: (context, state) => Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            l10n.groupEnrolledCount(state.enrolled.length),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(color: AppColors.textSecondary),
-                          ),
+    return AppPage(
+      title: group.name,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.md,
+              AppSpacing.md,
+              AppSpacing.md,
+              0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BlocBuilder<GroupEnrollmentCubit, GroupEnrollmentState>(
+                  buildWhen: (a, b) =>
+                      a.enrolled.length != b.enrolled.length ||
+                      a.isFull != b.isFull,
+                  builder: (context, state) => Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          l10n.groupEnrolledCount(state.enrolled.length),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: AppColors.textSecondary),
                         ),
-                        if (state.isFull)
-                          StatusBadge(
-                            label: l10n.groupFullBadge,
-                            tone: StatusTone.warning,
-                          ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  SearchField(
-                    hint: l10n.groupStudentsSearchHint,
-                    onChanged: cubit.setQuery,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: BlocBuilder<GroupEnrollmentCubit, GroupEnrollmentState>(
-                builder: (context, state) {
-                  return AsyncView<List<Student>>(
-                    state: state.view,
-                    onRetry: cubit.load,
-                    emptyMessage: l10n.groupStudentsEmpty,
-                    emptyIcon: Icons.school_outlined,
-                    builder: (context, students) => ListView.separated(
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      itemCount: students.length,
-                      separatorBuilder: (_, _) =>
-                          const SizedBox(height: AppSpacing.sm),
-                      itemBuilder: (context, index) => _EnrollmentTile(
-                        student: students[index],
-                        enrolled: students[index].isInGroup(group.id),
-                        busy: state.busyStudentId == students[index].id,
-                        onTap: () => _toggle(context, students[index]),
                       ),
-                    ),
-                  );
-                },
-              ),
+                      if (state.isFull)
+                        StatusBadge(
+                          label: l10n.groupFullBadge,
+                          tone: StatusTone.warning,
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                SearchField(
+                  hint: l10n.groupStudentsSearchHint,
+                  onChanged: cubit.setQuery,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            child: BlocBuilder<GroupEnrollmentCubit, GroupEnrollmentState>(
+              builder: (context, state) {
+                return AsyncView<List<Student>>(
+                  state: state.view,
+                  onRetry: cubit.load,
+                  emptyMessage: l10n.groupStudentsEmpty,
+                  emptyIcon: Icons.school_outlined,
+                  builder: (context, students) => ListView.separated(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    itemCount: students.length,
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(height: AppSpacing.sm),
+                    itemBuilder: (context, index) => _EnrollmentTile(
+                      student: students[index],
+                      enrolled: students[index].isInGroup(group.id),
+                      busy: state.busyStudentId == students[index].id,
+                      onTap: () => _toggle(context, students[index]),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -160,7 +158,7 @@ class _EnrollmentTile extends StatelessWidget {
                   student.grade.isEmpty
                       ? l10n.studentNumber(student.studentNo)
                       : '${l10n.studentNumber(student.studentNo)} · '
-                          '${student.grade}',
+                            '${student.grade}',
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -179,10 +177,7 @@ class _EnrollmentTile extends StatelessWidget {
               child: CircularProgressIndicator(strokeWidth: 2),
             )
           else
-            Checkbox(
-              value: enrolled,
-              onChanged: (_) => onTap(),
-            ),
+            Checkbox(value: enrolled, onChanged: (_) => onTap()),
         ],
       ),
     );

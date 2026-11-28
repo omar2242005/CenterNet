@@ -15,6 +15,7 @@ import '../models/child_data.dart';
 import '../models/updates_args.dart';
 import '../repository/student_data_repository.dart';
 import '../widgets/result_text.dart';
+import '../../../core/widgets/app_page.dart';
 
 typedef _ChildUpdates = ({Student student, List<UpdateItem> items});
 
@@ -44,37 +45,32 @@ class UpdatesScreen extends StatelessWidget {
         _load,
         isEmpty: (d) => d.every((c) => c.items.isEmpty),
       )..load(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            args.guardian ? l10n.updatesGuardianTitle : l10n.updatesStudentTitle,
-          ),
-        ),
-        body: SafeArea(
-          child: Builder(
-            builder: (context) {
-              final cubit = context.read<ChildDataCubit<List<_ChildUpdates>>>();
-              return BlocBuilder<ChildDataCubit<List<_ChildUpdates>>,
-                  ViewState<List<_ChildUpdates>>>(
-                builder: (context, state) => AsyncView<List<_ChildUpdates>>(
-                  state: state,
-                  onRetry: cubit.load,
-                  emptyMessage: l10n.updatesEmpty,
-                  emptyIcon: Icons.notifications_none,
-                  builder: (context, children) => ListView(
-                    padding: AppSpacing.screenPadding,
-                    children: [
-                      for (final c in children)
-                        _ChildSection(
-                          update: c,
-                          showName: args.guardian,
-                        ),
-                    ],
-                  ),
+      child: AppPage(
+        title: args.guardian
+            ? l10n.updatesGuardianTitle
+            : l10n.updatesStudentTitle,
+        body: Builder(
+          builder: (context) {
+            final cubit = context.read<ChildDataCubit<List<_ChildUpdates>>>();
+            return BlocBuilder<
+              ChildDataCubit<List<_ChildUpdates>>,
+              ViewState<List<_ChildUpdates>>
+            >(
+              builder: (context, state) => AsyncView<List<_ChildUpdates>>(
+                state: state,
+                onRetry: cubit.load,
+                emptyMessage: l10n.updatesEmpty,
+                emptyIcon: Icons.notifications_none,
+                builder: (context, children) => ListView(
+                  padding: AppSpacing.screenPadding,
+                  children: [
+                    for (final c in children)
+                      _ChildSection(update: c, showName: args.guardian),
+                  ],
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -88,19 +84,18 @@ class _ChildSection extends StatelessWidget {
   final bool showName;
 
   String _title(AppLocalizations l10n, UpdateKind k) => switch (k) {
-        UpdateKind.grade => l10n.updatesGrades,
-        UpdateKind.session => l10n.updatesSessions,
-        UpdateKind.attendance => l10n.updatesAttendance,
-        UpdateKind.absence => l10n.updatesAbsence,
-      };
+    UpdateKind.grade => l10n.updatesGrades,
+    UpdateKind.session => l10n.updatesSessions,
+    UpdateKind.attendance => l10n.updatesAttendance,
+    UpdateKind.absence => l10n.updatesAbsence,
+  };
 
   /// التاريخ والوقت، أو "اليوم" لو الحصة النهارده.
   String _when(AppLocalizations l10n, DateTime? when) {
     if (when == null) return '';
     final now = DateTime.now();
-    final today = when.year == now.year &&
-        when.month == now.month &&
-        when.day == now.day;
+    final today =
+        when.year == now.year && when.month == now.month && when.day == now.day;
     return l10n.attendanceDateTime(
       today ? l10n.updatesToday : formatDate(l10n, when),
       formatTime(l10n, when),
@@ -143,7 +138,10 @@ class _ChildSection extends StatelessWidget {
                         style: theme.textTheme.bodyLarge,
                       ),
                       if (i.result != null)
-                        Text(resultScoreText(l10n, i.result!), style: secondary),
+                        Text(
+                          resultScoreText(l10n, i.result!),
+                          style: secondary,
+                        ),
                       if (i.when != null)
                         Text(
                           kind == UpdateKind.grade
