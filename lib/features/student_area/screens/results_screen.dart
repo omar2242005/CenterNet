@@ -16,7 +16,7 @@ import '../cubit/child_data_cubit.dart';
 import '../models/child_data.dart';
 import '../repository/student_data_repository.dart';
 import '../widgets/child_shell.dart';
-import '../widgets/filter_chips.dart';
+import '../../../core/widgets/filter_chips.dart';
 import '../widgets/result_text.dart';
 
 /// نتايج الطالب في الامتحانات المنشورة + المتوسط العام + فلتر المادة.
@@ -40,14 +40,17 @@ class ResultsScreen extends StatelessWidget {
         body: Builder(
           builder: (context) {
             final cubit = context.read<ChildDataCubit<ResultsData>>();
-            return BlocBuilder<ChildDataCubit<ResultsData>,
-                ViewState<ResultsData>>(
+            return BlocBuilder<
+              ChildDataCubit<ResultsData>,
+              ViewState<ResultsData>
+            >(
               builder: (context, state) => AsyncView<ResultsData>(
                 state: state,
                 onRetry: cubit.load,
                 emptyMessage: l10n.areaResultsEmpty,
                 emptyIcon: Icons.grading_outlined,
-                builder: (context, data) => _ResultsList(data: data),
+                builder: (context, data) =>
+                    _ResultsList(student: student, data: data),
               ),
             );
           },
@@ -58,8 +61,9 @@ class ResultsScreen extends StatelessWidget {
 }
 
 class _ResultsList extends StatefulWidget {
-  const _ResultsList({required this.data});
+  const _ResultsList({required this.student, required this.data});
 
+  final Student student;
   final ResultsData data;
 
   @override
@@ -107,7 +111,10 @@ class _ResultsListState extends State<_ResultsList> {
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: AppCard(
-              onTap: () => context.push(ChildRoutes.exam, extra: r),
+              onTap: () => context.push(
+                ChildRoutes.exam,
+                extra: ExamDetailsArgs(widget.student, r),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

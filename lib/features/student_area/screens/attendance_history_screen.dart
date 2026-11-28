@@ -15,7 +15,8 @@ import '../../students/models/student.dart';
 import '../cubit/child_data_cubit.dart';
 import '../models/child_data.dart';
 import '../repository/student_data_repository.dart';
-import '../widgets/filter_chips.dart';
+import '../../../core/widgets/filter_chips.dart';
+import '../widgets/child_shell.dart';
 
 /// سجل حضور الطالب (الأحدث أولًا) مع ملخص "حضر X من Y" وفلتر (الكل / حضر / غاب).
 class AttendanceHistoryScreen extends StatelessWidget {
@@ -31,25 +32,28 @@ class AttendanceHistoryScreen extends StatelessWidget {
         () => sl<StudentDataRepository>().loadAttendance(student),
         isEmpty: (d) => d.total == 0,
       )..load(),
-      child: Scaffold(
-        appBar: AppBar(title: Text(l10n.areaAttendanceTitle)),
-        body: SafeArea(
-          child: Builder(
-            builder: (context) {
-              final cubit = context.read<ChildDataCubit<AttendanceHistory>>();
-              return BlocBuilder<ChildDataCubit<AttendanceHistory>,
-                  ViewState<AttendanceHistory>>(
-                builder: (context, state) => AsyncView<AttendanceHistory>(
-                  state: state,
-                  onRetry: cubit.load,
-                  emptyMessage: l10n.areaAttendanceEmpty,
-                  emptyIcon: Icons.fact_check_outlined,
-                  builder: (context, history) =>
-                      _AttendanceList(history: history),
-                ),
-              );
-            },
-          ),
+      child: ChildShell(
+        current: ChildTab.home,
+        isDetail: true,
+        title: l10n.areaAttendanceTitle,
+        student: student,
+        body: Builder(
+          builder: (context) {
+            final cubit = context.read<ChildDataCubit<AttendanceHistory>>();
+            return BlocBuilder<
+              ChildDataCubit<AttendanceHistory>,
+              ViewState<AttendanceHistory>
+            >(
+              builder: (context, state) => AsyncView<AttendanceHistory>(
+                state: state,
+                onRetry: cubit.load,
+                emptyMessage: l10n.areaAttendanceEmpty,
+                emptyIcon: Icons.fact_check_outlined,
+                builder: (context, history) =>
+                    _AttendanceList(history: history),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -109,17 +113,17 @@ class _AttendanceListState extends State<_AttendanceList> {
     if (a == null) return (l10n.attendanceStatusAbsent, StatusTone.error);
     return switch (a.status) {
       AttendanceStatus.present => (
-          l10n.attendanceStatusPresent,
-          StatusTone.success,
-        ),
+        l10n.attendanceStatusPresent,
+        StatusTone.success,
+      ),
       AttendanceStatus.lateArrival => (
-          l10n.attendanceStatusLate,
-          StatusTone.warning,
-        ),
+        l10n.attendanceStatusLate,
+        StatusTone.warning,
+      ),
       AttendanceStatus.excused => (
-          l10n.attendanceStatusExcused,
-          StatusTone.info,
-        ),
+        l10n.attendanceStatusExcused,
+        StatusTone.info,
+      ),
     };
   }
 

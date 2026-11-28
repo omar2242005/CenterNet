@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/di.dart';
+import '../../auth/repository/auth_repository.dart';
 import '../../../core/state/view_state.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -10,6 +11,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/async_view.dart';
 import '../../../core/widgets/confirm_dialog.dart';
+import '../../../core/widgets/filter_chips.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../linking/cubit/my_students_cubit.dart';
 import '../../linking/link_route_names.dart';
@@ -50,6 +52,17 @@ class _GuardianHomeView extends StatefulWidget {
 class _GuardianHomeViewState extends State<_GuardianHomeView> {
   /// الابن المختار (بالـ id). لو اختفى بعد فك ربط بنرجع لأول واحد.
   late String? _selectedId = widget.initialStudentId;
+
+  /// اسم صاحب الحساب للتحية. لو التحميل فشل بنعرض الشاشة من غير تحية.
+  late final Future<String?> _myName = _loadName();
+
+  Future<String?> _loadName() async {
+    try {
+      return (await sl<AuthRepository>().loadProfile())?.name;
+    } catch (_) {
+      return null;
+    }
+  }
 
   Future<void> _link(BuildContext context, String route) async {
     final cubit = context.read<MyStudentsCubit>();
@@ -139,24 +152,34 @@ class _GuardianHomeViewState extends State<_GuardianHomeView> {
               return ListView(
                 padding: AppSpacing.screenPadding,
                 children: [
+                  FutureBuilder<String?>(
+                    future: _myName,
+                    builder: (context, snap) {
+                      final name = snap.data;
+                      if (name == null || name.isEmpty) {
+                        return const SizedBox.shrink();
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                        child: Text(
+                          l10n.guardianGreeting(name),
+                          style: theme.textTheme.titleLarge,
+                        ),
+                      );
+                    },
+                  ),
                   if (items.length > 1) ...[
                     Text(
                       l10n.guardianChooseChild,
                       style: theme.textTheme.titleMedium,
                     ),
                     const SizedBox(height: AppSpacing.sm),
-                    Wrap(
-                      spacing: AppSpacing.sm,
-                      runSpacing: AppSpacing.sm,
-                      children: [
-                        for (final i in items)
-                          ChoiceChip(
-                            label: Text(i.student.fullName),
-                            selected: i.student.id == s.id,
-                            onSelected: (_) =>
-                                setState(() => _selectedId = i.student.id),
-                          ),
-                      ],
+                    FilterChips<String>(
+                      options: {
+                        for (final i in items) i.student.id: i.student.fullName,
+                      },
+                      selected: s.id,
+                      onSelected: (id) => setState(() => _selectedId = id),
                     ),
                     const SizedBox(height: AppSpacing.md),
                   ],

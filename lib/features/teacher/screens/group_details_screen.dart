@@ -13,6 +13,7 @@ import '../../students/models/student.dart';
 import '../../students/repository/students_repository.dart';
 import '../cubit/group_details_cubit.dart';
 import '../repository/group_attendance_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// تفاصيل مجموعة: الطلبة وغياب كل واحد + زرار الامتحانات.
 class GroupDetailsScreen extends StatelessWidget {
@@ -42,51 +43,49 @@ class _GroupDetailsView extends StatelessWidget {
 
     return BlocBuilder<GroupDetailsCubit, GroupDetailsState>(
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(title: Text(state.group.name)),
-          body: SafeArea(
-            child: Column(
-              children: [
-                if (!state.loading && state.failure == null)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md,
-                    ),
-                    child: Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Text(
-                        l10n.groupStudentsSummary(
-                          state.students.length,
-                          state.sessionsCount,
-                        ),
-                        style: Theme.of(context).textTheme.bodyMedium
-                            ?.copyWith(color: AppColors.textSecondary),
-                      ),
-                    ),
+        return AppPage(
+          title: state.group.name,
+          body: Column(
+            children: [
+              if (!state.loading && state.failure == null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
                   ),
-                Expanded(
-                  child: AsyncView<List<Student>>(
-                    state: state.view,
-                    onRetry: context.read<GroupDetailsCubit>().load,
-                    emptyMessage: l10n.groupNoStudents,
-                    emptyIcon: Icons.school_outlined,
-                    builder: (context, students) => ListView.separated(
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      itemCount: students.length,
-                      separatorBuilder: (_, _) =>
-                          const SizedBox(height: AppSpacing.sm),
-                      itemBuilder: (context, index) {
-                        final s = students[index];
-                        return _StudentRow(
-                          student: s,
-                          absences: state.absencesOf(s.id),
-                        );
-                      },
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      l10n.groupStudentsSummary(
+                        state.students.length,
+                        state.sessionsCount,
+                      ),
+                      style: Theme.of(context).textTheme.bodyMedium
+                          ?.copyWith(color: AppColors.textSecondary),
                     ),
                   ),
                 ),
-              ],
-            ),
+              Expanded(
+                child: AsyncView<List<Student>>(
+                  state: state.view,
+                  onRetry: context.read<GroupDetailsCubit>().load,
+                  emptyMessage: l10n.groupNoStudents,
+                  emptyIcon: Icons.school_outlined,
+                  builder: (context, students) => ListView.separated(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    itemCount: students.length,
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(height: AppSpacing.sm),
+                    itemBuilder: (context, index) {
+                      final s = students[index];
+                      return _StudentRow(
+                        student: s,
+                        absences: state.absencesOf(s.id),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },

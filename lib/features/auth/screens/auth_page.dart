@@ -4,6 +4,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/app_localizations.dart';
 import '../sign_out_action.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// هيكل مشترك لشاشات الـ auth: عنوان + محتوى متمركز بعرض أقصى.
 class AuthPage extends StatelessWidget {
@@ -24,27 +25,23 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        automaticallyImplyLeading: showBack,
-        actions: [
-          if (showSignOut)
-            TextButton.icon(
-              onPressed: () => confirmAndSignOut(context),
-              icon: const Icon(Icons.logout),
-              label: Text(AppLocalizations.of(context).authSignOut),
-            ),
-        ],
-      ),
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 480),
-            child: SingleChildScrollView(
-              padding: AppSpacing.screenPadding,
-              child: child,
-            ),
+    return AppPage(
+      title: title,
+      automaticallyImplyLeading: showBack,
+      actions: [
+        if (showSignOut)
+          TextButton.icon(
+            onPressed: () => confirmAndSignOut(context),
+            icon: const Icon(Icons.logout),
+            label: Text(AppLocalizations.of(context).authSignOut),
+          ),
+      ],
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 480),
+          child: SingleChildScrollView(
+            padding: AppSpacing.screenPadding,
+            child: child,
           ),
         ),
       ),
@@ -62,10 +59,7 @@ class AuthErrorText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
-      child: Text(
-        message,
-        style: const TextStyle(color: AppColors.error),
-      ),
+      child: Text(message, style: const TextStyle(color: AppColors.error)),
     );
   }
 }

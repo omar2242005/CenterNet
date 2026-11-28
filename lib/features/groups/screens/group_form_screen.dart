@@ -19,6 +19,7 @@ import '../cubit/group_form_cubit.dart';
 import '../models/group.dart';
 import '../models/group_input.dart';
 import '../repository/groups_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// إنشاء مجموعة جديدة، أو تعديل [editing]. بيرجّع المجموعة المحفوظة بـ pop.
 /// المعلم والمساعدين بيتجابوا من قائمة فريق السنتر (النشطين بس).
@@ -227,12 +228,7 @@ class _GroupFormViewState extends State<_GroupFormView> {
     final l10n = AppLocalizations.of(context);
     final isEdit = widget.editing != null;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(isEdit ? l10n.groupEditTitle : l10n.groupsAddTitle),
-      ),
-      body: SafeArea(
-        child: BlocConsumer<GroupFormCubit, GroupFormState>(
+    return AppPage(title: isEdit ? l10n.groupEditTitle : l10n.groupsAddTitle, body: BlocConsumer<GroupFormCubit, GroupFormState>(
           listener: (context, state) {
             if (state.status == GroupFormStatus.success) {
               context.pop<Group>(state.saved);
@@ -361,9 +357,7 @@ class _GroupFormViewState extends State<_GroupFormView> {
               ),
             );
           },
-        ),
-      ),
-    );
+        ));
   }
 
   Widget _staffSection(

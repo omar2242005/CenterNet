@@ -21,6 +21,7 @@ import '../cubit/exam_scores_cubit.dart';
 import '../models/exam_summary.dart';
 import '../rules/teacher_exams_builder.dart';
 import '../teacher_route_names.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// تفاصيل اختبار: كارت ملخص + درجات الطلاب، وزر رصد الدرجات.
 class TeacherExamDetailsScreen extends StatelessWidget {
@@ -51,18 +52,16 @@ class _DetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.teacherExamDetailsTitle)),
-      body: SafeArea(
-        child: BlocBuilder<ExamScoresCubit, ExamScoresState>(
-          builder: (context, state) => AsyncView<List<Student>>(
-            state: state.view,
-            onRetry: () => context.read<ExamScoresCubit>().load(),
-            emptyMessage: l10n.scoresEmpty,
-            emptyIcon: Icons.school_outlined,
-            builder: (context, students) =>
-                _Body(args: args, state: state, students: students),
-          ),
+    return AppPage(
+      title: l10n.teacherExamDetailsTitle,
+      body: BlocBuilder<ExamScoresCubit, ExamScoresState>(
+        builder: (context, state) => AsyncView<List<Student>>(
+          state: state.view,
+          onRetry: () => context.read<ExamScoresCubit>().load(),
+          emptyMessage: l10n.scoresEmpty,
+          emptyIcon: Icons.school_outlined,
+          builder: (context, students) =>
+              _Body(args: args, state: state, students: students),
         ),
       ),
     );

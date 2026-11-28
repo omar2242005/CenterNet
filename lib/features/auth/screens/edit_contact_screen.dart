@@ -11,6 +11,7 @@ import '../../../core/widgets/app_text_field.dart';
 import '../../../l10n/app_localizations.dart';
 import '../models/app_user.dart';
 import '../repository/auth_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// تعديل الاسم ورقم الموبايل فقط (الإيميل مش هنا). بترجّع `true` لو اتحفظ.
 class EditContactScreen extends StatefulWidget {
@@ -47,48 +48,45 @@ class _EditContactScreenState extends State<EditContactScreen> {
     } on Failure catch (f) {
       if (!mounted) return;
       setState(() => _saving = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(f.message)),
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(f.message)));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.editContactTitle)),
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            padding: AppSpacing.screenPadding,
-            children: [
-              AppTextField(
-                controller: _name,
-                label: l10n.authName,
-                enabled: !_saving,
-                textInputAction: TextInputAction.next,
-                validator: (v) => Validators.name(v ?? '')?.message(l10n),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              AppTextField(
-                controller: _phone,
-                label: l10n.authPhone,
-                keyboardType: TextInputType.phone,
-                enabled: !_saving,
-                isLtr: true,
-                latinDigits: true,
-                validator: (v) => Validators.mobile(v ?? '')?.message(l10n),
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              AppButton(
-                label: l10n.studentSave,
-                isLoading: _saving,
-                onPressed: _save,
-              ),
-            ],
-          ),
+    return AppPage(
+      title: l10n.editContactTitle,
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          padding: AppSpacing.screenPadding,
+          children: [
+            AppTextField(
+              controller: _name,
+              label: l10n.authName,
+              enabled: !_saving,
+              textInputAction: TextInputAction.next,
+              validator: (v) => Validators.name(v ?? '')?.message(l10n),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            AppTextField(
+              controller: _phone,
+              label: l10n.authPhone,
+              keyboardType: TextInputType.phone,
+              enabled: !_saving,
+              isLtr: true,
+              latinDigits: true,
+              validator: (v) => Validators.mobile(v ?? '')?.message(l10n),
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            AppButton(
+              label: l10n.studentSave,
+              isLoading: _saving,
+              onPressed: _save,
+            ),
+          ],
         ),
       ),
     );

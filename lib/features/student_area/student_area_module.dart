@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import '../students/models/student.dart';
 import 'child_route_names.dart';
-import 'models/child_data.dart';
 import 'models/updates_args.dart';
 import 'repository/student_data_repository.dart';
 import 'screens/attendance_history_screen.dart';
@@ -68,9 +67,9 @@ final List<RouteBase> studentAreaRoutes = <RouteBase>[
   GoRoute(
     path: ChildRoutes.exam,
     builder: (context, state) {
-      final r = state.extra;
-      if (r is! ExamResult) return const _MissingArgs();
-      return ExamDetailsScreen(result: r);
+      final a = state.extra;
+      if (a is! ExamDetailsArgs) return const _MissingArgs();
+      return ExamDetailsScreen(args: a);
     },
   ),
   GoRoute(

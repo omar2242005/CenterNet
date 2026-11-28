@@ -12,6 +12,7 @@ import '../../linking/cubit/link_requests_admin_cubit.dart';
 import '../../linking/models/link_request.dart';
 import '../../linking/models/student_link.dart';
 import '../../linking/repository/linking_repository.dart';
+import '../../../core/widgets/app_page.dart';
 
 /// (أدمن) طلبات الربط المعلّقة: موافقة (بيتولّد كود ربط) أو رفض.
 class LinkRequestsScreen extends StatelessWidget {
@@ -22,41 +23,38 @@ class LinkRequestsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     return BlocProvider(
       create: (_) => LinkRequestsAdminCubit(sl<LinkingRepository>())..load(),
-      child: Scaffold(
-        appBar: AppBar(title: Text(l10n.linkRequestsTitle)),
-        body: SafeArea(
-          child: BlocConsumer<LinkRequestsAdminCubit, LinkRequestsState>(
-            listenWhen: (a, b) => b.failure != null && b.failure != a.failure,
-            listener: (context, state) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.failure!.message)),
-              );
-            },
-            builder: (context, state) {
-              final cubit = context.read<LinkRequestsAdminCubit>();
-              return AsyncView<List<LinkRequest>>(
-                state: state.view,
-                onRetry: cubit.load,
-                emptyMessage: l10n.linkRequestsEmpty,
-                emptyIcon: Icons.link,
-                builder: (context, items) => ListView(
-                  padding: AppSpacing.screenPadding,
-                  children: [
-                    for (final r in items)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                        child: _RequestCard(
-                          request: r,
-                          busy: state.busy,
-                          onApprove: () => cubit.approve(r),
-                          onReject: () => cubit.reject(r),
-                        ),
+      child: AppPage(
+        title: l10n.linkRequestsTitle,
+        body: BlocConsumer<LinkRequestsAdminCubit, LinkRequestsState>(
+          listenWhen: (a, b) => b.failure != null && b.failure != a.failure,
+          listener: (context, state) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.failure!.message)));
+          },
+          builder: (context, state) {
+            final cubit = context.read<LinkRequestsAdminCubit>();
+            return AsyncView<List<LinkRequest>>(
+              state: state.view,
+              onRetry: cubit.load,
+              emptyMessage: l10n.linkRequestsEmpty,
+              emptyIcon: Icons.link,
+              builder: (context, items) => ListView(
+                padding: AppSpacing.screenPadding,
+                children: [
+                  for (final r in items)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                      child: _RequestCard(
+                        request: r,
+                        busy: state.busy,
+                        onApprove: () => cubit.approve(r),
+                        onReject: () => cubit.reject(r),
                       ),
-                  ],
-                ),
-              );
-            },
-          ),
+                    ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
