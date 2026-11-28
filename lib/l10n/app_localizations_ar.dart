@@ -657,6 +657,16 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String studentGreeting(String name) {
+    return 'أهلاً، $name';
+  }
+
+  @override
+  String guardianGreeting(String name) {
+    return 'أهلاً، $name';
+  }
+
+  @override
   String get adminShortcuts => 'الاختصارات';
 
   @override

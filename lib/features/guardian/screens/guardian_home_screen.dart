@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/di.dart';
+import '../../auth/repository/auth_repository.dart';
 import '../../../core/state/view_state.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -51,6 +52,17 @@ class _GuardianHomeView extends StatefulWidget {
 class _GuardianHomeViewState extends State<_GuardianHomeView> {
   /// الابن المختار (بالـ id). لو اختفى بعد فك ربط بنرجع لأول واحد.
   late String? _selectedId = widget.initialStudentId;
+
+  /// اسم صاحب الحساب للتحية. لو التحميل فشل بنعرض الشاشة من غير تحية.
+  late final Future<String?> _myName = _loadName();
+
+  Future<String?> _loadName() async {
+    try {
+      return (await sl<AuthRepository>().loadProfile())?.name;
+    } catch (_) {
+      return null;
+    }
+  }
 
   Future<void> _link(BuildContext context, String route) async {
     final cubit = context.read<MyStudentsCubit>();
@@ -140,6 +152,22 @@ class _GuardianHomeViewState extends State<_GuardianHomeView> {
               return ListView(
                 padding: AppSpacing.screenPadding,
                 children: [
+                  FutureBuilder<String?>(
+                    future: _myName,
+                    builder: (context, snap) {
+                      final name = snap.data;
+                      if (name == null || name.isEmpty) {
+                        return const SizedBox.shrink();
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                        child: Text(
+                          l10n.guardianGreeting(name),
+                          style: theme.textTheme.titleLarge,
+                        ),
+                      );
+                    },
+                  ),
                   if (items.length > 1) ...[
                     Text(
                       l10n.guardianChooseChild,

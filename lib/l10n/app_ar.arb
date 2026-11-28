@@ -407,6 +407,22 @@
       }
     }
   },
+  "studentGreeting": "أهلاً، {name}",
+  "@studentGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "guardianGreeting": "أهلاً، {name}",
+  "@guardianGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "adminShortcuts": "الاختصارات",
   "homeTeacherTitle": "رئيسية المعلم",
   "homeAssistantTitle": "رئيسية المساعد",

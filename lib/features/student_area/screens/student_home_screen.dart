@@ -133,6 +133,11 @@ class _StudentHomeView extends StatelessWidget {
               return ListView(
                 padding: AppSpacing.screenPadding,
                 children: [
+                  Text(
+                    l10n.studentGreeting(s.fullName),
+                    style: theme.textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
                   QrCard(
                     data: FirestoreIds.qr(s.centerId, s.id),
                     title: s.fullName,

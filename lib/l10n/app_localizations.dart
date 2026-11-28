@@ -1209,6 +1209,18 @@ abstract class AppLocalizations {
   /// **'أهلاً، {name}'**
   String adminGreeting(String name);
 
+  /// No description provided for @studentGreeting.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً، {name}'**
+  String studentGreeting(String name);
+
+  /// No description provided for @guardianGreeting.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً، {name}'**
+  String guardianGreeting(String name);
+
   /// No description provided for @adminShortcuts.
   ///
   /// In ar, this message translates to:
