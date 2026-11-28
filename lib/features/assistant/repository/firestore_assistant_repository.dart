@@ -329,11 +329,14 @@ class FirestoreAssistantRepository implements AssistantRepository {
       _requireUid();
       final key = Payment.monthKey(year, month);
       // فلترين equality بس = مفيش composite index.
+      // Source.server عمدًا: الكاش الفاضي أوفلاين بيرجّع نجاح فاضي فيخلي
+      // كل الطلاب "غير مدفوع" غلط. عايزين الأوفلاين يفشل → غير معروف،
+      // والنجاح الفاضي يبقى معناه أكيد: مفيش حد في المجموعة دافع الشهر ده.
       final snap = await _db
           .collection(FirestorePaths.paymentStatus(centerId))
           .where('groupId', isEqualTo: groupId)
           .where('month', isEqualTo: key)
-          .get()
+          .get(const GetOptions(source: Source.server))
           .timeout(serverConfirmationTimeout);
       final out = <String, bool>{};
       for (final doc in snap.docs) {

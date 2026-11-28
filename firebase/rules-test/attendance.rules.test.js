@@ -84,6 +84,7 @@ async function seed() {
     await put(`centers/${A}/students/st2`, { centerId: A, fullName: 'طالب 2', status: 'active', groupIds: ['g1'] });
     await put(`centers/${A}/students/st3`, { centerId: A, fullName: 'طالب 3', status: 'active', groupIds: ['g1'] });
     await put(`centers/${A}/students/st4`, { centerId: A, fullName: 'طالب 4', status: 'active', groupIds: ['g1'] });
+    await put(`centers/${A}/students/st5`, { centerId: A, fullName: 'طالب 5', status: 'active', groupIds: ['g1'] });
 
     // سجلين موجودين: واحد في g1 وواحد في g2.
     await put(`centers/${A}/attendance/${attId(G1_SESSION, 'st1')}`,
@@ -180,14 +181,17 @@ describe('attendance — الإنشاء', () => {
     await assertFails(setDoc(attRef(as('assistantA'), attId(G1_SESSION, 'st1')), attData()));
   });
 
-  it('[خطوة4] حالة سداد صالحة بتتسجل، والناقصة أو الغريبة مرفوضة', async () => {
+  it('[خطوة4] حالة السداد اختيارية في النشر: بدونها تتسجل، والغريبة مرفوضة', async () => {
     await assertSucceeds(setDoc(attRef(as('assistantA'), id2), attData({ studentId: 'st2', paymentStatus: 'paid' })));
     await assertSucceeds(setDoc(attRef(as('assistantA'), attId(G1_SESSION, 'st3')), attData({ studentId: 'st3', paymentStatus: 'unpaid' })));
 
-    const missing = attData({ studentId: 'st4' });
-    delete missing.paymentStatus;
-    await assertFails(setDoc(attRef(as('assistantA'), attId(G1_SESSION, 'st4')), missing));
-    await assertFails(setDoc(attRef(as('assistantA'), attId(G1_SESSION, 'st4')), attData({ studentId: 'st4', paymentStatus: 'rich' })));
+    // نسخة قديمة / مسحة معلّقة من غير الحقل: لازم تتسجل أثناء النشر.
+    const legacy = attData({ studentId: 'st4' });
+    delete legacy.paymentStatus;
+    await assertSucceeds(setDoc(attRef(as('assistantA'), attId(G1_SESSION, 'st4')), legacy));
+
+    // قيمة غريبة مرفوضة سواء من نسخة جديدة أو قديمة معدّلة.
+    await assertFails(setDoc(attRef(as('assistantA'), attId(G1_SESSION, 'st5')), attData({ studentId: 'st5', paymentStatus: 'rich' })));
   });
 });
 

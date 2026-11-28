@@ -227,8 +227,9 @@ service cloud.firestore {
     }
 
         // سجل الحضور: الـ id لازم = sessionId_studentId، وحقول الإلغاء بقيمها الابتدائية.
-    // [P1-خطوة4] paymentStatus إلزامي: حالة السداد وقت المسح (paid/unpaid/unknown)،
-    // بتتخزن مع السجل ومش بتتغير لو الطالب دفع بعدها.
+    // [P1-خطوة4] paymentStatus اختياري في فترة النشر (النسخ القديمة والمسحات
+    // المعلّقة لسه بتسجل من غيره)، ولو موجود لازم يبقى قيمة من التلاتة:
+    // paid/unpaid/unknown. بتتخزن مع السجل ومش بتتغير لو الطالب دفع بعدها.
     function validAttendance(d, c, aid) {
       return d.keys().hasOnly(['centerId', 'sessionId', 'studentId', 'status', 'method',
                                'scannedAt', 'recordedBy', 'recordedAt',
@@ -236,10 +237,10 @@ service cloud.firestore {
                                'paymentStatus'])
         && d.keys().hasAll(['centerId', 'sessionId', 'studentId', 'status', 'method',
                             'recordedBy', 'recordedAt',
-                            'voided', 'voidedBy', 'voidReason', 'voidedAt',
-                            'paymentStatus'])
+                            'voided', 'voidedBy', 'voidReason', 'voidedAt'])
         && d.centerId == c
-        && d.paymentStatus in ['paid', 'unpaid', 'unknown']
+        && (!d.keys().hasAny(['paymentStatus'])
+              || d.paymentStatus in ['paid', 'unpaid', 'unknown'])
         && d.sessionId is string && d.sessionId.matches('[A-Za-z0-9_]+')
         && d.studentId is string && d.studentId.matches('[A-Za-z0-9]+')
         && aid == d.sessionId + '_' + d.studentId
