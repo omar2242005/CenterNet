@@ -4,13 +4,18 @@ import 'package:center_net/core/services/pending_ops_guard.dart';
 import 'package:center_net/core/state/view_state.dart';
 import 'package:center_net/features/assistant/cubit/session_details_cubit.dart';
 import 'package:center_net/features/assistant/cubit/session_details_state.dart';
-import 'package:center_net/features/assistant/models/scan_setup.dart';
-import 'package:center_net/features/assistant/models/attendance.dart';
-import 'package:center_net/features/assistant/models/pending_scan.dart';
+import 'package:center_net/features/scan/models/scan_setup.dart';
+import 'package:center_net/features/attendance/models/attendance.dart';
+import 'package:center_net/features/scan/models/pending_scan.dart';
 import 'package:center_net/features/auth/models/account_type.dart';
 import 'package:center_net/features/auth/models/app_user.dart';
+import 'package:center_net/features/assistant/repository/assistant_repository.dart';
 import 'package:center_net/features/assistant/repository/mock_assistant_repository.dart';
-import 'package:center_net/features/assistant/services/pending_scan_store.dart';
+import 'package:center_net/features/attendance/repository/attendance_repository.dart';
+import 'package:center_net/features/attendance/repository/mock_attendance_repository.dart';
+import 'package:center_net/features/scan/repository/mock_scan_repository.dart';
+import 'package:center_net/features/scan/repository/scan_repository.dart';
+import 'package:center_net/features/scan/services/pending_scan_store.dart';
 import 'package:center_net/features/students/models/student.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:center_net/features/groups/models/group.dart';
@@ -26,6 +31,35 @@ void main() {
     guard = PendingOpsGuard();
     store = PendingScanStore(await LocalStore.open(), guard);
   });
+
+  /// الكيوبت بقى بياخد ثلاث repositories (دور المساعد + الحضور + المسح).
+  /// الهيلبر بتبني الثلاثة من نفس الـ callbacks اللي كانت في الاختبار.
+  ({
+    AssistantRepository assistant,
+    AttendanceRepository attendance,
+    ScanRepository scan,
+  })
+  mocksFor({
+    Future<Session> Function(String sessionId)? onSessionById,
+    Future<Group> Function(String groupId)? onGroupById,
+    Future<AppUser> Function()? onMyProfile,
+    Future<List<Student>> Function(String centerId, String groupId)?
+    onGroupStudents,
+    Future<List<Attendance>> Function(String centerId, String sessionId)?
+    onSessionAttendance,
+    Future<ScanSetup> Function(String sessionId)? onPrepareScanSetup,
+  }) => (
+    assistant: MockAssistantRepository(
+      onGroupById: onGroupById,
+      onMyProfile: onMyProfile,
+    ),
+    attendance: MockAttendanceRepository(
+      onSessionById: onSessionById,
+      onGroupStudents: onGroupStudents,
+      onSessionAttendance: onSessionAttendance,
+    ),
+    scan: MockScanRepository(onPrepareScanSetup: onPrepareScanSetup),
+  );
 
   AppUser profile() => AppUser(
     uid: 'u1',
@@ -58,14 +92,14 @@ void main() {
   group('SessionDetailsCubit.load', () {
     test('البداية تحميل، وبعد الجلب الجلسة والمجموعة', () async {
       final s = session();
-      final repository = MockAssistantRepository(
+      final mocks = mocksFor(
         onSessionById: (sessionId) async {
           expect(sessionId, s.id);
           return s;
         },
         onGroupById: (groupId) async => aGroup(),
       );
-      final cubit = SessionDetailsCubit(repository, store, guard, sessionId: s.id);
+      final cubit = SessionDetailsCubit(mocks.assistant, mocks.attendance, mocks.scan, store, guard, sessionId: s.id);
       expect(cubit.state.status, isA<ViewLoading<SessionDetailsData>>());
 
       await cubit.load();
@@ -81,7 +115,7 @@ void main() {
     test('جلسة مش موجودة = خطأ، وإعادة المحاولة بتنجح', () async {
       var calls = 0;
       final s = session();
-      final repository = MockAssistantRepository(
+      final mocks = mocksFor(
         onSessionById: (sessionId) async {
           calls++;
           if (calls == 1) throw const Failure.notFound();
@@ -89,7 +123,7 @@ void main() {
         },
         onGroupById: (groupId) async => aGroup(),
       );
-      final cubit = SessionDetailsCubit(repository, store, guard, sessionId: s.id);
+      final cubit = SessionDetailsCubit(mocks.assistant, mocks.attendance, mocks.scan, store, guard, sessionId: s.id);
 
       await cubit.load();
       expect(cubit.state.status, isA<ViewFailed<SessionDetailsData>>());
@@ -107,7 +141,7 @@ void main() {
         session: s,
         groupStudentIds: {'s1', 's2'},
       );
-      final repository = MockAssistantRepository(
+      final mocks = mocksFor(
         onSessionById: (sessionId) async => s,
         onGroupById: (groupId) async => aGroup(),
         onPrepareScanSetup: (sessionId) async {
@@ -115,7 +149,7 @@ void main() {
           return setup;
         },
       );
-      final cubit = SessionDetailsCubit(repository, store, guard, sessionId: s.id);
+      final cubit = SessionDetailsCubit(mocks.assistant, mocks.attendance, mocks.scan, store, guard, sessionId: s.id);
       await cubit.load();
 
       await cubit.prepareScan();
@@ -133,7 +167,7 @@ void main() {
       'فشل التحضير (أوفلاين/مجموعة فاضية) بيظهر خطأ ومفيش تنقّل',
       () async {
         final s = session();
-        final repository = MockAssistantRepository(
+        final mocks = mocksFor(
           onSessionById: (sessionId) async => s,
           onGroupById: (groupId) async => aGroup(),
           onPrepareScanSetup: (sessionId) async =>
@@ -141,7 +175,7 @@ void main() {
                 'مفيش طلاب مسجّلين في مجموعة الحصة دي. راجع إدارة السنتر.',
               ),
         );
-        final cubit = SessionDetailsCubit(repository, store, guard, sessionId: s.id);
+        final cubit = SessionDetailsCubit(mocks.assistant, mocks.attendance, mocks.scan, store, guard, sessionId: s.id);
         await cubit.load();
 
         await cubit.prepareScan();
@@ -166,7 +200,7 @@ void main() {
     test('التحضير ممنوع قبل اكتمال التحميل', () async {
       var prepareCalls = 0;
       final s = session();
-      final repository = MockAssistantRepository(
+      final mocks = mocksFor(
         onSessionById: (sessionId) async => s,
         onGroupById: (groupId) async => aGroup(),
         onPrepareScanSetup: (sessionId) async {
@@ -174,7 +208,7 @@ void main() {
           throw UnimplementedError();
         },
       );
-      final cubit = SessionDetailsCubit(repository, store, guard, sessionId: s.id);
+      final cubit = SessionDetailsCubit(mocks.assistant, mocks.attendance, mocks.scan, store, guard, sessionId: s.id);
 
       await cubit.prepareScan(); // لسه loading
 
@@ -209,14 +243,14 @@ void main() {
 
     test('الملخص وآخر المسحات بيتحسبوا من البيانات المدموجة', () async {
       final s = session();
-      final repository = MockAssistantRepository(
+      final mocks = mocksFor(
         onSessionById: (sessionId) async => s,
         onGroupById: (groupId) async => aGroup(),
         onMyProfile: () async => profile(),
         onGroupStudents: (c, g) async => [student('s1', 1), student('s2', 2)],
         onSessionAttendance: (c, sid) async => [record('s1', s.id)],
       );
-      final cubit = SessionDetailsCubit(repository, store, guard, sessionId: s.id);
+      final cubit = SessionDetailsCubit(mocks.assistant, mocks.attendance, mocks.scan, store, guard, sessionId: s.id);
       await cubit.load();
 
       final status = cubit.state.status;
@@ -233,7 +267,7 @@ void main() {
     test('فشل قراءة الحضور مش بيسقط الشاشة: summaryFailure مع إعادة', () async {
       var fail = true;
       final s = session();
-      final repository = MockAssistantRepository(
+      final mocks = mocksFor(
         onSessionById: (sessionId) async => s,
         onGroupById: (groupId) async => aGroup(),
         onMyProfile: () async => profile(),
@@ -243,7 +277,7 @@ void main() {
           return [record('s1', s.id)];
         },
       );
-      final cubit = SessionDetailsCubit(repository, store, guard, sessionId: s.id);
+      final cubit = SessionDetailsCubit(mocks.assistant, mocks.attendance, mocks.scan, store, guard, sessionId: s.id);
       await cubit.load();
 
       expect(cubit.state.status, isA<ViewSuccess<SessionDetailsData>>());
@@ -259,14 +293,14 @@ void main() {
 
     test('مسحة محلية جديدة بتحدّث الملخص لوحدها (الحارس)', () async {
       final s = session();
-      final repository = MockAssistantRepository(
+      final mocks = mocksFor(
         onSessionById: (sessionId) async => s,
         onGroupById: (groupId) async => aGroup(),
         onMyProfile: () async => profile(),
         onGroupStudents: (c, g) async => [student('s1', 1), student('s2', 2)],
         onSessionAttendance: (c, sid) async => [record('s1', s.id)],
       );
-      final cubit = SessionDetailsCubit(repository, store, guard, sessionId: s.id);
+      final cubit = SessionDetailsCubit(mocks.assistant, mocks.attendance, mocks.scan, store, guard, sessionId: s.id);
       await cubit.load();
 
       await store.add(

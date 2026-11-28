@@ -4,9 +4,11 @@ import 'package:center_net/core/errors/failure.dart';
 import 'package:center_net/core/state/view_state.dart';
 import 'package:center_net/features/assistant/cubit/home_cubit.dart';
 import 'package:center_net/features/assistant/cubit/home_state.dart';
-import 'package:center_net/features/assistant/models/scan_setup.dart';
+import 'package:center_net/features/scan/models/scan_setup.dart';
 import 'package:center_net/features/assistant/repository/mock_assistant_repository.dart';
-import 'package:center_net/features/assistant/services/connectivity_monitor.dart';
+import 'package:center_net/features/scan/repository/mock_scan_repository.dart';
+import 'package:center_net/features/scan/repository/scan_repository.dart';
+import 'package:center_net/core/services/connectivity_monitor.dart';
 import 'package:center_net/features/auth/models/account_type.dart';
 import 'package:center_net/features/auth/models/app_user.dart';
 import 'package:center_net/features/groups/models/group.dart';
@@ -70,8 +72,13 @@ void main() {
 
   tearDown(() => connectivity.dispose());
 
-  AssistantHomeCubit build(MockAssistantRepository repository) =>
-      AssistantHomeCubit(repository, connectivity, clock: () => now);
+  AssistantHomeCubit build(MockAssistantRepository repository, {ScanRepository? scan}) =>
+      AssistantHomeCubit(
+        repository,
+        scan ?? MockScanRepository(),
+        connectivity,
+        clock: () => now,
+      );
 
   group('AssistantHomeCubit.load', () {
     test('البداية تحميل، وبعد الجلب بيانات مع الحصة الجارية ومجموعتها', () async {
@@ -176,12 +183,14 @@ void main() {
         onMyProfile: () async => profile(),
         onTodaySessions: ({now}) async => [sessionAt(17, 18)],
         onGroupById: (groupId) async => aGroup(),
+      );
+      final scan = MockScanRepository(
         onPrepareScanSetup: (sessionId) async {
           expect(sessionId, 'g1_20261125_1700');
           return setup;
         },
       );
-      final cubit = build(repository);
+      final cubit = build(repository, scan: scan);
       await cubit.load();
 
       await cubit.prepareScan();
@@ -200,9 +209,11 @@ void main() {
         onMyProfile: () async => profile(),
         onTodaySessions: ({now}) async => [sessionAt(17, 18)],
         onGroupById: (groupId) async => aGroup(),
+      );
+      final scan = MockScanRepository(
         onPrepareScanSetup: (sessionId) async => throw const Failure.network(),
       );
-      final cubit = build(repository);
+      final cubit = build(repository, scan: scan);
       await cubit.load();
 
       await cubit.prepareScan();
@@ -218,12 +229,14 @@ void main() {
       final repository = MockAssistantRepository(
         onMyProfile: () async => profile(),
         onTodaySessions: ({now}) async => [sessionAt(19, 20)], // قادمة بس
+      );
+      final scan = MockScanRepository(
         onPrepareScanSetup: (sessionId) async {
           prepareCalls++;
           throw UnimplementedError();
         },
       );
-      final cubit = build(repository);
+      final cubit = build(repository, scan: scan);
       await cubit.load();
 
       await cubit.prepareScan();
